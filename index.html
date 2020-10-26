@@ -82,7 +82,7 @@
           $("#controls").remove();
           
           // Fetch up to 200 features in one big fetch.
-          api.get("/products/" + productKey + "/epics", {per_page: 5, fields: 'reference_num,name,description,requirements'}, function(response) {
+          api.get("/products/" + productKey + "/epics", {per_page: 5, fields: 'reference_num,name,description'}, function(response) {
             $("#feature-template").tmpl(response.features).appendTo("#features");
           });
         });
