@@ -9,9 +9,8 @@
     new AhaApi({
       accountDomain: $("#subdomain").val(),
       // Replace this with your client ID.
-      clientId: "b11bbb264c7432421b6abc05fae6bf93f541979b9fb42bbef684ab036487fd5c", 
-      // Replace this with your redirect URL.
-      redirectUri: "http://lvh.me:4567/scorecard.html"
+          clientId: "161eb65d203b91eb21a89fe30932b51f4deee51bcb66d5f7b376cd7fa1addd1d", // NOTE: replace this with your client ID.
+          redirectUri: "https://fhsal.github.io/fhs-aha1"
     }).authenticate(function(api, success, message) {
       var productKey = $("#product-key").val();
       
