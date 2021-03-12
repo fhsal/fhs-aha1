@@ -82,7 +82,7 @@
           $("#controls").remove();
           
           // Fetch up to 5 epics in one fetch.
-          api.get("/products/" + productKey + "/epics", {per_page: 5, fields: 'reference_num,name,description'}, function(response) {
+          api.get("/products/" + productKey + "/epics", {per_page: 10, fields: 'reference_num,name,description'}, function(response) {
             
             console.log(response)
             
