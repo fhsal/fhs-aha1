@@ -50,13 +50,6 @@
       <input type="text" placeholder="Product key" id="product-key">
       <input type="submit" class="btn" value="Load epics">
     </form>
-    <br>
-    <form id="table">
-      <input type="text" placeholder="Aha! subdomain" id="subdomain">
-      <input type="text" placeholder="Product key" id="product-key">
-      <input type="text" placeholder="Product key" id="product-key">
-      <input type="submit" class="btn" value="Load epics">
-    </form>
     
 <!--     <script id="feature-template" type="text/x-jquery-tmpl">
       <div class="feature">
@@ -89,13 +82,9 @@
           $("#controls").remove();
           
           // Fetch up to 5 epics in one fetch.
-          api.get("/products/" + productKey + "/epics", {per_page: 20, fields: 'reference_num,name,description'}, function(response) {
+          api.get("/products/" + productKey + "/epics", {per_page: 5, fields: 'reference_num,name,description'}, function(response) {
             
             console.log(response)
-
-            // api.get("/products/" + productKey + "/custom_objects/customers/records", function(response) {
-            
-            // console.log(response)
             
 //             $("#feature-template").tmpl(response.features).appendTo("#features");
           });
