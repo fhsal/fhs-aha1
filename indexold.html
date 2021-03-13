@@ -83,9 +83,11 @@
           
           // Fetch up to 5 epics in one fetch.
           api.get("/products/" + productKey + "/epics", {per_page: 10, fields: 'reference_num,name,description'}, function(response) {
-            
+            let z = response;
             console.log(response)
             
+        
+
 //             $("#feature-template").tmpl(response.features).appendTo("#features");
           });
         });
