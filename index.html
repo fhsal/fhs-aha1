@@ -63,8 +63,6 @@
       <input type="submit" class="btn" value="Load info for a single initiative">
     </form>
 
-
-
     <form id="milestone_controls">
       <input type="text" placeholder="Aha! subdomain" id="subdomain4">
       <input type="text" placeholder="Initiative number" id="intiative_num2">
@@ -90,8 +88,8 @@ milestones = "";
           console.log(message)
           var productKey = $("#product-key").val();
 
-// Fetch up to 20 epics in one fetch.
-          api.get("/products/" + productKey + "/initiatives", {per_page: 50, fields: 'reference_num,name,description'}, 
+// Fetch up to 50 epics in one fetch.
+          api.get("/products/" + productKey + "/epics", {per_page: 50, fields: 'reference_num,name,description'}, 
           function(response) {
             localStorage.zz = (JSON.stringify(response))
             epics = JSON.stringify(response)
@@ -102,21 +100,22 @@ milestones = "";
       });
 
 // API call for initiatives by product 
-      $("#intiative_controls").submit(function() { 
-        new AhaApi({
+      $("#initiative_controls").submit(function() { 
+         new AhaApi({
           accountDomain: $("#subdomain2").val(),
           clientId: "161eb65d203b91eb21a89fe30932b51f4deee51bcb66d5f7b376cd7fa1addd1d", // NOTE: replace this with your client ID.
           redirectUri: "https://fhsal.github.io/fhs-aha1"
         }).authenticate(function(api, success, message) {
+
           console.log(success)
           console.log(message)
           var productKey = $("#product-key2").val();
 
-// Fetch up to 10 initiatives in one fetch.
-          api.get("/products/" + productKey + "/initiatives",
-           function(response) {
-            localStorage.ii = (JSON.stringify(response))
-            initiatives = JSON.stringify(response)
+// Fetch up to 50 initiatives in one fetch.
+          api.get("/products/" + productKey + "/initiatives", {per_page: 50, fields: 'reference_num,name,description'}, 
+          function(response) {
+            localStorage.zz = (JSON.stringify(response))
+            epics = JSON.stringify(response)
             console.log(response)
           });
         });
