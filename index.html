@@ -95,7 +95,7 @@ milestones = "";
           function(response) {
             localStorage.zz = (JSON.stringify(response))
             epics = response
-            console.log("epics: " + response)
+            console.log(response)
           });
         });
         return false;
@@ -113,12 +113,12 @@ $("#epic_controls2").submit(function() {
           console.log(message)
           var productKey = $("#product-key").val();
 
-// Fetch up to 50 epics in one fetch.
+// Fetch up to 50 initiatives in one fetch.
           api.get("/products/" + productKey + "/initiatives", {per_page: 50, fields: 'reference_num,name,description'}, 
           function(response) {
             localStorage.ii = (JSON.stringify(response))
             inits = response
-            console.log("intitives: " + response)
+            console.log(response)
           });
         });
         return false;
