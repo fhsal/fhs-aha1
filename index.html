@@ -112,9 +112,9 @@ $("#epic_controls2").submit(function() {
           var productKey2 = $("#product-key2").val();
 
 // Fetch up to 50 epics in one fetch.
-          api.get("/products/" + productKey2 + "/initiatives", 
+          api.get("/products/" + productKey2 + "/initiatives", {per_page: 50, fields: 'reference_num,name,description, custom_object_links'}, 
           function(response) {
-            localStorage.ii = (JSON.stringify(response))
+            localStorage.zz = (JSON.stringify(response))
             initiatives = response
             console.log(response)
           });
