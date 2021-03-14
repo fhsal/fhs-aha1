@@ -63,56 +63,68 @@
       <input type="submit" class="btn" value="Load milestones">
     </form>
     
-<!--     <script id="feature-template" type="text/x-jquery-tmpl">
-      <div class="feature">
-        <div class="reference-num">${reference_num}</div>
-        <div class="name">${name}</div> 
-        <div class="description">{{html description.body}} </div>
-      
-        {{each requirements}}
-          <div class="requirement">
-            <div class="reference-num">${reference_num}</div>
-            <div class="description">{{html description.body}}</div>
-          </div>
-        {{/each}}
-      
-      </div>
-    </script> -->
-    
-    <div id="features"></div>
-    
 <script>
 
 epics = "";
-var initiatives = "";
-var milestones = "";
+initiatives = "";
+milestones = "";
 
       $("#epic_controls").submit(function() { 
-        
-        new AhaApi({
+         new AhaApi({
           accountDomain: $("#subdomain").val(),
           clientId: "161eb65d203b91eb21a89fe30932b51f4deee51bcb66d5f7b376cd7fa1addd1d", // NOTE: replace this with your client ID.
           redirectUri: "https://fhsal.github.io/fhs-aha1"
         }).authenticate(function(api, success, message) {
           var productKey = $("#product-key").val();
-          
-          // Hide the controls.
+// Hide the controls.
           $("#controls").remove();
-          
-          // Fetch up to 5 epics in one fetch.
+// Fetch up to 5 epics in one fetch.
           api.get("/products/" + productKey + "/epics", {per_page: 10, fields: 'reference_num,name,description'}, function(response) {
-            
             localStorage.zz = (JSON.stringify(response))
             epics = JSON.stringify(response)
-
             console.log(response)
-
-//             $("#feature-template").tmpl(response.features).appendTo("#features");
           });
         });
         return false;
       });
 
+      $("#intiative_controls").submit(function() { 
+         new AhaApi({
+          accountDomain: $("#subdomain").val(),
+          clientId: "161eb65d203b91eb21a89fe30932b51f4deee51bcb66d5f7b376cd7fa1addd1d", // NOTE: replace this with your client ID.
+          redirectUri: "https://fhsal.github.io/fhs-aha1"
+        }).authenticate(function(api, success, message) {
+          var productKey = $("#product-key").val();
+// Hide the controls.
+          $("#controls").remove();
+// Fetch up to 5 epics in one fetch.
+          api.get("/products/" + productKey + "/epics", {per_page: 10, fields: 'reference_num,name,description'}, function(response) {
+            localStorage.zz = (JSON.stringify(response))
+            epics = JSON.stringify(response)
+            console.log(response)
+          });
+        });
+        return false;
+      });
+
+      $("#milestone_controls").submit(function() { 
+         new AhaApi({
+          accountDomain: $("#subdomain").val(),
+          clientId: "161eb65d203b91eb21a89fe30932b51f4deee51bcb66d5f7b376cd7fa1addd1d", // NOTE: replace this with your client ID.
+          redirectUri: "https://fhsal.github.io/fhs-aha1"
+        }).authenticate(function(api, success, message) {
+          var productKey = $("#product-key").val();
+// Hide the controls.
+          $("#controls").remove();
+// Fetch up to 5 epics in one fetch.
+          api.get("/products/" + productKey + "/epics", {per_page: 10, fields: 'reference_num,name,description'}, function(response) {
+            localStorage.zz = (JSON.stringify(response))
+            epics = JSON.stringify(response)
+            console.log(response)
+          });
+        });
+        return false;
+      });
 
     </script>
   </body>
