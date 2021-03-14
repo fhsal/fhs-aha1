@@ -88,13 +88,13 @@ milestones = "";
 
           console.log(success)
           console.log(message)
-          var productKey = $("#product-key").val();
+          var productKey = $("#init-num").val();
 
 // Fetch up to 50 epics in one fetch.
-          api.get("/products/" + productKey + "/epics", {per_page: 50, fields: 'reference_num,name,description'}, 
+          api.get("/initiatives/" + productKey, 
           function(response) {
             localStorage.zz = (JSON.stringify(response))
-            epics = response
+            inits = response
             console.log(response)
           });
         });
