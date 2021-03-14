@@ -73,7 +73,7 @@
 <script>
 
 epics = "";
-initiatives = "";
+inits = "";
 singleInit = "";
 milestones = "";
 
@@ -95,7 +95,7 @@ milestones = "";
           function(response) {
             localStorage.zz = (JSON.stringify(response))
             epics = response
-            console.log(response)
+            console.log("epics: " + response)
           });
         });
         return false;
@@ -117,8 +117,8 @@ $("#epic_controls2").submit(function() {
           api.get("/products/" + productKey + "/initiatives", {per_page: 50, fields: 'reference_num,name,description'}, 
           function(response) {
             localStorage.ii = (JSON.stringify(response))
-            initiatives = response
-            console.log(response)
+            inits = response
+            console.log("intitives: " + response)
           });
         });
         return false;
