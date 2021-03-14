@@ -54,8 +54,16 @@
     <form id="intiative_controls">
       <input type="text" placeholder="Aha! subdomain" id="subdomain">
       <input type="text" placeholder="Product key" id="product-key2">
-      <input type="submit" class="btn" value="Load initiatives">
+      <input type="submit" class="btn" value="Load initiatives for a Product">
     </form>
+
+    <form id="single_intiative_controls">
+      <input type="text" placeholder="Aha! subdomain" id="subdomain">
+      <input type="text" placeholder="Product key" id="product-key2">
+      <input type="submit" class="btn" value="Load info for a single initiative">
+    </form>
+
+
 
     <form id="milestone_controls">
       <input type="text" placeholder="Aha! subdomain" id="subdomain">
@@ -69,6 +77,8 @@ epics = "";
 initiatives = "";
 milestones = "";
 
+
+// API call for epics by product
       $("#epic_controls").submit(function() { 
          new AhaApi({
           accountDomain: $("#subdomain").val(),
@@ -88,6 +98,7 @@ milestones = "";
         return false;
       });
 
+// API call for initiatives by product 
       $("#intiative_controls").submit(function() { 
          new AhaApi({
           accountDomain: $("#subdomain").val(),
@@ -107,6 +118,27 @@ milestones = "";
         return false;
       });
 
+// API call for a single initiative 
+      $("#single_intiative_controls").submit(function() { 
+         new AhaApi({
+          accountDomain: $("#subdomain").val(),
+          clientId: "161eb65d203b91eb21a89fe30932b51f4deee51bcb66d5f7b376cd7fa1addd1d", // NOTE: replace this with your client ID.
+          redirectUri: "https://fhsal.github.io/fhs-aha1"
+        }).authenticate(function(api, success, message) {
+          var productKey = $("#product-key").val();
+// Hide the controls.
+          $("#controls").remove();
+// Fetch up to 5 epics in one fetch.
+          api.get("/products/" + productKey + "/epics", {per_page: 10, fields: 'reference_num,name,description'}, function(response) {
+            localStorage.zz = (JSON.stringify(response))
+            epics = JSON.stringify(response)
+            console.log(response)
+          });
+        });
+        return false;
+      });
+
+// API call for milestone
       $("#milestone_controls").submit(function() { 
          new AhaApi({
           accountDomain: $("#subdomain").val(),
