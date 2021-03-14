@@ -115,7 +115,7 @@ $("#epic_controls2").submit(function() {
           api.get("/products/" + productKey2 + "/initiatives", 
           function(response) {
             localStorage.ii = (JSON.stringify(response))
-            initResp = response
+            initiatives = response
             console.log(response)
           });
         });
