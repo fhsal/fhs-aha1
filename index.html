@@ -109,7 +109,7 @@ milestones = "";
 // Hide the controls.
           $("#controls").remove();
 // Fetch up to 10 initiatives in one fetch.
-          api.get("/products/" + productKey + "/initiatives", 
+          api.get("/products/" + productKey + "/initiatives", {per_page: 100},
            function(response) {
             localStorage.zz = (JSON.stringify(response))
             epics = JSON.stringify(response)
