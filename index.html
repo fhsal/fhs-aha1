@@ -114,8 +114,8 @@ $("#epic_controls2").submit(function() {
 // Fetch up to 50 epics in one fetch.
           api.get("/products/" + productKey + "/initiatives", {per_page: 50, fields: 'reference_num,name,description'}, 
           function(response) {
-            localStorage.zz = (JSON.stringify(response))
-            epics = response
+            localStorage.ii = (JSON.stringify(response))
+            initiatives = response
             console.log(response)
           });
         });
