@@ -59,7 +59,7 @@
 
     <form id="single_intiative_controls">
       <input type="text" placeholder="Aha! subdomain" id="subdomain">
-      <input type="text" placeholder="Product key" id="product-key2">
+      <input type="text" placeholder="initiative number" id="intiative_num">
       <input type="submit" class="btn" value="Load info for a single initiative">
     </form>
 
@@ -67,8 +67,8 @@
 
     <form id="milestone_controls">
       <input type="text" placeholder="Aha! subdomain" id="subdomain">
-      <input type="text" placeholder="Initiative number" id="intiative_num">
-      <input type="submit" class="btn" value="Load milestones">
+      <input type="text" placeholder="Initiative number" id="intiative_num2">
+      <input type="submit" class="btn" value="Load milestones for a single initiative">
     </form>
     
 <script>
@@ -88,8 +88,8 @@ milestones = "";
           var productKey = $("#product-key").val();
 // Hide the controls.
           $("#controls").remove();
-// Fetch up to 5 epics in one fetch.
-          api.get("/products/" + productKey + "/epics", {per_page: 10, fields: 'reference_num,name,description'}, 
+// Fetch up to 20 epics in one fetch.
+          api.get("/products/" + productKey + "/epics", {per_page: 20, fields: 'reference_num,name,description'}, 
           function(response) {
             localStorage.zz = (JSON.stringify(response))
             epics = JSON.stringify(response)
@@ -112,8 +112,8 @@ milestones = "";
 // Fetch up to 10 initiatives in one fetch.
           api.get("/products/" + productKey + "/initiatives",
            function(response) {
-            localStorage.zz = (JSON.stringify(response))
-            epics = JSON.stringify(response)
+            localStorage.ii = (JSON.stringify(response))
+            initiatives = JSON.stringify(response)
             console.log(response)
           });
         });
@@ -127,11 +127,12 @@ milestones = "";
           clientId: "161eb65d203b91eb21a89fe30932b51f4deee51bcb66d5f7b376cd7fa1addd1d", // NOTE: replace this with your client ID.
           redirectUri: "https://fhsal.github.io/fhs-aha1"
         }).authenticate(function(api, success, message) {
-          var productKey = $("#product-key").val();
+          var searchKey = $("#intiative_num").val();
 // Hide the controls.
           $("#controls").remove();
-// Fetch up to 5 epics in one fetch.
-          api.get("/products/" + productKey + "/epics", {per_page: 10, fields: 'reference_num,name,description'}, function(response) {
+// Fetch info 
+          api.get("/initiatives/" + searchKey, 
+           function(response) {
             localStorage.zz = (JSON.stringify(response))
             epics = JSON.stringify(response)
             console.log(response)
