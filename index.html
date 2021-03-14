@@ -51,9 +51,9 @@
       <input type="submit" class="btn" value="Load epics">
     </form>
 
-    <form id="intiative_controls">
+    <form id="epic_controls2">
       <input type="text" placeholder="Aha! subdomain" id="subdomain">
-      <input type="text" placeholder="Product key" id="product-key2">
+      <input type="text" placeholder="Product key" id="product-key">
       <input type="submit" class="btn" value="Load initiatives for a Product">
     </form>
 
@@ -100,7 +100,7 @@ milestones = "";
       });
 
 // API call for initiatives by product 
-      $("#intiative_controls").submit(function() { 
+$("#epic_controls2").submit(function() { 
          new AhaApi({
           accountDomain: $("#subdomain").val(),
           clientId: "161eb65d203b91eb21a89fe30932b51f4deee51bcb66d5f7b376cd7fa1addd1d", // NOTE: replace this with your client ID.
@@ -109,13 +109,13 @@ milestones = "";
 
           console.log(success)
           console.log(message)
-          var productKey2 = $("#product-key2").val();
+          var productKey = $("#product-key").val();
 
-// Fetch up to 50 initiatives in one fetch.
-          api.get("/products/" + productKey2 + "/initiatives", {per_page: 50, fields: 'reference_num,name,description'}, 
+// Fetch up to 50 epics in one fetch.
+          api.get("/products/" + productKey + "/epics", {per_page: 50, fields: 'reference_num,name,description'}, 
           function(response) {
             localStorage.zz = (JSON.stringify(response))
-            epics = JSON.stringify(response)
+            epics = response
             console.log(response)
           });
         });
