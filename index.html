@@ -89,8 +89,7 @@ milestones = "";
           console.log(success)
           console.log(message)
           var productKey = $("#product-key").val();
-// Hide the controls.
-          $("#controls").remove();
+
 // Fetch up to 20 epics in one fetch.
           api.get("/products/" + productKey + "/epics", {per_page: 20, fields: 'reference_num,name,description'}, 
           function(response) {
@@ -112,8 +111,7 @@ milestones = "";
           console.log(success)
           console.log(message)
           var productKey = $("#product-key2").val();
-// Hide the controls.
-          $("#controls").remove();
+
 // Fetch up to 10 initiatives in one fetch.
           api.get("/products/" + productKey + "/initiatives",
            function(response) {
