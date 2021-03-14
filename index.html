@@ -106,6 +106,7 @@ milestones = "";
           clientId: "161eb65d203b91eb21a89fe30932b51f4deee51bcb66d5f7b376cd7fa1addd1d", // NOTE: replace this with your client ID.
           redirectUri: "https://fhsal.github.io/fhs-aha1"
         }).authenticate(function(api, success, message) {
+          console.log(success)
           var productKey = $("#product-key2").val();
 // Hide the controls.
           $("#controls").remove();
