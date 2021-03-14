@@ -53,7 +53,7 @@
 
     <form id="epic_controls2">
       <input type="text" placeholder="Aha! subdomain" id="subdomain">
-      <input type="text" placeholder="Product key" id="product-key">
+      <input type="text" placeholder="Product key" id="product-key2">
       <input type="submit" class="btn" value="Load initiatives for a Product">
     </form>
 
@@ -109,10 +109,10 @@ $("#epic_controls2").submit(function() {
 
           console.log(success)
           console.log(message)
-          var productKey = $("#product-key").val();
+          var productKey2 = $("#product-key2").val();
 
 // Fetch up to 50 epics in one fetch.
-          api.get("/products/" + productKey + "/initiatives", {per_page: 50, fields: 'reference_num,name,description'}, 
+          api.get("/products/" + productKey2 + "/initiatives", {per_page: 50, fields: 'reference_num,name,description, custom_object_links'}, 
           function(response) {
             localStorage.zz = (JSON.stringify(response))
             epics = response
