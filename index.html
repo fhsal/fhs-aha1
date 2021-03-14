@@ -52,13 +52,13 @@
     </form>
 
     <form id="intiative_controls">
-      <input type="text" placeholder="Aha! subdomain" id="subdomain">
+      <input type="text" placeholder="Aha! subdomain" id="subdomain2">
       <input type="text" placeholder="Product key" id="product-key2">
       <input type="submit" class="btn" value="Load initiatives for a Product">
     </form>
 
     <form id="single_intiative_controls">
-      <input type="text" placeholder="Aha! subdomain" id="subdomain">
+      <input type="text" placeholder="Aha! subdomain" id="subdomain3">
       <input type="text" placeholder="initiative number" id="intiative_num">
       <input type="submit" class="btn" value="Load info for a single initiative">
     </form>
@@ -66,7 +66,7 @@
 
 
     <form id="milestone_controls">
-      <input type="text" placeholder="Aha! subdomain" id="subdomain">
+      <input type="text" placeholder="Aha! subdomain" id="subdomain4">
       <input type="text" placeholder="Initiative number" id="intiative_num2">
       <input type="submit" class="btn" value="Load milestones for a single initiative">
     </form>
@@ -88,7 +88,6 @@ milestones = "";
 
           console.log(success)
           console.log(message)
-          console.log(response)
           var productKey = $("#product-key").val();
 // Hide the controls.
           $("#controls").remove();
@@ -106,7 +105,7 @@ milestones = "";
 // API call for initiatives by product 
       $("#intiative_controls").submit(function() { 
          new AhaApi({
-          accountDomain: $("#subdomain").val(),
+          accountDomain: $("#subdomain2").val(),
           clientId: "161eb65d203b91eb21a89fe30932b51f4deee51bcb66d5f7b376cd7fa1addd1d", // NOTE: replace this with your client ID.
           redirectUri: "https://fhsal.github.io/fhs-aha1"
         }).authenticate(function(api, success, message) {
@@ -128,7 +127,7 @@ milestones = "";
 // API call for a single initiative 
       $("#single_intiative_controls").submit(function() { 
          AhaApi({
-          accountDomain: $("#subdomain").val(),
+          accountDomain: $("#subdomain3").val(),
           clientId: "161eb65d203b91eb21a89fe30932b51f4deee51bcb66d5f7b376cd7fa1addd1d", // NOTE: replace this with your client ID.
           redirectUri: "https://fhsal.github.io/fhs-aha1"
         }).authenticate(function(api, success, message) {
@@ -149,7 +148,7 @@ milestones = "";
 // API call for milestone
       $("#milestone_controls").submit(function() { 
          AhaApi({
-          accountDomain: $("#subdomain").val(),
+          accountDomain: $("#subdomain4").val(),
           clientId: "161eb65d203b91eb21a89fe30932b51f4deee51bcb66d5f7b376cd7fa1addd1d", // NOTE: replace this with your client ID.
           redirectUri: "https://fhsal.github.io/fhs-aha1"
         }).authenticate(function(api, success, message) {
