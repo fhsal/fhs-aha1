@@ -91,7 +91,7 @@ milestones = "";
           var productKey = $("#product-key").val();
 
 // Fetch up to 20 epics in one fetch.
-          api.get("/products/" + productKey + "/epics", {per_page: 20, fields: 'reference_num,name,description'}, 
+          api.get("/products/" + productKey + "/initiatives", {per_page: 50, fields: 'reference_num,name,description'}, 
           function(response) {
             localStorage.zz = (JSON.stringify(response))
             epics = JSON.stringify(response)
@@ -103,7 +103,7 @@ milestones = "";
 
 // API call for initiatives by product 
       $("#intiative_controls").submit(function() { 
-        AhaApi({
+        new AhaApi({
           accountDomain: $("#subdomain2").val(),
           clientId: "161eb65d203b91eb21a89fe30932b51f4deee51bcb66d5f7b376cd7fa1addd1d", // NOTE: replace this with your client ID.
           redirectUri: "https://fhsal.github.io/fhs-aha1"
