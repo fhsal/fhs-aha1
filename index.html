@@ -48,6 +48,7 @@
     <form id="epic_controls">
       <input type="text" placeholder="Aha! subdomain" id="subdomain">
       <input type="text" placeholder="Product key" id="product-key">
+      <input type="text" placeholder="Initiative Number" id="init-num">
       <input type="submit" class="btn" value="Load epics">
     </form>
 
@@ -133,7 +134,7 @@ $("#epic_controls2").submit(function() {
 
           console.log(success)
           console.log(message)
-          var initNum = $("#init_num").val();
+          var initNum = $("#init-num").val();
 
 // Fetch up to 50 epics in one fetch.
           api.get("/initiatives/" + initNum, 
