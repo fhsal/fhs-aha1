@@ -60,7 +60,7 @@
 
     <form id="init_controls">
       <input type="text" placeholder="Aha! subdomain" id="subdomain">
-      <input type="text" placeholder="initiative number" id="product-key">
+      <input type="text" placeholder="initiative number" id="init-num">
       <input type="submit" class="btn" value="Load info for a single initiative">
     </form>
 
@@ -134,7 +134,7 @@ $("#epic_controls2").submit(function() {
 
           console.log(success)
           console.log(message)
-          var productKey = $("#product-key").val();
+          var productKey = $("#init-num").val();
 
 // Fetch up to 50 initiatives in one fetch.
           api.get("/products/" + productKey + "/epics", {per_page: 50, fields: 'reference_num,name,description'}, 
