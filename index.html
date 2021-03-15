@@ -138,8 +138,8 @@ $("#epic_controls2").submit(function() {
 // Fetch up to 50 initiatives in one fetch.
           api.get("/initiatives/" + productKey , {per_page: 50}, 
           function(response) {
-            localStorage.ii = (JSON.stringify(response))
-            inits = response
+            localStorage.singleInit = (JSON.stringify(response))
+            singleInit = response
             console.log(response)
           });
         });
