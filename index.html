@@ -125,7 +125,7 @@ $("#epic_controls2").submit(function() {
       });
 
 
-  $("#int_controls").submit(function() { 
+      $("#init_controls").submit(function() { 
          new AhaApi({
           accountDomain: $("#subdomain").val(),
           clientId: "161eb65d203b91eb21a89fe30932b51f4deee51bcb66d5f7b376cd7fa1addd1d", // NOTE: replace this with your client ID.
@@ -136,11 +136,11 @@ $("#epic_controls2").submit(function() {
           console.log(message)
           var productKey = $("#product-key").val();
 
-// Fetch up to 50 epics in one fetch.
+// Fetch up to 50 initiatives in one fetch.
           api.get("/products/" + productKey + "/epics", {per_page: 50, fields: 'reference_num,name,description'}, 
           function(response) {
-            localStorage.zz = (JSON.stringify(response))
-            epics = response
+            localStorage.ii = (JSON.stringify(response))
+            inits = response
             console.log(response)
           });
         });
