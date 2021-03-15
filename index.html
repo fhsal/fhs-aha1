@@ -63,10 +63,10 @@
       <input type="submit" class="btn" value="Load info for a single initiative">
     </form>
 
-    <form id="milestone_controls">
+    <form id="ms_controls">
       <input type="text" placeholder="Aha! subdomain" id="subdomain4">
-      <input type="text" placeholder="Initiative number" id="intiative_num2">
-      <input type="submit" class="btn" value="Load milestones for a single initiative">
+      <input type="text" placeholder="Milestone number" id="msNum">
+      <input type="submit" class="btn" value="Load epics for a single milestone">
     </form>
     
 <script>
@@ -74,7 +74,7 @@
 epics = "";
 inits = "";
 singleInit = "";
-milestones = "";
+msInfo = "";
 
 
 // API call for epics by product
@@ -140,6 +140,29 @@ $("#epic_controls2").submit(function() {
           function(response) {
             localStorage.singleInit = (JSON.stringify(response))
             singleInit = response
+            console.log(response)
+          });
+        });
+        return false;
+      });
+
+// API call for a single milestone
+  $("#ms_controls").submit(function() { 
+         new AhaApi({
+          accountDomain: $("#subdomain").val(),
+          clientId: "161eb65d203b91eb21a89fe30932b51f4deee51bcb66d5f7b376cd7fa1addd1d", // NOTE: replace this with your client ID.
+          redirectUri: "https://fhsal.github.io/fhs-aha1"
+        }).authenticate(function(api, success, message) {
+
+          console.log(success)
+          console.log(message)
+          var productKey = $("#msNum").val();
+
+// Fetch up to 50 initiatives in one fetch.
+          api.get("/custom_object_records/" + productKey , {per_page: 50}, 
+          function(response) {
+            localStorage.msInfo = (JSON.stringify(response))
+            msInfo = response
             console.log(response)
           });
         });
