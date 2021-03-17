@@ -89,10 +89,19 @@ singleInit = "";
 msInfo = "";
 epicInfo ="";
 epicSummary = [];
+epicEffortSum = "";
+epicCompleteSum = "";
+msEffortSum = "";
+msEffortComplete = "";
+msPercentComplete = "";
+
 
 // Function to get epic details (used in Milestone detail query)
 
 function getEpicDetail(epicNumber) { 
+
+  console.log("getEpicDetail");
+
         new AhaApi({
         accountDomain: $("#subdomain").val(),
         clientId: "161eb65d203b91eb21a89fe30932b51f4deee51bcb66d5f7b376cd7fa1addd1d", // NOTE: replace this with your client ID.
@@ -108,20 +117,24 @@ function getEpicDetail(epicNumber) {
         function(response) {
           localStorage.epicInfo = (JSON.stringify(response))
           epicInfo = response
-          console.log(response)
+          // console.log(response)
 
 // build object to insert into array of epic excerpt objects
 
 let epicName = epicInfo.epic.name;
 let epicEffort = epicInfo.epic.epic_only_original_estimate;
 let epicProgress = epicInfo.epic.progress;
-let epicEffortCompl = "";
+let epicEffortCompl = epicEffort*epicProgress;
 // if (!epicProgress) { epicEffortCompl = 0} else {epicEffortCompl=epicEffort*epicProgress};
 
-let epicLine = ("epicName: " + epicName.slice(0, 25) + " ; epicEffort: " + epicEffort + " ; epicProgress; " + epicProgress + "; epicEffortDone: " + epicEffort*epicProgress )
+let epicLine = ("epic_id: " + epicNumber + "; epicName: " + epicName.slice(0, 40) + " ; epicEffort: " + epicEffort + " ; epicProgress; " + epicProgress + "; epicEffortDone: " + epicEffortCompl )
+
+epicEffortSum = epicEffortSum + epicEffort;
+epicCompleteSum = epicCompleteSum + epicEffortCompl
 
 console.log(epicLine) 
-
+console.log(epicEffortSum);
+console.log(epicCompleteSum);
 
         });
       });
@@ -231,8 +244,14 @@ for (i = 0; i < numEpics; i++) {
         $('#msBody').append("Epic #: " + i);
         $('#msBody').append(" record_id: " + epicNum) ;
         $('#msBody').append('<br>') ;
+        getEpicDetail(epicNum);
          
-        getEpicDetail(epicNum)
+        msEffortSum = msEffortSum +epicEffortSum;
+        msCompleteSum = msCompleteSum + epicCompleteSum;
+
+console.log(msEffortSum);
+console.log(msCompleteSum);
+
      }
           });
         });
