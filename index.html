@@ -129,12 +129,12 @@ let epicEffortCompl = epicEffort*epicProgress;
 
 let epicLine = ("epic_id: " + epicNumber + "; epicName: " + epicName.slice(0, 40) + " ; epicEffort: " + epicEffort + " ; epicProgress; " + epicProgress + "; epicEffortDone: " + epicEffortCompl )
 
-epicEffortSum = epicEffortSum + epicEffort;
-epicCompleteSum = epicCompleteSum + epicEffortCompl
+// epicEffortSum = epicEffortSum + epicEffort;
+// epicCompleteSum = epicCompleteSum + epicEffortCompl
 
-console.log(epicLine) 
-console.log(epicEffortSum);
-console.log(epicCompleteSum);
+// console.log(epicLine) 
+// console.log(epicEffortSum);
+// console.log(epicCompleteSum);
 
         });
       });
@@ -249,8 +249,8 @@ for (i = 0; i < numEpics; i++) {
         msEffortSum = msEffortSum +epicEffortSum;
         msCompleteSum = msCompleteSum + epicCompleteSum;
 
-console.log(msEffortSum);
-console.log(msCompleteSum);
+        console.log(msEffortSum);
+        console.log(msCompleteSum);
 
      }
           });
