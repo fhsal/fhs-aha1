@@ -227,8 +227,8 @@ $("#epic_controls2").submit(function() {
           function(response) {
             localStorage.msInfo = (JSON.stringify(response))
             msInfo = response
-          console.log ('number of epics: ' + numEpics)
             var numEpics = msInfo.custom_object_record.linked_records["length"];
+          console.log ('number of epics: ' + numEpics)
           console.log(response)
 
 
@@ -240,8 +240,10 @@ var i;
     for (i = 0; i < numEpics; i++) {
       let epicNum = msInfo.custom_object_record.linked_records[i].record_id;
 
+console.log(epicNum)
+
         getEpicDetail(epicNum);
-        
+
             $('#msBody').append("Epic #: " + i);
             $('#msBody').append(" record_id: " + epicNum) ;
             $('#msBody').append('<br>') ;
