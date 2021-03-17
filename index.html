@@ -168,6 +168,28 @@ $("#epic_controls2").submit(function() {
         return false;
       });
 
+function charlie (){
+         new AhaApi({
+          accountDomain: $("#subdomain").val(),
+          clientId: "161eb65d203b91eb21a89fe30932b51f4deee51bcb66d5f7b376cd7fa1addd1d", // NOTE: replace this with your client ID.
+          redirectUri: "https://fhsal.github.io/fhs-aha1"
+        }).authenticate(function(api, success, message) {
+
+          console.log(success)
+          console.log(message)
+          var productKey = $("#init-num").val();
+
+// Fetch up to 50 initiatives in one fetch.
+          api.get("/initiatives/" + productKey , {per_page: 50}, 
+          function(response) {
+            localStorage.singleInit = (JSON.stringify(response))
+            singleInit = response
+            console.log(response)
+          });
+        });
+        return false;
+      };
+
 
 function epicDetail() { 
 
