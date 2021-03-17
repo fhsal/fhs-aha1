@@ -190,11 +190,13 @@ $('#msBody').append("Milestone Completion Calculation");
 
 var i;
 for (i = 0; i < numEpics; i++) {
-
+      let epicNum = msInfo.custom_object_record.linked_records[i].record_id
         $('#msBody').append("Epic #: " + i);
-        $('#msBody').append(" record_id: " + msInfo.custom_object_record.linked_records[i].record_id) ;
+        $('#msBody').append(" record_id: " + epicNum) ;
         $('#msBody').append('<br>') ;
-}
+         
+        getEpicDetail(epicNum)
+     }
           });
         });
         return false;
