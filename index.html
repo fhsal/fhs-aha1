@@ -182,13 +182,16 @@ $("#epic_controls2").submit(function() {
 
 console.log ('number of epics' + numEpics)
 
+$('#msBody').append("Milestone Completion Calculation");
+        $('#msBody').append('<br>') ;
+        $('#msBody').append("--------------------------------");
+        $('#msBody').append('<br>') ;
+        
 var i;
 for (i = 0; i < numEpics; i++) {
 
-        $('#msBody').append("Milestone Completion Calculation");
-        $('#msBody').append("--------------------------------");
         $('#msBody').append("Epic #: " + i);
-        $('#msBody').append(msInfo.custom_object_record.linked_records[i].record_id) ;
+        $('#msBody').append("ref ID: " + msInfo.custom_object_record.linked_records[i].record_id) ;
         $('#msBody').append('<br>') ;
 }
           });
