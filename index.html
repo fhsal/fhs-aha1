@@ -197,7 +197,7 @@ $("#epic_controls2").submit(function() {
 var i;
     for (i = 0; i < numEpics; i++) {
       let epicNum = msInfo.custom_object_record.linked_records[i].record_id;
-        getEpicDetail(epicNum);
+       epicDetail(epicNum);
             $('#msBody').append("Epic #: " + i);
             $('#msBody').append(" record_id: " + epicNum) ;
             $('#msBody').append('<br>') ;
@@ -239,6 +239,41 @@ var i;
       });
       return false;
     });
+
+function epicDetail(epicNum) { 
+        new AhaApi({
+        accountDomain: $("#subdomain").val(),
+        clientId: "161eb65d203b91eb21a89fe30932b51f4deee51bcb66d5f7b376cd7fa1addd1d", // NOTE: replace this with your client ID.
+        redirectUri: "https://fhsal.github.io/fhs-aha1"
+      }).authenticate(function(api, success, message) {
+
+        console.log(success)
+        console.log(message)
+        var productKey = epicNum;
+
+// Fetch up to 50 initiatives in one fetch.
+        api.get("/epics/" + productKey , {per_page: 50}, 
+        function(response) {
+          localStorage.epicInfo = (JSON.stringify(response))
+          epicInfo = response
+          console.log(response)
+
+let epicName = epicInfo.epic.name;
+let epicEffort = epicInfo.epic.epic_only_original_estimate;
+let epicProgress = epicInfo.epic.progress;
+let epicEffortCompl = "";
+// if (!epicProgress) { epicEffortCompl = 0} else {epicEffortCompl=epicEffort*epicProgress};
+
+epicSummary.push("epicName: " + epicName.slice(0, 25) + " ; epicEffort: " + epicEffort + " ; epicProgress; " + epicProgress + "; epicEffortDone: " + epicEffort*epicProgress )
+
+
+
+        });
+      });
+      return false;
+    };
+
+
 
 
 // function to append name, effort, % progress, to-go effort into epicSummary object
