@@ -69,7 +69,7 @@
       <input type="submit" class="btn" value="Load epics for a single milestone">
     </form>
 
-    <form id="epic_controls">
+    <form id="epic_detail">
       <input type="text" placeholder="Aha! subdomain" id="subdomain5">
       <input type="text" placeholder="Milestone number" id="epicNum">
       <input type="submit" class="btn" value="Load info for a single epic">
@@ -200,8 +200,7 @@ for (i = 0; i < numEpics; i++) {
     
       });
 
-
-      $("#epic_controls").submit(function() { 
+      $("#epic_detail").submit(function() { 
          new AhaApi({
           accountDomain: $("#subdomain").val(),
           clientId: "161eb65d203b91eb21a89fe30932b51f4deee51bcb66d5f7b376cd7fa1addd1d", // NOTE: replace this with your client ID.
@@ -222,6 +221,8 @@ for (i = 0; i < numEpics; i++) {
         });
         return false;
       });
+
+
 
     </script>
   </body>
