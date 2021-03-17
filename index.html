@@ -88,6 +88,7 @@ inits = "";
 singleInit = "";
 msInfo = "";
 epicInfo ="";
+epicSummary = "";
 
 
 // API call for epics by product
@@ -222,6 +223,51 @@ for (i = 0; i < numEpics; i++) {
         return false;
       });
 
+
+// function to append name, effort, % progress, to-go effort into epicSummary object
+
+  function getEpicDetail(epicNumber) { 
+        new AhaApi({
+        accountDomain: $("#subdomain").val(),
+        clientId: "161eb65d203b91eb21a89fe30932b51f4deee51bcb66d5f7b376cd7fa1addd1d", // NOTE: replace this with your client ID.
+        redirectUri: "https://fhsal.github.io/fhs-aha1"
+      }).authenticate(function(api, success, message) {
+
+        console.log(success)
+        console.log(message)
+        var productKey = epicNumber;
+
+// Fetch epic details
+        api.get("/epics/" + productKey , {per_page: 50}, 
+        function(response) {
+          localStorage.epicInfo = (JSON.stringify(response))
+          epicInfo = response
+          console.log(response)
+
+// build object to insert into array of epic excerpt objects
+
+let epicName = epicInfo.epic.name;
+let epicEffort = epicInfo.epic.epic_only_original_estimate;
+let epicProgress = epicInfo.epic.progress;
+let epicEffortCompl = "";
+if (!epicProgress) { epicEffortCompl = 0} else {epicEffortCompl=epicEffort*epicProgress};
+
+
+
+epicSummary.push("epicName: " + epicInfo.epic.name + " ; epicEffort: " + epicInfo.epic.epic_only_original_estimate + " ; epicProgress; " + epicInfo.epic.progress + "; epicEffortDone: " +  )
+
+
+if (hour < 18) {
+  greeting = "Good day";
+} else {
+  greeting = "Good evening";
+}
+
+
+        });
+      });
+      return false;
+    };
 
 
     </script>
