@@ -90,6 +90,43 @@ msInfo = "";
 epicInfo ="";
 epicSummary = "";
 
+// Function to get epic details (used in Milestone detail query)
+
+function getEpicDetail(epicNumber) { 
+        new AhaApi({
+        accountDomain: $("#subdomain").val(),
+        clientId: "161eb65d203b91eb21a89fe30932b51f4deee51bcb66d5f7b376cd7fa1addd1d", // NOTE: replace this with your client ID.
+        redirectUri: "https://fhsal.github.io/fhs-aha1"
+      }).authenticate(function(api, success, message) {
+
+        console.log(success)
+        console.log(message)
+        var productKey = epicNumber;
+
+// Fetch epic details
+        api.get("/epics/" + productKey , {per_page: 50}, 
+        function(response) {
+          localStorage.epicInfo = (JSON.stringify(response))
+          epicInfo = response
+          console.log(response)
+
+// build object to insert into array of epic excerpt objects
+
+let epicName = epicInfo.epic.name;
+let epicEffort = epicInfo.epic.epic_only_original_estimate;
+let epicProgress = epicInfo.epic.progress;
+let epicEffortCompl = "";
+if (!epicProgress) { epicEffortCompl = 0} else {epicEffortCompl=epicEffort*epicProgress};
+
+epicSummary.push("epicName: " + epicName.slice(0, 25) + " ; epicEffort: " + epicEffort + " ; epicProgress; " + epicProgress + "; epicEffortDone: " + epicEffort*epicProgress )
+
+console.log(epicSummary) 
+
+
+        });
+      });
+      return false;
+    };
 
 // API call for epics by product
 $("#epic_controls").submit(function() { 
