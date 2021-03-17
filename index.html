@@ -185,7 +185,10 @@ console.log ('number of epics' + numEpics)
 var i;
 for (i = 0; i < numEpics; i++) {
 
+        $('#msBody').append("Milestone Completion Calculation");
+        $('#msBody').append("--------------------------------");
         $('#msBody').append("Epic #: " + i);
+        $('#msBody').append(msInfo.custom_object_record.linked_records[i].record_id) ;
         $('#msBody').append('<br>') ;
 }
           });
