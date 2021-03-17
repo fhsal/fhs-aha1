@@ -227,11 +227,10 @@ $("#epic_controls2").submit(function() {
           function(response) {
             localStorage.msInfo = (JSON.stringify(response))
             msInfo = response
-            console.log(response)
-
+          console.log ('number of epics: ' + numEpics)
             var numEpics = msInfo.custom_object_record.linked_records["length"];
+          console.log(response)
 
-console.log ('number of epics: ' + numEpics)
 
 $('#msBody').append("Milestone Completion Calculation");
         $('#msBody').append('<br>') ;
@@ -239,13 +238,14 @@ $('#msBody').append("Milestone Completion Calculation");
         $('#msBody').append('<br><br>') ;
 var i;
     for (i = 0; i < numEpics; i++) {
-      let epicNum = msInfo.custom_object_record.linked_records[i].record_id
-        $('#msBody').append("Epic #: " + i);
-        $('#msBody').append(" record_id: " + epicNum) ;
-        $('#msBody').append('<br>') ;
+      let epicNum = msInfo.custom_object_record.linked_records[i].record_id;
 
         getEpicDetail(epicNum);
-         
+        
+            $('#msBody').append("Epic #: " + i);
+            $('#msBody').append(" record_id: " + epicNum) ;
+            $('#msBody').append('<br>') ;
+
         // msEffortSum = msEffortSum +epicEffortSum;
         // msCompleteSum = msCompleteSum + epicCompleteSum;
 
