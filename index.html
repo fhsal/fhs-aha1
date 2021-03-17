@@ -94,6 +94,7 @@ epicCompleteSum = "";
 msEffortSum = "";
 msCompleteSum = "";
 msPercentComplete = "";
+epicNum = "";
 
 
 // Function to get epic details (used in Milestone detail query)
@@ -168,7 +169,10 @@ $("#epic_controls2").submit(function() {
       });
 
 
-      function epicDetail(epicNum) { 
+function epicDetail(epicNum) { 
+
+  console.log("firing epicDetail");
+ 
         new AhaApi({
         accountDomain: $("#subdomain").val(),
         clientId: "161eb65d203b91eb21a89fe30932b51f4deee51bcb66d5f7b376cd7fa1addd1d", // NOTE: replace this with your client ID.
@@ -228,13 +232,13 @@ epicSummary.push("epicName: " + epicName.slice(0, 25) + " ; epicEffort: " + epic
 // loop through epics
 var i;
     for (i = 0; i < numEpics; i++) {
-      let epicNum = msInfo.custom_object_record.linked_records[i].record_id;
+      epicNum = msInfo.custom_object_record.linked_records[i].record_id;
 
             $('#msBody').append("Epic #: " + i);
             $('#msBody').append(" record_id: " + epicNum) ;
             $('#msBody').append('<br>') ;
 
-            epicDetail(epicNum);
+          epicDetail(epicNum);
 
         // msEffortSum = msEffortSum +epicEffortSum;
         // msCompleteSum = msCompleteSum + epicCompleteSum;
