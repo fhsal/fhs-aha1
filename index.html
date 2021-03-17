@@ -186,12 +186,12 @@ $('#msBody').append("Milestone Completion Calculation");
         $('#msBody').append('<br>') ;
         $('#msBody').append("--------------------------------");
         $('#msBody').append('<br>') ;
-        
+
 var i;
 for (i = 0; i < numEpics; i++) {
 
         $('#msBody').append("Epic #: " + i);
-        $('#msBody').append("ref ID: " + msInfo.custom_object_record.linked_records[i].record_id) ;
+        $('#msBody').append(" record_id: " + msInfo.custom_object_record.linked_records[i].record_id) ;
         $('#msBody').append('<br>') ;
 }
           });
