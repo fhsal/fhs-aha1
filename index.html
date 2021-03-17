@@ -252,16 +252,9 @@ let epicProgress = epicInfo.epic.progress;
 let epicEffortCompl = "";
 if (!epicProgress) { epicEffortCompl = 0} else {epicEffortCompl=epicEffort*epicProgress};
 
+epicSummary.push("epicName: " + epicName + " ; epicEffort: " + epicEffort + " ; epicProgress; " + epicProgress + "; epicEffortDone: " + epicEffort*epicProgress )
 
-
-epicSummary.push("epicName: " + epicInfo.epic.name + " ; epicEffort: " + epicInfo.epic.epic_only_original_estimate + " ; epicProgress; " + epicInfo.epic.progress + "; epicEffortDone: " +  )
-
-
-if (hour < 18) {
-  greeting = "Good day";
-} else {
-  greeting = "Good evening";
-}
+console.log(epicSummary) 
 
 
         });
