@@ -177,11 +177,8 @@ $("#epic_controls2").submit(function() {
             localStorage.msInfo = (JSON.stringify(response))
             msInfo = response
             console.log(response)
-          });
-        });
-        return false;
-     
-var numEpics = msInfo.custom.custom_object_record.linked_records["length]"];
+
+            var numEpics = msInfo.custom.custom_object_record.linked_records["length]"];
 
 console.log ('number of epics' + numEpics)
 
@@ -191,7 +188,10 @@ for (i = 0; i < numEpics; i++) {
         $('#msBody'.append("Epic #: " + i));
         $('#msBody').append('<br>') ;
 }
-
+          });
+        });
+        return false;
+    
       });
 
 
