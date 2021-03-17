@@ -237,11 +237,11 @@ var i;
             $('#msBody').append(" record_id: " + epicNum) ;
             $('#msBody').append('<br>') ;
 
-        api.get("/epics/" + epicNum , {per_page: 50}, 
-          function(response) {
-          localStorage.epicInfo = (JSON.stringify(response))
-          epicInfo = response
-          console.log(response);})
+        // api.get("/epics/" + epicNum , {per_page: 50}, 
+        //   function(response) {
+        //   localStorage.epicInfo = (JSON.stringify(response))
+        //   epicInfo = response
+        //   console.log(response);})
 
         // msEffortSum = msEffortSum +epicEffortSum;
         // msCompleteSum = msCompleteSum + epicCompleteSum;
