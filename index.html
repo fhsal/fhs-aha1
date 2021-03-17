@@ -231,19 +231,19 @@ $("#epic_controls2").submit(function() {
 
             var numEpics = msInfo.custom_object_record.linked_records["length"];
 
-console.log ('number of epics' + numEpics)
+console.log ('number of epics: ' + numEpics)
 
 $('#msBody').append("Milestone Completion Calculation");
         $('#msBody').append('<br>') ;
         $('#msBody').append("=====================================================================");
-        $('#msBody').append('<br><br><br>') ;
-
+        $('#msBody').append('<br><br>') ;
 var i;
-for (i = 0; i < numEpics; i++) {
+    for (i = 0; i < numEpics; i++) {
       let epicNum = msInfo.custom_object_record.linked_records[i].record_id
         $('#msBody').append("Epic #: " + i);
         $('#msBody').append(" record_id: " + epicNum) ;
         $('#msBody').append('<br>') ;
+
         getEpicDetail(epicNum);
          
         // msEffortSum = msEffortSum +epicEffortSum;
@@ -253,6 +253,9 @@ for (i = 0; i < numEpics; i++) {
         // console.log(msCompleteSum);
 
      }
+
+     $('#msBody').append('<br><br>') ;
+
           });
         });
         return false;
