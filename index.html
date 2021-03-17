@@ -116,7 +116,7 @@ let epicName = epicInfo.epic.name;
 let epicEffort = epicInfo.epic.epic_only_original_estimate;
 let epicProgress = epicInfo.epic.progress;
 let epicEffortCompl = "";
-if (!epicProgress) { epicEffortCompl = 0} else {epicEffortCompl=epicEffort*epicProgress};
+// if (!epicProgress) { epicEffortCompl = 0} else {epicEffortCompl=epicEffort*epicProgress};
 
 let epicLine = ("epicName: " + epicName.slice(0, 25) + " ; epicEffort: " + epicEffort + " ; epicProgress; " + epicProgress + "; epicEffortDone: " + epicEffort*epicProgress )
 
