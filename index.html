@@ -172,7 +172,7 @@ function charlie (){
   
 }
 
-function epicDetail() { 
+function epicDetail(epicID) { 
     
   console.log("firing epicDetail for epic: " + epicNum);
 
@@ -186,7 +186,7 @@ function epicDetail() {
         console.log(message)
 
 // Fetch up to 50 initiatives in one fetch.
-        api.get("/epics/" + epicNum , {per_page: 50}, 
+        api.get("/epics/" + epicID , {per_page: 50}, 
         function(response) {
           localStorage.epicInfo = (JSON.stringify(response))
           epicInfo = response
