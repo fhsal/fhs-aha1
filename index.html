@@ -95,7 +95,10 @@ msEffortSum = "";
 msCompleteSum = "";
 msPercentComplete = "";
 epicNum = "";
-
+epicName = "",
+epicEffort = "",
+epicProgress = "",
+epicEffortCompl = "",
 
 // Function to get epic details (used in Milestone detail query)
 
@@ -170,14 +173,27 @@ $("#epic_controls2").submit(function() {
 
 
 function fetchEpic () {
+  
     var myHeaders = new Headers(); 
         myHeaders.append("Authorization", 
                         "Bearer ccb58d0b3502a83d04c954c56414a55eb6b406f7eb9f0525bf4c9f6ee41d0a26"); 
 
     var requestOptions = { method: 'GET', headers: myHeaders, redirect: 'follow' };
 
-  fetch("https://optum.aha.io/api/v1/epics/6902587825394629366", requestOptions) .then(response => response.text()) 
-  .then(result => console.log("fetch response: " + result)) .catch(error => console.log('error', error));
+  fetch("https://optum.aha.io/api/v1/epics/" + epicNum, requestOptions) .then(
+         response => response.text()) 
+  .then(result => console.log("fetch response: " + result ),
+                  epicInfo = result,
+                  epicName = epicInfo.epic.name,
+                  epicEffort = epicInfo.epic.epic_only_original_estimate,
+                  epicProgress = epicInfo.epic.progress,
+                  epicEffortCompl = epicEffort*epicProgress,
+// if (!epicProgress) { epicEffortCompl = 0} else {epicEffortCompl=epicEffort*epicProgress};
+
+epicSummary.push("epicName: " + epicName.slice(0, 45) + " ; epicEffort: " + epicEffort + " ; epicProgress; " + epicProgress + "; epicEffortDone: " + epicEffortCompl )
+              
+  
+  ) .catch(error => console.log('error', error));
 
 }
 
@@ -279,6 +295,9 @@ epicSummary.push("epicName: " + epicName.slice(0, 45) + " ; epicEffort: " + epic
         $('#msBody').append("=====================================================================");
         $('#msBody').append('<br><br>') ;
 
+// reset epicSummary object prior to loading 
+        epicSummary = [];
+
 // loop through epics
 var i;
     for (i = 0; i < (numEpics-1); i++) {
@@ -296,6 +315,7 @@ var i;
 
         // console.log(msEffortSum);
         // console.log(msCompleteSum);
+console.log(epicSummary)
 
      }
 
