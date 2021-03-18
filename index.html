@@ -183,7 +183,19 @@ function epicAjax(){
 };
 
 $.ajax(settings).done(function (response) {
-  console.log("ajax call response: " + JSON.stringify(response));
+  // console.log("ajax call response: " + JSON.stringify(response));
+
+epicInfo = response
+          console.log(response)
+
+let epicName = epicInfo.epic.name;
+let epicEffort = epicInfo.epic.epic_only_original_estimate;
+let epicProgress = epicInfo.epic.progress;
+let epicEffortCompl = epicEffort*epicProgress;
+// if (!epicProgress) { epicEffortCompl = 0} else {epicEffortCompl=epicEffort*epicProgress};
+
+epicSummary.push("epicName: " + epicName.slice(0, 45) + " ; epicEffort: " + epicEffort + " ; epicProgress; " + epicProgress + "; epicEffortDone: " + epicEffortCompl )
+
 });
 }
 
