@@ -172,7 +172,7 @@ $("#epic_controls2").submit(function() {
 function fetchEpic () {
     var myHeaders = new Headers(); 
         myHeaders.append("Authorization", 
-                        "'" + localStorage.ahaToken +"'"); 
+                        localStorage.ahaToken); 
 
     var requestOptions = { method: 'GET', headers: myHeaders, redirect: 'follow' };
 
