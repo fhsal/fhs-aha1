@@ -231,13 +231,14 @@ epicSummary.push("epicName: " + epicName.slice(0, 45) + " ; epicEffort: " + epic
 // loop through epics
 var i;
     for (i = 0; i < numEpics; i++) {
-      epicNum = msInfo.custom_object_record.linked_records[i].record_id;
+       let num = msInfo.custom_object_record.linked_records[i].record_id;
+       epicNum = num.tostring()
 
             $('#msBody').append("Epic #: " + i);
             $('#msBody').append(" record_id: " + epicNum) ;
             $('#msBody').append('<br>') ;
 
-          epicDetail(epicNum);
+          epicDetail();
 
         // msEffortSum = msEffortSum +epicEffortSum;
         // msCompleteSum = msCompleteSum + epicCompleteSum;
