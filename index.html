@@ -176,13 +176,21 @@ function fetchEpic () {
 
     var requestOptions = { method: 'GET', headers: myHeaders, redirect: 'follow' };
 
-  fetch("https://optum.aha.io/api/v1/epics/6902587825394629366", requestOptions)
-  .then (epicInfo => response.text())
-  .then (console.log("fetch response: " + epicInfo))
-  // .then(response => response.text()) 
-  // .then(result => epicInfo = result, console.log("epic info: " + epicInfo),
-  //                 console.log("fetch response: " + result)) 
-  .catch(error => console.log('error', error));
+    fetch("https://optum.aha.io/api/v1/epics/6902587825394629366", requestOptions) 
+    .then(response => response.text()) 
+    .then(console.log(response))
+    .then(result => console.log("result: " + result)) 
+    .catch(error => console.log('error', error));
+
+
+
+  // fetch("https://optum.aha.io/api/v1/epics/6902587825394629366", requestOptions)
+  // .then (epicInfo => response.text())
+  // .then (console.log("fetch response: " + epicInfo))
+  // // .then(response => response.text()) 
+  // // .then(result => epicInfo = result, console.log("epic info: " + epicInfo),
+  // //                 console.log("fetch response: " + result)) 
+  // .catch(error => console.log('error', error));
 
 }
 
