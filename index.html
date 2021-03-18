@@ -169,9 +169,9 @@ $("#epic_controls2").submit(function() {
       });
 
 
-function epicDetail(epicID) { 
+function epicDetail(epicPDQ) { 
     
-  console.log("firing epicDetail for epic: zzzzz" + epicID);
+  console.log("firing epicDetail for epic: " + epicPDQ);
 
     new AhaApi({
         accountDomain: $("#subdomain").val(),
@@ -183,7 +183,7 @@ function epicDetail(epicID) {
         console.log(message)
 
 // Fetch up to 50 initiatives in one fetch.
-        api.get("/epics/" + epicID , {per_page: 50}, 
+        api.get("/epics/" + epicPDQ , {per_page: 50}, 
         function(response) {
           localStorage.epicInfo = (JSON.stringify(response))
           epicInfo = response
