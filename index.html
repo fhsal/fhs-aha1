@@ -255,7 +255,7 @@ epicSummary.push("epicName: " + epicName.slice(0, 45) + " ; epicEffort: " + epic
 var i;
     for (i = 0; i < numEpics; i++) {
        let num = msInfo.custom_object_record.linked_records[i].record_id;
-       epicNum = num.tostring()
+       epicNum = num.toString()
 
             $('#msBody').append("Epic #: " + i);
             $('#msBody').append(" record_id: " + epicNum) ;
