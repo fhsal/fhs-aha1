@@ -182,8 +182,8 @@ function fetchEpic () {
 
   fetch("https://optum.aha.io/api/v1/epics/" + epicNum, requestOptions) .then(
          response => response.text()) 
-  .then(result => console.log("fetch response: " + result ),
-                  epicInfo = result,
+  .then(result => console.log("fetch response: " + response ),
+                  epicInfo = response,
                   epicName = epicInfo.epic.name,
                   epicEffort = epicInfo.epic.epic_only_original_estimate,
                   epicProgress = epicInfo.epic.progress,
