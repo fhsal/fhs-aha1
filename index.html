@@ -182,7 +182,7 @@ function epicAjax(){
 };
 
 $.ajax(settings).done(function (response) {
-  console.log("ajax call response: " + response);
+  console.log("ajax call response: " + JSON.stringify(response));
 });
 }
 
