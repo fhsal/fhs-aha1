@@ -169,20 +169,38 @@ $("#epic_controls2").submit(function() {
       });
 
 
+function fetchEpic () {
+    var myHeaders = new Headers(); 
+        myHeaders.append("Authorization", 
+                        "Bearer ccb58d0b3502a83d04c954c56414a55eb6b406f7eb9f0525bf4c9f6ee41d0a26"); 
 
+    var requestOptions = { method: 'GET', headers: myHeaders, redirect: 'follow' };
+
+  fetch("https://optum.aha.io/api/v1/epics/6902587825394629366", requestOptions) .then(response => response.text()) 
+  .then(result => console.log("fetch response: " + result)) .catch(error => console.log('error', error));
+
+}
+
+
+
+
+
+
+
+
+      
 function epicAjax(){
 
   var settings = {
   "url": "https://optum.aha.io/api/v1/epics/" + epicNum,
   "method": "GET",
-  "timeout": 0,
+  // "timeout": 0,
   "crossDomain": true,
-  "Access-Control-Allow-Origin": "*",
+  "access-control-allow-origin": "*",
   "headers": {
     "Authorization": "Bearer ccb58d0b3502a83d04c954c56414a55eb6b406f7eb9f0525bf4c9f6ee41d0a26",
   },
 };
-
 $.ajax(settings).done(function (response) {
   // console.log("ajax call response: " + JSON.stringify(response));
 
@@ -199,9 +217,6 @@ epicSummary.push("epicName: " + epicName.slice(0, 45) + " ; epicEffort: " + epic
 
 });
 }
-
-
-
 
 
 
@@ -266,7 +281,7 @@ epicSummary.push("epicName: " + epicName.slice(0, 45) + " ; epicEffort: " + epic
 
 // loop through epics
 var i;
-    for (i = 0; i < numEpics; i++) {
+    for (i = 0; i < (numEpics-1); i++) {
        let num = msInfo.custom_object_record.linked_records[i].record_id;
        epicNum = num.toString()
 
@@ -274,7 +289,7 @@ var i;
             $('#msBody').append(" record_id: " + epicNum) ;
             $('#msBody').append('<br>') ;
 
-          epicAjax();
+          fetchEpic();
 
         // msEffortSum = msEffortSum +epicEffortSum;
         // msCompleteSum = msCompleteSum + epicCompleteSum;
