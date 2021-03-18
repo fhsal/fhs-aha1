@@ -173,9 +173,10 @@ $("#epic_controls2").submit(function() {
 function epicAjax(){
 
   var settings = {
-  "url": "https://optum.aha.io/api/v1/epics/6927699538893433328",
+  "url": "https://optum.aha.io/api/v1/epics/" + epicNum,
   "method": "GET",
   "timeout": 0,
+  "crossDomain": true,
   "headers": {
     "Authorization": "Bearer ccb58d0b3502a83d04c954c56414a55eb6b406f7eb9f0525bf4c9f6ee41d0a26",
   },
