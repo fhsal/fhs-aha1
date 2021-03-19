@@ -221,7 +221,7 @@ function fetchEpic () {
 function epicAjax(){
 
   var settings = {
-  "url": "https://optum.aha.io/api/v1/epics/" + epicNum,
+  "url": "https://optum.aha.io/api/v1/epics/" + epicNum + "?fields=name,original_estimate,progress",
   "method": "GET",
   // "timeout": 0,
   "crossDomain": true,
@@ -230,8 +230,9 @@ function epicAjax(){
     "Authorization": "'" + localStorage.ahaToken +"'",
   },
 };
-$.ajax(settings).done(function (response) {
-  // console.log("ajax call response: " + JSON.stringify(response));
+$.ajax(settings)
+
+.then(function (response) {
 
 epicInfo = response
           console.log(response)
@@ -318,7 +319,7 @@ for(i = 0; i < (numEpics-2); i++){
                 $('#msBody').append("Epic #: " + i);
                 $('#msBody').append(" record_id: " + epicNum) ;
                 $('#msBody').append('<br>') ;
-              fetchEpic()
+              epicAjax()
         }, 1000 * i);
     }(i));
 } 
