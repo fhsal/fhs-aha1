@@ -97,6 +97,10 @@ msPercentComplete = "";
 epicNum = "";
 
 
+function paceCalls() {
+  myVar = setTimeout(function(){  Console.log('wait'); }, 1000);
+}
+
 // Function to get epic details (used in Milestone detail query)
 
 // API call for epics by product
@@ -303,6 +307,8 @@ var i;
             $('#msBody').append("Epic #: " + i);
             $('#msBody').append(" record_id: " + epicNum) ;
             $('#msBody').append('<br>') ;
+
+          paceCalls() 
 
           fetchEpic();
 
