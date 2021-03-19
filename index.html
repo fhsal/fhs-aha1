@@ -239,6 +239,7 @@ epicInfo = response
 
 let epicName = epicInfo.epic.name;
 let epicEffort = epicInfo.epic.original_estimate;
+if (epicEffort > 0) { epicEffort = epicEffort} else { epicEffortl = 0} ;
 let epicProgress = epicInfo.epic.progress;
 let epicEffortCompl = epicEffort*epicProgress;
 if (epicEffortCompl > 0) { epicEffortCompl = epicEffortCompl} else { epicEffortCompl = 0} ;
@@ -327,7 +328,7 @@ for(i = 0; i < (numEpics-2); i++){
                 $('#msBody').append(" record_id: " + epicNum) ;
                 $('#msBody').append('<br>') ;
               epicAjax()
-        }, 250 * i);
+        }, 200 * i);
     }(i));
     } 
     console.log(epicSummary)
