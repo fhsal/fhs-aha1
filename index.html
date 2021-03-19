@@ -243,7 +243,7 @@ let epicProgress = epicInfo.epic.progress;
 let epicEffortCompl = epicEffort*epicProgress;
 // if (!epicProgress) { epicEffortCompl = 0} else {epicEffortCompl=epicEffort*epicProgress};
 
-epicSummary.push("{"+ "epicName: " + epicName.slice(0, 45) + " ; epicEffort: " + epicEffort + " ; epicProgress; " + epicProgress + "; epicEffortDone: " + epicEffortCompl + "}" )
+epicSummary.push("{"+ "'epicName:'" + epicName.slice(0, 45) + " , 'epicEffort:'" + epicEffort + " , 'epicProgress:'" + epicProgress + ", 'epicEffortDone:' " + epicEffortCompl + "}" )
 
 });
 }
@@ -322,10 +322,13 @@ for(i = 0; i < (numEpics-2); i++){
               epicAjax()
         }, 1000 * i);
     }(i));
-} 
+    } 
+    console.log(epicSummary)
         })
      $('#msBody').append('<br><br>') ;
-          });
+          }
+
+          );
         return false;
       });
 
