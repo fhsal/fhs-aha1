@@ -177,11 +177,11 @@ function fetchEpic () {
     var requestOptions = { method: 'GET', headers: myHeaders, redirect: 'follow' };
 
     fetch("https://optum.aha.io/api/v1/epics/" + epicNum, requestOptions) 
-    .then(output => { var data = output;})
+    .then(output => { epicInfo = output;})
     .then((response) => response.text()) 
     // .then(console.log(response))
     .then(result => console.log("result: " + result)) 
-    .then(result => epicInfo = result )
+    // .then(result => epicInfo = result )
     .then(console.log('data: ' + data))
     .catch(error => console.log('error', error));
 
