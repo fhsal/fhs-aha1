@@ -183,7 +183,7 @@ function fetchEpic () {
     fetch("https://optum.aha.io/api/v1/epics/" + epicNum, requestOptions) 
     .then((response) => response.text()) 
     // .then(console.log(response))
-    .then(result => console.log("result: " + result), epicInfo = result) 
+    .then(result => console.log("result: " + result)) 
     // .then(output => {epicInfo = output ; console.log('epicInfo: ' + epicInfo)}  )
     .then(console.log('epicInfo: ' + epicInfo))
     .catch(error => console.log('error', error));
