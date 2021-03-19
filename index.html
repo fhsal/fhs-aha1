@@ -175,7 +175,7 @@ $("#epic_controls2").submit(function() {
 
 function fetchEpic () {
 
-  paceCalls()
+  // paceCalls()
     var myHeaders = new Headers(); 
         myHeaders.append("Authorization", 
                         localStorage.ahaToken); 
@@ -312,7 +312,9 @@ var i;
 
           // paceCalls() 
 
-          fetchEpic();
+         setTimeout(fetchEpic(), 2000)
+
+          // fetchEpic();
 
         // msEffortSum = msEffortSum +epicEffortSum;
         // msCompleteSum = msCompleteSum + epicCompleteSum;
