@@ -240,8 +240,8 @@ epicInfo = response
 let epicName = epicInfo.epic.name;
 let epicEffort = epicInfo.epic.epic_only_original_estimate;
 let epicProgress = epicInfo.epic.progress;
-let epicEffortCompl = epicEffort*epicProgress;
-// if (!epicProgress) { epicEffortCompl = 0} else {epicEffortCompl=epicEffort*epicProgress};
+// let epicEffortCompl = epicEffort*epicProgress;
+if (epicProgress = 0) { epicEffortCompl = 0} else {epicEffortCompl=epicEffort*epicProgress};
 
  let epicObject = {
         "epicName" :epicName.slice(0, 45),
