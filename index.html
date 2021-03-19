@@ -270,7 +270,7 @@ epicSummary.push("epicName: " + epicName.slice(0, 45) + " ; epicEffort: " + epic
 // API call for a single milestone
   $("#ms_controls").submit(function() { 
          new AhaApi({
-          accountDomain: $("#subdomain").val(),
+          accountDomain: localStorage.subDomain,
           clientId: "161eb65d203b91eb21a89fe30932b51f4deee51bcb66d5f7b376cd7fa1addd1d", // NOTE: replace this with your client ID.
           redirectUri: "https://fhsal.github.io/fhs-aha1"
         }).authenticate(function(api, success, message) {
