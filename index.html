@@ -280,7 +280,7 @@ function epicDetail() {
 let epicName = epicInfo.epic.name;
 let epicEffort = epicInfo.epic.epic_only_original_estimate;
 let epicProgress = epicInfo.epic.progress;
-let epicEffortCompl = epicEffort*epicProgress;
+// let epicEffortCompl = epicEffort*epicProgress;
 if (epicProgress = 0) { epicEffortCompl = 0} else {epicEffortCompl=epicEffort*epicProgress};
 
 epicSummary.push("epicName: " + epicName.slice(0, 45) + " ; epicEffort: " + epicEffort + " ; epicProgress; " + epicProgress + "; epicEffortDone: " + epicEffortCompl )
