@@ -227,7 +227,7 @@ function epicAjax(){
   "crossDomain": true,
   "access-control-allow-origin": "*",
   "headers": {
-    "Authorization": "'" + localStorage.ahaToken +"'",
+    "Authorization": localStorage.ahaToken,
   },
 };
 $.ajax(settings)
