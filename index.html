@@ -174,7 +174,7 @@ function fetchEpic () {
         myHeaders.append("Authorization", 
                         localStorage.ahaToken); 
 
-    var requestOptions = { method: 'GET', headers: myHeaders};
+    var requestOptions = { method: 'GET', headers: myHeaders, timeout: 10000};
 
     fetch("https://optum.aha.io/api/v1/epics/" + epicNum, requestOptions) 
     .then((response) => response.text()) 
