@@ -311,21 +311,28 @@ epicSummary.push("epicName: " + epicName.slice(0, 45) + " ; epicEffort: " + epic
 // loop through epics
 
 var i;
-for(i = 1; i <= 8; i++){
+for(i = 1; i < (numEpics-1); i++){
     (function(i){
         setTimeout(function(){
-            document.body.innerHTML += i + "<br/>"
+
+          let num = msInfo.custom_object_record.linked_records[i].record_id;
+                epicNum = num.toString()
+                $('#msBody').append("Epic #: " + i);
+                $('#msBody').append(" record_id: " + epicNum) ;
+                $('#msBody').append('<br>') ;
+
+            // document.body.innerHTML += i + "<br/>"
         }, 1000 * i);
     }(i));
 } 
 
 // var i;
 //     for (i = 0; i < (numEpics-1); i++) {
-//                 let num = msInfo.custom_object_record.linked_records[i].record_id;
-//                 epicNum = num.toString()
-//                 $('#msBody').append("Epic #: " + i);
-//                 $('#msBody').append(" record_id: " + epicNum) ;
-//                 $('#msBody').append('<br>') ;
+                let num = msInfo.custom_object_record.linked_records[i].record_id;
+                epicNum = num.toString()
+                $('#msBody').append("Epic #: " + i);
+                $('#msBody').append(" record_id: " + epicNum) ;
+                $('#msBody').append('<br>') ;
 //                 fetchEpic()
 //           }
         })
