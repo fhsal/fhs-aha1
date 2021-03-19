@@ -180,8 +180,8 @@ function fetchEpic () {
     .then((response) => response.text()) 
     // .then(console.log(response))
     .then(result => console.log("result: " + result)) 
-    .then(result => epicInfo = result )
-    .then(console.log(epicInfo))
+    .then(output => {epicInfo = output ; console.log('epicInfo: ' + epicInfo)}  )
+    // .then(console.log(epicInfo))
     .catch(error => console.log('error', error));
 
 
