@@ -240,8 +240,8 @@ epicInfo = response
 let epicName = epicInfo.epic.name;
 let epicEffort = epicInfo.epic.epic_only_original_estimate;
 let epicProgress = epicInfo.epic.progress;
-// let epicEffortCompl = epicEffort*epicProgress;
-if (epicProgress = 0) { epicEffortCompl = 0} else {epicEffortCompl=epicEffort*epicProgress};
+let epicEffortCompl = epicEffort*epicProgress;
+if (epicEffortCompl = NaN) { epicEffortCompl = 0} ;
 
  let epicObject = {
         "epicName" :epicName.slice(0, 45),
@@ -327,7 +327,7 @@ for(i = 0; i < (numEpics-2); i++){
                 $('#msBody').append(" record_id: " + epicNum) ;
                 $('#msBody').append('<br>') ;
               epicAjax()
-        }, 500 * i);
+        }, 250 * i);
     }(i));
     } 
     console.log(epicSummary)
