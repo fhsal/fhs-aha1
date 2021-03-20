@@ -245,7 +245,7 @@ if (epicEffortCompl > 0) { epicEffortCompl = epicEffortCompl} else { epicEffortC
 
 msEffortSum = msEffortSum + epicEffort;
 msCompleteSum = msCompleteSum + epicEffortCompl
-msPercentComplete = 100*msCompleteSum/msEffortSum
+msPercentComplete = Math.round(100*msCompleteSum/msEffortSum)
 
 console.log('epic effort: ' + epicEffort);
 console.log('milestone effort subtotal: ' + msEffortSum);
@@ -261,14 +261,8 @@ let epicObject = {
       }
  
 epicSummary.push(epicObject)
-
-$('#msBody').append(JSON.stringify(epicObject)) ;
-$('#msBody').append('<br>') ;
-
 });
 }
-
-
 
 function epicDetail() { 
     
@@ -349,7 +343,7 @@ epicSummary.push("epicName: " + epicName.slice(0, 45) + " ; epicEffort: " + epic
                   let num = msInfo.custom_object_record.linked_records[i].record_id;
                         epicNum = num.toString()
                         $('#msBody').append("Epic #: " + i);
-                        // $('#msBody').append(" record_id: " + epicNum) ;
+                        $('#msBody').append(" record_id: " + epicNum) ;
                         $('#msBody').append('<br>') ;
                       epicAjax()
                 }, 100 * i);
