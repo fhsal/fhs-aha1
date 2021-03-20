@@ -349,11 +349,7 @@ epicSummary.push("epicName: " + epicName.slice(0, 45) + " ; epicEffort: " + epic
                       epicAjax()
                 }, 200 * i);
             }(i));
-          $('#msBody').append('<br>') ;
-          $('#msBody').append('Milestone total effort: ' + msEffortSum ) ;
-          $('#msBody').append(',  Milestone effort completed: ' + msCompleteSum ) ;
-          $('#msBody').append(',  % complete: ' + msPercentComplete +"%") ;
-          $('#msBody').append('<br><br>')
+
             }
 
     // $('#msBody').append('<br>') ;
@@ -364,8 +360,14 @@ epicSummary.push("epicName: " + epicName.slice(0, 45) + " ; epicEffort: " + epic
         })
     //  $('#msBody').append('<br><br>') ;
           }
-
           );
+
+          $('#msBody').append('<br>') ;
+          $('#msBody').append('Milestone total effort: ' + msEffortSum ) ;
+          $('#msBody').append(',  Milestone effort completed: ' + msCompleteSum ) ;
+          $('#msBody').append(',  % complete: ' + msPercentComplete +"%") ;
+          $('#msBody').append('<br><br>')
+
         return false;
       });
 
