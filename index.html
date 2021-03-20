@@ -325,7 +325,7 @@ epicSummary.push("epicName: " + epicName.slice(0, 45) + " ; epicEffort: " + epic
           console.log ('number of epics: ' + numEpics)
           console.log(response)
 
-          msName = msInfo.custom_object_record.linked_records.custom_fields[0].value
+          msName = msInfo.custom_object_record.custom_fields[0].value
           
 // populate display block
         $('#msBody').append("Milestone Completion Calculation:");
