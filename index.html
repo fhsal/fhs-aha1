@@ -240,7 +240,7 @@ let epicName = epicInfo.epic.name;
 let epicEffort = epicInfo.epic.original_estimate/480;
 if (epicEffort > 0) { epicEffort = epicEffort} else { epicEffort = 0} ;
 let epicProgress = parseInt(epicInfo.epic.progress)/100;
-let epicEffortCompl = epicEffort*epicProgress/100;
+let epicEffortCompl = epicEffort*epicProgress;
 if (epicEffortCompl > 0) { epicEffortCompl = epicEffortCompl} else { epicEffortCompl = 0} ;
 
 msEffortSum = msEffortSum + epicEffort;
