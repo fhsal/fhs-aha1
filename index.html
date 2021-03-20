@@ -333,7 +333,7 @@ epicSummary.push("epicName: " + epicName.slice(0, 45) + " ; epicEffort: " + epic
         $('#msBody').append('MilestoneID: ' + productKey)
         $('#msBody').append(', MS Name: ' + msName)
         $('#msBody').append('<br>') ;
-        $('#msBody').append("=====================================================================");
+        $('#msBody').append("===============================================================================");
         $('#msBody').append('<br><br>') ;
 
 // loop through epics, waiting between each fetch to stay within API limits
@@ -361,15 +361,26 @@ epicSummary.push("epicName: " + epicName.slice(0, 45) + " ; epicEffort: " + epic
     //  $('#msBody').append('<br><br>') ;
           }
           );
+          
+          setTimeout(function(){  
+              $('#msBody').append('<br>') ;
+              $('#msBody').append('Milestone total effort: ' + msEffortSum ) ;
+              $('#msBody').append(',  Milestone effort completed: ' + msCompleteSum ) ;
+              $('#msBody').append(',  % complete: ' + msPercentComplete +"%") ;
+              $('#msBody').append('<br><br>')
+            }, 6000)
+        return false;
+      });
 
-          $('#msBody').append('<br>') ;
+function milestoneSummaryDisplay(){
+  $('#msBody').append('<br>') ;
           $('#msBody').append('Milestone total effort: ' + msEffortSum ) ;
           $('#msBody').append(',  Milestone effort completed: ' + msCompleteSum ) ;
           $('#msBody').append(',  % complete: ' + msPercentComplete +"%") ;
           $('#msBody').append('<br><br>')
+}
 
-        return false;
-      });
+
 
     $("#epic_detail").submit(function() { 
         new AhaApi({
