@@ -239,10 +239,10 @@ epicInfo = response
 
 let epicID = epicInfo.epic.id;         
 let epicName = epicInfo.epic.name;
-let epicEffort = epicInfo.epic.original_estimate;
+let epicEffort = parseInt(epicInfo.epic.original_estimate);
 if (epicEffort > 0) { epicEffort = epicEffort} else { epicEffort = 0} ;
 let epicProgress = epicInfo.epic.progress;
-let epicEffortCompl = epicEffort*epicProgress;
+let epicEffortCompl = parseInt(epicEffort*epicProgress);
 if (epicEffortCompl > 0) { epicEffortCompl = epicEffortCompl} else { epicEffortCompl = 0} ;
 
 
