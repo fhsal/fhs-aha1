@@ -245,7 +245,7 @@ if (epicEffortCompl > 0) { epicEffortCompl = epicEffortCompl} else { epicEffortC
 
 msEffortSum = msEffortSum + epicEffort;
 msCompleteSum = msCompleteSum + epicEffortCompl
-msPercentComplete = 100*msCompleteSum/msEffortSum.toFixed(0)
+msPercentComplete = msCompleteSum/msEffortSum
 
 console.log('epic effort: ' + epicEffort);
 console.log('milestone effort subtotal: ' + msEffortSum);
