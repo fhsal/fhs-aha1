@@ -95,6 +95,7 @@ msEffortSum = 0;
 msCompleteSum = 0;
 msPercentComplete = 0;
 epicNum = "";
+msName = "";
 
 
 function paceCalls() {
@@ -336,27 +337,32 @@ epicSummary.push("epicName: " + epicName.slice(0, 45) + " ; epicEffort: " + epic
         $('#msBody').append('<br><br>') ;
 
 // loop through epics, waiting between each fetch to stay within API limits
-var i;
-for(i = 0; i < (numEpics-2); i++){
-    (function(i){
-        setTimeout(function(){
-          let num = msInfo.custom_object_record.linked_records[i].record_id;
-                epicNum = num.toString()
-                $('#msBody').append("Epic #: " + i);
-                $('#msBody').append(" record_id: " + epicNum) ;
-                $('#msBody').append('<br>') ;
-              epicAjax()
-        }, 200 * i);
-    }(i));
-    }
-    
-    $('#msBody').append('<br>') ;
-    $('#msBody').append('Milestone total effort: ' + msEffortSum ) ;
-    $('#msBody').append(',  Milestone effort completed: ' + msCompleteSum ) ;
-    $('#msBody').append(',  % complete: ' + msPercentComplete +"%") ;
+        var i;
+        for(i = 0; i < (numEpics-2); i++){
+            (function(i){
+                setTimeout(function(){
+                  let num = msInfo.custom_object_record.linked_records[i].record_id;
+                        epicNum = num.toString()
+                        $('#msBody').append("Epic #: " + i);
+                        $('#msBody').append(" record_id: " + epicNum) ;
+                        $('#msBody').append('<br>') ;
+                      epicAjax()
+                }, 200 * i);
+            }(i));
+          $('#msBody').append('<br>') ;
+          $('#msBody').append('Milestone total effort: ' + msEffortSum ) ;
+          $('#msBody').append(',  Milestone effort completed: ' + msCompleteSum ) ;
+          $('#msBody').append(',  % complete: ' + msPercentComplete +"%") ;
+          $('#msBody').append('<br><br>')
+            }
+
+    // $('#msBody').append('<br>') ;
+    // $('#msBody').append('Milestone total effort: ' + msEffortSum ) ;
+    // $('#msBody').append(',  Milestone effort completed: ' + msCompleteSum ) ;
+    // $('#msBody').append(',  % complete: ' + msPercentComplete +"%") ;
 
         })
-     $('#msBody').append('<br><br>') ;
+    //  $('#msBody').append('<br><br>') ;
           }
 
           );
