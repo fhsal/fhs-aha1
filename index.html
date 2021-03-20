@@ -323,8 +323,14 @@ epicSummary.push("epicName: " + epicName.slice(0, 45) + " ; epicEffort: " + epic
             var numEpics = msInfo.custom_object_record.linked_records["length"];
           console.log ('number of epics: ' + numEpics)
           console.log(response)
+
+          msName = msInfo.custom_object_record.linked_records.custom_fields[0].value
+          
 // populate display block
-        $('#msBody').append("Milestone Completion Calculation");
+        $('#msBody').append("Milestone Completion Calculation:");
+        $('#msBody').append('<br>')
+        $('#msBody').append('MilestoneID: ' + productKey)
+        $('#msBody').append(', MS Name: ' + msName)
         $('#msBody').append('<br>') ;
         $('#msBody').append("=====================================================================");
         $('#msBody').append('<br><br>') ;
@@ -342,8 +348,13 @@ for(i = 0; i < (numEpics-2); i++){
               epicAjax()
         }, 200 * i);
     }(i));
-    } 
-    console.log(epicSummary)
+    }
+    
+    $('#msBody').append('<br>') ;
+    $('#msBody').append('Milestone total effort: ' + msEffortSum ) ;
+    $('#msBody').append(',  Milestone effort completed: ' + msCompleteSum ) ;
+    $('#msBody').append(',  % complete: ' + msPercentComplete +"%") ;
+
         })
      $('#msBody').append('<br><br>') ;
           }
