@@ -361,7 +361,6 @@ epicSummary.push("epicName: " + epicName.slice(0, 45) + " ; epicEffort: " + epic
 // Wait for above retrieval of epic data to complete to display milestone totals 
 
           setTimeout(function(){  
-              $('#msBody').append('<br>') ;
               $('#msBody').append('<strong>Milestone total effort: </strong>' + msEffortSum + ' days' ) ;
               $('#msBody').append(',  <strong>Milestone effort completed: </strong>' + msCompleteSum + ' days' ) ;
               $('#msBody').append(',  <strong>Percent complete: </strong>' + msPercentComplete +"%") ;
@@ -369,16 +368,6 @@ epicSummary.push("epicName: " + epicName.slice(0, 45) + " ; epicEffort: " + epic
             }, 8000)
         return false;
       });
-
-function milestoneSummaryDisplay(){
-  $('#msBody').append('<br>') ;
-          $('#msBody').append('Milestone total effort: ' + msEffortSum ) ;
-          $('#msBody').append(',  Milestone effort completed: ' + msCompleteSum ) ;
-          $('#msBody').append(',  % complete: ' + msPercentComplete +"%") ;
-          $('#msBody').append('<br><br>')
-}
-
-
 
     $("#epic_detail").submit(function() { 
         new AhaApi({
