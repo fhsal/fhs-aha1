@@ -96,6 +96,7 @@ msCompleteSum = 0;
 msPercentComplete = 0;
 epicNum = "";
 msName = "";
+msID = "";
 msObject = [];
 msSummary = [];
 
@@ -328,10 +329,7 @@ epicSummary.push("epicName: " + epicName.slice(0, 45) + " ; epicEffort: " + epic
           console.log(response)
 
           msName = msInfo.custom_object_record.custom_fields[0].value
-          
-
-          "<strong>Hello</strong>"
-
+          msID = msInfo.custom_object_record.id
 
 // populate display block
         $('#msBody').append("<strong>Milestone Completion Calculation:</strong>");
@@ -370,7 +368,7 @@ epicSummary.push("epicName: " + epicName.slice(0, 45) + " ; epicEffort: " + epic
               $('#msBody').append('<br><br>')
 
               let msObject = {
-                  "msID" : productKey,
+                  "msID" : msID,
                   "msName" : msName,
                   "msTotalEffort" :  epicEffort,
                   "msProgress" : msPercentComplete,
