@@ -240,7 +240,7 @@ epicInfo = response
 
 let epicID = epicInfo.epic.id;         
 let epicName = epicInfo.epic.name;
-let epicEffort = parseInt(epicInfo.epic.original_estimate);
+let epicEffort = parseInt(epicInfo.epic.original_estimate)/480;
 if (epicEffort > 0) { epicEffort = epicEffort} else { epicEffort = 0} ;
 let epicProgress = epicInfo.epic.progress;
 let epicEffortCompl = parseInt(epicEffort*epicProgress);
@@ -251,7 +251,7 @@ msEffortSum = msEffortSum + epicEffort;
 msCompleteSum = msCompleteSum + epicEffortCompl
 msPercentComplete = 100*msCompleteSum/msEffortSum
 
-console.log('epif effort: ' + epicEffort);
+console.log('epic effort: ' + epicEffort);
 console.log('milestone effort subtotal: ' + msEffortSum);
 console.log('milestone complete: ' + msCompleteSum);
 console.log('milestone % complete: ' + msPercentComplete + "%");
@@ -361,10 +361,10 @@ epicSummary.push("epicName: " + epicName.slice(0, 45) + " ; epicEffort: " + epic
     //  $('#msBody').append('<br><br>') ;
           }
           );
-          
+
           setTimeout(function(){  
               $('#msBody').append('<br>') ;
-              $('#msBody').append('Milestone total effort: ' + msEffortSum ) ;
+              $('#msBody').append('Milestone total effort: ' + msEffortSum + 'days)' ) ;
               $('#msBody').append(',  Milestone effort completed: ' + msCompleteSum ) ;
               $('#msBody').append(',  % complete: ' + msPercentComplete +"%") ;
               $('#msBody').append('<br><br>')
