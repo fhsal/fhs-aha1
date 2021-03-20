@@ -350,7 +350,8 @@ epicSummary.push("epicName: " + epicName.slice(0, 45) + " ; epicEffort: " + epic
                         $('#msBody').append(" record_id: " + epicNum) ;
                         $('#msBody').append('<br>') ;
                       epicAjax()
-                }, 60 * i);
+          //wait 100 milliseconds between calls (API limit is 20ms)
+                }, 100 * i);
             }(i));
 
             }
