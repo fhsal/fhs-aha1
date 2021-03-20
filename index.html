@@ -89,11 +89,11 @@ singleInit = "";
 msInfo = "";
 epicInfo ="";
 epicSummary = [];
-epicEffortSum = "";
-epicCompleteSum = "";
-msEffortSum = "";
-msCompleteSum = "";
-msPercentComplete = "";
+epicEffortSum = 0;
+epicCompleteSum = 0;
+msEffortSum = 0;
+msCompleteSum = 0;
+msPercentComplete = 0;
 epicNum = "";
 
 
@@ -250,7 +250,8 @@ msEffortSum = msEffortSum + epicEffort;
 msCompleteSum = msCompleteSum + epicEffortCompl
 msPercentComplete = 100*msCompleteSum/msEffortSum
 
-console.log('milestone effort: ' + msEffortSum);
+console.log('epif effort: ' + epicEffort);
+console.log('milestone effort subtotal: ' + msEffortSum);
 console.log('milestone complete: ' + msCompleteSum);
 console.log('milestone % complete: ' + msPercentComplete + "%");
 
