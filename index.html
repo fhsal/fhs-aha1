@@ -185,121 +185,51 @@ $("#epic_controls2").submit(function() {
         return false;
       });
 
-
-function fetchEpic () {
-
-  // paceCalls()
-    var myHeaders = new Headers(); 
-        myHeaders.append("Authorization", 
-                        localStorage.ahaToken); 
-
-    var requestOptions = { method: 'GET', headers: myHeaders, timeout: 10000};
-
-    fetch("https://optum.aha.io/api/v1/epics/" + epicNum + "?fields=name,original_estimate,progress", requestOptions) 
-    .then((response) => response.text()) 
-    // .then(console.log(response))
-    .then(result => console.log("result: " + result)) 
-    // .then(output => {epicInfo = output ; console.log('epicInfo: ' + epicInfo)}  )
-    .then(console.log('epicInfo: ' + epicInfo))
-    .catch(error => console.log('error', error));
-
-
-
-  // fetch("https://optum.aha.io/api/v1/epics/6902587825394629366", requestOptions)
-  // .then (epicInfo => response.text())
-  // .then (console.log("fetch response: " + epicInfo))
-  // // .then(response => response.text()) 
-  // // .then(result => epicInfo = result, console.log("epic info: " + epicInfo),
-  // //                 console.log("fetch response: " + result)) 
-  // .catch(error => console.log('error', error));
-
-}
-
-
-
-
-
-
-
-
       
 function epicAjax(){
+    var settings = {
+      "url": "https://optum.aha.io/api/v1/epics/" + epicNum + "?fields=name,original_estimate,progress",
+      "method": "GET",
+      // "timeout": 0,
+      "crossDomain": true,
+      "access-control-allow-origin": "*",
+      "headers": { "Authorization": localStorage.ahaToken, },
+      };
 
-  var settings = {
-  "url": "https://optum.aha.io/api/v1/epics/" + epicNum + "?fields=name,original_estimate,progress",
-  "method": "GET",
-  // "timeout": 0,
-  "crossDomain": true,
-  "access-control-allow-origin": "*",
-  "headers": { "Authorization": localStorage.ahaToken, },
-};
+      $.ajax(settings)
+      .then(function (response) {
+              epicInfo = response
+                        console.log(response)
 
-$.ajax(settings)
-.then(function (response) {
-epicInfo = response
-          console.log(response)
+              let epicID = epicInfo.epic.id;         
+              let epicName = epicInfo.epic.name;
+              let epicEffort = epicInfo.epic.original_estimate/480;
+              if (epicEffort > 0) { epicEffort = epicEffort} else { epicEffort = 0} ;
+              let epicProgress = parseInt(epicInfo.epic.progress)/100;
+              let epicEffortCompl = epicEffort*epicProgress;
+              if (epicEffortCompl > 0) { epicEffortCompl = epicEffortCompl} else { epicEffortCompl = 0} ;
 
-let epicID = epicInfo.epic.id;         
-let epicName = epicInfo.epic.name;
-let epicEffort = epicInfo.epic.original_estimate/480;
-if (epicEffort > 0) { epicEffort = epicEffort} else { epicEffort = 0} ;
-let epicProgress = parseInt(epicInfo.epic.progress)/100;
-let epicEffortCompl = epicEffort*epicProgress;
-if (epicEffortCompl > 0) { epicEffortCompl = epicEffortCompl} else { epicEffortCompl = 0} ;
+              msEffortSum = msEffortSum + epicEffort;
+              msCompleteSum = msCompleteSum + epicEffortCompl
+              msPercentComplete = Math.round(100*msCompleteSum/msEffortSum)
 
-msEffortSum = msEffortSum + epicEffort;
-msCompleteSum = msCompleteSum + epicEffortCompl
-msPercentComplete = Math.round(100*msCompleteSum/msEffortSum)
+          console.log('epic effort: ' + epicEffort);
+          console.log('milestone effort subtotal: ' + msEffortSum);
+          console.log('milestone complete: ' + msCompleteSum);
+          console.log('milestone % complete: ' + msPercentComplete + "%");
 
-console.log('epic effort: ' + epicEffort);
-console.log('milestone effort subtotal: ' + msEffortSum);
-console.log('milestone complete: ' + msCompleteSum);
-console.log('milestone % complete: ' + msPercentComplete + "%");
-
-let epicObject = {
-        "epicID" : epicID,
-        "epicName" :epicName.slice(0, 30),
-        "epicEffort" :  epicEffort,
-        "epicProgress" : epicProgress,
-        "epicEffortDone" : epicEffortCompl
-      }
- 
-epicSummary.push(epicObject)
-});
+      let epicObject = {
+              "epicID" : epicID,
+              "epicName" :epicName.slice(0, 30),
+              "epicEffort" :  epicEffort,
+              "epicProgress" : epicProgress,
+              "epicEffortDone" : epicEffortCompl
+            }
+      
+      epicSummary.push(epicObject)
+      });
 }
 
-function epicDetail() { 
-    
-  console.log("firing epicDetail for epic: " + epicNum);
-
-    new AhaApi({
-        accountDomain: localStorage.subDomain,
-        clientId: "161eb65d203b91eb21a89fe30932b51f4deee51bcb66d5f7b376cd7fa1addd1d", // NOTE: replace this with your client ID.
-        redirectUri: "https://fhsal.github.io/fhs-aha1",
-      }).authenticate(function(api, success, message) {
-
-        console.log(success)
-        console.log(message)
-
-// Fetch up to 50 initiatives in one fetch.
-        api.get("/epics/" + epicNum , {per_page: 50}, 
-        function(response) {
-          localStorage.epicInfo = (JSON.stringify(response))
-          epicInfo = response
-          console.log(response)
-
-let epicName = epicInfo.epic.name;
-let epicEffort = epicInfo.epic.epic_only_original_estimate;
-let epicProgress = epicInfo.epic.progress;
-// let epicEffortCompl = epicEffort*epicProgress;
-if (epicProgress = 0) { epicEffortCompl = 0} else {epicEffortCompl=epicEffort*epicProgress};
-
-epicSummary.push("epicName: " + epicName.slice(0, 45) + " ; epicEffort: " + epicEffort + " ; epicProgress; " + epicProgress + "; epicEffortDone: " + epicEffortCompl )
-
-        });
-      });
-      return false;
-    };
 
 // input form listener to retrieve information for a single milestone, iterating through epic detail 
   $("#ms_controls").submit(function() { 
@@ -377,7 +307,7 @@ epicSummary.push("epicName: " + epicName.slice(0, 45) + " ; epicEffort: " + epic
       });
 
 // input form listener to retrieve information for a single epic 
-    $("#epic_detail").submit(function() { 
+ $("#epic_detail").submit(function() { 
         new AhaApi({
         accountDomain: $("#subdomain").val(),
         clientId: "161eb65d203b91eb21a89fe30932b51f4deee51bcb66d5f7b376cd7fa1addd1d", // NOTE: replace this with your client ID.
