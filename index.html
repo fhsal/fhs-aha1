@@ -296,7 +296,7 @@ function epicAjax(){
 // populate Milestone summary object 
               let msObject = {
                   "product" : msInfo.custom_object_record.product_id,
-                  "initiativeID" : msInfo.custom_object_record.linked_records[numEpics].record_id,
+                  "initiativeID" : msInfo.custom_object_record.linked_records[(numEpics-1)].record_id,
                   "msID" : msID,
                   "msName" : msName,
                   "msTotalEffort" :  msEffortSum,
