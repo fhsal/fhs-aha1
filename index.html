@@ -255,15 +255,17 @@ if (epicEffortCompl > 0) { epicEffortCompl = epicEffortCompl} else { epicEffortC
  
 epicSummary.push(epicObject)
 
+msEffortSum = "";
+msCompleteSum = "";
+msPercentComplete
 
-epicEffortSum = epicEffortSum + epicEffort;
-epicCompleteSum = epicCompleteSum + epicEffortCompl
+msEffortSum = msEffortSum + epicEffort;
+msCompleteSum = msCompleteSum + epicEffortCompl
+msPercentComplete = 100*msCompleteSum/msEffortSum
 
-console.log(epicLine) 
-console.log(epicEffortSum);
-console.log(epicCompleteSum);
-
-
+console.log('milestone effort: ' + msEffortSum);
+console.log('milestone complete: ' + msCompleteSum);
+console.log('milestone % complete: ' + msPercentComplete + "%");
 
 });
 }
