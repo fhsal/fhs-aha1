@@ -245,7 +245,7 @@ if (epicEffortCompl > 0) { epicEffortCompl = epicEffortCompl} else { epicEffortC
 
 msEffortSum = msEffortSum + epicEffort;
 msCompleteSum = msCompleteSum + epicEffortCompl
-msPercentComplete = msCompleteSum/msEffortSum
+msPercentComplete = 100*msCompleteSum/msEffortSum
 
 console.log('epic effort: ' + epicEffort);
 console.log('milestone effort subtotal: ' + msEffortSum);
@@ -261,6 +261,9 @@ let epicObject = {
       }
  
 epicSummary.push(epicObject)
+
+$('#msBody').append(JSON.stringify(epicObject)) ;
+$('#msBody').append('<br>') ;
 
 });
 }
