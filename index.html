@@ -349,10 +349,10 @@ epicSummary.push("epicName: " + epicName.slice(0, 45) + " ; epicEffort: " + epic
                   let num = msInfo.custom_object_record.linked_records[i].record_id;
                         epicNum = num.toString()
                         $('#msBody').append("Epic #: " + i);
-                        $('#msBody').append(" record_id: " + epicNum) ;
+                        // $('#msBody').append(" record_id: " + epicNum) ;
                         $('#msBody').append('<br>') ;
                       epicAjax()
-                }, 200 * i);
+                }, 100 * i);
             }(i));
 
             }
