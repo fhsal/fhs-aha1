@@ -237,7 +237,6 @@ $.ajax(settings)
 epicInfo = response
           console.log(response)
 
-let epicID = epicInfo.epic.id;         
 let epicName = epicInfo.epic.name;
 let epicEffort = epicInfo.epic.original_estimate;
 if (epicEffort > 0) { epicEffort = epicEffort} else { epicEffortl = 0} ;
@@ -246,29 +245,16 @@ let epicEffortCompl = epicEffort*epicProgress;
 if (epicEffortCompl > 0) { epicEffortCompl = epicEffortCompl} else { epicEffortCompl = 0} ;
 
  let epicObject = {
-        "epicID" : epicID,
-        "epicName" :epicName.slice(0, 30),
+        "epicName" :epicName.slice(0, 45),
         "epicEffort" :  epicEffort,
         "epicProgress" : epicProgress,
         "epicEffortDone" : epicEffortCompl
       }
- 
+
 epicSummary.push(epicObject)
-
-
-epicEffortSum = epicEffortSum + epicEffort;
-epicCompleteSum = epicCompleteSum + epicEffortCompl
-
-console.log(epicLine) 
-console.log(epicEffortSum);
-console.log(epicCompleteSum);
-
-
 
 });
 }
-
-
 
 function epicDetail() { 
     
@@ -342,15 +328,12 @@ for(i = 0; i < (numEpics-2); i++){
               epicAjax()
         }, 200 * i);
     }(i));
-    } 
-    console.log(epicSummary)
+    }
         })
      $('#msBody').append('<br><br>') ;
-          }
-
-          );
-        return false;
-      });
+    });
+    return false;
+    });
 
     $("#epic_detail").submit(function() { 
         new AhaApi({
@@ -373,9 +356,6 @@ for(i = 0; i < (numEpics-2); i++){
       });
       return false;
     });
-
-
-
 
 // function to append name, effort, % progress, to-go effort into epicSummary object
 

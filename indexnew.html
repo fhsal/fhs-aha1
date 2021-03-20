@@ -237,7 +237,6 @@ $.ajax(settings)
 epicInfo = response
           console.log(response)
 
-let epicID = epicInfo.epic.id;         
 let epicName = epicInfo.epic.name;
 let epicEffort = epicInfo.epic.original_estimate;
 if (epicEffort > 0) { epicEffort = epicEffort} else { epicEffortl = 0} ;
@@ -246,24 +245,13 @@ let epicEffortCompl = epicEffort*epicProgress;
 if (epicEffortCompl > 0) { epicEffortCompl = epicEffortCompl} else { epicEffortCompl = 0} ;
 
  let epicObject = {
-        "epicID" : epicID,
-        "epicName" :epicName.slice(0, 30),
+        "epicName" :epicName.slice(0, 45),
         "epicEffort" :  epicEffort,
         "epicProgress" : epicProgress,
         "epicEffortDone" : epicEffortCompl
       }
- 
+
 epicSummary.push(epicObject)
-
-
-epicEffortSum = epicEffortSum + epicEffort;
-epicCompleteSum = epicCompleteSum + epicEffortCompl
-
-console.log(epicLine) 
-console.log(epicEffortSum);
-console.log(epicCompleteSum);
-
-
 
 });
 }
