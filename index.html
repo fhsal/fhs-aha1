@@ -368,19 +368,16 @@ epicSummary.push("epicName: " + epicName.slice(0, 45) + " ; epicEffort: " + epic
               $('#msBody').append(',  <strong>Milestone effort completed: </strong>' + msCompleteSum + ' days' ) ;
               $('#msBody').append(',  <strong>Percent complete: </strong>' + msPercentComplete +"%") ;
               $('#msBody').append('<br><br>')
+
+              let msObject = {
+                  "msID" : productKey,
+                  "msName" : msName,
+                  "msTotalEffort" :  epicEffort,
+                  "msProgress" : msPercentComplete,
+                  "msTotalEffortDone" : msCompleteSum
+              }
+              msSummary.push(msObject)
             }, 8000)
-
-  //   let msObject = {
-  //       "msID" : productKey,
-  //       "msName" : msName,
-  //       "msTotalEffort" :  epicEffort,
-  //       "msProgress" : msPercentComplete,
-  //       "msTotalEffortDone" : msCompleteSum
-  //     }
-
-  // msSummary.push(msObject)
-
-
 
         return false;
       });
