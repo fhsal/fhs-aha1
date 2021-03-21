@@ -116,17 +116,10 @@ epicCount = 0;
 waitingFlag ="";
 
 
-
-function paceCalls() {
-  myVar = setTimeout(function(){ console.log('wait'); }, 1000);
+// function to display numbers with thousands comma separator
+function formatNumber(num) {
+  return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
 }
-
-setTimeout(myFunction, 3000)
-
-function myFunction() {
-  connsole.log('wait');
-}
-
 
 
 // Function to get epic details (used in Milestone detail query)
@@ -209,12 +202,16 @@ console.log('checkEpicsDone, numEpics: ' + epicCount)
             console.log('condition: ' + (epicCount !==0))
             } else {
   // populate Milestone summary display
+
+let showmsEffortSum = formatNumber(msEffortSum)
+let showmsCompleteSum = formatNumber(msCompleteSum)
+
         waitingFlag = false;
                 $('#msResults').append('<br>')
                 $('#msResults').append('<strong>Milestone ID: </strong>' + msID ); 
                 $('#msResults').append(',  <strong>  # epics: </strong>' + numEpics);
-                $('#msResults').append(',  <strong>  Total effort: </strong>' + msEffortSum + ' days' );
-                $('#msResults').append(',  <strong>  Done: </strong>' + msCompleteSum + ' days' );
+                $('#msResults').append(',  <strong>  Effort: </strong>' + showmsEffortSum + ' days' );
+                $('#msResults').append(',  <strong>  Done: </strong>' + showmsCompleteSum + ' days' );
                 $('#msResults').append(',  <strong>  Progress: </strong>' + msPercentComplete +"%");
                 $('#msResults').append('<br>')
 
