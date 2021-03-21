@@ -317,20 +317,13 @@ function epicAjax(){
             msInitiative = msInfo.custom_object_record.linked_records[(numEpics-1)].record_id
 
 // populate display block
-        $('#msBody').append("<strong>Epics related to selected Milestone:</strong>");
-        $('#msBody').append('<br>')
+
         $('#msBody').append('<strong>MilestoneID: </strong>' + productKey)
         $('#msBody').append('<br>') ;
         $('#msBody').append('<strong>MS Name: </strong>' + msName)
         $('#msBody').append('<br>') ;
         $('#msBody').append("================================================");
         $('#msBody').append('<br>') ;
-
-        // $('#msResults').append("<strong>Milestone summaries:</strong>");
-        // $('#msResults').append('<br><br><br>')
-        // $('#msResults').append("================================================");
-        // $('#msResults').append('<br>') ;
-
 
 // loop through epics, waiting between each fetch to stay within API limits
         var i;
