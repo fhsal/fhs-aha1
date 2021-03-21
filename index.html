@@ -88,7 +88,7 @@
          <div class="col-sm-1" style="width: 10px; padding-left: 0px; padding-right: 0px"></div>
 
       <!-- display area for MS results on right -->
-         <div class="col-sm-8" id = "msResults" style="width: 740px; padding-right: 0px; background-color:lightslategray; border-color: black; color:white"><strong>Milestone summaries</strong><br></div>
+         <div class="col-sm-8" id = "msResults" style="width: 720px; padding-right: 0px; background-color:lightslategray; border-color: black; color:white"><strong>Milestone summaries</strong><br></div>
     </div> 
 
 <script>
@@ -214,7 +214,7 @@ console.log('checkEpicsDone, numEpics: ' + epicCount)
                 $('#msResults').append('<strong>Milestone ID: </strong>' + msID ); 
                 $('#msResults').append(',  <strong>  # epics: </strong>' + numEpics);
                 $('#msResults').append(',  <strong>  Total effort: </strong>' + msEffortSum + ' days' );
-                $('#msResults').append(',  <strong>  Complete: </strong>' + msCompleteSum + ' days' );
+                $('#msResults').append(',  <strong>  Done: </strong>' + msCompleteSum + ' days' );
                 $('#msResults').append(',  <strong>  Progress: </strong>' + msPercentComplete +"%");
                 $('#msResults').append('<br>')
 
