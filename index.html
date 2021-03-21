@@ -244,12 +244,12 @@ function epicAjax(){
       });
 }
 
-  function checkEpicsDone() {
+function checkEpicsDone(epicCount) {
 
-    console.log('checkEpicsDone, numEpics: ' + epicCount)
-    
-      if (epicCount >= 1) {
-          setTimeout(showWaiting, 500); // setTimeout(func, timeMS, params...)
+console.log('checkEpicsDone, numEpics: ' + epicCount)
+
+  if (epicCount >= 1) {
+      setInterval(showWaiting, 1000)
       } else {
 
   // populate Milestone summary display
@@ -343,9 +343,7 @@ function epicAjax(){
 
 // Wait for above retrieval of epic data to complete to display milestone totals 
 
-
-
-        checkEpicsDone()
+        checkEpicsDone(epicCount)
 
 //           setTimeout(function(){  
 //               $('#msResults').append('<strong>Milestone ID: </strong>' + msID ) 
