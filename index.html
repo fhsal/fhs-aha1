@@ -297,7 +297,7 @@ console.log('checkEpicsDone, numEpics: ' + epicCount)
             localStorage.msInfo = (JSON.stringify(response))
             msInfo = response
             numEpics = msInfo.custom_object_record.linked_records["length"];
-            epicCount = numEpics;
+            epicCount = (numEpics-1);
         console.log ('number of epics: ' + numEpics)
         console.log(response)
             msName = msInfo.custom_object_record.custom_fields[0].value
@@ -333,7 +333,7 @@ console.log('checkEpicsDone, numEpics: ' + epicCount)
                         $('#msBody').append('<br>') ;
                       epicAjax()
           //wait 100 milliseconds between calls (API limit is 'technically' 20ms)
-                }, 100 * i);
+                }, 150 * i);
             }(i)
             );
             };
