@@ -88,7 +88,7 @@
          <div class="col-sm-1" style="width: 10px; padding-left: 0px; padding-right: 0px"></div>
 
       <!-- display area for MS results on right -->
-         <div class="col-sm-7" id = "msResults" style="width: 710px; padding-right: 0px; background-color:lightslategray; border-color: black; color:white"><strong>Milestone summaries</strong></div>
+         <div class="col-sm-7" id = "msResults" style="width: 710px; padding-right: 0px; background-color:lightslategray; border-color: black; color:white"><strong>Milestone summaries</strong><br></div>
     </div> 
 
 <script>
@@ -202,8 +202,7 @@ $("#epic_controls2").submit(function() {
 
   function checkEpicsDone(epicCount) {
 
-console.log('checkEpicsDone, numEpics: ' + epicCount)
-     $('#msResults').append('<br>')  
+console.log('checkEpicsDone, numEpics: ' + epicCount) 
         if (epicCount !== 0) {
             // waitingFlag = true;
             setInterval(showWaiting, 500);
