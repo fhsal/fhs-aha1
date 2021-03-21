@@ -40,11 +40,6 @@
       .requirement .description {
         margin-left: 120px;
       }
-
-      .anyClass {
-        height:150px;
-        overflow-y: scroll;
-      }
       
     </style>
   </head>
@@ -80,11 +75,7 @@
       <input type="submit" class="btn" value="Load info for a single epic">
     </form>
 
-    <div class="col-md-12" id="diplayBody">
-
-      <div class="col-md-4" id="msBody" style="color:linen">
-
-      <div class="col-md-8" id="msResults" style="color: steelblue">
+    <div class="col-md-12" id="msBody">
 
 <!-- display area for results on page -->
 
@@ -279,7 +270,7 @@ function epicAjax(){
         $('#msBody').append('<strong>MilestoneID: </strong>' + productKey)
         $('#msBody').append(', <strong>MS Name: </strong>' + msName)
         $('#msBody').append('<br>') ;
-        $('#msBody').append("================================================================");
+        $('#msBody').append("===============================================================================");
         $('#msBody').append('<br>') ;
 
 // loop through epics, waiting between each fetch to stay within API limits
@@ -301,10 +292,10 @@ function epicAjax(){
 
 // Wait for above retrieval of epic data to complete to display milestone totals 
           setTimeout(function(){  
-              $('#msResults').append('<strong>Milestone total effort: </strong>' + msEffortSum + ' days' ) ;
-              $('#msResults').append(',  <strong>Milestone effort completed: </strong>' + msCompleteSum + ' days' ) ;
-              $('#msResults').append(',  <strong>Percent complete: </strong>' + msPercentComplete +"%") ;
-              $('#msResults').append('<br><br>')
+              $('#msBody').append('<strong>Milestone total effort: </strong>' + msEffortSum + ' days' ) ;
+              $('#msBody').append(',  <strong>Milestone effort completed: </strong>' + msCompleteSum + ' days' ) ;
+              $('#msBody').append(',  <strong>Percent complete: </strong>' + msPercentComplete +"%") ;
+              $('#msBody').append('<br><br>')
 
 // populate Milestone summary object 
               let msObject = {
