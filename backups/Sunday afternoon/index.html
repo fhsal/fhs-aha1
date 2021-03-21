@@ -344,7 +344,33 @@ function epicAjax(){
           })
           $('#msBody').append('<br>')
           msSummary.push(epicSummary)
+
           });
+
+// Wait for above retrieval of epic data to complete to display milestone totals 
+
+        // checkEpicsDone(epicCount)
+
+//           setTimeout(function(){  
+//               $('#msResults').append('<strong>Milestone ID: </strong>' + msID ) 
+//               $('#msResults').append(',  <strong>  Total effort: </strong>' + msEffortSum + ' days' ) ;
+//               $('#msResults').append(',  <strong>  Completed: </strong>' + msCompleteSum + ' days' ) ;
+//               $('#msResults').append(',  <strong>  Progress: </strong>' + msPercentComplete +"%") ;
+//               $('#msResults').append('<br><br>')
+
+// // populate Milestone summary object 
+//               let msObject = {
+//                   "productID" : msProduct,
+//                   "initiativeID" : msInitiative,
+//                   "msID" : msID,
+//                   "msName" : msName,
+//                   "msTotalEffort" :  msEffortSum,
+//                   "msProgress" : msPercentComplete,
+//                   "msTotalEffortDone" : msCompleteSum
+//               }
+//               msSummary.push(msObject)
+//             }, 12000)
+
         return false;
       });
 
@@ -370,6 +396,91 @@ function epicAjax(){
       });
       return false;
     });
+
+
+
+
+// function to append name, effort, % progress, to-go effort into epicSummary object
+
+  function getEpicDetail(epicNum) { 
+        new AhaApi({
+        accountDomain: $("#subdomain").val(),
+        clientId: "161eb65d203b91eb21a89fe30932b51f4deee51bcb66d5f7b376cd7fa1addd1d", // NOTE: replace this with your client ID.
+        redirectUri: "https://fhsal.github.io/fhs-aha1"
+      }).authenticate(function(api, success, message) {
+
+        console.log(success)
+        console.log(message)
+        var productKey = epicNum;
+
+// Fetch epic details
+        api.get("/epics/" + productKey , {per_page: 50}, 
+        function(response) {
+          localStorage.epicInfo = (JSON.stringify(response))
+          epicInfo = response
+          console.log(response)
+
+// build object to insert into array of epic excerpt objects
+
+let epicName = epicInfo.epic.name;
+let epicEffort = epicInfo.epic.epic_only_original_estimate;
+let epicProgress = epicInfo.epic.progress;
+let epicEffortCompl = "";
+if (!epicProgress) { epicEffortCompl = 0} else {epicEffortCompl=epicEffort*epicProgress};
+
+epicSummary.push("epicName: " + epicName.slice(0, 25) + " ; epicEffort: " + epicEffort + " ; epicProgress; " + epicProgress + "; epicEffortDone: " + epicEffort*epicProgress )
+
+console.log(epicSummary) 
+
+        });
+      });
+      return false;
+    };
+
+function getEpicDetail(epicNumber) { 
+
+console.log("getEpicDetail");
+
+      new AhaApi({
+      accountDomain: $("#subdomain").val(),
+      clientId: "161eb65d203b91eb21a89fe30932b51f4deee51bcb66d5f7b376cd7fa1addd1d", // NOTE: replace this with your client ID.
+      redirectUri: "https://fhsal.github.io/fhs-aha1"
+    }).authenticate(function(api, success, message) {
+
+      console.log(success)
+      console.log(message)
+      var productKey = epicNumber;
+
+// Fetch epic details
+      api.get("/epics/" + productKey , {per_page: 50}, 
+      function(response) {
+        localStorage.epicInfo = (JSON.stringify(response))
+        epicInfo = response
+        // console.log(response)
+
+// build object to insert into array of epic excerpt objects
+
+let epicName = epicInfo.epic.name;
+let epicEffort = epicInfo.epic.epic_only_original_estimate;
+let epicProgress = epicInfo.epic.progress;
+let epicEffortCompl = epicEffort*epicProgress;
+// if (!epicProgress) { epicEffortCompl = 0} else {epicEffortCompl=epicEffort*epicProgress};
+
+let epicLine = ("epic_id: " + epicNumber + "; epicName: " + epicName.slice(0, 40) + " ; epicEffort: " + epicEffort + " ; epicProgress; " + epicProgress + "; epicEffortDone: " + epicEffortCompl )
+
+// epicEffortSum = epicEffortSum + epicEffort;
+// epicCompleteSum = epicCompleteSum + epicEffortCompl
+
+// console.log(epicLine) 
+// console.log(epicEffortSum);
+// console.log(epicCompleteSum);
+
+      });
+    });
+    return false;
+  };
+
+
     </script>
   </body>
 </html>
