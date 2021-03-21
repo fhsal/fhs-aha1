@@ -239,6 +239,7 @@ function epicAjax(){
               "epicProgress" : epicProgress,
               "epicEffortDone" : epicEffortCompl
             }
+            console.log('from Ajax, epicCount: ' + epicCount )
       epicCount = epicCount-1 
       epicSummary.push(epicObject)
       });
@@ -248,8 +249,9 @@ function checkEpicsDone(epicCount) {
 
 console.log('checkEpicsDone, numEpics: ' + epicCount)
 
-  if (epicCount > 1) {
+  if (epicCount !== 0) {
       setInterval(showWaiting, 500);
+      console.log('condition: ' + (epicCount !==0))
       } else {
 
   // populate Milestone summary display
