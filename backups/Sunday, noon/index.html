@@ -200,23 +200,23 @@ $("#epic_controls2").submit(function() {
         return false;
       });
 
-  function checkEpicsDone(epicCount) {
+      function checkEpicsDone(epicCount) {
 
 console.log('checkEpicsDone, numEpics: ' + epicCount)
-     $('#msResults').append('<br>')  
-        if (epicCount !== 0) {
-            // waitingFlag = true;
-            setInterval(showWaiting, 500);
-            console.log('condition: ' + (epicCount !==0))
-            } else {
+
+  if (epicCount !== 0) {
+      // waitingFlag = true;
+      setInterval(showWaiting, 500);
+      console.log('condition: ' + (epicCount !==0))
+      } else {
   // populate Milestone summary display
         waitingFlag = false;
-                $('#msResults').append('<br><br>')
+                $('#msResults').append('<br>')
                 $('#msResults').append('<strong>Milestone ID: </strong>' + msID ) 
                 $('#msResults').append(',  <strong>  Total effort: </strong>' + msEffortSum + ' days' ) ;
                 $('#msResults').append(',  <strong>  Completed: </strong>' + msCompleteSum + ' days' ) ;
                 $('#msResults').append(',  <strong>  Progress: </strong>' + msPercentComplete +"%") ;
-                $('#msResults').append('<br>')
+                $('#msResults').append('<br><br>')
 
   // populate Milestone summary object 
                 let msObject = {
