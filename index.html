@@ -83,9 +83,9 @@
     <div class="row">
 
       <!-- display area for epic parsing display on left -->
-         <div class="col-sm-4" style="background-color:rgb(81, 119, 168);color:white" id="msBody"></div>
+         <div class="col-sm-4" style="background-color:rgb(81, 119, 168);color:white ; width: 450px " id="msBody"></div>
 
-         <div class="col-sm-1" style="width: 20px"></div>
+         <div class="col-sm-1" style="width: 10px"></div>
 
       <!-- display area for MS results on right -->
          <div class="col-sm-7" id = "msResults" style="background-color:lightslategray; border-color: black; color:white"></div>
@@ -281,7 +281,7 @@ function epicAjax(){
         $('#msBody').append('<br>') ;
         $('#msBody').append('<strong>MS Name: </strong>' + msName)
         $('#msBody').append('<br>') ;
-        $('#msBody').append("=====================================================");
+        $('#msBody').append("================================================");
         $('#msBody').append('<br>') ;
 
 // loop through epics, waiting between each fetch to stay within API limits
