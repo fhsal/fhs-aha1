@@ -211,10 +211,11 @@ console.log('checkEpicsDone, numEpics: ' + epicCount)
   // populate Milestone summary display
         waitingFlag = false;
                 $('#msResults').append('<br><br>')
-                $('#msResults').append('<strong>Milestone ID: </strong>' + msID ) 
-                $('#msResults').append(',  <strong>  Total effort: </strong>' + msEffortSum + ' days' ) ;
-                $('#msResults').append(',  <strong>  Completed: </strong>' + msCompleteSum + ' days' ) ;
-                $('#msResults').append(',  <strong>  Progress: </strong>' + msPercentComplete +"%") ;
+                $('#msResults').append('<strong>Milestone ID: </strong>' + msID ); 
+                $('#msResults').append(',  <strong>  # epics: </strong>' + numEpics);
+                $('#msResults').append(',  <strong>  Total effort: </strong>' + msEffortSum + ' days' );
+                $('#msResults').append(',  <strong>  Complete: </strong>' + msCompleteSum + ' days' );
+                $('#msResults').append(',  <strong>  Progress: </strong>' + msPercentComplete +"%");
                 $('#msResults').append('<br>')
 
   // populate Milestone summary object 
