@@ -228,6 +228,7 @@ console.log('checkEpicsDone, numEpics: ' + epicCount)
                     "msProgress" : msPercentComplete,
                     "msTotalEffortDone" : msCompleteSum
                 };
+                msSummary.push(msObject)
       }; 
   }
 
@@ -343,6 +344,7 @@ function epicAjax(){
             };
           })
           $('#msBody').append('<br>')
+          msSummary.push(epicSummary)
 
           });
 
