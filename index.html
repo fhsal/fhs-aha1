@@ -277,7 +277,7 @@ function epicAjax(){
         $('#msBody').append('<br>')
         $('#msBody').append('<strong>MilestoneID: </strong>' + productKey)
         $('#msBody').append('<br>') ;
-        $('#msBody').append(', <strong>MS Name: </strong>' + msName)
+        $('#msBody').append('<strong>MS Name: </strong>' + msName)
         $('#msBody').append('<br>') ;
         $('#msBody').append("================================================================");
         $('#msBody').append('<br>') ;
@@ -301,9 +301,10 @@ function epicAjax(){
 
 // Wait for above retrieval of epic data to complete to display milestone totals 
           setTimeout(function(){  
-              $('#msResults').append('<strong>Milestone total effort: </strong>' + msEffortSum + ' days' ) ;
-              $('#msResults').append(',  <strong>Milestone effort completed: </strong>' + msCompleteSum + ' days' ) ;
-              $('#msResults').append(',  <strong>Percent complete: </strong>' + msPercentComplete +"%") ;
+              $('#msResults').append('<strong>Milestone ID: </strong>' + msID + ' days' ) 
+              $('#msResults').append('<strong>MS total effort: </strong>' + msEffortSum + ' days' ) ;
+              $('#msResults').append(',  <strong>MS effort completed: </strong>' + msCompleteSum + ' days' ) ;
+              $('#msResults').append(',  <strong>Completion: </strong>' + msPercentComplete +"%") ;
               $('#msResults').append('<br><br>')
 
 // populate Milestone summary object 
