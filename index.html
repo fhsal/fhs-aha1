@@ -317,7 +317,7 @@ function epicAjax(){
             msInitiative = msInfo.custom_object_record.linked_records[(numEpics-1)].record_id
 
 // populate display block
-
+        $('#msBody').append('<br>') ;
         $('#msBody').append('<strong>MilestoneID: </strong>' + productKey)
         $('#msBody').append('<br>') ;
         $('#msBody').append('<strong>MS Name: </strong>' + msName)
@@ -337,7 +337,7 @@ function epicAjax(){
                         $('#msBody').append('<br>') ;
                       epicAjax()
           //wait 100 milliseconds between calls (API limit is 'technically' 20ms)
-                }, 150 * i);
+                }, 500 * i);
             }(i)
             );
             };
