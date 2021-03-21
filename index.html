@@ -86,9 +86,9 @@
          <div class="col-sm-4" style="background-color:grey;color:white" id="msBody"></div>
 
       <!-- display area for MS results on right -->
-         <div class="col-sm-9" id = "msResults" style="background-color:lightslategray; border-color: black; color:white"></div>
+         <div class="col-sm-8" id = "msResults" style="background-color:lightslategray; border-color: black; color:white"></div>
     </div> 
-    
+
 <script>
 
 epics = "";
@@ -276,6 +276,7 @@ function epicAjax(){
         $('#msBody').append("<strong>Milestone Completion Calculation:</strong>");
         $('#msBody').append('<br>')
         $('#msBody').append('<strong>MilestoneID: </strong>' + productKey)
+        $('#msBody').append('<br>') ;
         $('#msBody').append(', <strong>MS Name: </strong>' + msName)
         $('#msBody').append('<br>') ;
         $('#msBody').append("================================================================");
