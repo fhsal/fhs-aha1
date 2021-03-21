@@ -243,7 +243,6 @@ function epicAjax(){
       });
 }
 
-
 // input form listener to retrieve information for a single milestone, iterating through epic detail 
   $("#ms_controls").submit(function() { 
 
@@ -303,8 +302,11 @@ function epicAjax(){
                       epicAjax()
           //wait 100 milliseconds between calls (API limit is 20ms)
                 }, 100 * i);
-            }(i));
-            }})
+            }(i)
+            );
+            }
+            $('#msBody').append('<br>') ;
+          })
           });
 
 // Wait for above retrieval of epic data to complete to display milestone totals 
