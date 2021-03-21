@@ -83,7 +83,7 @@
     <div class="row">
 
       <!-- display area for epic parsing display on left -->
-         <div class="col-sm-4" style="background-color:steelblue;color:white" id="msBody"></div>
+         <div class="col-sm-4" style="background-color:rgb(81, 119, 168);color:white" id="msBody"></div>
 
          <div class="col-sm-1" style="width: 20px"></div>
 
@@ -281,7 +281,7 @@ function epicAjax(){
         $('#msBody').append('<br>') ;
         $('#msBody').append('<strong>MS Name: </strong>' + msName)
         $('#msBody').append('<br>') ;
-        $('#msBody').append("================================================================");
+        $('#msBody').append("=====================================================");
         $('#msBody').append('<br>') ;
 
 // loop through epics, waiting between each fetch to stay within API limits
@@ -307,7 +307,7 @@ function epicAjax(){
               $('#msResults').append(',  <strong>  Total effort: </strong>' + msEffortSum + ' days' ) ;
               $('#msResults').append(',  <strong>  Completed: </strong>' + msCompleteSum + ' days' ) ;
               $('#msResults').append(',  <strong>  Progress: </strong>' + msPercentComplete +"%") ;
-              $('#msResults').append('<br><br>')
+              $('#msResults').append('<br>')
 
 // populate Milestone summary object 
               let msObject = {
