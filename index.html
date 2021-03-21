@@ -88,7 +88,7 @@
          <div class="col-sm-1" style="width: 10px; padding-left: 0px; padding-right: 0px"></div>
 
       <!-- display area for MS results on right -->
-         <div class="col-sm-7" id = "msResults" style="background-color:lightslategray; border-color: black; color:white"></div>
+         <div class="col-sm-7" id = "msResults" style="width: 710px; padding-right: 0px; background-color:lightslategray; border-color: black; color:white"></div>
     </div> 
 
 <script>
@@ -223,7 +223,7 @@ function epicAjax(){
               if (epicEffortCompl > 0) { epicEffortCompl = epicEffortCompl} else { epicEffortCompl = 0} ;
 
               msEffortSum = msEffortSum + epicEffort;
-              msCompleteSum = msCompleteSum + epicEffortCompl
+              msCompleteSum = Math.round(msCompleteSum + epicEffortCompl)
               msPercentComplete = Math.round(100*msCompleteSum/msEffortSum)
 
           console.log('epic effort: ' + epicEffort);
