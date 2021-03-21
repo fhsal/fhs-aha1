@@ -209,7 +209,7 @@ let showmsCompleteSum = formatNumber(msCompleteSum)
         waitingFlag = false;
                 $('#msResults').append('<br>')
                 $('#msResults').append('<strong>Milestone ID: </strong>' + msID ); 
-                $('#msResults').append(';  <strong>  # epics: </strong>' + numEpics);
+                $('#msResults').append(';  <strong>  # epics: </strong>' + (numEpics-1));
                 $('#msResults').append(';  <strong>  Effort: </strong>' + showmsEffortSum + ' days' );
                 $('#msResults').append(';  <strong>  Done: </strong>' + showmsCompleteSum + ' days' );
                 $('#msResults').append(';  <strong>  Progress: </strong>' + msPercentComplete +"%");
