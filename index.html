@@ -113,6 +113,7 @@ numEpics = 0;
 msInitiative = "";
 msProduct = "";
 epicCount = 0;
+waitingFlag ="";
 
 
 
@@ -207,8 +208,9 @@ console.log('checkEpicsDone, numEpics: ' + epicCount)
       setInterval(showWaiting, 500);
       console.log('condition: ' + (epicCount !==0))
       } else {
-
   // populate Milestone summary display
+        waitingFlag = false;
+                $('#msResults').append('<br>')
                 $('#msResults').append('<strong>Milestone ID: </strong>' + msID ) 
                 $('#msResults').append(',  <strong>  Total effort: </strong>' + msEffortSum + ' days' ) ;
                 $('#msResults').append(',  <strong>  Completed: </strong>' + msCompleteSum + ' days' ) ;
@@ -228,7 +230,11 @@ console.log('checkEpicsDone, numEpics: ' + epicCount)
       }; 
   }
 
-  function showWaiting() {$('#msResults').append('.')}
+  function showWaiting() {
+     while(waitingFlag){
+       $('#msResults').append('.')
+      }
+  }
 
 
       
