@@ -71,7 +71,7 @@
     <form id="ms_controls">
       <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain4"> -->
       <input type="text" placeholder="Milestone number" id="msNum">
-      <input type="submit" class="btn" value="Load info for a single milestone">
+      <input type="submit" class="btn" value="Load epics for a single milestone">
     </form>
 
     <form id="epic_detail">
@@ -112,7 +112,6 @@ msSummary = [];
 numEpics = 0;
 msInitiative = "";
 msProduct = "";
-epicCount = 0;
 
 
 
@@ -239,37 +238,10 @@ function epicAjax(){
               "epicProgress" : epicProgress,
               "epicEffortDone" : epicEffortCompl
             }
-      epicCount = epicCount-1 
+      
       epicSummary.push(epicObject)
       });
 }
-
-  function checkEpicsDone() {
-      if (epicCount = 0) {
-          setTimeout(showWaiting, 500, form); // setTimeout(func, timeMS, params...)
-      } else {
-
-  // populate Milestone summary display
-        $('#msResults').append('<strong>Milestone ID: </strong>' + msID ) 
-                $('#msResults').append(',  <strong>  Total effort: </strong>' + msEffortSum + ' days' ) ;
-                $('#msResults').append(',  <strong>  Completed: </strong>' + msCompleteSum + ' days' ) ;
-                $('#msResults').append(',  <strong>  Progress: </strong>' + msPercentComplete +"%") ;
-                $('#msResults').append('<br><br>')
-
-  // populate Milestone summary object 
-                let msObject = {
-                    "productID" : msProduct,
-                    "initiativeID" : msInitiative,
-                    "msID" : msID,
-                    "msName" : msName,
-                    "msTotalEffort" :  msEffortSum,
-                    "msProgress" : msPercentComplete,
-                    "msTotalEffortDone" : msCompleteSum
-                };
-      } 
-  }
-
-  function showWaiting() {$('#msResults').append('.')}
 
 // input form listener to retrieve information for a single milestone, iterating through epic detail 
   $("#ms_controls").submit(function() { 
@@ -328,7 +300,7 @@ function epicAjax(){
                         $('#msBody').append(" record_id: " + epicNum) ;
                         $('#msBody').append('<br>') ;
                       epicAjax()
-          //wait 100 milliseconds between calls (API limit is 'technically' 20ms)
+          //wait 100 milliseconds between calls (API limit is 20ms)
                 }, 100 * i);
             }(i)
             );
@@ -338,30 +310,25 @@ function epicAjax(){
           });
 
 // Wait for above retrieval of epic data to complete to display milestone totals 
+          setTimeout(function(){  
+              $('#msResults').append('<strong>Milestone ID: </strong>' + msID ) 
+              $('#msResults').append(',  <strong>  Total effort: </strong>' + msEffortSum + ' days' ) ;
+              $('#msResults').append(',  <strong>  Completed: </strong>' + msCompleteSum + ' days' ) ;
+              $('#msResults').append(',  <strong>  Progress: </strong>' + msPercentComplete +"%") ;
+              $('#msResults').append('<br><br>')
 
-        epicCount = numEpics
-
-        checkEpicsDone()
-
-//           setTimeout(function(){  
-//               $('#msResults').append('<strong>Milestone ID: </strong>' + msID ) 
-//               $('#msResults').append(',  <strong>  Total effort: </strong>' + msEffortSum + ' days' ) ;
-//               $('#msResults').append(',  <strong>  Completed: </strong>' + msCompleteSum + ' days' ) ;
-//               $('#msResults').append(',  <strong>  Progress: </strong>' + msPercentComplete +"%") ;
-//               $('#msResults').append('<br><br>')
-
-// // populate Milestone summary object 
-//               let msObject = {
-//                   "productID" : msProduct,
-//                   "initiativeID" : msInitiative,
-//                   "msID" : msID,
-//                   "msName" : msName,
-//                   "msTotalEffort" :  msEffortSum,
-//                   "msProgress" : msPercentComplete,
-//                   "msTotalEffortDone" : msCompleteSum
-//               }
-//               msSummary.push(msObject)
-//             }, 12000)
+// populate Milestone summary object 
+              let msObject = {
+                  "productID" : msProduct,
+                  "initiativeID" : msInitiative,
+                  "msID" : msID,
+                  "msName" : msName,
+                  "msTotalEffort" :  msEffortSum,
+                  "msProgress" : msPercentComplete,
+                  "msTotalEffortDone" : msCompleteSum
+              }
+              msSummary.push(msObject)
+            }, 12000)
 
         return false;
       });
