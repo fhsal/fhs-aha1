@@ -338,12 +338,13 @@ console.log('checkEpicsDone, numEpics: ' + epicCount)
             );
             };
           })
-          $('#msBody').append('<br>') 
+          $('#msBody').append('<br>')
+          checkEpicsDone(epicCount) 
           });
 
 // Wait for above retrieval of epic data to complete to display milestone totals 
 
-        checkEpicsDone(epicCount)
+        // checkEpicsDone(epicCount)
 
 //           setTimeout(function(){  
 //               $('#msResults').append('<strong>Milestone ID: </strong>' + msID ) 
