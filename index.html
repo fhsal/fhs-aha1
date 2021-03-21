@@ -245,12 +245,15 @@ function epicAjax(){
 }
 
   function checkEpicsDone() {
+
+    console.log('checkEpicsDone, numEpics: ' + epicCount)
+    
       if (epicCount = 0) {
           setTimeout(showWaiting, 500, form); // setTimeout(func, timeMS, params...)
       } else {
 
   // populate Milestone summary display
-        $('#msResults').append('<strong>Milestone ID: </strong>' + msID ) 
+                $('#msResults').append('<strong>Milestone ID: </strong>' + msID ) 
                 $('#msResults').append(',  <strong>  Total effort: </strong>' + msEffortSum + ' days' ) ;
                 $('#msResults').append(',  <strong>  Completed: </strong>' + msCompleteSum + ' days' ) ;
                 $('#msResults').append(',  <strong>  Progress: </strong>' + msPercentComplete +"%") ;
@@ -294,6 +297,7 @@ function epicAjax(){
             localStorage.msInfo = (JSON.stringify(response))
             msInfo = response
             numEpics = msInfo.custom_object_record.linked_records["length"];
+            epicCount = numEpics;
         console.log ('number of epics: ' + numEpics)
         console.log(response)
             msName = msInfo.custom_object_record.custom_fields[0].value
@@ -339,7 +343,7 @@ function epicAjax(){
 
 // Wait for above retrieval of epic data to complete to display milestone totals 
 
-        epicCount = numEpics
+
 
         checkEpicsDone()
 
