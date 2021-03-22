@@ -1,7 +1,7 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
-    <title>Example of Aha! Javascript API</title>
+    <title>Aha! Epic Crawler</title>
 
     <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" type="text/css"></link>
     <script type="text/javascript" charset="utf-8" src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -198,12 +198,31 @@ $("#epic_controls2").submit(function() {
         return false;
       });
 
+function updateMilestone(){
+  var settings = {
+      "url": "https://optum.aha.io/api/v1//custom_object_records/" + msID,
+      "method": "PUT",
+      "timeout": 0,
+      "Content-Type": "application/json",
+      // "crossDomain": true,
+      // "access-control-allow-origin": "*",
+      "headers": { "Authorization": localStorage.ahaToken, },
+      "data" : JSON.stringify(
+        {"custom_object_record": 
+           {"custom_fields":{"milestone_percent_complete": msPercentComplete}}})
+      };
+      $.ajax(settings)
+      .then(function (response) {
+           console.log(response)
+      });
+}
+
 function checkEpicsDone(epicCount) {
 
 console.log('checkEpicsDone, numEpics: ' + epicCount) 
         if (epicCount !== 0) {
             // waitingFlag = true;
-            setInterval(showWaiting, 500);
+            // setInterval(showWaiting, 500);
             console.log('condition: ' + (epicCount !==0))
             } else {
   // populate Milestone summary display

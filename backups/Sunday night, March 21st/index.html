@@ -54,37 +54,37 @@
 <br><br>
     <div class="col-sm-5"  style= "width: 425px";>
         <form id="epic_controls">
-          <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain"> -->
+  <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain"> -->
           <input type="text" placeholder="Product key" id="product-key">
           <input type="submit" class="btn" value="Load epics for a Product">
         </form>
 
         <form id="epic_controls2">
-          <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain"> -->
+  <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain"> -->
           <input type="text" placeholder="Product key" id="product-key2">
           <input type="submit" class="btn" value="Load initiatives for a Product">
         </form>
 
         <form id="init_controls">
-          <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain"> -->
+  <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain"> -->
           <input type="text" placeholder="initiative number" id="init-num">
           <input type="submit" class="btn" value="Load info for an initiative">
         </form>
 
         <form id="ms_controls">
-          <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain4"> -->
+  <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain4"> -->
           <input type="text" placeholder="Milestone number" id="msNum">
           <input type="submit" class="btn" value="Load info for a milestone">
         </form>
 
         <form id="epic_detail">
-          <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain5"> -->
+  <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain5"> -->
           <input type="text" placeholder="Epic number" id="epicNum">
           <input type="submit" class="btn" value="Load info for an epic">
         </form>
       </div>
-   <!-- display area for MS results on right -->
-      <div class="col-sm-6" id = "msResults" style="width: 710px; background-color:teal; border-color: black; color:white"><strong>Initiative summaries<br>---------------------------------------------------------------------------------------------------------------------------------------------</strong><br></div>
+  <!-- display area for MS results on right -->
+      <div class="col-sm-6" id = "initResults" style="width: 710px; background-color:teal; border-color: black; color:white"><strong>Initiative summaries<br>---------------------------------------------------------------------------------------------------------------------------------------------</strong><br></div>
 </div>
  
     <div class="row">
@@ -97,7 +97,6 @@
       <!-- display area for MS results on right -->
          <div class="col-sm-8" id = "msResults" style="width: 710px; padding-right: 0px; background-color:darkslategray; border-color: black; color:white"><strong>Milestone summaries<br>---------------------------------------------------------------------------------------------------------------------------------------------</strong><br></div>
     </div> 
-
 
 <script>
 
@@ -123,12 +122,10 @@ msProduct = "";
 epicCount = 0;
 waitingFlag ="";
 
-
 // function to display numbers with thousands comma separator
 function formatNumber(num) {
   return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
 }
-
 
 // Function to get epic details (used in Milestone detail query)
 
@@ -237,14 +234,6 @@ let showmsCompleteSum = formatNumber(msCompleteSum)
       }; 
   }
 
-  function showWaiting() {
-     while(waitingFlag){
-       $('#msResults').append('.')
-      }
-  }
-
-
-      
 function epicAjax(){
     var settings = {
       "url": "https://optum.aha.io/api/v1/epics/" + epicNum + "?fields=name,original_estimate,progress",
@@ -254,12 +243,10 @@ function epicAjax(){
       "access-control-allow-origin": "*",
       "headers": { "Authorization": localStorage.ahaToken, },
       };
-
       $.ajax(settings)
       .then(function (response) {
               epicInfo = response
                         console.log(response)
-
               let epicID = epicInfo.epic.id;         
               let epicName = epicInfo.epic.name;
               let epicEffort = epicInfo.epic.original_estimate/480;
@@ -267,17 +254,15 @@ function epicAjax(){
               let epicProgress = parseInt(epicInfo.epic.progress)/100;
               let epicEffortCompl = epicEffort*epicProgress;
               if (epicEffortCompl > 0) { epicEffortCompl = epicEffortCompl} else { epicEffortCompl = 0} ;
-
               msEffortSum = msEffortSum + epicEffort;
               msCompleteSum = Math.round(msCompleteSum + epicEffortCompl)
               msPercentComplete = Math.round(100*msCompleteSum/msEffortSum)
-
           console.log('epic effort: ' + epicEffort);
           console.log('milestone effort subtotal: ' + msEffortSum);
           console.log('milestone complete: ' + msCompleteSum);
           console.log('milestone % complete: ' + msPercentComplete + "%");
 
-      let epicObject = {
+          let epicObject = {
               "epicID" : epicID,
               "epicName" :epicName.slice(0, 30),
               "epicEffort" :  epicEffort,
@@ -321,10 +306,6 @@ function epicAjax(){
             msID = msInfo.custom_object_record.id
             msProduct = msInfo.custom_object_record.product_id
             msInitiative = msInfo.custom_object_record.linked_records[(numEpics-1)].record_id
-
-            
-
-
 // populate display block
         $('#msBody').append('<br>') ;
         $('#msBody').append('<strong>MilestoneID: </strong>' + productKey)
@@ -372,17 +353,15 @@ function epicAjax(){
         clientId: "161eb65d203b91eb21a89fe30932b51f4deee51bcb66d5f7b376cd7fa1addd1d", // NOTE: replace this with your client ID.
         redirectUri: "https://fhsal.github.io/fhs-aha1"
       }).authenticate(function(api, success, message) {
-
-        console.log(success)
-        console.log(message)
+    console.log(success)
+    console.log(message)
         var productKey = $("#epicNum").val();
-
 // Fetch epic information
         api.get("/epics/" + productKey , {per_page: 50}, 
         function(response) {
           localStorage.epicInfo = (JSON.stringify(response))
           epicInfo = response
-          console.log(response)
+    console.log(response)
         });
       });
       return false;
