@@ -52,8 +52,7 @@
   <body class="container">
    <div class="row">
 
-    <div class="col-sm-3" style="height:450px; overflow-y: scroll; background-color:goldenrod;color:white ; width: 410px " id="msBody"> <strong>Select Action <br><br></strong></div>
-
+    <div class="col-sm-5" style= "width: 425px";>
         <form id="epic_controls">
           <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain"> -->
           <input type="text" placeholder="Product key" id="product-key">
@@ -69,37 +68,36 @@
         <form id="init_controls">
           <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain"> -->
           <input type="text" placeholder="initiative number" id="init-num">
-          <input type="submit" class="btn" value="Load info for a single initiative">
+          <input type="submit" class="btn" value="Load info for an initiative">
         </form>
 
         <form id="ms_controls">
           <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain4"> -->
           <input type="text" placeholder="Milestone number" id="msNum">
-          <input type="submit" class="btn" value="Load info for a single milestone">
+          <input type="submit" class="btn" value="Load info for a milestone">
         </form>
 
         <form id="epic_detail">
           <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain5"> -->
           <input type="text" placeholder="Epic number" id="epicNum">
-          <input type="submit" class="btn" value="Load info for a single epic">
+          <input type="submit" class="btn" value="Load info for an epic">
         </form>
-
-   </div>
-   <div class="col-sm-1" style="width: 10px; padding-left: 0px; padding-right: 0px"></div>
-
+      </div>
    <!-- display area for MS results on right -->
-      <div class="col-sm-8" id = "msResults" style="width: 710px; padding-right: 0px; background-color:lightslategray; border-color: black; color:white"><strong>Initiative summaries</strong><br></div>
+      <div class="col-sm-6" id = "msResults" style="width: 710px; background-color:teal; border-color: black; color:white"><strong>Initiative summaries<br>---------------------------------------------------------------------------------------------------------------------------------------------</strong><br></div>
+</div>
  
     <div class="row">
 
       <!-- display area for epic parsing display on left -->
-         <div class="col-sm-3" style="height:450px; overflow-y: scroll; background-color:steelblue;color:white ; width: 410px " id="msBody"> <strong>Epics related to selected Milestones</strong></div>
+         <div class="col-sm-3" style="height:450px; overflow-y: scroll; background-color:steelblue;color:white ; width: 410px " id="msBody"> <strong>Epics related to selected Milestones<br>------------------------------------------------------------------------</strong></div>
 
          <div class="col-sm-1" style="width: 10px; padding-left: 0px; padding-right: 0px"></div>
 
       <!-- display area for MS results on right -->
-         <div class="col-sm-8" id = "msResults" style="width: 710px; padding-right: 0px; background-color:lightslategray; border-color: black; color:white"><strong>Milestone summaries</strong><br></div>
+         <div class="col-sm-8" id = "msResults" style="width: 710px; padding-right: 0px; background-color:darkslategray; border-color: black; color:white"><strong>Milestone summaries<br>---------------------------------------------------------------------------------------------------------------------------------------------</strong><br></div>
     </div> 
+
 
 <script>
 
