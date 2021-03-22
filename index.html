@@ -317,6 +317,7 @@ function epicAjax(){
 // populate display block
         $('#msBody').append('<br>') ;
         $('#msBody').append('<strong>MilestoneID: </strong>' + productKey)
+        $('#msResults').append('<br>') ;
         $('#msResults').append('<strong>MilestoneID: </strong>' + productKey)
         $('#msBody').append('<br>') ;
         $('#msBody').append('<strong># Epics: </strong>' + (numEpics-1))
@@ -338,7 +339,7 @@ function epicAjax(){
                         $('#msBody').append("Epic #: " + (i+1));
                         $('#msBody').append(",  record_id: " + epicNum) ;
                         $('#msBody').append('<br>') ;
-                        $('#msResults').append('*') ;
+                        $('#msResults').append('.') ;
                       epicAjax()
           //wait 100 milliseconds between calls (API limit is 'technically' 20ms)
                 }, 700 * i);
