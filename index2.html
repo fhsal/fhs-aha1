@@ -1,0 +1,379 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+    <title>Example of Aha! Javascript API</title>
+
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" type="text/css"></link>
+    <script type="text/javascript" charset="utf-8" src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="https://secure.aha.io/assets/javascript_api/aha-api.latest.js"></script>
+    
+    <style>
+      .feature {
+        border-top: 1px solid #0073cf;
+        margin-top: 10px;
+        margin-bottom: 30px;
+      }
+      .feature .reference-num {
+        float: left;
+        padding-right: 10px;
+      }
+      .feature .name {
+        float: left;
+        font-weight: bold;
+      }
+      .feature > .description {
+        clear: left;
+        margin-left: 20px;
+      }
+      .requirement {
+        position: relative;
+        margin-top: 15px;
+        margin-left: 20px;
+        
+      }
+      .requirement .reference-num {
+        position: absolute;
+        font-weight: bold;
+      }
+      .requirement .description {
+        margin-left: 120px;
+      }
+
+      .anyClass {
+        height:150px;
+        overflow-y: scroll;
+      }
+      
+    </style>
+  </head>
+
+  <body class="container">
+    <form id="epic_controls">
+      <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain"> -->
+      <input type="text" placeholder="Product key" id="product-key">
+      <input type="submit" class="btn" value="Load epics for a Product">
+    </form>
+
+    <form id="epic_controls2">
+      <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain"> -->
+      <input type="text" placeholder="Product key" id="product-key2">
+      <input type="submit" class="btn" value="Load initiatives for a Product">
+    </form>
+
+    <form id="init_controls">
+      <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain"> -->
+      <input type="text" placeholder="initiative number" id="init-num">
+      <input type="submit" class="btn" value="Load info for a single initiative">
+    </form>
+
+    <form id="ms_controls">
+      <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain4"> -->
+      <input type="text" placeholder="Milestone number" id="msNum">
+      <input type="submit" class="btn" value="Load info for a single milestone">
+    </form>
+
+    <form id="epic_detail">
+      <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain5"> -->
+      <input type="text" placeholder="Epic number" id="epicNum">
+      <input type="submit" class="btn" value="Load info for a single epic">
+    </form>
+
+    <div class="row">
+
+      <!-- display area for epic parsing display on left -->
+         <div class="col-sm-3" style="height:450px; overflow-y: scroll; background-color:steelblue;color:white ; width: 410px " id="msBody"> <strong>Epics related to selected Milestones</strong></div>
+
+         <div class="col-sm-1" style="width: 10px; padding-left: 0px; padding-right: 0px"></div>
+
+      <!-- display area for MS results on right -->
+         <div class="col-sm-8" id = "msResults" style="width: 710px; padding-right: 0px; background-color:lightslategray; border-color: black; color:white"><strong>Milestone summaries</strong><br></div>
+    </div> 
+
+<script>
+
+epics = "";
+inits = "";
+singleInit = "";
+msInfo = "";
+epicInfo ="";
+epicSummary = [];
+epicEffortSum = 0;
+epicCompleteSum = 0;
+msEffortSum = 0;
+msCompleteSum = 0;
+msPercentComplete = 0;
+epicNum = "";
+msName = "";
+msID = "";
+msObject = [];
+msSummary = [];
+numEpics = 0;
+msInitiative = "";
+msProduct = "";
+epicCount = 0;
+waitingFlag ="";
+
+
+// function to display numbers with thousands comma separator
+function formatNumber(num) {
+  return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+}
+
+
+// Function to get epic details (used in Milestone detail query)
+
+// API call for epics by product
+$("#epic_controls").submit(function() { 
+         new AhaApi({
+          accountDomain: localStorage.subDomain,
+          clientId: "161eb65d203b91eb21a89fe30932b51f4deee51bcb66d5f7b376cd7fa1addd1d", // NOTE: replace this with your client ID.
+          redirectUri: "https://fhsal.github.io/fhs-aha1"
+        }).authenticate(function(api, success, message) {
+
+          console.log(success)
+          console.log(message)
+          var productKey = $("#product-key").val();
+
+// Fetch up to 50 initiatives in one fetch.
+          api.get("/products/" + productKey + "/epics", {per_page: 50, fields: 'reference_num,name,description'}, 
+          function(response) {
+            localStorage.ii = (JSON.stringify(response))
+            inits = response
+            console.log(response)
+          });
+        });
+        return false;
+      });
+
+// API call for initiatives by product 
+$("#epic_controls2").submit(function() { 
+         new AhaApi({
+          accountDomain: localStorage.subDomain,
+          clientId: "161eb65d203b91eb21a89fe30932b51f4deee51bcb66d5f7b376cd7fa1addd1d", // NOTE: replace this with your client ID.
+          redirectUri: "https://fhsal.github.io/fhs-aha1"
+        }).authenticate(function(api, success, message) {
+
+          console.log(success)
+          console.log(message)
+          var productKey = $("#product-key2").val();
+
+// Fetch up to 50 initiatives in one fetch.
+          api.get("/products/" + productKey + "/initiatives", {per_page: 50, fields: 'reference_num,name,description'}, 
+          function(response) {
+            localStorage.ii = (JSON.stringify(response))
+            inits = response
+            console.log(response)
+          });
+        });
+        return false;
+      });
+
+// API call for a single initiative
+  $("#init_controls").submit(function() { 
+         new AhaApi({
+          accountDomain: localStorage.subDomain,
+          clientId: "161eb65d203b91eb21a89fe30932b51f4deee51bcb66d5f7b376cd7fa1addd1d", // NOTE: replace this with your client ID.
+          redirectUri: "https://fhsal.github.io/fhs-aha1"
+        }).authenticate(function(api, success, message) {
+
+          console.log(success)
+          console.log(message)
+          var productKey = $("#init-num").val();
+
+// Fetch up to 50 initiatives in one fetch.
+          api.get("/initiatives/" + productKey , {per_page: 50}, 
+          function(response) {
+            localStorage.singleInit = (JSON.stringify(response))
+            singleInit = response
+            console.log(response)
+          });
+        });
+        return false;
+      });
+
+function checkEpicsDone(epicCount) {
+
+console.log('checkEpicsDone, numEpics: ' + epicCount) 
+        if (epicCount !== 0) {
+            // waitingFlag = true;
+            setInterval(showWaiting, 500);
+            console.log('condition: ' + (epicCount !==0))
+            } else {
+  // populate Milestone summary display
+
+let showmsEffortSum = formatNumber(msEffortSum)
+let showmsCompleteSum = formatNumber(msCompleteSum)
+
+        waitingFlag = false;
+                $('#msResults').append('<br>')
+                $('#msResults').append('<strong>Milestone ID: </strong>' + msID ); 
+                $('#msResults').append(';  <strong>  # epics: </strong>' + (numEpics-1));
+                $('#msResults').append(';  <strong>  Effort: </strong>' + showmsEffortSum + ' days' );
+                $('#msResults').append(';  <strong>  Done: </strong>' + showmsCompleteSum + ' days' );
+                $('#msResults').append(';  <strong>  Progress: </strong>' + msPercentComplete +"%");
+                $('#msResults').append('<br>')
+
+  // populate Milestone summary object 
+                let msObject = {
+                    "productID" : msProduct,
+                    "initiativeID" : msInitiative,
+                    "msID" : msID,
+                    "msName" : msName,
+                    "msTotalEffort" :  msEffortSum,
+                    "msProgress" : msPercentComplete,
+                    "msTotalEffortDone" : msCompleteSum
+                };
+                msSummary.push(msObject)
+      }; 
+  }
+
+  function showWaiting() {
+     while(waitingFlag){
+       $('#msResults').append('.')
+      }
+  }
+
+
+      
+function epicAjax(){
+    var settings = {
+      "url": "https://optum.aha.io/api/v1/epics/" + epicNum + "?fields=name,original_estimate,progress",
+      "method": "GET",
+      // "timeout": 0,
+      "crossDomain": true,
+      "access-control-allow-origin": "*",
+      "headers": { "Authorization": localStorage.ahaToken, },
+      };
+
+      $.ajax(settings)
+      .then(function (response) {
+              epicInfo = response
+                        console.log(response)
+
+              let epicID = epicInfo.epic.id;         
+              let epicName = epicInfo.epic.name;
+              let epicEffort = epicInfo.epic.original_estimate/480;
+              if (epicEffort > 0) { epicEffort = epicEffort} else { epicEffort = 0} ;
+              let epicProgress = parseInt(epicInfo.epic.progress)/100;
+              let epicEffortCompl = epicEffort*epicProgress;
+              if (epicEffortCompl > 0) { epicEffortCompl = epicEffortCompl} else { epicEffortCompl = 0} ;
+
+              msEffortSum = msEffortSum + epicEffort;
+              msCompleteSum = Math.round(msCompleteSum + epicEffortCompl)
+              msPercentComplete = Math.round(100*msCompleteSum/msEffortSum)
+
+          console.log('epic effort: ' + epicEffort);
+          console.log('milestone effort subtotal: ' + msEffortSum);
+          console.log('milestone complete: ' + msCompleteSum);
+          console.log('milestone % complete: ' + msPercentComplete + "%");
+
+      let epicObject = {
+              "epicID" : epicID,
+              "epicName" :epicName.slice(0, 30),
+              "epicEffort" :  epicEffort,
+              "epicProgress" : epicProgress,
+              "epicEffortDone" : epicEffortCompl
+            }
+            console.log('from Ajax, epicCount: ' + epicCount )
+            epicSummary.push(epicObject)
+        epicCount = epicCount-1 
+        checkEpicsDone(epicCount) 
+      });
+}
+
+// input form listener to retrieve information for a single milestone, iterating through epic detail 
+  $("#ms_controls").submit(function() { 
+
+    // Initializing milestone information
+        msEffortSum = 0;
+        msCompleteSum = 0;
+        msPercentComplete = 0;
+
+         new AhaApi({
+          accountDomain: localStorage.subDomain,
+          clientId: "161eb65d203b91eb21a89fe30932b51f4deee51bcb66d5f7b376cd7fa1addd1d", // NOTE: replace this with your client ID.
+          redirectUri: "https://fhsal.github.io/fhs-aha1"
+        }).authenticate(function(api, success, message) {
+      console.log(success)
+      console.log(message)
+          var productKey = $("#msNum").val();
+
+// Fetch milestone information
+          api.get("/custom_object_records/" + productKey , {per_page: 50}, 
+          function(response) {
+            localStorage.msInfo = (JSON.stringify(response))
+            msInfo = response
+            numEpics = msInfo.custom_object_record.linked_records["length"];
+            epicCount = (numEpics-1);
+        console.log ('number of epics: ' + numEpics)
+        console.log(response)
+            msName = msInfo.custom_object_record.custom_fields[0].value
+            msID = msInfo.custom_object_record.id
+            msProduct = msInfo.custom_object_record.product_id
+            msInitiative = msInfo.custom_object_record.linked_records[(numEpics-1)].record_id
+
+// populate display block
+        $('#msBody').append('<br>') ;
+        $('#msBody').append('<strong>MilestoneID: </strong>' + productKey)
+        $('#msResults').append('<strong>MilestoneID: </strong>' + productKey)
+        $('#msBody').append('<br>') ;
+        $('#msBody').append('<strong># Epics: </strong>' + (numEpics-1))
+        $('#msResults').append(',  <strong># Epics: </strong>' + (numEpics-1))
+        $('#msResults').append('<br>') ;
+        $('#msBody').append('<br>') ;       
+        $('#msBody').append('<strong>MS Name: </strong>' + msName)
+        $('#msBody').append('<br>') ;
+        $('#msBody').append("==========================================");
+        $('#msBody').append('<br>') ;
+
+// loop through epics, waiting between each fetch to stay within API limits
+        var i;
+        for(i = 0; i < (numEpics-1); i++){
+            (function(i){
+                setTimeout(function(){
+                  let num = msInfo.custom_object_record.linked_records[i].record_id;
+                        epicNum = num.toString()
+                        $('#msBody').append("Epic #: " + (i+1));
+                        $('#msBody').append(",  record_id: " + epicNum) ;
+                        $('#msBody').append('<br>') ;
+                        $('#msResults').append('*') ;
+                      epicAjax()
+          //wait 100 milliseconds between calls (API limit is 'technically' 20ms)
+                }, 700 * i);
+            }(i)
+            );
+            };
+          })
+          $('#msBody').append('<br>')
+          msSummary.push(epicSummary)
+          });
+        return false;
+      });
+
+// input form listener to retrieve information for a single epic 
+ $("#epic_detail").submit(function() { 
+        new AhaApi({
+        accountDomain: $("#subdomain").val(),
+        clientId: "161eb65d203b91eb21a89fe30932b51f4deee51bcb66d5f7b376cd7fa1addd1d", // NOTE: replace this with your client ID.
+        redirectUri: "https://fhsal.github.io/fhs-aha1"
+      }).authenticate(function(api, success, message) {
+
+        console.log(success)
+        console.log(message)
+        var productKey = $("#epicNum").val();
+
+// Fetch epic information
+        api.get("/epics/" + productKey , {per_page: 50}, 
+        function(response) {
+          localStorage.epicInfo = (JSON.stringify(response))
+          epicInfo = response
+          console.log(response)
+        });
+      });
+      return false;
+    });
+    </script>
+  </body>
+</html>
