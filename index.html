@@ -198,7 +198,18 @@ $("#epic_controls2").submit(function() {
         return false;
       });
 
+function newPUT(){
 
+var settings = { "url": "https://optum.aha.io/api/v1/custom_object_records/" + msID, 
+   "method": "PUT", 
+   "timeout": 0, 
+   "headers": { "Authorization": localStorage.ahaToken, 
+   "Content-Type": "application/json", 
+  }, 
+   "data": JSON.stringify({"custom_object_record":{"custom_fields":{"milestone_percent_complete":msPercentComplete}}}), };
+
+$.ajax(settings).done(function (response) { console.log(response); });
+}
 
 function testPUT(){
 
