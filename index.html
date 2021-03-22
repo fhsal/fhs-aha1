@@ -314,6 +314,9 @@ function epicAjax(){
             msProduct = msInfo.custom_object_record.product_id
             msInitiative = msInfo.custom_object_record.linked_records[(numEpics-1)].record_id
 
+            
+
+
 // populate display block
         $('#msBody').append('<br>') ;
         $('#msBody').append('<strong>MilestoneID: </strong>' + productKey)
@@ -325,6 +328,7 @@ function epicAjax(){
         $('#msResults').append('<br>') ;
         $('#msBody').append('<br>') ;       
         $('#msBody').append('<strong>MS Name: </strong>' + msName)
+        $('#msResults').append(',  <strong># MS Name: </strong>' + msName.slice(0, 30))
         $('#msBody').append('<br>') ;
         $('#msBody').append("==========================================");
         $('#msBody').append('<br>') ;
@@ -339,7 +343,7 @@ function epicAjax(){
                         $('#msBody').append("Epic #: " + (i+1));
                         $('#msBody').append(",  record_id: " + epicNum) ;
                         $('#msBody').append('<br>') ;
-                        $('#msResults').append('.') ;
+                        $('#msResults').append('*') ;
                       epicAjax()
           //wait 100 milliseconds between calls (API limit is 'technically' 20ms)
                 }, 700 * i);
