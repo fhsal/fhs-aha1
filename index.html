@@ -84,7 +84,7 @@
         </form>
       </div>
   <!-- display area for MS results on right -->
-      <div class="col-sm-6" id = "initResults" style="width: 710px; background-color:teal; border-color: black; color:white"><strong>Initiative summaries<br>---------------------------------------------------------------------------------------------------------------------------------------------</strong><br></div>
+      <div class="col-sm-6" id = "initResults" style="width: 710px; background-color:teal; border-color: black; color:white"><strong>Initiative summary<br>---------------------------------------------------------------------------------------------------------------------------------------------</strong><br></div>
 </div>
  
     <div class="row">
@@ -121,6 +121,7 @@ msInitiative = "";
 msProduct = "";
 epicCount = 0;
 waitingFlag ="";
+relatedMilestones = [];
 
 // function to display numbers with thousands comma separator
 function formatNumber(num) {
@@ -192,6 +193,7 @@ $("#epic_controls2").submit(function() {
           function(response) {
             localStorage.singleInit = (JSON.stringify(response))
             singleInit = response
+            relatedMilestones = singleInit.initiative.custom_object_links[1].record_ids
             console.log(response)
           });
         });
@@ -211,54 +213,27 @@ var settings = { "url": "https://optum.aha.io/api/v1/custom_object_records/" + m
 $.ajax(settings).done(function (response) { console.log(response); });
 }
 
-function testPUT(){
-
-  var settings = { "url": "https://optum.aha.io/api/v1/custom_object_records/" + msID, 
-     "method": "PUT", 
-     "timeout": 0, 
-     "headers": { "Authorization": localStorage.ahaToken, 
-     "Content-Type": "application/json", 
-    }, 
-     "data": JSON.stringify({"custom_object_record":{"custom_fields":{"milestone_percent_complete":msPercentComplete}}}), };
-
-$.ajax(settings).done(function (response) { console.log(response); });
-}
-
-
-
-
 function updateMilestone(){
-  var settings = {
-      "url": "https://optum.aha.io/api/v1/custom_object_records/" + msID,
-      "method": "PUT",
-      "timeout": 0,
-      "Content-Type": "application/json",
-      // "crossDomain": true,
-      // "access-control-allow-origin": "*",
-      "headers": { "Authorization": localStorage.ahaToken, },
-      "data" : JSON.stringify(
-        {"custom_object_record": 
-           {"custom_fields":{"milestone_percent_complete":"40.0"}}})
-      };
-      $.ajax(settings)
-      .then(function (response) {
-           console.log(response)
-      });
-}
+  var settings = { "url": "https://optum.aha.io/api/v1/custom_object_records/" + msID, 
+        "method": "PUT", 
+        "timeout": 0, 
+        "headers": { "Authorization": localStorage.ahaToken, 
+        "Content-Type": "application/json", 
+          }, 
+        "data": JSON.stringify({"custom_object_record":{"custom_fields":{"milestone_percent_complete":msPercentComplete}}}), };
+    $.ajax(settings).done(function (response) { console.log(response); });
+  }
 
 function checkEpicsDone(epicCount) {
-
-console.log('checkEpicsDone, numEpics: ' + epicCount) 
+    console.log('checkEpicsDone, numEpics: ' + epicCount) 
         if (epicCount !== 0) {
             // waitingFlag = true;
             // setInterval(showWaiting, 500);
             console.log('condition: ' + (epicCount !==0))
             } else {
   // populate Milestone summary display
-
-let showmsEffortSum = formatNumber(msEffortSum)
-let showmsCompleteSum = formatNumber(msCompleteSum)
-
+        let showmsEffortSum = formatNumber(msEffortSum)
+        let showmsCompleteSum = formatNumber(msCompleteSum)
         waitingFlag = false;
                 $('#msResults').append('<br>')
                 $('#msResults').append('<strong>Milestone ID: </strong>' + msID ); 
@@ -267,7 +242,6 @@ let showmsCompleteSum = formatNumber(msCompleteSum)
                 $('#msResults').append(';  <strong>  Done: </strong>' + showmsCompleteSum + ' days' );
                 $('#msResults').append(';  <strong>  Progress: </strong>' + msPercentComplete +"%");
                 $('#msResults').append('<br>')
-
   // populate Milestone summary object 
                 let msObject = {
                     "productID" : msProduct,
@@ -325,7 +299,7 @@ function epicAjax(){
 }
 
 // input form listener to retrieve information for a single milestone, iterating through epic detail 
-  $("#ms_controls").submit(function() { 
+$("#ms_controls").submit(function() { 
 
     // Initializing milestone information
         msEffortSum = 0;
