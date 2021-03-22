@@ -84,7 +84,7 @@
         </form>
       </div>
   <!-- display area for MS results on right -->
-      <div class="col-sm-6" id = "msResults" style="width: 710px; background-color:teal; border-color: black; color:white"><strong>Initiative summaries<br>---------------------------------------------------------------------------------------------------------------------------------------------</strong><br></div>
+      <div class="col-sm-6" id = "initResults" style="width: 710px; background-color:teal; border-color: black; color:white"><strong>Initiative summaries<br>---------------------------------------------------------------------------------------------------------------------------------------------</strong><br></div>
 </div>
  
     <div class="row">
@@ -95,7 +95,7 @@
          <div class="col-sm-1" style="width: 10px; padding-left: 0px; padding-right: 0px"></div>
 
       <!-- display area for MS results on right -->
-         <div class="col-sm-8" id = "msResults" style="width: 710px; padding-right: 0px; background-color:darkslategray; border-color: black; color:white"><strong>Milestone summaries<br>---------------------------------------------------------------------------------------------------------------------------------------------</strong><br></div>
+         <div class="col-sm-8" id = "msResults" style="width: 710px; padding-right: 0px; background-color:darkolivegreen; border-color: black; color:white"><strong>Milestone summaries<br>---------------------------------------------------------------------------------------------------------------------------------------------</strong><br></div>
     </div> 
 
 <script>
@@ -306,7 +306,6 @@ function epicAjax(){
             msID = msInfo.custom_object_record.id
             msProduct = msInfo.custom_object_record.product_id
             msInitiative = msInfo.custom_object_record.linked_records[(numEpics-1)].record_id
-
 // populate display block
         $('#msBody').append('<br>') ;
         $('#msBody').append('<strong>MilestoneID: </strong>' + productKey)
