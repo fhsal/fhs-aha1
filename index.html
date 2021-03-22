@@ -209,7 +209,7 @@ function updateMilestone(){
       "headers": { "Authorization": localStorage.ahaToken, },
       "data" : JSON.stringify(
         {"custom_object_record": 
-           {"custom_fields":{"milestone_percent_complete":'"' + msPercentComplete +'"'}}})
+           {"custom_fields":{"milestone_percent_complete":msPercentComplete}}})
       };
       $.ajax(settings)
       .then(function (response) {
