@@ -74,19 +74,19 @@
         <form id="init_update">
   <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain"> -->
                   <input type="text" placeholder="initiative number" id="init-num2">
-                  <input type="submit" class="btn btn-primary  btn-sm"value="Load info for an initiative">
+                  <input type="submit" class="btn btn-primary  btn-sm"value="Load summary for an initiative">
                 </form>
 
         <form id="ms_controls">
   <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain4"> -->
           <input type="text" placeholder="Milestone number" id="msNum">
-          <input type="submit" class="btn btn-success  btn-sm" value="Load info for a milestone">
+          <input type="submit" class="btn btn-success  btn-sm" value="Load summaries for a milestone">
         </form>
 
         <form id="epic_detail">
   <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain5"> -->
           <input type="text" placeholder="Epic number" id="epicNum">
-          <input type="submit" class="btn btn-success  btn-sm" value="Console.log for an epic">
+          <input type="submit" class="btn btn-success  btn-sm" value="Console.log info for an epic">
         </form>
       </div>
   <!-- display area for MS results on right -->
@@ -98,7 +98,7 @@
       <!-- display area for epic parsing display on left -->
          <div class="col-sm-3" style="height:450px; overflow-y: scroll; background-color:steelblue;color:white ; width: 410px " id="msBody"> <strong>Epics related to selected Milestones<br>------------------------------------------------------------------------</strong></div>
 
-         <div class="col-sm-1" style="width: 10px; padding-left: 0px; padding-right: 0px"></div>
+         <div class="col-sm-1" style="width: 15px; padding-left: 0px; padding-right: 0px"></div>
 
       <!-- display area for MS results on right -->
          <div class="col-sm-8" id = "msResults" style="height:450px; overflow-y: scroll; word-wrap: break-word; width: 710px; padding-right: 0px; background-color:darkslategray; border-color: black; color:white"><strong>Milestone summaries<br>---------------------------------------------------------------------------------------------------------------------------------------------</strong><br></div>
@@ -140,8 +140,8 @@ function formatNumber(num) {
 $("#epic_controls").submit(function() { 
          new AhaApi({
           accountDomain: localStorage.subDomain,
-          clientId: "161eb65d203b91eb21a89fe30932b51f4deee51bcb66d5f7b376cd7fa1addd1d", // NOTE: replace this with your client ID.
-          redirectUri: "https://fhsal.github.io/fhs-aha1"
+          clientId: localStorage.clientID, // NOTE: replace this with your client ID.
+          redirectUri: localStorage.redirectUri
         }).authenticate(function(api, success, message) {
 
           console.log(success)
@@ -163,8 +163,8 @@ $("#epic_controls").submit(function() {
 $("#epic_controls2").submit(function() { 
          new AhaApi({
           accountDomain: localStorage.subDomain,
-          clientId: "161eb65d203b91eb21a89fe30932b51f4deee51bcb66d5f7b376cd7fa1addd1d", // NOTE: replace this with your client ID.
-          redirectUri: "https://fhsal.github.io/fhs-aha1"
+          clientId: localStorage.clientID, // NOTE: replace this with your client ID.
+          redirectUri: localStorage.redirectUri
         }).authenticate(function(api, success, message) {
 
           console.log(success)
@@ -186,8 +186,8 @@ $("#epic_controls2").submit(function() {
   $("#init_controls").submit(function() { 
          new AhaApi({
           accountDomain: localStorage.subDomain,
-          clientId: "161eb65d203b91eb21a89fe30932b51f4deee51bcb66d5f7b376cd7fa1addd1d", // NOTE: replace this with your client ID.
-          redirectUri: "https://fhsal.github.io/fhs-aha1"
+          clientId: localStorage.clientID, // NOTE: replace this with your client ID.
+          redirectUri: localStorage.redirectUri
         }).authenticate(function(api, success, message) {
 
           console.log(success)
@@ -212,8 +212,8 @@ $("#init_update").submit(function() {
   console.log("init update");
          new AhaApi({
           accountDomain: localStorage.subDomain,
-          clientId: "161eb65d203b91eb21a89fe30932b51f4deee51bcb66d5f7b376cd7fa1addd1d", // NOTE: replace this with your client ID.
-          redirectUri: "https://fhsal.github.io/fhs-aha1"
+          clientId: localStorage.clientID, // NOTE: replace this with your client ID.
+          redirectUri: localStorage.redirectUri
         }).authenticate(function(api, success, message) {
 
           console.log(success)
@@ -258,7 +258,7 @@ function displayInitiativeInfo () {
         $('#initResults').append(',  <strong> Name: </strong>' + initName.slice(0, 50))
         $('#initResults').append(',  <strong># Milestones: </strong>' + (numMilestones))
         $('#initResults').append('<br>') ;
-        $('#initResults').append("--------------------------------------------------------------------------------------------------------------");
+        $('#initResults').append("-------------------------------------------------------------------------------------------------------------------------------");
         $('#initResults').append('<br>') ; 
      }
 
@@ -361,8 +361,8 @@ $("#ms_controls").submit(function() {
 
          new AhaApi({
           accountDomain: localStorage.subDomain,
-          clientId: "161eb65d203b91eb21a89fe30932b51f4deee51bcb66d5f7b376cd7fa1addd1d", // NOTE: replace this with your client ID.
-          redirectUri: "https://fhsal.github.io/fhs-aha1"
+          clientId: localStorage.clientID, // NOTE: replace this with your client ID.
+          redirectUri: localStorage.redirectUri
         }).authenticate(function(api, success, message) {
       console.log(success)
       console.log(message)
@@ -425,8 +425,8 @@ $("#ms_controls").submit(function() {
  $("#epic_detail").submit(function() { 
         new AhaApi({
         accountDomain: $("#subdomain").val(),
-        clientId: "161eb65d203b91eb21a89fe30932b51f4deee51bcb66d5f7b376cd7fa1addd1d", // NOTE: replace this with your client ID.
-        redirectUri: "https://fhsal.github.io/fhs-aha1"
+        clientId: localStorage.clientID, // NOTE: replace this with your client ID.
+        redirectUri: localStorage.redirectUri
       }).authenticate(function(api, success, message) {
     console.log(success)
     console.log(message)
