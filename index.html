@@ -56,20 +56,26 @@
         <form id="epic_controls">
   <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain"> -->
           <input type="text" placeholder="Product key" id="product-key">
-          <input type="submit" class="btn" value="Load epics for a Product">
+          <input type="submit" class="btn" value="Console epics for a Product">
         </form>
 
         <form id="epic_controls2">
   <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain"> -->
           <input type="text" placeholder="Product key" id="product-key2">
-          <input type="submit" class="btn" value="Load initiatives for a Product">
+          <input type="submit" class="btn" value="Console initiatives for a Product">
         </form>
 
         <form id="init_controls">
   <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain"> -->
           <input type="text" placeholder="initiative number" id="init-num">
-          <input type="submit" class="btn" value="Load info for an initiative">
+          <input type="submit" class="btn" value="Console info for an initiative">
         </form>
+
+        <form id="init_update">
+  <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain"> -->
+                  <input type="text" placeholder="initiative number" id="init-num2">
+                  <input type="submit" class="btn" value="Load info for an initiative">
+                </form>
 
         <form id="ms_controls">
   <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain4"> -->
@@ -186,6 +192,31 @@ $("#epic_controls2").submit(function() {
 
           console.log(success)
           console.log(message)
+          var productKey = $("#init-num2").val();
+
+// Fetch up to 50 initiatives in one fetch.
+          api.get("/initiatives/" + productKey , {per_page: 50}, 
+          function(response) {
+            localStorage.singleInit = (JSON.stringify(response))
+            singleInit = response
+            relatedMilestones = singleInit.initiative.custom_object_links[1].record_ids
+            console.log(response)
+          });
+        });
+        return false;
+      });
+
+
+// API call for a single initiative
+$("#init_update").submit(function() { 
+         new AhaApi({
+          accountDomain: localStorage.subDomain,
+          clientId: "161eb65d203b91eb21a89fe30932b51f4deee51bcb66d5f7b376cd7fa1addd1d", // NOTE: replace this with your client ID.
+          redirectUri: "https://fhsal.github.io/fhs-aha1"
+        }).authenticate(function(api, success, message) {
+
+          console.log(success)
+          console.log(message)
           var productKey = $("#init-num").val();
 
 // Fetch up to 50 initiatives in one fetch.
@@ -200,19 +231,73 @@ $("#epic_controls2").submit(function() {
         return false;
       });
 
-function newPUT(){
 
-var settings = { "url": "https://optum.aha.io/api/v1/custom_object_records/" + msID, 
-   "method": "PUT", 
-   "timeout": 0, 
-   "headers": { "Authorization": localStorage.ahaToken, 
-   "Content-Type": "application/json", 
-  }, 
-   "data": JSON.stringify({"custom_object_record":{"custom_fields":{"milestone_percent_complete":msPercentComplete}}}), };
 
-$.ajax(settings).done(function (response) { console.log(response); });
-}
+function getInitiativeInfo () {
 
+// Initializing milestone information
+    initEffortSum = 0;
+    initCompleteSum = 0;
+    initPercentComplete = 0;
+
+     new AhaApi({
+      accountDomain: localStorage.subDomain,
+      clientId: "161eb65d203b91eb21a89fe30932b51f4deee51bcb66d5f7b376cd7fa1addd1d", // NOTE: replace this with your client ID.
+      redirectUri: "https://fhsal.github.io/fhs-aha1"
+    }).authenticate(function(api, success, message) {
+  console.log(success)
+  console.log(message)
+  // use input initiative number from form above
+      var productKey = $("#initNum").val();
+
+// Fetch initiative information
+      api.get("/custom_object_records/initiatives" + productKey, 
+      function(response) {
+        localStorage.initInfo = (JSON.stringify(response))
+        initInfo = response
+        numMilestones = initInfo.initiative.custom_object_links[1].record_ids.length;
+        msCount = numMilestones;
+    console.log ('number of milestones: ' + numMilestones)
+    console.log(response)
+        initName = initInfo.initiative.name;
+        initID = msInfo.custom_object_record.id;
+        initProduct = initInfo.initiative.product_id;
+// populate display block
+        $('#initResults').append('<br>') ;
+        $('#initResults').append('<strong>InitiativeID: </strong>' + initID)
+        $('#initResults').append('<br>') ;
+        $('#initResults').append('<strong># Milestones: </strong>' + (numMilestones))
+        $('#initResults').append('<br>') ;       
+        $('#initResults').append(',  <strong> Name: </strong>' + initName.slice(0, 50))
+        $('#initResults').append('<br>') ;
+        $('#initResults').append("==========================================");
+        $('#initResults').append('<br>') ;
+
+// loop through epics, waiting between each fetch to stay within API limits
+    // var i;
+    // for(i = 0; i < (numEpics-1); i++){
+    //     (function(i){
+    //         setTimeout(function(){
+    //           let num = msInfo.custom_object_record.linked_records[i].record_id;
+    //                 epicNum = num.toString()
+    //                 $('#msBody').append("Epic #: " + (i+1));
+    //                 $('#msBody').append(",  record_id: " + epicNum) ;
+    //                 $('#msBody').append('<br>') ;
+    //                 $('#msResults').append('*') ;
+    //               epicAjax()
+    //   //wait 100 milliseconds between calls (API limit is 'technically' 20ms)
+    //         }, 700 * i);
+    //     }(i)
+    //     );
+    //     };
+      })
+      $('#initResults').append('<br>')
+      // msSummary.push(epicSummary)
+      });
+    return false;
+  }
+
+// function to update Milestone % complete via PUT 
 function updateMilestone(){
   var settings = { "url": "https://optum.aha.io/api/v1/custom_object_records/" + msID, 
         "method": "PUT", 
