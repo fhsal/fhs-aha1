@@ -45,6 +45,31 @@
         height:150px;
         overflow-y: scroll;
       }
+
+      .btn-primary {
+        color: white;
+        background-color: teal;
+        border-color: teal;
+        }
+
+        .btn-secondary {
+        color: white;
+        background-color: darkgoldenrod;
+        border-color: darkgoldenrod;
+        }
+
+        .btn-success {
+        color: white;
+        background-color: darkslategray;
+        border-color: darkslategray;
+        }
+
+        .btn-info {
+        color: white;
+        background-color: darkgreen;
+        border-color: darkgreen;
+        }
+
       
     </style>
   </head>
@@ -59,7 +84,7 @@
         <form id="epic_controls">
   <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain"> -->
           <input type="text" placeholder="Product key" id="product-key">
-          <input type="submit" class="btn btn-secondary  btn-sm" value="Console.log epics for a Product">
+          <input type="submit" class="btn btn-secondary btn-sm" value="Console.log epics for a Product">
         </form>
 
         <form id="epic_controls2">
@@ -89,11 +114,12 @@
         <form id="epic_detail">
   <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain5"> -->
           <input type="text" placeholder="Epic number" id="epicNum">
-          <input type="submit" class="btn btn-success  btn-sm" value="Console.log info for an epic">
+          <input type="submit" class="btn btn-info  btn-sm" value="Console.log info for an epic">
         </form>
       </div>
   <!-- display area for MS results on right -->
-      <div class="col-sm-6" id = "initResults" style="height:250px; overflow-y: scroll; ; word-wrap: break-word; width: 710px; background-color:teal; border-color: black; color:white"><strong>Initiative summary<br>---------------------------------------------------------------------------------------------------------------------------------------------</strong><br></div>
+      <div class="col-sm-6" id = "prodResults" style="height:120px; margin-bottom: 5px;overflow-y: scroll; ; word-wrap: break-word; width: 710px; background-color:darkgoldenrod; border-color: black; color:white"><strong>Product summary<br>---------------------------------------------------------------------------------------------------------------------------------------------</strong><br></div>
+      <div class="col-sm-6" id = "initResults" style="height:125px; margin-top: 5px; overflow-y: scroll; ; word-wrap: break-word; width: 710px; background-color:teal; border-color: black; color:white"><strong>Initiative summary<br>---------------------------------------------------------------------------------------------------------------------------------------------</strong><br></div>
 </div>
  
     <div class="row">
