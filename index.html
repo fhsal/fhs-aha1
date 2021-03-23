@@ -227,7 +227,7 @@ $("#init_update").submit(function() {
             singleInit = response
             relatedMilestones = singleInit.initiative.custom_object_links[1].record_ids
             console.log(response)
-            getInitiativeInfo()
+            displayInitiativeInfo()
           });
         });
         return false;
