@@ -192,7 +192,7 @@ $("#epic_controls2").submit(function() {
 
           console.log(success)
           console.log(message)
-          var productKey = $("#init-num2").val();
+          var productKey = $("#init-num").val();
 
 // Fetch up to 50 initiatives in one fetch.
           api.get("/initiatives/" + productKey , {per_page: 50}, 
@@ -209,6 +209,7 @@ $("#epic_controls2").submit(function() {
 
 // API call for a single initiative
 $("#init_update").submit(function() { 
+  console.log("init update");
          new AhaApi({
           accountDomain: localStorage.subDomain,
           clientId: "161eb65d203b91eb21a89fe30932b51f4deee51bcb66d5f7b376cd7fa1addd1d", // NOTE: replace this with your client ID.
@@ -217,7 +218,7 @@ $("#init_update").submit(function() {
 
           console.log(success)
           console.log(message)
-          var productKey = $("#init-num").val();
+          var productKey = $("#init-num2").val();
 
 // Fetch up to 50 initiatives in one fetch.
           api.get("/initiatives/" + productKey , {per_page: 50}, 
