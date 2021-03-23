@@ -52,7 +52,7 @@
   <body class="container">
    <div class="row" id = inputForms>
 <br><br>
-    <div class="col-sm-5"  style= "width: 425px";>
+    <div class="col-sm-5"  style= "width: 425px; padding-left: 0px";>
         <form id="epic_controls">
   <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain"> -->
           <input type="text" placeholder="Product key" id="product-key">
@@ -254,12 +254,15 @@ function displayInitiativeInfo () {
         initProduct = initInfo.initiative.product_id;
 // populate initiative summary for display block
         $('#initResults').append('<br>') ;
-        $('#initResults').append('<strong>InitiativeID: </strong>' + initID)
-        $('#initResults').append(',  <strong> Name: </strong>' + initName.slice(0, 50))
-        $('#initResults').append(',  <strong># Milestones: </strong>' + (numMilestones))
+        $('#initResults').append('<strong>InitiativeID: </strong>' + initID);
+        $('#initResults').append(',  <strong> Name: </strong>' + initName.slice(0, 50));
+        $('#initResults').append(',  <strong># Milestones: </strong>' + (numMilestones));
         $('#initResults').append('<br>') ;
         $('#initResults').append("-------------------------------------------------------------------------------------------------------------------------------");
-        $('#initResults').append('<br>') ; 
+        $('#initResults').append('<br>') ;
+        $('#initResults').append(JSON.stringify(relatedMilestones));
+        $('#initResults').append('<br>');
+        ; 
      }
 
 
