@@ -252,15 +252,13 @@ function displayInitiativeInfo () {
         initName = initInfo.initiative.name;
         initID = initInfo.initiative.id;
         initProduct = initInfo.initiative.product_id;
-// populate display block
+// populate initiative summary for display block
         $('#initResults').append('<br>') ;
         $('#initResults').append('<strong>InitiativeID: </strong>' + initID)
-        $('#initResults').append('<br>') ;
-        $('#initResults').append('<strong># Milestones: </strong>' + (numMilestones))
-        $('#initResults').append('<br>') ;       
         $('#initResults').append(',  <strong> Name: </strong>' + initName.slice(0, 50))
+        $('#initResults').append(',  <strong># Milestones: </strong>' + (numMilestones))
         $('#initResults').append('<br>') ;
-        $('#initResults').append("==========================================");
+        $('#initResults').append("=================================================================================");
         $('#initResults').append('<br>') ; 
      }
 
@@ -277,6 +275,8 @@ function updateMilestone(){
     $.ajax(settings).done(function (response) { console.log(response); });
   }
 
+// function to count down epics as their responses are received, displaying an "*"
+//  for each as completed & then the overall summary  
 function checkEpicsDone(epicCount) {
     console.log('checkEpicsDone, numEpics: ' + epicCount) 
         if (epicCount !== 0) {
