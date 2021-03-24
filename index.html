@@ -423,7 +423,8 @@ function checkEpicsDone(epicCount) {
                     "msProgress" : msPercentComplete,
                     "msTotalEffortDone" : msCompleteSum
                 };
-                msSummary.push(msObject)
+                msSummary.push(msObject);
+                updateMilestone();
       }; 
   }
 
