@@ -45,11 +45,40 @@
         height:150px;
         overflow-y: scroll;
       }
+
+      .btn-primary {
+        color: white;
+        background-color: teal;
+        border-color: teal;
+        width: 212px;
+        }
+
+        .btn-secondary {
+        color: white;
+        background-color: darkgoldenrod;
+        border-color: darkgoldenrod;
+        width: 212px;
+        }
+
+        .btn-success {
+        color: white;
+        background-color: darkslategray;
+        border-color: darkslategray;
+        width: 212px;
+        }
+
+        .btn-info {
+        color: white;
+        background-color: darkgreen;
+        border-color: darkgreen;
+        width: 212px;
+        }
+
       
     </style>
   </head>
 
-<h1>Aha! Milestone Crawler</h1>
+<h1>Aha! Milestone API Crawler</h1>
 <hr style = "margin-top: -5px; margin-bottom: 0px; width: 1135px; border-top: 1px solid cadetblue; margin-left: -15">  
 
   <body class="container">
@@ -59,13 +88,13 @@
         <form id="epic_controls">
   <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain"> -->
           <input type="text" placeholder="Product key" id="product-key">
-          <input type="submit" class="btn btn-secondary  btn-sm" value="Console.log epics for a Product">
+          <input type="submit" class="btn btn-secondary btn-sm" value="Console.log initiatives for a product">
         </form>
 
         <form id="epic_controls2">
   <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain"> -->
-          <input type="text" placeholder="Product key" id="product-key2">
-          <input type="submit" class="btn btn-secondary  btn-sm" value="Console.log initiatives for Product">
+          <input type="text" placeholder="Roll up Initiative number" id="product-key2">
+          <input type="submit" class="btn btn-secondary  btn-sm" value="Console.log children of an initiative">
         </form>
 
         <form id="init_controls">
@@ -89,11 +118,12 @@
         <form id="epic_detail">
   <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain5"> -->
           <input type="text" placeholder="Epic number" id="epicNum">
-          <input type="submit" class="btn btn-success  btn-sm" value="Console.log info for an epic">
+          <input type="submit" class="btn btn-info  btn-sm" value="Console.log info for an epic">
         </form>
       </div>
   <!-- display area for MS results on right -->
-      <div class="col-sm-6" id = "initResults" style="height:250px; overflow-y: scroll; ; word-wrap: break-word; width: 710px; background-color:teal; border-color: black; color:white"><strong>Initiative summary<br>---------------------------------------------------------------------------------------------------------------------------------------------</strong><br></div>
+      <div class="col-sm-6" id = "prodResults" style="height:120px; margin-bottom: 5px;overflow-y: scroll; ; word-wrap: break-word; width: 710px; background-color:darkgoldenrod; border-color: black; color:white"><strong>Product summary<br>---------------------------------------------------------------------------------------------------------------------------------------------</strong><br></div>
+      <div class="col-sm-6" id = "initResults" style="height:125px; margin-top: 5px; overflow-y: scroll; ; word-wrap: break-word; width: 710px; background-color:teal; border-color: black; color:white"><strong>Initiative summary<br>---------------------------------------------------------------------------------------------------------------------------------------------</strong><br></div>
 </div>
  
     <div class="row">
@@ -287,7 +317,7 @@ function checkInitiativesDone(initCount) {
         waitingFlag = false;
                 $('#initResults').append('<br>')
                 $('#initResults').append('<strong>Initiative ID: </strong>' + initID ); 
-                $('#initResults').append(';  <strong>  # epics: </strong>' + numMilestones);
+                $('#initResults').append(';  <strong>  #epics: </strong>' + numMilestones);
                 $('#initResults').append(';  <strong>  Effort: </strong>' + showInitEffortSum + ' days' );
                 $('#initResults').append(';  <strong>  Done: </strong>' + showInitCompleteSum + ' days' );
                 $('#initResults').append(';  <strong>  Progress: </strong>' + mInitPercentComplete +"%");
@@ -377,8 +407,8 @@ function checkEpicsDone(epicCount) {
         let showmsCompleteSum = formatNumber(msCompleteSum)
         waitingFlag = false;
                 $('#msResults').append('<br>')
-                $('#msResults').append('<strong>Milestone ID: </strong>' + msID ); 
-                $('#msResults').append(';  <strong>  # epics: </strong>' + (numEpics-1));
+                $('#msResults').append('<strong>Milestone: </strong>' + msID ); 
+                $('#msResults').append(';  <strong>  #Epics: </strong>' + (numEpics-1));
                 $('#msResults').append(';  <strong>  Effort: </strong>' + showmsEffortSum + ' days' );
                 $('#msResults').append(';  <strong>  Done: </strong>' + showmsCompleteSum + ' days' );
                 $('#msResults').append(';  <strong>  Progress: </strong>' + msPercentComplete +"%");
