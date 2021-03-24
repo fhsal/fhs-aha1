@@ -88,12 +88,12 @@
         <form id="epic_controls">
   <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain"> -->
           <input type="text" placeholder="Product key" id="product-key">
-          <input type="submit" class="btn btn-secondary btn-sm" value="Console.log initiatives for a Product">
+          <input type="submit" class="btn btn-secondary btn-sm" value="Console.log initiatives for a product">
         </form>
 
         <form id="epic_controls2">
   <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain"> -->
-          <input type="text" placeholder="Product key" id="product-key2">
+          <input type="text" placeholder="Roll up Initiative number" id="product-key2">
           <input type="submit" class="btn btn-secondary  btn-sm" value="Console.log children of an initiative">
         </form>
 
@@ -317,7 +317,7 @@ function checkInitiativesDone(initCount) {
         waitingFlag = false;
                 $('#initResults').append('<br>')
                 $('#initResults').append('<strong>Initiative ID: </strong>' + initID ); 
-                $('#initResults').append(';  <strong>  # epics: </strong>' + numMilestones);
+                $('#initResults').append(';  <strong>  #epics: </strong>' + numMilestones);
                 $('#initResults').append(';  <strong>  Effort: </strong>' + showInitEffortSum + ' days' );
                 $('#initResults').append(';  <strong>  Done: </strong>' + showInitCompleteSum + ' days' );
                 $('#initResults').append(';  <strong>  Progress: </strong>' + mInitPercentComplete +"%");
@@ -407,8 +407,8 @@ function checkEpicsDone(epicCount) {
         let showmsCompleteSum = formatNumber(msCompleteSum)
         waitingFlag = false;
                 $('#msResults').append('<br>')
-                $('#msResults').append('<strong>Milestone ID: </strong>' + msID ); 
-                $('#msResults').append(';  <strong>  # epics: </strong>' + (numEpics-1));
+                $('#msResults').append('<strong>Milestone: </strong>' + msID ); 
+                $('#msResults').append(';  <strong>  #Epics: </strong>' + (numEpics-1));
                 $('#msResults').append(';  <strong>  Effort: </strong>' + showmsEffortSum + ' days' );
                 $('#msResults').append(';  <strong>  Done: </strong>' + showmsCompleteSum + ' days' );
                 $('#msResults').append(';  <strong>  Progress: </strong>' + msPercentComplete +"%");
