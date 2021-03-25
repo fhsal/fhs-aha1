@@ -158,6 +158,7 @@ msPercentComplete = 0;
 msCount = 0;
 msName = "";
 msID = "";
+msIndex = 0;
 msObject = [];
 msSummary = [];
 msInitiative = "";
@@ -433,7 +434,7 @@ $("#ms_controls").submit(function() {
           function(response) {
             localStorage.msInfo = (JSON.stringify(response))
             msInfo = response
-            numEpics = msInfo.custom_object_record.linked_records["length"];
+            numEpics = (msInfo.custom_object_record.linked_records["length"] -1);
             epicCount = (numEpics-1);
         console.log ('number of epics: ' + numEpics)
         console.log(response)
@@ -562,8 +563,8 @@ function parseMilestone(){
           function(response) {
             localStorage.msInfo = (JSON.stringify(response))
             msInfo = response
-            numEpics = msInfo.custom_object_record.linked_records["length"];
-            epicCount = (numEpics-2);
+            numEpics = (msInfo.custom_object_record.linked_records["length"]-1);
+            epicCount = (numEpics-1);
         console.log ('number of epics: ' + numEpics)
         console.log(response)
             msName = msInfo.custom_object_record.custom_fields[0].value
