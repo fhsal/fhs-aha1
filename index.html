@@ -606,30 +606,39 @@ function parseMilestone(){
           $('#msBody').append('<br>')
           msSummary.push(epicSummary)
 
-// // when milestone complete decrement msCount and parse next milestone if count != 0 
-//             msCount = (msCount-1);
-//             if (msCount !==0){ 
-//                 msIndex = (numMilestones - msCount)
-//                 msToParse = relatedMilestones[msIndex]
-//         console.log('milestone count: ' + msCount);        
-//                 parseMilestone()}
-//             else {
-//   // populate Initiative summary object 
-//                 let initObject = {
-//                     "productID" : initProductID,
-//                     "productName" : initProductName,
-//                     "initiativeID" : initID,
-//                     "initiativeName" : initName,
-//                     "initTotalEffort" :  initEffortSum,
-//                     "initProgress" : initPercentComplete,
-//                     "initTotalEffortDone" : initCompleteSum
-//                 };
-//                 initSummary.push(initObject)
-//               $('#initResults').append('<br>')
-//             }
             });
           return false;
   }
+
+function checkMilestonesDone () {
+// when milestone complete decrement msCount and parse next milestone if count != 0 
+
+            console.log('milestone count: ' + msCount);  
+            if (msCount !==0){ 
+                msIndex = (numMilestones - msCount)
+                msToParse = relatedMilestones[msIndex]
+                msCount = (msCount-1);
+              parseMilestone()
+            }
+            else {
+  // populate Initiative summary object 
+                let initObject = {
+                    "productID" : initProductID,
+                    "productName" : initProductName,
+                    "initiativeID" : initID,
+                    "initiativeName" : initName,
+                    "initTotalEffort" :  initEffortSum,
+                    "initProgress" : initPercentComplete,
+                    "initTotalEffortDone" : initCompleteSum
+                };
+                initSummary.push(initObject)
+              $('#initResults').append('<br>')
+            }
+
+
+}
+
+
 
 // input form listener to retrieve information for a single epic 
  $("#epic_detail").submit(function() { 
