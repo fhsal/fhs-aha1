@@ -87,14 +87,14 @@
     <div class="col-sm-5"  style= "width: 425px; padding-left: 0px";>
         <form id="epic_controls">
   <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain"> -->
-          <input type="text" placeholder="Roll up Initiative number" id="product-key">
-          <input type="submit" class="btn btn-secondary btn-sm" value="Console.log initiatives for a portfolio">
+          <input type="text" placeholder="Product key" id="product-key">
+          <input type="submit" class="btn btn-secondary btn-sm" value="Console.log initiatives for a product">
         </form>
 
         <form id="epic_controls2">
   <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain"> -->
           <input type="text" placeholder="Roll up Initiative number" id="product-key2">
-          <input type="submit" class="btn btn-secondary  btn-sm" value="*tbd* update initiatives for a portfolio">
+          <input type="submit" class="btn btn-secondary  btn-sm" value="Console.log children of an initiative">
         </form>
 
         <form id="init_info">
@@ -162,12 +162,6 @@ msProduct = "";
 epicCount = 0;
 waitingFlag ="";
 relatedMilestones = [];
-msToParse = "";
-initObject = [];
-initCount = 0;
-msCount = 0;
-
-
 
 // function to display numbers with thousands comma separator
 function formatNumber(num) {
@@ -222,8 +216,8 @@ $("#epic_controls2").submit(function() {
         return false;
       });
 
-// API call to display a single initiative and store related milestones in relatedMilestones variable
-$("#init_info").submit(function() { 
+// API call for a single initiative and store related milestones in relatedMilestones variable
+  $("#init_info").submit(function() { 
          new AhaApi({
           accountDomain: localStorage.subDomain,
           clientId: localStorage.clientID, // NOTE: replace this with your client ID.
@@ -236,6 +230,35 @@ $("#init_info").submit(function() {
 
 // Fetch up to 50 initiatives in one fetch.
         api.get("/initiatives/" + productKey , {per_page: 50}, 
+          function(response) {
+            localStorage.singleInit = (JSON.stringify(response))
+            singleInit = response
+            relatedMilestones = singleInit.initiative.custom_object_links[1].record_ids
+            console.log(response)
+            initProductName = singleInit.initiative.project.name
+            initProductID = singleInit.initiative.project.id
+            displayInitiativeInfo()
+          });
+        });
+        return false;
+      });
+
+
+// API call for a single initiative to display related milestones in initiative summary block
+$("#init_update").submit(function() { 
+  console.log("init update");
+         new AhaApi({
+          accountDomain: localStorage.subDomain,
+          clientId: localStorage.clientID, // NOTE: replace this with your client ID.
+          redirectUri: localStorage.redirectUri
+        }).authenticate(function(api, success, message) {
+
+          console.log(success)
+          console.log(message)
+          var productKey = $("#init-num2").val();
+
+// Fetch up to 50 initiatives in one fetch.
+          api.get("/initiatives/" + productKey , {per_page: 50}, 
           function(response) {
             localStorage.singleInit = (JSON.stringify(response))
             singleInit = response
@@ -284,23 +307,20 @@ function displayInitiativeInfo () {
 
 // function to count down epics as their responses are received, displaying an "*"
 //  for each as completed & then the overall summary  
-function checkInitiativeDone(initCount) {
+function checkInitiativesDone(initCount) {
     console.log('checkInitiativesDone, numMilestones: ' + numMilestones) 
-        if (msCount !== 0) {
+        if (numMilestones !== 0) {
             // waitingFlag = true;
             // setInterval(showWaiting, 500);
-            console.log('condition: ' + (msCount !==0))
-            msCount = (mscount-1)
-            parseMilestone ()
-
+            console.log('condition: ' + (numMilestones !==0))
             } else {
-  // populate Initiative summary display
+  // populate Milestone summary display
         let showInitEffortSum = formatNumber(initEffortSum)
         let showInitCompleteSum = formatNumber(initCompleteSum)
         waitingFlag = false;
                 $('#initResults').append('<br>')
-                $('#initResults').append('<strong>Initiative#: </strong>' + initID ); 
-                $('#initResults').append(';  <strong>  #Milestones: </strong>' + numMilestones);
+                $('#initResults').append('<strong>Initiative ID: </strong>' + initID ); 
+                $('#initResults').append(';  <strong>  #epics: </strong>' + numMilestones);
                 $('#initResults').append(';  <strong>  Effort: </strong>' + showInitEffortSum + ' days' );
                 $('#initResults').append(';  <strong>  Done: </strong>' + showInitCompleteSum + ' days' );
                 $('#initResults').append(';  <strong>  Progress: </strong>' + mInitPercentComplete +"%");
@@ -319,6 +339,50 @@ function checkInitiativeDone(initCount) {
                 initSummary.push(initObject)
       }; 
   }
+
+function initiativeAjax(){
+    var settings = {
+      "url": "https://optum.aha.io/api/v1/epics/" + epicNum + "?fields=name,original_estimate,progress",
+      "method": "GET",
+      // "timeout": 0,
+      "crossDomain": true,
+      "access-control-allow-origin": "*",
+      "headers": { "Authorization": localStorage.ahaToken, },
+      };
+      $.ajax(settings)
+      .then(function (response) {
+              epicInfo = response
+                        console.log(response)
+              let epicID = epicInfo.epic.id;         
+              let epicName = epicInfo.epic.name;
+              let epicEffort = epicInfo.epic.original_estimate/480;
+              if (epicEffort > 0) { epicEffort = epicEffort} else { epicEffort = 0} ;
+              let epicProgress = parseInt(epicInfo.epic.progress)/100;
+              let epicEffortCompl = epicEffort*epicProgress;
+              if (epicEffortCompl > 0) { epicEffortCompl = epicEffortCompl} else { epicEffortCompl = 0} ;
+              msEffortSum = msEffortSum + epicEffort;
+              msCompleteSum = Math.round(msCompleteSum + epicEffortCompl)
+              msPercentComplete = Math.round(100*msCompleteSum/msEffortSum)
+          console.log('epic effort: ' + epicEffort);
+          console.log('milestone effort subtotal: ' + msEffortSum);
+          console.log('milestone complete: ' + msCompleteSum);
+          console.log('milestone % complete: ' + msPercentComplete + "%");
+
+          let epicObject = {
+              "epicID" : epicID,
+              "epicName" :epicName.slice(0, 30),
+              "epicEffort" :  epicEffort,
+              "epicProgress" : epicProgress,
+              "epicEffortDone" : epicEffortCompl
+            }
+            console.log('from Ajax, epicCount: ' + epicCount )
+            epicSummary.push(epicObject)
+        epicCount = epicCount-1 
+        checkEpicsDone(epicCount) 
+      });
+}
+
+
 
 // function to update Milestone % complete via PUT 
 function postMilestoneUpdate(){
@@ -367,7 +431,6 @@ function checkEpicsDone(epicCount) {
       }; 
   }
 
-// function GETs info for a specific Epic
 function epicAjax(){
     var settings = {
       "url": "https://optum.aha.io/api/v1/epics/" + epicNum + "?fields=name,original_estimate,progress",
@@ -481,67 +544,8 @@ $("#ms_controls").submit(function() {
       });
 
 
-// API call to update milestones for an initiative by calling function crawlMilestones
-$("#init_update").submit(function() { 
-
-console.log('init update');
-
-// Initializing milestone information
-    initEffortSum = 0;
-    msinitCompleteSum = 0;
-    initPercentComplete = 0;
-
-     new AhaApi({
-      accountDomain: localStorage.subDomain,
-      clientId: localStorage.clientID, // NOTE: replace this with your client ID.
-      redirectUri: localStorage.redirectUri
-    }).authenticate(function(api, success, message) {
-  console.log(success)
-  console.log(message)
-      var productKey = $("#init-num2").val();
-
-// Fetch milestone information
-      api.get("/initiatives/" + productKey , {per_page: 50}, 
-      function(response) {
-        localStorage.singleInit = (JSON.stringify(response))
-            singleInit = response
-            relatedMilestones = singleInit.initiative.custom_object_links[1].record_ids
-            console.log(response)
-            numMilestones = initInfo.initiative.custom_object_links[1].record_ids.length;
-            msCount = (numMilestones);
-    console.log ('number of milestones: ' + numMilestones)
-    console.log(response)
-            initName = initInfo.initiative.name;
-            initID = initInfo.initiative.id;
-            initProduct = initInfo.initiative.product_id;
-
-// populate initiative summary for display block
-        $('#initResults').append('<br>') ;
-        $('#initResults').append('<strong>InitiativeID: </strong>' + initID);
-        $('#initResults').append(',  <strong> Name: </strong>' + initName.slice(0, 50));
-        $('#initResults').append(',  <strong># Milestones: </strong>' + (numMilestones));
-        $('#initResults').append('<br>') ;
-        $('#initResults').append("-------------------------------------------------------------------------------------------------------------------------------");
-        $('#initResults').append('<br>') ;
-        $('#initResults').append('<strong>Milestones: </strong>' + JSON.stringify(relatedMilestones));
-        $('#initResults').append('<br>');
-        ; 
-
-// set the index of the milestone to parse and call parseMilestone 
-
-       let msIndex = (numMilestones - msCount)
-       msToParse = relatedMilestones[msIndex]
-       parseMilestone()
-
-      })
-      });
-    return false;
-  });
-
-// function to parse in individual milestone and update it's progress (a partial copy of #ms_controls listener abpve)      
+// function to parse in individual milestone and update it's progress       
 function parseMilestone(){
-
-  console.log('parseMilestone')
       // Initializing milestone information
           msEffortSum = 0;
           msCompleteSum = 0;
@@ -554,7 +558,7 @@ function parseMilestone(){
           }).authenticate(function(api, success, message) {
         console.log(success)
         console.log(message)
-            var productKey = msToParse;
+            var productKey = $("#msNum").val();
 
       // Fetch milestone information
             api.get("/custom_object_records/" + productKey , {per_page: 50}, 
@@ -605,28 +609,6 @@ function parseMilestone(){
             })
             $('#msBody').append('<br>')
             msSummary.push(epicSummary)
-
-// when milestone complete decrement msCount and parse next milestone if count != 0 
-            msCount = (msCount-1);
-            if (msCount !==0){ 
-                msIndex = (numMilestones - msCount)
-                msToParse = relatedMilestones[msIndex]
-        console.log('milestone count: ' + msCount);        
-                parseMilestone()}
-            else {
-  // populate Initiative summary object 
-                let initObject = {
-                    "productID" : initProductID,
-                    "productName" : initProductName,
-                    "initiativeID" : initID,
-                    "initiativeName" : initName,
-                    "initTotalEffort" :  initEffortSum,
-                    "initProgress" : initPercentComplete,
-                    "initTotalEffortDone" : initCompleteSum
-                };
-                initSummary.push(initObject)
-              $('#initResults').append('<br>')
-            }
             });
           return false;
   }
