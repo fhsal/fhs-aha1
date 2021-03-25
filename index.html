@@ -93,8 +93,8 @@
 
         <form id="epic_controls2">
   <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain"> -->
-          <input type="text" placeholder="Roll up Initiative number" id="product-key2">
-          <input type="submit" class="btn btn-secondary  btn-sm" value="*tbd* update initiatives for a portfolio">
+          <input type="text" placeholder="Product ID" id="product-key2">
+          <input type="submit" class="btn btn-secondary  btn-sm" value="console.log initiatives for product">
         </form>
 
         <form id="init_info">
@@ -142,31 +142,32 @@
 
 epics = "";
 inits = "";
+portfolioInits = [];
 singleInit = "";
 msInfo = "";
 epicInfo ="";
 epicSummary = [];
 epicEffortSum = 0;
 epicCompleteSum = 0;
+epicNum = "";
+numEpics = 0;
+epicCount = 0;
 msEffortSum = 0;
 msCompleteSum = 0;
 msPercentComplete = 0;
-epicNum = "";
+msCount = 0;
 msName = "";
 msID = "";
 msObject = [];
 msSummary = [];
-numEpics = 0;
 msInitiative = "";
 msProduct = "";
-epicCount = 0;
 waitingFlag ="";
 relatedMilestones = [];
 msToParse = "";
 initObject = [];
 initCount = 0;
-msCount = 0;
-
+initSummary = [];
 
 
 // function to display numbers with thousands comma separator
@@ -174,9 +175,7 @@ function formatNumber(num) {
   return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
 }
 
-// Function to get epic details (used in Milestone detail query)
-
-// API call for epics by product
+// API call for epics by portfolio (roll-up initiative)
 $("#epic_controls").submit(function() { 
          new AhaApi({
           accountDomain: localStorage.subDomain,
@@ -189,10 +188,10 @@ $("#epic_controls").submit(function() {
           var productKey = $("#product-key").val();
 
 // Fetch up to 50 initiatives in one fetch.
-          api.get("/products/" + productKey + "/epics", {per_page: 50, fields: 'reference_num,name,description'}, 
+          api.get("/initiatives/" + productKey + "?fields=children", 
           function(response) {
             localStorage.ii = (JSON.stringify(response))
-            inits = response
+            portfolioInits = response
             console.log(response)
           });
         });
@@ -481,14 +480,14 @@ $("#ms_controls").submit(function() {
       });
 
 
-// API call to update milestones for an initiative by calling function crawlMilestones
+// API call to update milestones for an initiative by iterating through each related milestone
 $("#init_update").submit(function() { 
 
 console.log('init update');
 
 // Initializing milestone information
     initEffortSum = 0;
-    msinitCompleteSum = 0;
+    initCompleteSum = 0;
     initPercentComplete = 0;
 
      new AhaApi({
@@ -527,9 +526,9 @@ console.log('init update');
         $('#initResults').append('<br>');
         ; 
 
-// set the index of the milestone to parse and call parseMilestone 
+// set the index and ID of the milestone to parse and call parseMilestone 
 
-       let msIndex = (numMilestones - msCount)
+       msIndex = (numMilestones - msCount)
        msToParse = relatedMilestones[msIndex]
        parseMilestone()
 
@@ -547,7 +546,7 @@ function parseMilestone(){
           msCompleteSum = 0;
           msPercentComplete = 0;
 
-          new AhaApi({
+        new AhaApi({
             accountDomain: localStorage.subDomain,
             clientId: localStorage.clientID, // NOTE: replace this with your client ID.
             redirectUri: localStorage.redirectUri
@@ -630,7 +629,6 @@ function parseMilestone(){
             });
           return false;
   }
-
 
 // input form listener to retrieve information for a single epic 
  $("#epic_detail").submit(function() { 
