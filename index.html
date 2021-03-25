@@ -554,7 +554,7 @@ function parseMilestone(){
         }).authenticate(function(api, success, message) {
       console.log(success)
       console.log(message)
-          var productKey = $("#msNum").val();
+          var productKey = msToParse;
 
 // Fetch milestone information
           api.get("/custom_object_records/" + productKey , {per_page: 50}, 
