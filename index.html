@@ -165,6 +165,7 @@ msProduct = "";
 waitingFlag ="";
 relatedMilestones = [];
 msToParse = "";
+initinfo = "";
 initObject = [];
 initCount = 0;
 initSummary = [];
@@ -268,14 +269,14 @@ function displayInitiativeInfo () {
         initID = initInfo.initiative.id;
         initProduct = initInfo.initiative.product_id;
 // populate initiative summary for display block
-        $('#initResults').append('<br>') ;
+        // $('#initResults').append('<br>') ;
         $('#initResults').append('<strong>InitiativeID: </strong>' + initID);
         $('#initResults').append(',  <strong> Name: </strong>' + initName.slice(0, 50));
         $('#initResults').append(',  <strong># Milestones: </strong>' + (numMilestones));
         $('#initResults').append('<br>') ;
         $('#initResults').append("-------------------------------------------------------------------------------------------------------------------------------");
         $('#initResults').append('<br>') ;
-        $('#initResults').append('<strong>Milestones: </strong>' + JSON.stringify(relatedMilestones));
+        $('#initResults').append(JSON.stringify(relatedMilestones));
         $('#initResults').append('<br>');
         ; 
      }
