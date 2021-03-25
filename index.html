@@ -562,7 +562,7 @@ function parseMilestone(){
             localStorage.msInfo = (JSON.stringify(response))
             msInfo = response
             numEpics = msInfo.custom_object_record.linked_records["length"];
-            epicCount = (numEpics-1);
+            epicCount = (numEpics-2);
         console.log ('number of epics: ' + numEpics)
         console.log(response)
             msName = msInfo.custom_object_record.custom_fields[0].value
