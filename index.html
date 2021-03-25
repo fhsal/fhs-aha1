@@ -391,6 +391,7 @@ function epicAjax(){
               msEffortSum = msEffortSum + epicEffort;
               msCompleteSum = Math.round(msCompleteSum + epicEffortCompl)
               msPercentComplete = Math.round(100*msCompleteSum/msEffortSum)
+          console.log('epicID: ' + epicID);
           console.log('epic effort: ' + epicEffort);
           console.log('milestone effort subtotal: ' + msEffortSum);
           console.log('milestone complete: ' + msCompleteSum);
