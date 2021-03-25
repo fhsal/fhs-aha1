@@ -425,10 +425,11 @@ function milestoneAjax(){
             }(i)
             );
             };
+        console.log('msAjax call checkMilestonesDone: ')
+        mscount = (mscount-1);
+        checkMilestonesDone()
           });    
 }
-
-
 
 // function GETs info for a specific Epic
 function epicAjax(){
@@ -681,8 +682,9 @@ function checkMilestonesDone () {
             if (msCount !==0){ 
                 msIndex = (numMilestones - msCount)
                 msToParse = relatedMilestones[msIndex]
-                msCount = (msCount-1);
-              parseMilestone()
+
+          console.log('call milestoneAjax, ms#: ' + msToParse)      
+              milestoneAjax()
             }
             else {
   // populate Initiative summary object 
