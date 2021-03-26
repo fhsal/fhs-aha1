@@ -506,7 +506,7 @@ $("#ms_controls").submit(function() {
             localStorage.msInfo = (JSON.stringify(response))
             msInfo = response
             numEpics = (msInfo.custom_object_record.linked_records["length"] -1);
-            epicCount = (numEpics);
+            epicCount = (numEpics-1);
         console.log ('number of epics: ' + numEpics)
         console.log(response)
             msName = msInfo.custom_object_record.custom_fields[0].value
