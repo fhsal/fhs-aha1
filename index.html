@@ -506,7 +506,7 @@ $("#ms_controls").submit(function() {
             localStorage.msInfo = (JSON.stringify(response))
             msInfo = response
             numEpics = (msInfo.custom_object_record.linked_records["length"] -1);
-            epicCount = (numEpics-1);
+            epicCount = (numEpics);
         console.log ('number of epics: ' + numEpics)
         console.log(response)
             msName = msInfo.custom_object_record.custom_fields[0].value
@@ -519,8 +519,8 @@ $("#ms_controls").submit(function() {
         $('#msResults').append('<br>') ;
         $('#msResults').append('<strong>MilestoneID: </strong>' + productKey)
         $('#msBody').append('<br>') ;
-        $('#msBody').append('<strong># Epics: </strong>' + (numEpics-1))
-        $('#msResults').append(',  <strong># Epics: </strong>' + (numEpics-1))
+        $('#msBody').append('<strong># Epics: </strong>' + (numEpics))
+        $('#msResults').append(',  <strong># Epics: </strong>' + (numEpics))
         $('#msBody').append('<br>') ;       
         $('#msBody').append('<strong>MS Name: </strong>' + msName)
         $('#msResults').append(',  <strong> Name: </strong>' + msName.slice(0, 50))
@@ -633,7 +633,7 @@ function parseMilestone(){
         localStorage.msInfo = (JSON.stringify(response))
         msInfo = response
         numEpics = (msInfo.custom_object_record.linked_records["length"] -1);
-        epicCount = (numEpics-1);
+        epicCount = (numEpics);
     console.log ('number of epics: ' + numEpics)
     console.log(response)
         msName = msInfo.custom_object_record.custom_fields[0].value
@@ -646,8 +646,8 @@ function parseMilestone(){
     $('#msResults').append('<br>') ;
     $('#msResults').append('<strong>MilestoneID: </strong>' + msToParse)
     $('#msBody').append('<br>') ;
-    $('#msBody').append('<strong># Epics: </strong>' + (numEpics-1))
-    $('#msResults').append(',  <strong># Epics: </strong>' + (numEpics-1))
+    $('#msBody').append('<strong># Epics: </strong>' + (numEpics))
+    $('#msResults').append(',  <strong># Epics: </strong>' + (numEpics))
     $('#msBody').append('<br>') ;       
     $('#msBody').append('<strong>MS Name: </strong>' + msName)
     $('#msResults').append(',  <strong> Name: </strong>' + msName.slice(0, 50))
