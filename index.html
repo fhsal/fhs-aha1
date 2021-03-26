@@ -392,7 +392,7 @@ function milestoneAjax(){
             numEpics = (msInfo.custom_object_record.linked_records["length"]-1);
             epicCount = (numEpics-1);
         console.log ('number of epics: ' + numEpics)
-        console.log(response)
+        console.log('milestoneAjax response: ' + response)
             msName = msInfo.custom_object_record.custom_fields[0].value
             msID = msInfo.custom_object_record.id
             msProduct = msInfo.custom_object_record.product_id
