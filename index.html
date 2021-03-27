@@ -691,6 +691,7 @@ function checkMilestonesDone () {
             console.log('checkMilestone ->  ' ); 
             console.log('milestone count: ' + msCount);  
             if (msCount !==0){ 
+                msCount = msCount-1
                 msIndex = (numMilestones - msCount)
                 msToParse = relatedMilestones[msIndex]
 
