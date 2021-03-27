@@ -367,8 +367,8 @@ function checkEpicsDone(epicCount) {
         let showmsCompleteSum = formatNumber(msCompleteSum)
         waitingFlag = false;
                 $('#msResults').append('<br>')
-                $('#msResults').append('<strong>Milestone: </strong>' + msID ); 
-                $('#msResults').append(';  <strong>  #Epics: </strong>' + (numEpics-1));
+                $('#msResults').append('<strong>Total MS: </strong>' + msID ); 
+                $('#msResults').append(';  <strong>  #Epics: </strong>' + (numEpics));
                 $('#msResults').append(';  <strong>  Effort: </strong>' + showmsEffortSum + ' days' );
                 $('#msResults').append(';  <strong>  Done: </strong>' + showmsCompleteSum + ' days' );
                 $('#msResults').append(';  <strong>  Progress: </strong>' + msPercentComplete +"%");
