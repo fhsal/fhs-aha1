@@ -372,6 +372,10 @@ function checkEpicsDone(epicCount) {
                 postMilestoneUpdate();
 
                 console.log('time to call next milestone')
+
+                checkMilestonesDone()
+
+
       }; 
   }
 
@@ -658,7 +662,7 @@ function parseMilestone(){
 
 // loop through epics, waiting between each fetch to stay within API limits
     var i;
-    for(i = 0; i < (numEpics-1); i++){
+    for(i = 0; i < (numEpics); i++){
         (function(i){
             setTimeout(function(){
               let num = msInfo.custom_object_record.linked_records[i].record_id;
@@ -684,29 +688,29 @@ function parseMilestone(){
 function checkMilestonesDone () {
 // when milestone complete decrement msCount and parse next milestone if count != 0 
 
+            console.log('checkMilestone ->  ' ); 
             console.log('milestone count: ' + msCount);  
             if (msCount !==0){ 
                 msIndex = (numMilestones - msCount)
                 msToParse = relatedMilestones[msIndex]
 
-          console.log('call milestoneAjax, ms#: ' + msToParse)      
+          console.log('call parseMilestone for next ms#: ' + msToParse)      
               parseMilestone()
             }
-            else {
-  // populate Initiative summary object 
-                let initObject = {
-                    "productID" : initProductID,
-                    "productName" : initProductName,
-                    "initiativeID" : initID,
-                    "initiativeName" : initName,
-                    "initTotalEffort" :  initEffortSum,
-                    "initProgress" : initPercentComplete,
-                    "initTotalEffortDone" : initCompleteSum
-                };
-                initSummary.push(initObject)
-              $('#initResults').append('<br>')
-            }
-
+  //           else {
+  // // populate Initiative summary object 
+  //               let initObject = {
+  //                   "productID" : initProductID,
+  //                   "productName" : initProductName,
+  //                   "initiativeID" : initID,
+  //                   "initiativeName" : initName,
+  //                   "initTotalEffort" :  initEffortSum,
+  //                   "initProgress" : initPercentComplete,
+  //                   "initTotalEffortDone" : initCompleteSum
+  //               };
+  //               initSummary.push(initObject)
+  //             $('#initResults').append('<br>')
+  //           }
 
 }
 
