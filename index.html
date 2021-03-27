@@ -245,7 +245,13 @@ $("#init_info").submit(function() {
           function(response) {
             localStorage.singleInit = (JSON.stringify(response))
             singleInit = response
+
+            if (!singleInit.initiative.custom_object_links){
+              console.log('initiative ' + productKey + ' has no related milestones')
+            }
+            else {
             relatedMilestones = singleInit.initiative.custom_object_links[1].record_ids
+            }
             console.log(response)
             initProductName = singleInit.initiative.project.name
             initProductID = singleInit.initiative.project.id
@@ -266,7 +272,15 @@ function displayInitiativeInfo () {
 
     initInfo=singleInit
 
-    numMilestones = initInfo.initiative.custom_object_links[1].record_ids.length;
+    // check to see if initiative has any milestones
+        if (!singleInit.initiative.custom_object_links){
+              console.log('initiative ' + productKey + ' has no related milestones');
+              numMilestones = 0;
+            }
+        else {
+              numMilestones = initInfo.initiative.custom_object_links[1].record_ids.length
+            }
+
     msCount = numMilestones;
 
     console.log ('number of milestones: ' + numMilestones)
