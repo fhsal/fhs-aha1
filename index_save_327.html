@@ -394,6 +394,70 @@ function checkEpicsDone(epicCount) {
       }; 
   }
 
+// function GET info for a specific Milestone
+function milestoneAjax(){
+    var settings = {
+      "url": "https://optum.aha.io/api/v1/custom_object_records/" + msToParse,
+      "method": "GET",
+      // "timeout": 0,
+      "crossDomain": true,
+      "access-control-allow-origin": "*",
+      "headers": { "Authorization": localStorage.ahaToken, },
+      };
+      $.ajax(settings)
+      .then(
+        function (response) 
+          {
+            localStorage.msInfo = (JSON.stringify(response))
+            msInfo = response
+            numEpics = (msInfo.custom_object_record.linked_records["length"]-1);
+            epicCount = (numEpics-1);
+        console.log ('number of epics: ' + numEpics)
+        console.log('milestoneAjax response: ' + msInfo)
+            msName = msInfo.custom_object_record.custom_fields[0].value
+            msID = msInfo.custom_object_record.id
+            msProduct = msInfo.custom_object_record.product_id
+            msInitiative = msInfo.custom_object_record.linked_records[(numEpics-1)].record_id
+// populate display block
+        $('#msBody').append('<br>') ;
+        $('#msBody').append('<strong>MilestoneID: </strong>' + msToParse)
+        $('#msResults').append('<br>') ;
+        $('#msResults').append('<strong>MilestoneID: </strong>' + msToParse)
+        $('#msBody').append('<br>') ;
+        $('#msBody').append('<strong># Epics: </strong>' + (numEpics-1))
+        $('#msResults').append(',  <strong># Epics: </strong>' + (numEpics-1))
+        $('#msBody').append('<br>') ;       
+        $('#msBody').append('<strong>MS Name: </strong>' + msName)
+        $('#msResults').append(',  <strong> Name: </strong>' + msName.slice(0, 50))
+        $('#msResults').append('<br>') ;
+        $('#msBody').append('<br>') ;
+        $('#msBody').append("==========================================");
+        $('#msBody').append('<br>') ;
+
+// loop through epics, waiting between each fetch to stay within API limits
+        var i;
+        for(i = 0; i < (numEpics-1); i++){
+            (function(i){
+                setTimeout(function(){
+                  let num = msInfo.custom_object_record.linked_records[i].record_id;
+                        epicNum = num.toString()
+                        $('#msBody').append("Epic #: " + (i+1));
+                        $('#msBody').append(",  record_id: " + epicNum) ;
+                        $('#msBody').append('<br>') ;
+                        $('#msResults').append('*') ;
+                      epicAjax()
+          //wait 100 milliseconds between calls (API limit is 'technically' 20ms)
+                }, 700 * i);
+            }
+            );
+            };
+          },
+        // msCount = (msCount-1),
+        // console.log('msAjax call checkMilestonesDone, # milestones: ' + msCount ) ,
+        // checkMilestonesDone(),
+        );    
+}
+
 // function GETs info for a specific Epic
 function epicAjax(){
     var settings = {
