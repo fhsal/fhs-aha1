@@ -157,6 +157,7 @@ epicCompleteSum = 0;
 epicNum = "";
 numEpics = 0;
 epicCount = 0;
+epicsToParse = [];
 msEffortSum = 0;
 msCompleteSum = 0;
 msPercentComplete = 0;
@@ -261,20 +262,22 @@ $("#init_info").submit(function() {
         return false;
       });
 
-
-function countEpics() {
-
+  function countEpics() {
       let numObjects = msInfo.custom_object_record.linked_records.length
       epicCount = 0;
-
-// loop through milestone response and count number of epics where related record_type = 'Epic'
+// loop through milestone response, count number of epics where related record_type = 'Epic' and append 
+// the found epic # to the epicsToParse array
       var i;
           for(i = 0; i < (numObjects); i++){
-            let record_type = msInfo.custom_object_record.linked_records[i]
-            if(record_type = 'Epic') { epicCount = (epicCount + 1)
+            let record_type = msInfo.custom_object_record.linked_records[i].record_type
+            if(record_type = 'Epic') { 
+                epicCount = (epicCount + 1);
+                let num = msInfo.custom_object_record.linked_records[i].record_id;
+                epicsToParse = epicsToParse.push(num);
+        console.log('epic array: ' + JSON.stringify(epicsToParse))
             }
-        }
-}
+          }
+  }
 
 
 // function which displays milestones related to an initiative in the initiative summary block
@@ -474,7 +477,6 @@ $("#ms_controls").submit(function() {
 // Fetch milestone information
           api.get("/custom_object_records/" + productKey , {per_page: 50}, 
 
-        
           function(response) {
             localStorage.msInfo = (JSON.stringify(response))
             msInfo = response
@@ -507,6 +509,8 @@ $("#ms_controls").submit(function() {
         for(i = 0; i < (numEpics); i++){
             (function(i){
                 setTimeout(function(){
+
+//this is the object where epic# is coming from - it is incorrect as other linked records exist  
                   let num = msInfo.custom_object_record.linked_records[i].record_id;
                         epicNum = num.toString()
                         $('#msBody').append("Epic #: " + (i+1));
@@ -518,8 +522,11 @@ $("#ms_controls").submit(function() {
                 }, 700 * i);
             }(i)
             );
+
             };
-          })
+          }
+          .fail (function error(){console.log('error retrieving epic')})
+          )
 
           $('#msBody').append('<br>')
           msSummary.push(epicSummary)
