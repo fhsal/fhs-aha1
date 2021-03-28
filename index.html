@@ -360,7 +360,8 @@ function checkEpicsDone(epicCount) {
         if (epicCount !== 0) {
             // waitingFlag = true;
             // setInterval(showWaiting, 500);
-            console.log('condition: ' + (epicCount !==0))
+            console.log('waiting condition: ' + (epicCount !==0))
+            $('#msResults').append('*') ;
             } else {
   // populate Milestone summary display
         let showmsEffortSum = formatNumber(msEffortSum)
@@ -482,7 +483,7 @@ $("#ms_controls").submit(function() {
         $('#msResults').append('<br>') ;
         $('#msBody').append('<br>') ;
         $('#msBody').append("==========================================");
-        $('#msBody').append('<br>') ;
+        // $('#msBody').append('<br>') ;
 
 // loop through epics, waiting between each fetch to stay within API limits
         var i;
@@ -494,7 +495,7 @@ $("#ms_controls").submit(function() {
                         $('#msBody').append("Epic #: " + (i+1));
                         $('#msBody').append(",  record_id: " + epicNum) ;
                         $('#msBody').append('<br>') ;
-                        $('#msResults').append('*') ;
+                        // $('#msResults').append('*') ;
                       epicAjax()
           //wait 100 milliseconds between calls (API limit is 'technically' 20ms)
                 }, 700 * i);
