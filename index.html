@@ -274,10 +274,12 @@ $("#init_info").submit(function() {
                 epicCount = (epicCount + 1);
                 let num = msInfo.custom_object_record.linked_records[i].record_id;
         console.log('epic identified: ' + i + ', ' + num)
-                epicsToParse = epicsToParse.push(num);
-        console.log('epic array: ' + JSON.stringify(epicsToParse))
+                epicsToParse.push(num);
+        console.log('building epic array: ' + JSON.stringify(epicsToParse))
             }
           }
+        console.log('total # of epics: ' + i + ', ' + num)
+        console.log('final epic array: ' + JSON.stringify(epicsToParse))
   }
 
 
