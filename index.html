@@ -265,6 +265,7 @@ $("#init_info").submit(function() {
   function countEpics() {
       let numObjects = msInfo.custom_object_record.linked_records.length
       epicCount = 0;
+      epicsToParse = [];
 // loop through milestone response, count number of epics where related record_type = 'Epic' and append 
 // the found epic # to the epicsToParse array
       var i;
@@ -279,8 +280,9 @@ $("#init_info").submit(function() {
         console.log('building epic array: ' + JSON.stringify(epicsToParse))
             }
           }
-        console.log('total # of epics: ' + i + ', ' + epicCount)
+        console.log('total # of epics: ' + epicCount)
         console.log('final epic array: ' + JSON.stringify(epicsToParse))
+    numEpics=epicCount
   }
 
 
@@ -484,7 +486,9 @@ $("#ms_controls").submit(function() {
           function(response) {
             localStorage.msInfo = (JSON.stringify(response))
             msInfo = response
-            numEpics = (msInfo.custom_object_record.linked_records["length"] -1);
+      // call function countEpics to determine the number of epics and assing to var numEpics
+      // and create the object epicsToParse
+          countEpics()
             epicCount = (numEpics);
         console.log ('number of epics: ' + numEpics)
         console.log(response)
@@ -513,9 +517,8 @@ $("#ms_controls").submit(function() {
         for(i = 0; i < (numEpics); i++){
             (function(i){
                 setTimeout(function(){
-
-//this is the object where epic# is coming from - it is incorrect as other linked records exist  
-                  let num = msInfo.custom_object_record.linked_records[i].record_id;
+//getting epic number from new object epicsToParse  
+                  let num = epicsToParse[i];
                         epicNum = num.toString()
                         $('#msBody').append("Epic #: " + (i+1));
                         $('#msBody').append(",  record_id: " + epicNum) ;
