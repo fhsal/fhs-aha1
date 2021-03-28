@@ -262,21 +262,6 @@ $("#init_info").submit(function() {
       });
 
 
-function countEpics() {
-
-      let numObjects = msInfo.custom_object_record.linked_records.length
-      epicCount = 0;
-
-// loop through milestone response and count number of epics where related record_type = 'Epic'
-      var i;
-          for(i = 0; i < (numObjects); i++){
-            let record_type = msInfo.custom_object_record.linked_records[i]
-            if(record_type = 'Epic') { epicCount = (epicCount + 1)
-            }
-        }
-}
-
-
 // function which displays milestones related to an initiative in the initiative summary block
 function displayInitiativeInfo () {
 
@@ -375,8 +360,7 @@ function checkEpicsDone(epicCount) {
         if (epicCount !== 0) {
             // waitingFlag = true;
             // setInterval(showWaiting, 500);
-            console.log('waiting condition: ' + (epicCount !==0))
-            $('#msResults').append('*') ;
+            console.log('condition: ' + (epicCount !==0))
             } else {
   // populate Milestone summary display
         let showmsEffortSum = formatNumber(msEffortSum)
@@ -409,6 +393,70 @@ function checkEpicsDone(epicCount) {
 
       }; 
   }
+
+// function GET info for a specific Milestone
+function milestoneAjax(){
+    var settings = {
+      "url": "https://optum.aha.io/api/v1/custom_object_records/" + msToParse,
+      "method": "GET",
+      // "timeout": 0,
+      "crossDomain": true,
+      "access-control-allow-origin": "*",
+      "headers": { "Authorization": localStorage.ahaToken, },
+      };
+      $.ajax(settings)
+      .then(
+        function (response) 
+          {
+            localStorage.msInfo = (JSON.stringify(response))
+            msInfo = response
+            numEpics = (msInfo.custom_object_record.linked_records["length"]-1);
+            epicCount = (numEpics-1);
+        console.log ('number of epics: ' + numEpics)
+        console.log('milestoneAjax response: ' + msInfo)
+            msName = msInfo.custom_object_record.custom_fields[0].value
+            msID = msInfo.custom_object_record.id
+            msProduct = msInfo.custom_object_record.product_id
+            msInitiative = msInfo.custom_object_record.linked_records[(numEpics-1)].record_id
+// populate display block
+        $('#msBody').append('<br>') ;
+        $('#msBody').append('<strong>MilestoneID: </strong>' + msToParse)
+        $('#msResults').append('<br>') ;
+        $('#msResults').append('<strong>MilestoneID: </strong>' + msToParse)
+        $('#msBody').append('<br>') ;
+        $('#msBody').append('<strong># Epics: </strong>' + (numEpics-1))
+        $('#msResults').append(',  <strong># Epics: </strong>' + (numEpics-1))
+        $('#msBody').append('<br>') ;       
+        $('#msBody').append('<strong>MS Name: </strong>' + msName)
+        $('#msResults').append(',  <strong> Name: </strong>' + msName.slice(0, 50))
+        $('#msResults').append('<br>') ;
+        $('#msBody').append('<br>') ;
+        $('#msBody').append("==========================================");
+        $('#msBody').append('<br>') ;
+
+// loop through epics, waiting between each fetch to stay within API limits
+        var i;
+        for(i = 0; i < (numEpics-1); i++){
+            (function(i){
+                setTimeout(function(){
+                  let num = msInfo.custom_object_record.linked_records[i].record_id;
+                        epicNum = num.toString()
+                        $('#msBody').append("Epic #: " + (i+1));
+                        $('#msBody').append(",  record_id: " + epicNum) ;
+                        $('#msBody').append('<br>') ;
+                        $('#msResults').append('*') ;
+                      epicAjax()
+          //wait 100 milliseconds between calls (API limit is 'technically' 20ms)
+                }, 700 * i);
+            }
+            );
+            };
+          },
+        // msCount = (msCount-1),
+        // console.log('msAjax call checkMilestonesDone, # milestones: ' + msCount ) ,
+        // checkMilestonesDone(),
+        );    
+}
 
 // function GETs info for a specific Epic
 function epicAjax(){
@@ -467,19 +515,17 @@ $("#ms_controls").submit(function() {
           clientId: localStorage.clientID, // NOTE: replace this with your client ID.
           redirectUri: localStorage.redirectUri
         }).authenticate(function(api, success, message) {
-      console.log('api success ' +  success)
-      console.log('api message ' +  message)
+      console.log(success)
+      console.log(message)
           var productKey = $("#msNum").val();
 
 // Fetch milestone information
           api.get("/custom_object_records/" + productKey , {per_page: 50}, 
-
-        
           function(response) {
             localStorage.msInfo = (JSON.stringify(response))
             msInfo = response
             numEpics = (msInfo.custom_object_record.linked_records["length"] -1);
-            epicCount = (numEpics);
+            epicCount = (numEpics-1);
         console.log ('number of epics: ' + numEpics)
         console.log(response)
             msName = msInfo.custom_object_record.custom_fields[0].value
@@ -487,15 +533,15 @@ $("#ms_controls").submit(function() {
             msProduct = msInfo.custom_object_record.product_id
             msInitiative = msInfo.custom_object_record.linked_records[0].record_id
 // populate display block
-        // $('#msBody').append('<br>') ;
+        $('#msBody').append('<br>') ;
         $('#msBody').append('<strong>MilestoneID: </strong>' + productKey)
         $('#msResults').append('<br>') ;
         $('#msResults').append('<strong>MilestoneID: </strong>' + productKey)
         $('#msBody').append('<br>') ;
         $('#msBody').append('<strong># Epics: </strong>' + (numEpics))
         $('#msResults').append(',  <strong># Epics: </strong>' + (numEpics))
-        // $('#msBody').append('<br>') ;       
-        $('#msBody').append('  <strong>MS Name: </strong>' + msName)
+        $('#msBody').append('<br>') ;       
+        $('#msBody').append('<strong>MS Name: </strong>' + msName)
         $('#msResults').append(',  <strong> Name: </strong>' + msName.slice(0, 50))
         $('#msResults').append('<br>') ;
         $('#msBody').append('<br>') ;
@@ -512,7 +558,7 @@ $("#ms_controls").submit(function() {
                         $('#msBody').append("Epic #: " + (i+1));
                         $('#msBody').append(",  record_id: " + epicNum) ;
                         $('#msBody').append('<br>') ;
-                        // $('#msResults').append('*') ;
+                        $('#msResults').append('*') ;
                       epicAjax()
           //wait 100 milliseconds between calls (API limit is 'technically' 20ms)
                 }, 700 * i);
@@ -520,7 +566,6 @@ $("#ms_controls").submit(function() {
             );
             };
           })
-
           $('#msBody').append('<br>')
           msSummary.push(epicSummary)
           });
@@ -613,7 +658,7 @@ function parseMilestone(){
         msName = msInfo.custom_object_record.custom_fields[0].value
         msID = msInfo.custom_object_record.id
         msProduct = msInfo.custom_object_record.product_id
-        msInitiative = msInfo.custom_object_record.linked_records[0].record_id
+        msInitiative = msInfo.custom_object_record.linked_records[(numEpics-1)].record_id
 // populate display block
     $('#msBody').append('<br>') ;
     $('#msBody').append('<strong>MilestoneID: </strong>' + msToParse)
@@ -640,7 +685,7 @@ function parseMilestone(){
                     $('#msBody').append("Epic #: " + (i+1));
                     $('#msBody').append(",  record_id: " + epicNum) ;
                     $('#msBody').append('<br>') ;
-                    // $('#msResults').append('*') ;
+                    $('#msResults').append('*') ;
                   epicAjax()
       //wait 100 milliseconds between calls (API limit is 'technically' 20ms)
             }, 700 * i);
@@ -651,6 +696,9 @@ function parseMilestone(){
       $('#msBody').append('<br>')
       msSummary.push(epicSummary)
       };
+
+  
+
 
 function checkMilestonesDone () {
 // when milestone complete decrement msCount and parse next milestone if count != 0 

@@ -467,14 +467,12 @@ $("#ms_controls").submit(function() {
           clientId: localStorage.clientID, // NOTE: replace this with your client ID.
           redirectUri: localStorage.redirectUri
         }).authenticate(function(api, success, message) {
-      console.log('api success ' +  success)
-      console.log('api message ' +  message)
+      console.log(success)
+      console.log(message)
           var productKey = $("#msNum").val();
 
 // Fetch milestone information
           api.get("/custom_object_records/" + productKey , {per_page: 50}, 
-
-        
           function(response) {
             localStorage.msInfo = (JSON.stringify(response))
             msInfo = response
@@ -520,7 +518,6 @@ $("#ms_controls").submit(function() {
             );
             };
           })
-
           $('#msBody').append('<br>')
           msSummary.push(epicSummary)
           });
