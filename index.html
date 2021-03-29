@@ -620,7 +620,9 @@ function parseMilestone(){
       function(response) {
         localStorage.msInfo = (JSON.stringify(response))
         msInfo = response
-        numEpics = (msInfo.custom_object_record.linked_records["length"] -1);
+// call function countEpics to determine the number of epics and assing to var numEpics
+// and create the object epicsToParse
+      countEpics()
         epicCount = (numEpics);
     console.log ('number of epics: ' + numEpics)
     console.log(response)
@@ -649,7 +651,7 @@ function parseMilestone(){
     for(i = 0; i < (numEpics); i++){
         (function(i){
             setTimeout(function(){
-              let num = msInfo.custom_object_record.linked_records[i].record_id;
+              let num = epicsToParse[i];
                     epicNum = num.toString()
                     $('#msBody').append("Epic #: " + (i+1));
                     $('#msBody').append(",  record_id: " + epicNum) ;
