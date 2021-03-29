@@ -79,30 +79,15 @@
         width: 212px;
         }
 
-        .btn-warning {
-        color: white;
-        background-color: darkgreen;
-        border-color: darkgreen;
-        width: 212px;
-        }
-
       
     </style>
   </head>
-<div class = "row">
-  <div class = "col-sm-8">
+
 <h1>Aha! Milestone API Crawler</h1>
-<hr style = "margin-top: -5px; margin-bottom: 0px; width: 1135px; border-top: 1px solid cadetblue; margin-left: -15"> 
-</div>
+<hr style = "margin-top: -5px; margin-bottom: 0px; width: 1135px; border-top: 1px solid cadetblue; margin-left: -15">  
 
-  <div class = "col-sm-4" style = "float:right right">
-    <button id = "credentials" style = "background-color: steelblue;color: white;margin-top: 30px;margin-left: 160px;width: 166px;">add API credentials </button>
-  </div>
-
-  </div>
-    <body class="container">
-  <div class="row" id = inputForms style = "margin-top: -25px">
-
+  <body class="container">
+   <div class="row" id = inputForms style = "margin-top: -25px">
 <br><br>
     <div class="col-sm-5"  style= "width: 425px; padding-left: 0px";>
         <form id="epic_controls">
@@ -423,10 +408,14 @@ function checkEpicsDone(epicCount) {
                     "msProgress" : msPercentComplete,
                     "msTotalEffortDone" : msCompleteSum
                 };
-              msSummary.push(msObject);
-              postMilestoneUpdate();
-          console.log('time to call next milestone')
+                msSummary.push(msObject);
+                postMilestoneUpdate();
+
+                console.log('time to call next milestone')
+
                 checkMilestonesDone()
+
+
       }; 
   }
 
@@ -579,8 +568,6 @@ console.log('init update');
             singleInit = response
             relatedMilestones = singleInit.initiative.custom_object_links[1].record_ids
             console.log(response)
-
-// check this to ensure that the number of milestones is correct this way - thery may be other custom_object_links             
             numMilestones = initInfo.initiative.custom_object_links[1].record_ids.length;
             msCount = (numMilestones);
     console.log ('number of milestones: ' + numMilestones)
@@ -588,7 +575,6 @@ console.log('init update');
             initName = initInfo.initiative.name;
             initID = initInfo.initiative.id;
             initProduct = initInfo.initiative.product_id;
-            
 
 // populate initiative summary for display block
         $('#initResults').append('<br>') ;
@@ -614,7 +600,7 @@ console.log('init update');
   });
 
 // function to parse in individual milestone and update it's progress (a partial copy of #ms_controls listener abpve)      
-function parseMilestone(msToParse){
+function parseMilestone(){
 
 // Initializing milestone information
     msEffortSum = 0;
@@ -632,12 +618,12 @@ function parseMilestone(msToParse){
       $.ajax(settings)
       .then(
       function(response) {
-          localStorage.msInfo = (JSON.stringify(response))
-          msInfo = response
+        localStorage.msInfo = (JSON.stringify(response))
+        msInfo = response
 // call function countEpics to determine the number of epics and assing to var numEpics
 // and create the object epicsToParse
-       countEpics()
-          epicCount = (numEpics);
+      countEpics()
+        epicCount = (numEpics);
     console.log ('number of epics: ' + numEpics)
     console.log(response)
         msName = msInfo.custom_object_record.custom_fields[0].value
@@ -693,7 +679,7 @@ function checkMilestonesDone () {
                 msToParse = relatedMilestones[msIndex]
 
           console.log('call parseMilestone for next ms#: ' + msToParse)      
-              parseMilestone(msToParse)
+              parseMilestone()
             }
   //           else {
   // // populate Initiative summary object 

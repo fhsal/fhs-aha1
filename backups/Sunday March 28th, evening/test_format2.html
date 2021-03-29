@@ -46,7 +46,7 @@
         overflow-y: scroll;
       }
 
-       .btn-primary {
+      .btn-primary {
         color: white;
         background-color: teal;
         border-color: teal;
@@ -58,11 +58,6 @@
         background-color: darkgoldenrod;
         border-color: darkgoldenrod;
         width: 212px;
-        }
-
-        .btn-secondary:hover {
-          background-color: rgb(218, 122, 32);
-          color: white;
         }
 
         .btn-success {
@@ -79,60 +74,45 @@
         width: 212px;
         }
 
-        .btn-warning {
-        color: white;
-        background-color: darkgreen;
-        border-color: darkgreen;
-        width: 212px;
-        }
-
       
     </style>
   </head>
-<div class = "row">
-  <div class = "col-sm-8">
+
 <h1>Aha! Milestone API Crawler</h1>
-<hr style = "margin-top: -5px; margin-bottom: 0px; width: 1135px; border-top: 1px solid cadetblue; margin-left: -15"> 
-</div>
+<hr style = "margin-top: -5px; margin-bottom: 0px; width: 1135px; border-top: 1px solid cadetblue; margin-left: -15">  
 
-  <div class = "col-sm-4" style = "float:right right">
-    <button id = "credentials" style = "background-color: steelblue;color: white;margin-top: 30px;margin-left: 160px;width: 166px;">add API credentials </button>
-  </div>
-
-  </div>
-    <body class="container">
-  <div class="row" id = inputForms style = "margin-top: -25px">
-
+  <body class="container">
+   <div class="row" id = inputForms style = "margin-top: -25px">
 <br><br>
     <div class="col-sm-5"  style= "width: 425px; padding-left: 0px";>
         <form id="epic_controls">
   <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain"> -->
-          <input type="text" placeholder="Roll up Initiative number" id="product-key">
-          <input type="submit" class="btn btn-secondary btn-sm" value="Console.log initiatives for a portfolio">
+          <input type="text" placeholder="Product key" id="product-key">
+          <input type="submit" class="btn btn-secondary btn-sm" value="Console.log initiatives for a product">
         </form>
 
         <form id="epic_controls2">
   <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain"> -->
-          <input type="text" placeholder="Product ID" id="product-key2">
-          <input type="submit" class="btn btn-secondary  btn-sm" value="console.log initiatives for product">
+          <input type="text" placeholder="Roll up Initiative number" id="product-key2">
+          <input type="submit" class="btn btn-secondary  btn-sm" value="Console.log children of an initiative">
         </form>
 
-        <form id="init_info">
+        <form id="init_controls">
   <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain"> -->
           <input type="text" placeholder="initiative number" id="init-num">
-          <input type="submit" class="btn btn-primary  btn-sm" value="Show milestones for an initiative">
+          <input type="submit" class="btn btn-primary  btn-sm" value="Console.log info for an initiative">
         </form>
 
         <form id="init_update">
   <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain"> -->
                   <input type="text" placeholder="initiative number" id="init-num2">
-                  <input type="submit" class="btn btn-primary  btn-sm"value="Update milestones for an initiative">
+                  <input type="submit" class="btn btn-primary  btn-sm"value="Load summary for an initiative">
                 </form>
 
         <form id="ms_controls">
   <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain4"> -->
           <input type="text" placeholder="Milestone number" id="msNum">
-          <input type="submit" class="btn btn-success  btn-sm" value="Update progress for a milestone">
+          <input type="submit" class="btn btn-success  btn-sm" value="Load summaries for a milestone">
         </form>
 
         <form id="epic_detail">
@@ -142,19 +122,19 @@
         </form>
       </div>
   <!-- display area for MS results on right -->
-      <div class="col-sm-6" id = "prodResults" style="height: 160px;margin-bottom: 5px;overflow-y: scroll;word-wrap: break-word;width: 710px;background-color:darkgoldenrod;border-color: black;color:white;"><strong>Product summary<br>---------------------------------------------------------------------------------------------------------------------------------------------</strong><br></div>
-      <div class="col-sm-6" id = "initResults" style="height: 160px;margin-top: 5px;overflow-y: scroll;word-wrap: break-word;width: 710px;background-color:teal;border-color: black;color:white;top: 0px;bottom: -50;"><strong>Initiative summary<br>---------------------------------------------------------------------------------------------------------------------------------------------</strong><br></div>
+      <div class="col-sm-6" id = "prodResults" style="height:120px; margin-bottom: 5px;overflow-y: scroll; ; word-wrap: break-word; width: 710px; background-color:darkgoldenrod; border-color: black; color:white"><strong>Product summary<br>---------------------------------------------------------------------------------------------------------------------------------------------</strong><br></div>
+      <div class="col-sm-6" id = "initResults" style="height:125px; margin-top: 5px; overflow-y: scroll; ; word-wrap: break-word; width: 710px; background-color:teal; border-color: black; color:white"><strong>Initiative summary<br>---------------------------------------------------------------------------------------------------------------------------------------------</strong><br></div>
 </div>
  
     <div class="row">
 
       <!-- display area for epic parsing display on left -->
-         <div class="col-sm-3" style="height: 320px;overflow-y: scroll;background-color:steelblue;color:white;width: 410px;top: -65;" id="msBody"> <strong>Epics related to selected Milestones<br>------------------------------------------------------------------------</strong></div>
+         <div class="col-sm-3" style="height:360px; overflow-y: scroll; background-color:steelblue;color:white ; width: 410px " id="msBody"> <strong>Epics related to selected Milestones<br>------------------------------------------------------------------------</strong></div>
 
          <div class="col-sm-1" style="width: 15px; padding-left: 0px; padding-right: 0px"></div>
 
       <!-- display area for MS results on right -->
-         <div class="col-sm-8" id = "msResults" style="height: 245px;overflow-y: scroll;word-wrap: break-word;width: 710px;padding-right: 0px;background-color:darkslategray;border-color: black;color:white;top: 10px;"><strong>Milestone summaries<br>---------------------------------------------------------------------------------------------------------------------------------------------</strong><br></div>
+         <div class="col-sm-8" id = "msResults" style="height:360px; overflow-y: scroll; word-wrap: break-word; width: 710px; padding-right: 0px; background-color:darkslategray; border-color: black; color:white"><strong>Milestone summaries<br>---------------------------------------------------------------------------------------------------------------------------------------------</strong><br></div>
     </div>
     <div class = "row" style="height: 25px;"></div> 
 
@@ -162,43 +142,35 @@
 
 epics = "";
 inits = "";
-portfolioInits = [];
 singleInit = "";
 msInfo = "";
 epicInfo ="";
 epicSummary = [];
 epicEffortSum = 0;
 epicCompleteSum = 0;
-epicNum = "";
-numEpics = 0;
-epicCount = 0;
-epicsToParse = [];
 msEffortSum = 0;
 msCompleteSum = 0;
 msPercentComplete = 0;
-msCount = 0;
+epicNum = "";
 msName = "";
 msID = "";
-msIndex = 0;
 msObject = [];
 msSummary = [];
+numEpics = 0;
 msInitiative = "";
 msProduct = "";
+epicCount = 0;
 waitingFlag ="";
 relatedMilestones = [];
-msToParse = "";
-initinfo = "";
-initObject = [];
-initCount = 0;
-initSummary = [];
-
 
 // function to display numbers with thousands comma separator
 function formatNumber(num) {
   return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
 }
 
-// API call for epics by portfolio (roll-up initiative)
+// Function to get epic details (used in Milestone detail query)
+
+// API call for epics by product
 $("#epic_controls").submit(function() { 
          new AhaApi({
           accountDomain: localStorage.subDomain,
@@ -211,10 +183,10 @@ $("#epic_controls").submit(function() {
           var productKey = $("#product-key").val();
 
 // Fetch up to 50 initiatives in one fetch.
-          api.get("/initiatives/" + productKey + "?fields=children", 
+          api.get("/products/" + productKey + "/epics", {per_page: 50, fields: 'reference_num,name,description'}, 
           function(response) {
             localStorage.ii = (JSON.stringify(response))
-            portfolioInits = response
+            inits = response
             console.log(response)
           });
         });
@@ -244,8 +216,8 @@ $("#epic_controls2").submit(function() {
         return false;
       });
 
-// API call to display a single initiative and store related milestones in relatedMilestones variable
-$("#init_info").submit(function() { 
+// API call for a single initiative
+  $("#init_controls").submit(function() { 
          new AhaApi({
           accountDomain: localStorage.subDomain,
           clientId: localStorage.clientID, // NOTE: replace this with your client ID.
@@ -257,17 +229,37 @@ $("#init_info").submit(function() {
           var productKey = $("#init-num").val();
 
 // Fetch up to 50 initiatives in one fetch.
-        api.get("/initiatives/" + productKey , {per_page: 50}, 
+          api.get("/initiatives/" + productKey , {per_page: 50}, 
           function(response) {
             localStorage.singleInit = (JSON.stringify(response))
             singleInit = response
-
-            if (!singleInit.initiative.custom_object_links){
-              console.log('initiative ' + productKey + ' has no related milestones')
-            }
-            else {
             relatedMilestones = singleInit.initiative.custom_object_links[1].record_ids
-            }
+            console.log(response)
+          });
+        });
+        return false;
+      });
+
+
+// API call for a single initiative
+$("#init_update").submit(function() { 
+  console.log("init update");
+         new AhaApi({
+          accountDomain: localStorage.subDomain,
+          clientId: localStorage.clientID, // NOTE: replace this with your client ID.
+          redirectUri: localStorage.redirectUri
+        }).authenticate(function(api, success, message) {
+
+          console.log(success)
+          console.log(message)
+          var productKey = $("#init-num2").val();
+
+// Fetch up to 50 initiatives in one fetch.
+          api.get("/initiatives/" + productKey , {per_page: 50}, 
+          function(response) {
+            localStorage.singleInit = (JSON.stringify(response))
+            singleInit = response
+            relatedMilestones = singleInit.initiative.custom_object_links[1].record_ids
             console.log(response)
             initProductName = singleInit.initiative.project.name
             initProductID = singleInit.initiative.project.id
@@ -277,50 +269,18 @@ $("#init_info").submit(function() {
         return false;
       });
 
-  function countEpics() {
-      let numObjects = msInfo.custom_object_record.linked_records.length
-      epicCount = 0;
-      epicsToParse = [];
-// loop through milestone response, count number of epics where related record_type = 'Epic' and append 
-// the found epic # to the epicsToParse array
-      var i;
-          for(i = 0; i < (numObjects); i++){
-            let record_type = msInfo.custom_object_record.linked_records[i].record_type
-        console.log('record type: ' + record_type)
-            if(record_type == 'Epic') { 
-                epicCount = (epicCount + 1);
-                let num = msInfo.custom_object_record.linked_records[i].record_id;
-        console.log('epic identified: ' + i + ', ' + num)
-                epicsToParse.push(num);
-        console.log('building epic array: ' + JSON.stringify(epicsToParse))
-            }
-          }
-        console.log('total # of epics: ' + epicCount)
-        console.log('final epic array: ' + JSON.stringify(epicsToParse))
-    numEpics=epicCount
-  }
 
 
-// function which displays milestones related to an initiative in the initiative summary block
 function displayInitiativeInfo () {
 
-// Initializing initiative information
+// Initializing milestone information
     initEffortSum = 0;
     initCompleteSum = 0;
     initPercentComplete = 0;
 
     initInfo=singleInit
 
-    // check to see if initiative has any milestones
-        if (!singleInit.initiative.custom_object_links){
-              console.log('initiative ' + initInfo.initiative.id + ' has no related milestones');
-              numMilestones = 0;
-              relatedMilestones = 'no related milestones'
-            }
-        else {
-              numMilestones = initInfo.initiative.custom_object_links[1].record_ids.length
-            }
-
+    numMilestones = initInfo.initiative.custom_object_links[1].record_ids.length;
     msCount = numMilestones;
 
     console.log ('number of milestones: ' + numMilestones)
@@ -329,38 +289,35 @@ function displayInitiativeInfo () {
         initID = initInfo.initiative.id;
         initProduct = initInfo.initiative.product_id;
 // populate initiative summary for display block
-        // $('#initResults').append('<br>') ;
+        $('#initResults').append('<br>') ;
         $('#initResults').append('<strong>InitiativeID: </strong>' + initID);
         $('#initResults').append(',  <strong> Name: </strong>' + initName.slice(0, 50));
         $('#initResults').append(',  <strong># Milestones: </strong>' + (numMilestones));
         $('#initResults').append('<br>') ;
         $('#initResults').append("-------------------------------------------------------------------------------------------------------------------------------");
         $('#initResults').append('<br>') ;
-        $('#initResults').append(JSON.stringify(relatedMilestones));
-        $('#initResults').append('<br><br>');
+        $('#initResults').append('<strong>Milestones: </strong>' + JSON.stringify(relatedMilestones));
+        $('#initResults').append('<br>');
         ; 
      }
 
 
 // function to count down epics as their responses are received, displaying an "*"
 //  for each as completed & then the overall summary  
-function checkInitiativeDone(initCount) {
+function checkInitiativesDone(initCount) {
     console.log('checkInitiativesDone, numMilestones: ' + numMilestones) 
-        if (msCount !== 0) {
+        if (numMilestones !== 0) {
             // waitingFlag = true;
             // setInterval(showWaiting, 500);
-            console.log('condition: ' + (msCount !==0))
-            msCount = (mscount-1)
-            parseMilestone ()
-
+            console.log('condition: ' + (numMilestones !==0))
             } else {
-  // populate Initiative summary display
+  // populate Milestone summary display
         let showInitEffortSum = formatNumber(initEffortSum)
         let showInitCompleteSum = formatNumber(initCompleteSum)
         waitingFlag = false;
                 $('#initResults').append('<br>')
-                $('#initResults').append('<strong>Initiative#: </strong>' + initID ); 
-                $('#initResults').append(';  <strong>  #Milestones: </strong>' + numMilestones);
+                $('#initResults').append('<strong>Initiative ID: </strong>' + initID ); 
+                $('#initResults').append(';  <strong>  #epics: </strong>' + numMilestones);
                 $('#initResults').append(';  <strong>  Effort: </strong>' + showInitEffortSum + ' days' );
                 $('#initResults').append(';  <strong>  Done: </strong>' + showInitCompleteSum + ' days' );
                 $('#initResults').append(';  <strong>  Progress: </strong>' + mInitPercentComplete +"%");
@@ -380,8 +337,52 @@ function checkInitiativeDone(initCount) {
       }; 
   }
 
+function initiativeAjax(){
+    var settings = {
+      "url": "https://optum.aha.io/api/v1/epics/" + epicNum + "?fields=name,original_estimate,progress",
+      "method": "GET",
+      // "timeout": 0,
+      "crossDomain": true,
+      "access-control-allow-origin": "*",
+      "headers": { "Authorization": localStorage.ahaToken, },
+      };
+      $.ajax(settings)
+      .then(function (response) {
+              epicInfo = response
+                        console.log(response)
+              let epicID = epicInfo.epic.id;         
+              let epicName = epicInfo.epic.name;
+              let epicEffort = epicInfo.epic.original_estimate/480;
+              if (epicEffort > 0) { epicEffort = epicEffort} else { epicEffort = 0} ;
+              let epicProgress = parseInt(epicInfo.epic.progress)/100;
+              let epicEffortCompl = epicEffort*epicProgress;
+              if (epicEffortCompl > 0) { epicEffortCompl = epicEffortCompl} else { epicEffortCompl = 0} ;
+              msEffortSum = msEffortSum + epicEffort;
+              msCompleteSum = Math.round(msCompleteSum + epicEffortCompl)
+              msPercentComplete = Math.round(100*msCompleteSum/msEffortSum)
+          console.log('epic effort: ' + epicEffort);
+          console.log('milestone effort subtotal: ' + msEffortSum);
+          console.log('milestone complete: ' + msCompleteSum);
+          console.log('milestone % complete: ' + msPercentComplete + "%");
+
+          let epicObject = {
+              "epicID" : epicID,
+              "epicName" :epicName.slice(0, 30),
+              "epicEffort" :  epicEffort,
+              "epicProgress" : epicProgress,
+              "epicEffortDone" : epicEffortCompl
+            }
+            console.log('from Ajax, epicCount: ' + epicCount )
+            epicSummary.push(epicObject)
+        epicCount = epicCount-1 
+        checkEpicsDone(epicCount) 
+      });
+}
+
+
+
 // function to update Milestone % complete via PUT 
-function postMilestoneUpdate(){
+function updateMilestone(){
   var settings = { "url": "https://optum.aha.io/api/v1/custom_object_records/" + msID, 
         "method": "PUT", 
         "timeout": 0, 
@@ -399,16 +400,15 @@ function checkEpicsDone(epicCount) {
         if (epicCount !== 0) {
             // waitingFlag = true;
             // setInterval(showWaiting, 500);
-            console.log('waiting condition: ' + (epicCount !==0))
-            $('#msResults').append('*') ;
+            console.log('condition: ' + (epicCount !==0))
             } else {
   // populate Milestone summary display
         let showmsEffortSum = formatNumber(msEffortSum)
         let showmsCompleteSum = formatNumber(msCompleteSum)
         waitingFlag = false;
                 $('#msResults').append('<br>')
-                $('#msResults').append('<strong>Total MS: </strong>' + msID ); 
-                $('#msResults').append(';  <strong>  #Epics: </strong>' + (numEpics));
+                $('#msResults').append('<strong>Milestone: </strong>' + msID ); 
+                $('#msResults').append(';  <strong>  #Epics: </strong>' + (numEpics-1));
                 $('#msResults').append(';  <strong>  Effort: </strong>' + showmsEffortSum + ' days' );
                 $('#msResults').append(';  <strong>  Done: </strong>' + showmsCompleteSum + ' days' );
                 $('#msResults').append(';  <strong>  Progress: </strong>' + msPercentComplete +"%");
@@ -423,14 +423,10 @@ function checkEpicsDone(epicCount) {
                     "msProgress" : msPercentComplete,
                     "msTotalEffortDone" : msCompleteSum
                 };
-              msSummary.push(msObject);
-              postMilestoneUpdate();
-          console.log('time to call next milestone')
-                checkMilestonesDone()
+                msSummary.push(msObject)
       }; 
   }
 
-// function GETs info for a specific Epic
 function epicAjax(){
     var settings = {
       "url": "https://optum.aha.io/api/v1/epics/" + epicNum + "?fields=name,original_estimate,progress",
@@ -454,7 +450,6 @@ function epicAjax(){
               msEffortSum = msEffortSum + epicEffort;
               msCompleteSum = Math.round(msCompleteSum + epicEffortCompl)
               msPercentComplete = Math.round(100*msCompleteSum/msEffortSum)
-          console.log('epicID: ' + epicID);
           console.log('epic effort: ' + epicEffort);
           console.log('milestone effort subtotal: ' + msEffortSum);
           console.log('milestone complete: ' + msCompleteSum);
@@ -487,36 +482,33 @@ $("#ms_controls").submit(function() {
           clientId: localStorage.clientID, // NOTE: replace this with your client ID.
           redirectUri: localStorage.redirectUri
         }).authenticate(function(api, success, message) {
-      console.log('api success ' +  success)
-      console.log('api message ' +  message)
+      console.log(success)
+      console.log(message)
           var productKey = $("#msNum").val();
 
 // Fetch milestone information
           api.get("/custom_object_records/" + productKey , {per_page: 50}, 
-
           function(response) {
             localStorage.msInfo = (JSON.stringify(response))
             msInfo = response
-      // call function countEpics to determine the number of epics and assing to var numEpics
-      // and create the object epicsToParse
-          countEpics()
-            epicCount = (numEpics);
+            numEpics = msInfo.custom_object_record.linked_records["length"];
+            epicCount = (numEpics-1);
         console.log ('number of epics: ' + numEpics)
         console.log(response)
             msName = msInfo.custom_object_record.custom_fields[0].value
             msID = msInfo.custom_object_record.id
             msProduct = msInfo.custom_object_record.product_id
-            msInitiative = msInfo.custom_object_record.linked_records[0].record_id
+            msInitiative = msInfo.custom_object_record.linked_records[(numEpics-1)].record_id
 // populate display block
-        // $('#msBody').append('<br>') ;
+        $('#msBody').append('<br>') ;
         $('#msBody').append('<strong>MilestoneID: </strong>' + productKey)
         $('#msResults').append('<br>') ;
         $('#msResults').append('<strong>MilestoneID: </strong>' + productKey)
         $('#msBody').append('<br>') ;
-        $('#msBody').append('<strong># Epics: </strong>' + (numEpics))
-        $('#msResults').append(',  <strong># Epics: </strong>' + (numEpics))
-        // $('#msBody').append('<br>') ;       
-        $('#msBody').append('  <strong>MS Name: </strong>' + msName)
+        $('#msBody').append('<strong># Epics: </strong>' + (numEpics-1))
+        $('#msResults').append(',  <strong># Epics: </strong>' + (numEpics-1))
+        $('#msBody').append('<br>') ;       
+        $('#msBody').append('<strong>MS Name: </strong>' + msName)
         $('#msResults').append(',  <strong> Name: </strong>' + msName.slice(0, 50))
         $('#msResults').append('<br>') ;
         $('#msBody').append('<br>') ;
@@ -525,194 +517,27 @@ $("#ms_controls").submit(function() {
 
 // loop through epics, waiting between each fetch to stay within API limits
         var i;
-        for(i = 0; i < (numEpics); i++){
+        for(i = 0; i < (numEpics-1); i++){
             (function(i){
                 setTimeout(function(){
-//getting epic number from new object epicsToParse  
-                  let num = epicsToParse[i];
+                  let num = msInfo.custom_object_record.linked_records[i].record_id;
                         epicNum = num.toString()
                         $('#msBody').append("Epic #: " + (i+1));
                         $('#msBody').append(",  record_id: " + epicNum) ;
                         $('#msBody').append('<br>') ;
-                        // $('#msResults').append('*') ;
+                        $('#msResults').append('*') ;
                       epicAjax()
           //wait 100 milliseconds between calls (API limit is 'technically' 20ms)
                 }, 700 * i);
             }(i)
             );
-
             };
-          }
-          // .fail (function error(){console.log('error retrieving epic')})
-          )
-
+          })
           $('#msBody').append('<br>')
           msSummary.push(epicSummary)
           });
         return false;
       });
-
-
-// API call to update milestones for an initiative by iterating through each related milestone
-$("#init_update").submit(function() { 
-
-console.log('init update');
-
-// Initializing milestone information
-    initEffortSum = 0;
-    initCompleteSum = 0;
-    initPercentComplete = 0;
-
-     new AhaApi({
-      accountDomain: localStorage.subDomain,
-      clientId: localStorage.clientID, // NOTE: replace this with your client ID.
-      redirectUri: localStorage.redirectUri
-    }).authenticate(function(api, success, message) {
-  console.log(success)
-  console.log(message)
-      var productKey = $("#init-num2").val();
-
-// Fetch milestone information
-      api.get("/initiatives/" + productKey , {per_page: 50}, 
-      function(response) {
-        localStorage.singleInit = (JSON.stringify(response))
-            singleInit = response
-            relatedMilestones = singleInit.initiative.custom_object_links[1].record_ids
-            console.log(response)
-
-// check this to ensure that the number of milestones is correct this way - thery may be other custom_object_links             
-            numMilestones = initInfo.initiative.custom_object_links[1].record_ids.length;
-            msCount = (numMilestones);
-    console.log ('number of milestones: ' + numMilestones)
-    console.log(response)
-            initName = initInfo.initiative.name;
-            initID = initInfo.initiative.id;
-            initProduct = initInfo.initiative.product_id;
-            
-
-// populate initiative summary for display block
-        $('#initResults').append('<br>') ;
-        $('#initResults').append('<strong>InitiativeID: </strong>' + initID);
-        $('#initResults').append(',  <strong> Name: </strong>' + initName.slice(0, 50));
-        $('#initResults').append(',  <strong># Milestones: </strong>' + (numMilestones));
-        $('#initResults').append('<br>') ;
-        $('#initResults').append("-------------------------------------------------------------------------------------------------------------------------------");
-        $('#initResults').append('<br>') ;
-        $('#initResults').append('<strong>Milestones: </strong>' + JSON.stringify(relatedMilestones));
-        $('#initResults').append('<br>');
-        ; 
-
-// set the index and ID of the milestone to parse and call parseMilestone 
-
-       msIndex = (numMilestones - msCount)
-       msToParse = relatedMilestones[msIndex]
-       parseMilestone()
-
-      })
-      });
-    return false;
-  });
-
-// function to parse in individual milestone and update it's progress (a partial copy of #ms_controls listener abpve)      
-function parseMilestone(msToParse){
-
-// Initializing milestone information
-    msEffortSum = 0;
-    msCompleteSum = 0;
-    msPercentComplete = 0;
-
-    var settings = {
-      "url": "https://optum.aha.io/api/v1/custom_object_records/" + msToParse,
-      "method": "GET",
-      // "timeout": 0,
-      "crossDomain": true,
-      "access-control-allow-origin": "*",
-      "headers": { "Authorization": localStorage.ahaToken, },
-      };
-      $.ajax(settings)
-      .then(
-      function(response) {
-          localStorage.msInfo = (JSON.stringify(response))
-          msInfo = response
-// call function countEpics to determine the number of epics and assing to var numEpics
-// and create the object epicsToParse
-       countEpics()
-          epicCount = (numEpics);
-    console.log ('number of epics: ' + numEpics)
-    console.log(response)
-        msName = msInfo.custom_object_record.custom_fields[0].value
-        msID = msInfo.custom_object_record.id
-        msProduct = msInfo.custom_object_record.product_id
-        msInitiative = msInfo.custom_object_record.linked_records[0].record_id
-// populate display block
-    $('#msBody').append('<br>') ;
-    $('#msBody').append('<strong>MilestoneID: </strong>' + msToParse)
-    $('#msResults').append('<br>') ;
-    $('#msResults').append('<strong>MilestoneID: </strong>' + msToParse)
-    $('#msBody').append('<br>') ;
-    $('#msBody').append('<strong># Epics: </strong>' + (numEpics))
-    $('#msResults').append(',  <strong># Epics: </strong>' + (numEpics))
-    $('#msBody').append('<br>') ;       
-    $('#msBody').append('<strong>MS Name: </strong>' + msName)
-    $('#msResults').append(',  <strong> Name: </strong>' + msName.slice(0, 50))
-    $('#msResults').append('<br>') ;
-    $('#msBody').append('<br>') ;
-    $('#msBody').append("==========================================");
-    $('#msBody').append('<br>') ;
-
-// loop through epics, waiting between each fetch to stay within API limits
-    var i;
-    for(i = 0; i < (numEpics); i++){
-        (function(i){
-            setTimeout(function(){
-              let num = epicsToParse[i];
-                    epicNum = num.toString()
-                    $('#msBody').append("Epic #: " + (i+1));
-                    $('#msBody').append(",  record_id: " + epicNum) ;
-                    $('#msBody').append('<br>') ;
-                    // $('#msResults').append('*') ;
-                  epicAjax()
-      //wait 100 milliseconds between calls (API limit is 'technically' 20ms)
-            }, 700 * i);
-        }(i)
-        );
-        };
-      })
-      $('#msBody').append('<br>')
-      msSummary.push(epicSummary)
-      };
-
-function checkMilestonesDone () {
-// when milestone complete decrement msCount and parse next milestone if count != 0 
-
-            console.log('checkMilestone ->  ' ); 
-            console.log('milestone count: ' + msCount);  
-            if (msCount !==0){ 
-                msCount = msCount-1
-                msIndex = (numMilestones - msCount)
-                msToParse = relatedMilestones[msIndex]
-
-          console.log('call parseMilestone for next ms#: ' + msToParse)      
-              parseMilestone(msToParse)
-            }
-  //           else {
-  // // populate Initiative summary object 
-  //               let initObject = {
-  //                   "productID" : initProductID,
-  //                   "productName" : initProductName,
-  //                   "initiativeID" : initID,
-  //                   "initiativeName" : initName,
-  //                   "initTotalEffort" :  initEffortSum,
-  //                   "initProgress" : initPercentComplete,
-  //                   "initTotalEffortDone" : initCompleteSum
-  //               };
-  //               initSummary.push(initObject)
-  //             $('#initResults').append('<br>')
-  //           }
-
-}
-
-
 
 // input form listener to retrieve information for a single epic 
  $("#epic_detail").submit(function() { 

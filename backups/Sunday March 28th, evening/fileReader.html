@@ -1,0 +1,49 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+    <title>File Reader</title>
+
+  </head>
+
+  <body>
+
+    <input type="file" id="fileInput">
+
+    <script>
+        document.getElementById('fileInput').addEventListener('change', function selectedFileChanged() {
+          console.log(this.files); // will contain information about the file that was selected.
+        });
+  
+    
+    
+    
+    
+    
+    // document.getElementById('fileInput').addEventListener('change', function selectedFileChanged() {
+    //   if (this.files.length === 0) {
+    //     console.log('No file selected.');
+    //     return;
+    //   }
+    
+    //   const reader = new FileReader();
+    //   reader.onload = function fileReadCompleted() {
+    //     // when the reader is done, the content is in reader.result.
+    //     console.log(reader.result);
+    //   };
+    //   reader.readAsText(this.files[0]);
+    // });
+  
+
+</script>
+
+
+
+
+
+
+
+
+</body>
+</html>
+
+
