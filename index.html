@@ -532,27 +532,30 @@ $("#ms_controls").submit(function() {
         $('#msBody').append("==========================================");
         $('#msBody').append('<br>') ;
 
+        if (numEpics !== 0){
 // loop through epics, waiting between each fetch to stay within API limits
-        var i;
-        for(i = 0; i < (numEpics); i++){
-            (function(i){
-                setTimeout(function(){
+              var i;
+              for(i = 0; i < (numEpics); i++){
+                  (function(i){
+                      setTimeout(function(){
 //getting epic number from new object epicsToParse  
-                  let num = epicsToParse[i];
-                        epicNum = num.toString()
-                        $('#msBody').append("Epic #: " + (i+1));
-                        $('#msBody').append(",  record_id: " + epicNum) ;
-                        $('#msBody').append('<br>') ;
-                        // $('#msResults').append('*') ;
-                      epicAjax()
-          //wait 100 milliseconds between calls (API limit is 'technically' 20ms)
-                }, 700 * i);
-            }(i)
-            );
-
-            };
+                        let num = epicsToParse[i];
+                              epicNum = num.toString()
+                              $('#msBody').append("Epic #: " + (i+1));
+                              $('#msBody').append(",  record_id: " + epicNum) ;
+                              $('#msBody').append('<br>') ;
+                              // $('#msResults').append('*') ;
+                            epicAjax()
+//wait 100 milliseconds between calls (API limit is 'technically' 20ms)
+                      }, 700 * i);
+                    }
+                  );
+              };
+        }
+        else {checkEpicsDone(numEpics)}
           }
           )
+
 // push resulting milestone summary to the msBody display and update the milestone summary data object
           $('#msBody').append('<br>')
           msSummary.push(epicSummary)
