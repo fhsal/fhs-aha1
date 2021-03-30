@@ -184,6 +184,7 @@ msObject = [];
 msSummary = [];
 msInitiative = "";
 msProduct = "";
+numMilestones = 0;
 waitingFlag ="";
 relatedMilestones = [];
 msToParse = "";
@@ -244,7 +245,7 @@ $("#epic_controls2").submit(function() {
         return false;
       });
 
-// API call to display a single initiative and store related milestones in relatedMilestones variable
+// API call to display a single initiative milestone information and update msSummary object 
 $("#init_info").submit(function() { 
          new AhaApi({
           accountDomain: localStorage.subDomain,
@@ -477,10 +478,13 @@ function epicAjax(){
 // input form listener to retrieve information for a single milestone, iterating through epic detail 
 $("#ms_controls").submit(function() { 
 
-    // Initializing milestone information
-        msEffortSum = 0;
-        msCompleteSum = 0;
-        msPercentComplete = 0;
+// Initializing milestone information for this listener which is for a single milestone
+    msEffortSum = 0;
+    msCompleteSum = 0;
+    msPercentComplete = 0;
+    relatedMilestones = [];
+    msCount = 1;
+    numMilestones = 1;
 
          new AhaApi({
           accountDomain: localStorage.subDomain,
@@ -497,8 +501,8 @@ $("#ms_controls").submit(function() {
           function(response) {
             localStorage.msInfo = (JSON.stringify(response))
             msInfo = response
-      // call function countEpics to determine the number of epics and assing to var numEpics
-      // and create the object epicsToParse
+// call function countEpics to determine the number of epics and assing to var numEpics
+// and create the object epicsToParse
           countEpics()
             epicCount = (numEpics);
         console.log ('number of epics: ' + numEpics)
@@ -543,9 +547,8 @@ $("#ms_controls").submit(function() {
 
             };
           }
-          // .fail (function error(){console.log('error retrieving epic')})
           )
-
+// push resulting milestone summary to the msBody display and update the milestone summary data object
           $('#msBody').append('<br>')
           msSummary.push(epicSummary)
           });
@@ -562,6 +565,7 @@ console.log('init update');
     initEffortSum = 0;
     initCompleteSum = 0;
     initPercentComplete = 0;
+    relatedMilestones = [];
 
      new AhaApi({
       accountDomain: localStorage.subDomain,
@@ -577,36 +581,26 @@ console.log('init update');
       function(response) {
         localStorage.singleInit = (JSON.stringify(response))
             singleInit = response
-            relatedMilestones = singleInit.initiative.custom_object_links[1].record_ids
-            console.log(response)
-
-// check this to ensure that the number of milestones is correct this way - thery may be other custom_object_links             
-            numMilestones = initInfo.initiative.custom_object_links[1].record_ids.length;
-            msCount = (numMilestones);
-    console.log ('number of milestones: ' + numMilestones)
-    console.log(response)
-            initName = initInfo.initiative.name;
-            initID = initInfo.initiative.id;
-            initProduct = initInfo.initiative.product_id;
-            
-
-// populate initiative summary for display block
-        $('#initResults').append('<br>') ;
-        $('#initResults').append('<strong>InitiativeID: </strong>' + initID);
-        $('#initResults').append(',  <strong> Name: </strong>' + initName.slice(0, 50));
-        $('#initResults').append(',  <strong># Milestones: </strong>' + (numMilestones));
-        $('#initResults').append('<br>') ;
-        $('#initResults').append("-------------------------------------------------------------------------------------------------------------------------------");
-        $('#initResults').append('<br>') ;
-        $('#initResults').append('<strong>Milestones: </strong>' + JSON.stringify(relatedMilestones));
-        $('#initResults').append('<br>');
-        ; 
+// still need to check the below as there may be other custom_object_links
+            if (!singleInit.initiative.custom_object_links){
+              console.log('initiative ' + productKey + ' has no related milestones')
+            }
+            else {
+// if there are milestones, push id's into relatedMilestones and set numMilestones = msCount
+              relatedMilestones = singleInit.initiative.custom_object_links[1].record_ids
+              numMilestones = singleInit.initiative.custom_object_links[1].record_ids.length
+              msCount = numMilestones
+            }
+              console.log(response)
+              initProductName = singleInit.initiative.project.name
+              initProductID = singleInit.initiative.project.id
+        displayInitiativeInfo()
 
 // set the index and ID of the milestone to parse and call parseMilestone 
 
-       msIndex = (numMilestones - msCount)
-       msToParse = relatedMilestones[msIndex]
-       parseMilestone()
+            msIndex = (numMilestones - msCount)
+            msToParse = relatedMilestones[msIndex]
+       parseMilestone(msToParse)
 
       })
       });
