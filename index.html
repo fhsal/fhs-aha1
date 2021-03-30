@@ -666,6 +666,8 @@ function parseMilestone(msToParse){
     $('#msBody').append("==========================================");
     $('#msBody').append('<br>') ;
 
+if (numEpics == 0) { checkEpicsDone(epicCount)}
+
 // loop through epics, waiting between each fetch to stay within API limits
     var i;
     for(i = 0; i < (numEpics); i++){
