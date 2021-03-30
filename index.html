@@ -532,7 +532,9 @@ $("#ms_controls").submit(function() {
         $('#msBody').append("==========================================");
         $('#msBody').append('<br>') ;
 
-        if (numEpics !== 0){
+      if (numEpics !== 0){
+
+          console.log('#ms - loop through epics')
 // loop through epics, waiting between each fetch to stay within API limits
               var i;
               for(i = 0; i < (numEpics); i++){
