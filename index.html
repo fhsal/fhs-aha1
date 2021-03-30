@@ -532,7 +532,7 @@ $("#ms_controls").submit(function() {
         $('#msBody').append("==========================================");
         $('#msBody').append('<br>') ;
 
-      if (numEpics !== 0){
+      // if (numEpics !== 0){
 
           console.log('#ms - loop through epics')
 // loop through epics, waiting between each fetch to stay within API limits
@@ -554,8 +554,8 @@ $("#ms_controls").submit(function() {
                   );
               };
         }
-        else {checkEpicsDone(numEpics)}
-          }
+        // else {checkEpicsDone(numEpics)}
+          // }
           )
 
 // push resulting milestone summary to the msBody display and update the milestone summary data object
