@@ -279,6 +279,8 @@ $("#init_info").submit(function() {
       });
 
   function countEpics() {
+
+    console.log('function = countEpics ')
       let numObjects = msInfo.custom_object_record.linked_records.length
       epicCount = 0;
       epicsToParse = [];
@@ -390,7 +392,7 @@ function postMilestoneUpdate(){
         "Content-Type": "application/json", 
           }, 
         "data": JSON.stringify({"custom_object_record":{"custom_fields":{"milestone_percent_complete":msPercentComplete}}}), };
-    $.ajax(settings).done(function (response) { console.log(response); });
+    $.ajax(settings).done(function (response) { console.log('PUT update ' + response); });
   }
 
 // function to count down epics as their responses are received, displaying an "*"
@@ -402,7 +404,8 @@ function checkEpicsDone(epicCount) {
             // setInterval(showWaiting, 500);
             console.log('waiting condition: ' + (epicCount !==0))
             $('#msResults').append('*') ;
-            } else {
+            } 
+        else {
   // populate Milestone summary display
         let showmsEffortSum = formatNumber(msEffortSum)
         let showmsCompleteSum = formatNumber(msCompleteSum)
@@ -427,7 +430,8 @@ function checkEpicsDone(epicCount) {
               msSummary.push(msObject);
               postMilestoneUpdate();
           console.log('time to call next milestone')
-                checkMilestonesDone()
+
+              checkMilestonesDone()
       }; 
   }
 
@@ -635,7 +639,7 @@ function parseMilestone(msToParse){
        countEpics()
           epicCount = (numEpics);
     console.log ('number of epics: ' + numEpics)
-    console.log(response)
+    // console.log(response)
         msName = msInfo.custom_object_record.custom_fields[0].value
         msID = msInfo.custom_object_record.id
         msProduct = msInfo.custom_object_record.product_id
