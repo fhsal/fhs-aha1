@@ -438,9 +438,6 @@ function checkEpicsDone(epicCount) {
 
 // function GETs info for a specific Epic
 function epicAjax(){
-
-  console.log('epicAjax')
-  
     var settings = {
       "url": "https://optum.aha.io/api/v1/epics/" + epicNum + "?fields=name,original_estimate,progress",
       "method": "GET",
