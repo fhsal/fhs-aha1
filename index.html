@@ -635,6 +635,8 @@ function parseMilestone(msToParse){
 
     console.log('parseMilestone, MS#: ' + msToParse); 
 
+  if(msToParse){ 
+
     var settings = {
       "url": "https://optum.aha.io/api/v1/custom_object_records/" + msToParse,
       "method": "GET",
@@ -695,7 +697,7 @@ if (numEpics == 0) { checkEpicsDone(epicCount)}
         };
       })
 // check to see if milestones finished 
-
+  } 
       $('#msBody').append('<br>')
       msSummary.push(epicSummary)
 
@@ -715,8 +717,9 @@ function checkMilestonesDone () {
 
               console.log('call parseMilestone for next ms#: ' + msToParse)
               console.log('with milestone count: ' + msCount);  
-              console.log('and milestone index: ' + msIndex);      
-                parseMilestone(msToParse)
+              console.log('and milestone index: ' + msIndex);
+// call parseMilestone if msToParse is not undefined                    
+            if(msToParse){ parseMilestone(msToParse)}
             }
   //           else {
   // // populate Initiative summary object 
