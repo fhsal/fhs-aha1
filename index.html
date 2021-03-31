@@ -508,8 +508,15 @@ $("#ms_controls").submit(function() {
           function(response) {
             localStorage.msInfo = (JSON.stringify(response))
             msInfo = response
-            numEpics = (msInfo.custom_object_record.linked_records["length"] -1);
-            epicCount = (numEpics-1);
+
+// call function countEpics to determine the number of epics and assing to var numEpics
+// and create the object epicsToParse
+          countEpics()
+            epicCount = numEpics;  
+
+
+            // numEpics = (msInfo.custom_object_record.linked_records["length"] -1);
+            // epicCount = (numEpics-1);
         console.log ('number of epics: ' + numEpics)
         console.log(response)
             msName = msInfo.custom_object_record.custom_fields[0].value
