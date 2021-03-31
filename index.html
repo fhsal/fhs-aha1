@@ -315,15 +315,25 @@ function displayInitiativeInfo () {
 
     initInfo=singleInit
 
-    // check to see if initiative has any milestones
+    // check to see if initiative has any related records (milestones or outcomes
         if (!singleInit.initiative.custom_object_links){
               console.log('initiative ' + initInfo.initiative.id + ' has no related milestones');
               numMilestones = 0;
               relatedMilestones = 'no related milestones'
             }
         else {
-              numMilestones = initInfo.initiative.custom_object_links[1].record_ids.length
-            }
+// check to see if the related records are milestones 
+          if(initInfo.initiative.custom_object_links[1].record_ids.key == "milestones"){
+
+              numMilestones = initInfo.initiative.custom_object_links[1].record_ids.length}
+
+          else {
+              console.log('initiative ' + initInfo.initiative.id + ' has no related milestones');
+              numMilestones = 0;
+              relatedMilestones = 'no related milestones'
+          }
+        }
+  }
 
     msCount = numMilestones;
 
