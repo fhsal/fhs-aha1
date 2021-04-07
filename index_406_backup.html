@@ -1,7 +1,7 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
-    <title>Aha! API Crawler</title>
+    <title>Aha! Epic Crawler</title>
 
     <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" type="text/css"></link>
     <script type="text/javascript" charset="utf-8" src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -189,7 +189,6 @@ waitingFlag ="";
 relatedMilestones = [];
 msToParse = "";
 initinfo = "";
-numInitiatives = 0;
 initObject = [];
 initCount = 0;
 initSummary = [];
@@ -355,6 +354,45 @@ function displayInitiativeInfo () {
         $('#initResults').append('<br><br>');
         ; 
      }
+
+
+// function to count down epics as their responses are received, displaying an "*"
+//  for each as completed & then the overall summary  
+function checkInitiativeDone(initCount) {
+    console.log('checkInitiativesDone, numMilestones: ' + numMilestones) 
+        if (msCount !== 0) {
+            // waitingFlag = true;
+            // setInterval(showWaiting, 500);
+            console.log('condition: ' + (msCount !==0))
+            msCount = (mscount-1)
+            parseMilestone ()
+
+            } else {
+  // populate Initiative summary display
+        let showInitEffortSum = formatNumber(initEffortSum)
+        let showInitCompleteSum = formatNumber(initCompleteSum)
+        waitingFlag = false;
+                $('#initResults').append('<br>')
+                $('#initResults').append('<strong>Initiative#: </strong>' + initID ); 
+                $('#initResults').append(';  <strong>  #Milestones: </strong>' + numMilestones);
+                $('#initResults').append(';  <strong>  Effort: </strong>' + showInitEffortSum + ' days' );
+                $('#initResults').append(';  <strong>  Done: </strong>' + showInitCompleteSum + ' days' );
+                $('#initResults').append(';  <strong>  Progress: </strong>' + mInitPercentComplete +"%");
+                $('#initResults').append('<br>')
+  // populate Initiative summary object 
+
+                let initObject = {
+                    "productID" : initProductID,
+                    "productName" : initProductName,
+                    "initiativeID" : initID,
+                    "initiativeName" : initName,
+                    "initTotalEffort" :  initEffortSum,
+                    "initProgress" : initPercentComplete,
+                    "initTotalEffortDone" : initCompleteSum
+                };
+                initSummary.push(initObject)
+      }; 
+  }
 
 // function to update Milestone % complete via PUT 
 function postMilestoneUpdate(){
@@ -592,60 +630,6 @@ console.log('init update');
     return false;
   });
 
-
-// function to parse in individual initiative and update it's progress (similar to parseMilestone)      
-function parseInitiative(initToParse){
-
-// Initializing milestone information
-    initEffortSum = 0;
-    initCompleteSum = 0;
-    initPercentComplete = 0;
-
-    console.log('parseInitiative, init#: ' + initToParse); 
-
-  if(initToParse){ productKey = initToParse;
-
-// Fetch milestone information
-      api.get("/initiatives/" + productKey , {per_page: 50}, 
-      function(response) {
-        localStorage.singleInit = (JSON.stringify(response))
-            singleInit = response
-// still need to check the below as there may be other custom_object_links
-            if (!singleInit.initiative.custom_object_links){
-              console.log('initiative ' + productKey + ' has no related milestones')
-            }
-            else {
-// if there are milestones, push id's into relatedMilestones and set numMilestones = msCount
-              relatedMilestones = singleInit.initiative.custom_object_links[1].record_ids
-              numMilestones = singleInit.initiative.custom_object_links[1].record_ids.length
-              msCount = numMilestones
-            }
-              console.log(response)
-              initProductName = singleInit.initiative.project.name
-              initProductID = singleInit.initiative.project.id
-        displayInitiativeInfo()
-
-// set the index and ID of the milestone to parse and call parseMilestone 
-
-            msIndex = (numMilestones - msCount)
-            msToParse = relatedMilestones[msIndex]
-       parseMilestone(msToParse)
-
-      })
-// check to see if milestones finished 
-  } 
-      $('#msBody').append('<br>')
-      msSummary.push(epicSummary)
-
-      // checkMilestonesDone()
-
-      };
-
-
-
-
-
-
 // function to parse in individual milestone and update it's progress (a partial copy of #ms_controls listener abpve)      
 function parseMilestone(msToParse){
 
@@ -742,47 +726,23 @@ function checkMilestonesDone () {
 // call parseMilestone if msToParse is not undefined                    
             if(msToParse){ parseMilestone(msToParse)}
             }
+  //           else {
+  // // populate Initiative summary object 
+  //               let initObject = {
+  //                   "productID" : initProductID,
+  //                   "productName" : initProductName,
+  //                   "initiativeID" : initID,
+  //                   "initiativeName" : initName,
+  //                   "initTotalEffort" :  initEffortSum,
+  //                   "initProgress" : initPercentComplete,
+  //                   "initTotalEffortDone" : initCompleteSum
+  //               };
+  //               initSummary.push(initObject)
+  //             $('#initResults').append('<br>')
+  //           }
 
 }
 
-
-// function to count down initiatives as their milestones are complete
-
-function checkInitiativeDone(initCount) {
-    console.log('checkInitiativesDone, numInitiatives: ' + numInitiatives) 
-        if (initCount !== 0) {
-            // waitingFlag = true;
-            // setInterval(showWaiting, 500);
-            console.log('condition: ' + (intCount !==0))
-            initCount = (initCount-1)
-            parseInitiative ()
-
-            } else {
-  // populate Initiative summary display
-        let showInitEffortSum = formatNumber(initEffortSum)
-        let showInitCompleteSum = formatNumber(initCompleteSum)
-        waitingFlag = false;
-                $('#initResults').append('<br>')
-                $('#initResults').append('<strong>Initiative#: </strong>' + initID ); 
-                $('#initResults').append(';  <strong>  #Milestones: </strong>' + numMilestones);
-                $('#initResults').append(';  <strong>  Effort: </strong>' + showInitEffortSum + ' days' );
-                $('#initResults').append(';  <strong>  Done: </strong>' + showInitCompleteSum + ' days' );
-                $('#initResults').append(';  <strong>  Progress: </strong>' + mInitPercentComplete +"%");
-                $('#initResults').append('<br>')
-  // populate Initiative summary object 
-
-                let initObject = {
-                    "productID" : initProductID,
-                    "productName" : initProductName,
-                    "initiativeID" : initID,
-                    "initiativeName" : initName,
-                    "initTotalEffort" :  initEffortSum,
-                    "initProgress" : initPercentComplete,
-                    "initTotalEffortDone" : initCompleteSum
-                };
-                initSummary.push(initObject)
-      }; 
-  }
 
 
 // input form listener to retrieve information for a single epic 
