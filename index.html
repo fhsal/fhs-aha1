@@ -433,9 +433,9 @@ function epicAjax(){
                         console.log(response)
               let epicID = epicInfo.epic.id;         
               let epicName = epicInfo.epic.name;
-              let epicEffort = epicInfo.epic.original_estimate/480
+              let epicEffortCalc = epicInfo.epic.original_estimate/480
+              let epicEffort = epicEffortCalc.toFixed(0)
               if (epicEffort > 0) { epicEffort = epicEffort} else { epicEffort = 0} ;
-              epicEffort = epicEffort.toFixed(0);
               let epicProgress = parseInt(epicInfo.epic.progress)/100;
               let epicEffortCompl = epicEffort*epicProgress;
               if (epicEffortCompl > 0) { epicEffortCompl = epicEffortCompl} else { epicEffortCompl = 0} ;
