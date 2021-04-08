@@ -358,7 +358,7 @@ function displayInitiativeInfo () {
 
 // function to update Milestone % complete via PUT 
 function postMilestoneUpdate(){
-  let showmsEffortSum = formatNumber(msEffortSum)
+  let showmsEffortSum = formatNumber(msEffortSum.toFixed(0))
   var settings = { "url": "https://optum.aha.io/api/v1/custom_object_records/" + msID, 
         "method": "PUT", 
         "timeout": 0, 
