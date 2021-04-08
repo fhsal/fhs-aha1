@@ -366,8 +366,8 @@ function postMilestoneUpdate(){
           }, 
         "data": JSON.stringify({"custom_object_record":
         {"custom_fields":
-        {"milestone_percent_complete":msPercentComplete,
-        "milestone_total_estimated_effort": msEffortSum,
+        {"milestone_percent_complete": showmsPercentComplete,
+        "milestone_total_estimated_effort": showmsEffortSum,
         "no_capabilities": numEpics},
       }}), };
     $.ajax(settings).done(function (response) { console.log('PUT update ' + response); });
@@ -401,8 +401,8 @@ function checkEpicsDone(epicCount) {
                     "initiativeID" : msInitiative,
                     "msID" : msID,
                     "msName" : msName,
-                    "msTotalEffort" :  msEffortSum,
-                    "msProgress" : msPercentComplete,
+                    "msTotalEffort" :  showmsEffortSum,
+                    "msProgress" : showmsPercentComplete,
                     "msTotalEffortDone" : msCompleteSum
                 };
               msSummary.push(msObject);
@@ -650,10 +650,6 @@ function parseInitiative(initToParse){
       // checkMilestonesDone()
 
       };
-
-
-
-
 
 
 // function to parse in individual milestone and update it's progress (a partial copy of #ms_controls listener abpve)      
