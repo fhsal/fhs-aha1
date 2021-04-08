@@ -201,7 +201,7 @@ function formatNumber(num) {
 }
 
 // API call for epics by portfolio (roll-up initiative)
-$("#portfolio_controls").submit(function() { 
+$("#epic_controls").submit(function() { 
          new AhaApi({
           accountDomain: localStorage.subDomain,
           clientId: localStorage.clientID, // NOTE: replace this with your client ID.
@@ -213,7 +213,7 @@ $("#portfolio_controls").submit(function() {
           var productKey = $("#product-key").val();
 
 // Fetch up to 50 initiatives in one fetch.
-          api.get("/products/" + productKey + "/initiatives/?fields=children", 
+          api.get("/initiatives/" + productKey + "?fields=children", 
           function(response) {
             localStorage.ii = (JSON.stringify(response))
             portfolioInits = response
