@@ -603,10 +603,20 @@ function parseInitiative(initToParse){
 
     console.log('parseInitiative, init#: ' + initToParse); 
 
-  if(initToParse){ productKey = initToParse;
+  if(initToParse){ 
 
-// Fetch milestone information
-      api.get("/initiatives/" + productKey , {per_page: 50}, 
+// fetch initiative inforamation
+
+    var settings = {
+      "url": "https://optum.aha.io/api/v1/custom_object_records/" + initToParse,
+      "method": "GET",
+      // "timeout": 0,
+      "crossDomain": true,
+      "access-control-allow-origin": "*",
+      "headers": { "Authorization": localStorage.ahaToken, },
+      };
+      $.ajax(settings)
+      .then(
       function(response) {
         localStorage.singleInit = (JSON.stringify(response))
             singleInit = response
