@@ -213,7 +213,7 @@ $("#portfolio_controls").submit(function() {
           var productKey = $("#portfolio-key").val();
 
 // Fetch up to 50 initiatives in one fetch.
-          api.get("/products/" + productKey + "/initiatives/?fields=children", 
+          api.get("/products/" + productKey + "/initiatives?fields=children", 
           function(response) {
             localStorage.ii = (JSON.stringify(response))
             portfolioInits = response
