@@ -107,7 +107,7 @@
     <div class="col-sm-5"  style= "width: 425px; padding-left: 0px";>
         <form id="portfolio_controls">
   <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain"> -->
-          <input type="text" placeholder="Roll up Initiative number" id="product-key">
+          <input type="text" placeholder="Roll up Initiative number" id="portfolio-key">
           <input type="submit" class="btn btn-secondary btn-sm" value="Console.log initiatives for a portfolio">
         </form>
 
@@ -210,7 +210,7 @@ $("#portfolio_controls").submit(function() {
 
           console.log(success)
           console.log(message)
-          var productKey = $("#product-key").val();
+          var productKey = $("#portfolio-key").val();
 
 // Fetch up to 50 initiatives in one fetch.
           api.get("/products/" + productKey + "/initiatives/?fields=children", 
