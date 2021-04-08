@@ -368,7 +368,7 @@ function postMilestoneUpdate(){
         "data": JSON.stringify({"custom_object_record":
         {"custom_fields":
         {"milestone_percent_complete": msPercentComplete,
-        "milestone_total_estimated_effort": formatNumber(msEffortSum),
+        "milestone_total_estimated_effort": msEffortSum,
         "no_capabilities": numEpics},
       }}), };
     $.ajax(settings).done(function (response) { console.log('PUT update ' + response); });
