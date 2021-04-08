@@ -358,7 +358,7 @@ function displayInitiativeInfo () {
 
 // function to update Milestone % complete via PUT 
 function postMilestoneUpdate(){
-
+  let showmsEffortSum = formatNumber(msEffortSum)
   var settings = { "url": "https://optum.aha.io/api/v1/custom_object_records/" + msID, 
         "method": "PUT", 
         "timeout": 0, 
@@ -368,7 +368,7 @@ function postMilestoneUpdate(){
         "data": JSON.stringify({"custom_object_record":
         {"custom_fields":
         {"milestone_percent_complete": msPercentComplete,
-        "milestone_total_estimated_effort": msEffortSum,
+        "milestone_total_estimated_effort": showmsEffortSum,
         "no_capabilities": numEpics},
       }}), };
     $.ajax(settings).done(function (response) { console.log('PUT update ' + response); });
