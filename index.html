@@ -236,7 +236,7 @@ $("#epic_controls2").submit(function() {
           var productKey = $("#product-key2").val();
 
 // Fetch up to 50 initiatives in one fetch.
-          api.get("/products/" + productKey + "/initiatives", {per_page: 50, fields: 'reference_num,name,description'}, 
+          api.get("/products/" + productKey + "/initiatives?fields=children", {per_page: 50, fields: 'reference_num,name,description'}, 
           function(response) {
             localStorage.ii = (JSON.stringify(response))
             inits = response
