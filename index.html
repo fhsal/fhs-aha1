@@ -108,7 +108,7 @@
 
       <form id="portfolio_list">
         <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain"> -->
-                <input type="text" placeholder="Portfolio group (e.g., UHC)" id="portfolio-name">
+                <input type="text" placeholder="Portfolio group (e.g.,UHC)" id="portfolio-name">
                 <input type="submit" class="btn btn-secondary btn-sm" value="Show defined portfolios">
               </form>
 
@@ -253,7 +253,7 @@ $("#portfolio_controls").submit(function() {
           var productKey = $("#portfolio-key").val();
 
 // Fetch up to 50 initiatives in one fetch.
-api.get("/products/" + productKey + "/initiatives", {per_page: 50, fields: 'reference_num,name, children'}, 
+api.get("/initiatives" + productKey, {per_page: 50, fields: 'children'}, 
           function(response) {
             localStorage.ii = (JSON.stringify(response))
             let uhcItems = response
