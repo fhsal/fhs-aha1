@@ -114,7 +114,7 @@
 
         <form id="portfolio_controls">
   <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain"> -->
-          <input type="text" placeholder="Portfolio id" id="portfolio-key">
+          <input type="text" placeholder="Portfolio ID" id="portfolio-key">
           <input type="submit" class="btn btn-secondary btn-sm"  value="Show initiatives for a portfolio">
         </form>
 
@@ -233,6 +233,7 @@ api.get("/products/" + productKey + "/initiatives", {per_page: 50, fields: 'refe
         portfolios.push(currentItem)
       }
       $('#prodResults').append(JSON.stringify(portfolios))
+      $('#prodResults').append('<br>')
           });
         });
         return false;
@@ -264,7 +265,10 @@ api.get("/initiatives/" + productKey, {per_page: 50, fields: 'children'},
         let currentItem = uhcItems.initiative.children[i].name + ': ' + uhcItems.initiative.children[i].id
         portfolioInits.push(currentItem)
       }
+      $('#prodResults').append('<strong> Portfolio:' + uhcItems.initiative.name + ", #initiatives: " + n + '</strong>')
+      $('#prodResults').append('<br>')
       $('#prodResults').append(JSON.stringify(portfolioInits))
+      $('#prodResults').append('<br>')
 
           });
         });
