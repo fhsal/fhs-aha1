@@ -226,16 +226,13 @@ api.get("/products/" + productKey + "/initiatives", {per_page: 50, fields: 'refe
             localStorage.portfolios = (JSON.stringify(response))
             let uhcItems = response
             console.log(response)
-          });
 
-      let n = uhcItems.initiatives.length;
-
+            let n = uhcItems.initiatives.length;
       for (i = 0; i < n; i++){
-
         let currentItem = uhcItems.initiatives[1].name + ', ' + uhcItems.initiatives[1].id + ', '
         portfolios.push(currentItem)
       }
-
+          });
       $('#ProdSummary').append(portfolios)
 
         });
