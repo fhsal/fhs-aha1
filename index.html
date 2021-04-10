@@ -105,10 +105,17 @@
 
 <br><br>
     <div class="col-sm-5"  style= "width: 425px; padding-left: 0px";>
+
+      <form id="portfolio_list">
+        <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain"> -->
+                <input type="text" placeholder="UHC" id="portfolio-name">
+                <input type="submit" class="btn btn-secondary btn-sm" value="Show defined portfolios">
+              </form>
+
         <form id="portfolio_controls">
   <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain"> -->
           <input type="text" placeholder="Roll up Initiative number" id="portfolio-key">
-          <input type="submit" class="btn btn-secondary btn-sm" value="Console.log initiatives for a portfolio">
+          <input type="submit" class="btn btn-secondary btn-sm"  value="Console.log initiatives for a portfolio">
         </form>
 
         <form id="epic_controls2">
@@ -190,6 +197,7 @@ relatedMilestones = [];
 msToParse = "";
 initinfo = "";
 numInitiatives = 0;
+portfolios = [];
 initObject = [];
 initCount = 0;
 initSummary = [];
@@ -199,6 +207,41 @@ initSummary = [];
 function formatNumber(num) {
   return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
 }
+
+// API call for defined portfolios (defined roll-up initiatives)
+$("#portfolio_list").submit(function() { 
+         new AhaApi({
+          accountDomain: localStorage.subDomain,
+          clientId: localStorage.clientID, // NOTE: replace this with your client ID.
+          redirectUri: localStorage.redirectUri
+        }).authenticate(function(api, success, message) {
+
+          console.log(success)
+          console.log(message)
+          var productKey = $("#portfolio-name").val();
+
+// Fetch up to 50 initiatives in one fetch.
+api.get("/products/" + productKey + "/initiatives", {per_page: 50, fields: 'reference_num,name, children'}, 
+          function(response) {
+            localStorage.portfolios = (JSON.stringify(response))
+            console.log(response)
+          });
+
+      let n = response.initiatives.length;
+
+      for (i = 0; i < n; i++){
+
+        let currentItem = response.initiatives[1].name + ', ' + response.initiatives[1].id + ', '
+        portfolios.push(currentItem)
+      }
+
+      $('#ProdSummary').append(portfolios)
+
+        });
+        return false;
+      });
+
+
 
 // API call for epics by portfolio (roll-up initiative)
 $("#portfolio_controls").submit(function() { 
@@ -213,7 +256,7 @@ $("#portfolio_controls").submit(function() {
           var productKey = $("#portfolio-key").val();
 
 // Fetch up to 50 initiatives in one fetch.
-api.get("/products/" + productKey + "/initiatives", {per_page: 50, fields: 'children'}, 
+api.get("/products/" + productKey + "/initiatives", {per_page: 50, fields: 'reference_num,name, children'}, 
           function(response) {
             localStorage.ii = (JSON.stringify(response))
             portfolioInits = response
@@ -236,7 +279,7 @@ $("#epic_controls2").submit(function() {
           var productKey = $("#product-key2").val();
 
 // Fetch up to 50 initiatives in one fetch.
-          api.get("/products/" + productKey + "/initiatives?fields=children", {per_page: 50, fields: 'reference_num,name,description, children'}, 
+          api.get("/products/" + productKey + "/initiatives", {per_page: 50, fields: 'reference_num,name,description, children'}, 
           function(response) {
             localStorage.ii = (JSON.stringify(response))
             inits = response
@@ -289,7 +332,7 @@ $("#init_info").submit(function() {
 // loop through milestone response, count number of epics where related record_type = 'Epic' and append 
 // the found epic # to the epicsToParse array
       var i;
-          for(i = 0; i < (numObjects); i++){
+          (fori = 0; i < (numObjects); i++){
             let record_type = msInfo.custom_object_record.linked_records[i].record_type
         console.log('record type: ' + record_type)
             if(record_type == 'Epic') { 
