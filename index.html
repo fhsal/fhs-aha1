@@ -332,7 +332,7 @@ $("#init_info").submit(function() {
 // loop through milestone response, count number of epics where related record_type = 'Epic' and append 
 // the found epic # to the epicsToParse array
       var i;
-          (fori = 0; i < (numObjects); i++){
+          for( i = 0; i < (numObjects); i++){
             let record_type = msInfo.custom_object_record.linked_records[i].record_type
         console.log('record type: ' + record_type)
             if(record_type == 'Epic') { 
