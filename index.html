@@ -108,14 +108,14 @@
 
       <form id="portfolio_list">
         <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain"> -->
-                <input type="text" placeholder="UHC" id="portfolio-name">
+                <input type="text" placeholder="Portfolio group (e.g., UHC)" id="portfolio-name">
                 <input type="submit" class="btn btn-secondary btn-sm" value="Show defined portfolios">
               </form>
 
         <form id="portfolio_controls">
   <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain"> -->
           <input type="text" placeholder="Roll up Initiative number" id="portfolio-key">
-          <input type="submit" class="btn btn-secondary btn-sm"  value="Console.log initiatives for a portfolio">
+          <input type="submit" class="btn btn-secondary btn-sm"  value="Show initiatives for a portfolio">
         </form>
 
         <form id="epic_controls2">
@@ -149,7 +149,7 @@
         </form> -->
       </div>
   <!-- display area for MS results on right -->
-      <div class="col-sm-6" id = "prodResults" style="height: 160px;margin-bottom: 5px;overflow-y: scroll;word-wrap: break-word;width: 710px;background-color:darkgoldenrod;border-color: black;color:white;"><strong>Product summary<br>---------------------------------------------------------------------------------------------------------------------------------------------</strong><br></div>
+      <div class="col-sm-6" id = "prodResults" style="height: 160px;margin-bottom: 5px;overflow-y: scroll;word-wrap: break-word;width: 710px;background-color:darkgoldenrod;border-color: black;color:white;"><strong>Portfolio summary<br>---------------------------------------------------------------------------------------------------------------------------------------------</strong><br></div>
       <div class="col-sm-6" id = "initResults" style="height: 160px;margin-top: 5px;overflow-y: scroll;word-wrap: break-word;width: 710px;background-color:teal;border-color: black;color:white;top: 0px;bottom: -50;"><strong>Initiative summary<br>---------------------------------------------------------------------------------------------------------------------------------------------</strong><br></div>
 </div>
  
@@ -169,7 +169,6 @@
 
 epics = "";
 inits = "";
-portfolioInits = [];
 singleInit = "";
 msInfo = "";
 epicInfo ="";
@@ -198,6 +197,7 @@ msToParse = "";
 initinfo = "";
 numInitiatives = 0;
 portfolios = [];
+portfolioInits = [];
 initObject = [];
 initCount = 0;
 initSummary = [];
@@ -229,7 +229,7 @@ api.get("/products/" + productKey + "/initiatives", {per_page: 50, fields: 'refe
 
             let n = uhcItems.initiatives.length;
       for (i = 0; i < n; i++){
-        let currentItem = uhcItems.initiatives[i].name + ', ' + uhcItems.initiatives[i].id
+        let currentItem = uhcItems.initiatives[i].name + ': ' + uhcItems.initiatives[i].id
         portfolios.push(currentItem)
       }
       $('#prodResults').append(JSON.stringify(portfolios))
@@ -256,8 +256,16 @@ $("#portfolio_controls").submit(function() {
 api.get("/products/" + productKey + "/initiatives", {per_page: 50, fields: 'reference_num,name, children'}, 
           function(response) {
             localStorage.ii = (JSON.stringify(response))
-            portfolioInits = response
+            let uhcItems = response
             console.log(response)
+
+            let n = uhcItems.initiative.children.length;
+      for (i = 0; i < n; i++){
+        let currentItem = uhcItems.initiative.children[i].name + ': ' + uhcItems.initiative.children[i].id
+        portfolioInits.push(currentItem)
+      }
+      $('#prodResults').append(JSON.stringify(portfolioInits))
+
           });
         });
         return false;
