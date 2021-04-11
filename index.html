@@ -266,7 +266,12 @@ $(document).ready(function(){
           let ahaToken = $('#token').val();
           let enteredURI = $('#uri').val();
       console.log('save credentials: '  + ' Domain' + subDomain + ' ClientID' + clientID + ' Token' + ahaToken + ' URI' + enteredURI)
-    }      )
+// saving credentials locally
+      localStorage.subDomain=subDomain;
+      localStorage.clientID=clientID;
+      localStorage.redirectUri=enteredURI;
+      localStorage.ahaToken=ahaToken
+    })
   });
 });
 
