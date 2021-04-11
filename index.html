@@ -277,6 +277,10 @@ $(document).ready(function(){
 
 // API call for defined portfolios (defined roll-up initiatives)
 $("#portfolio_list").submit(function() { 
+
+// clearing prior portfolio information 
+         portfolios = [];
+// authentication 
          new AhaApi({
           accountDomain: localStorage.subDomain,
           clientId: localStorage.clientID, // NOTE: replace this with your client ID.
@@ -287,7 +291,7 @@ $("#portfolio_list").submit(function() {
           console.log(message)
           var productKey = $("#portfolio-name").val();
 
-// Fetch up to 50 initiatives in one fetch.
+// calling API with Portfolio ID 
 api.get("/products/" + productKey + "/initiatives", {per_page: 50, fields: 'reference_num,name, children'}, 
           function(response) {
             localStorage.portfolios = (JSON.stringify(response))
@@ -299,6 +303,7 @@ api.get("/products/" + productKey + "/initiatives", {per_page: 50, fields: 'refe
         let currentItem = planItems.initiatives[i].name + ': ' + planItems.initiatives[i].id
         portfolios.push(currentItem)
       }
+      $('#prodResults').append('<strong>' + productKey + ' - Related Initiatives:  </strong>')
       $('#prodResults').append(JSON.stringify(portfolios))
       $('#prodResults').append('<br>')
           });
