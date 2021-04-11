@@ -314,7 +314,7 @@ api.get("/products/" + productKey + "/initiatives", {per_page: 50, fields: 'refe
 // API call for epics by portfolio (roll-up initiative)
 $("#portfolio_controls").submit(function() { 
 
-  portfolios = [];
+  portfolioInits = [];
          new AhaApi({
           accountDomain: localStorage.subDomain,
           clientId: localStorage.clientID, // NOTE: replace this with your client ID.
@@ -340,7 +340,7 @@ api.get("/initiatives/" + productKey, {per_page: 50, fields: 'children'},
       $('#prodResults').append('<strong> Portfolio: ' + planItems.initiative.name + ",  # Initiatives: " + n + '</strong>')
       $('#prodResults').append('<br>')
       $('#prodResults').append(JSON.stringify(portfolioInits))
-      $('#prodResults').append('<br>')
+      $('#prodResults').append('<br><br>')
 
           });
         });
