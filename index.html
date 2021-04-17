@@ -532,7 +532,9 @@ function checkEpicsDone(epicCount) {
                     "msTotalEffortDone" : msCompleteSum
                 };
               msSummary.push(msObject);
+// call function to post milestone updated information into custom table 
               postMilestoneUpdate();
+
           console.log('time to call next milestone')
 
               checkMilestonesDone()
@@ -874,6 +876,8 @@ function checkMilestonesDone () {
 // call parseMilestone if msToParse is not undefined                    
             if(msToParse){ parseMilestone(msToParse)}
             }
+
+            alert('milestones complete - could test next iniatiative?')
 
 }
 
