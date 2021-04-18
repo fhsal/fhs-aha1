@@ -771,7 +771,7 @@ function parseInitiative(initToParse){
             singleInit = response
 // still need to check the below as there may be other custom_object_links
             if (!singleInit.initiative.custom_object_links){
-              console.log('initiative ' + productKey + ' has no related milestones')
+              console.log('initiative ' + initToParse + ' has no related milestones')
             }
             else {
 // if there are milestones, push id's into relatedMilestones and set numMilestones = msCount
