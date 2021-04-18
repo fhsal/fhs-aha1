@@ -499,6 +499,12 @@ function displayInitiativeInfo () {
         $('#initResults').append(JSON.stringify(relatedMilestones));
         $('#initResults').append('<br><br>');
         ; 
+
+// call function checkInitiativesDone
+
+console.log('from displayInitiativeInfo calling checkInitiativesDone')
+     checkInitiativesDone()
+
      }
 
 // function to update Milestone % complete via PUT 
@@ -897,15 +903,17 @@ function checkMilestonesDone () {
             }
 
             if (msCount ==0) {
+
+              checkInitiativesDone()
               
-              if (initCount !==0){
-                  initCount =(initCount-1)
-                  nextInit = portfolioInits[initCount].split(": ")[1]
+              // if (initCount !==0){
+              //     initCount =(initCount-1)
+              //     nextInit = portfolioInits[initCount].split(": ")[1]
 
-                console.log('milestones complete - calling parseInitiative, next init#: ' + nextInit)
+              //   console.log('milestones complete - calling parseInitiative, next init#: ' + nextInit)
 
-                parseInitiative(nextInit)
-              }
+              //   parseInitiative(nextInit)
+              // }
               }
 
 }
@@ -913,40 +921,42 @@ function checkMilestonesDone () {
 
 // function to count down initiatives as their milestones are complete
 
-function checkInitiativeDone(initCount) {
+function checkInitiativesDone() {
     console.log('checkInitiativesDone, numInits: ' + numInits) 
-        if (initCount !== 0) {
-            // waitingFlag = true;
-            // setInterval(showWaiting, 500);
-            console.log('initiatives complete: ' + (intCount !==0))
-            initCount = (initCount-1)
-            parseInitiative ()
+        if (initCount !==0){
+                  initCount =(initCount-1)
+                  nextInit = portfolioInits[initCount].split(": ")[1]
 
-            } else {
-  // populate Initiative summary display
-        let showInitEffortSum = formatNumber(initEffortSum)
-        let showInitCompleteSum = formatNumber(initCompleteSum)
-        waitingFlag = false;
-                $('#initResults').append('<br>')
-                $('#initResults').append('<strong>Initiative#: </strong>' + initID ); 
-                $('#initResults').append(';  <strong>  #Milestones: </strong>' + numMilestones);
-                $('#initResults').append(';  <strong>  Effort: </strong>' + showInitEffortSum + ' days' );
-                $('#initResults').append(';  <strong>  Done: </strong>' + showInitCompleteSum + ' days' );
-                $('#initResults').append(';  <strong>  Progress: </strong>' + mInitPercentComplete +"%");
-                $('#initResults').append('<br>')
-  // populate Initiative summary object 
+                console.log('milestones complete - calling parseInitiative, next init#: ' + nextInit)
 
-                let initObject = {
-                    "productID" : initProductID,
-                    "productName" : initProductName,
-                    "initiativeID" : initID,
-                    "initiativeName" : initName,
-                    "initTotalEffort" :  initEffortSum,
-                    "initProgress" : initPercentComplete,
-                    "initTotalEffortDone" : initCompleteSum
-                };
-                initSummary.push(initObject)
-      }; 
+                parseInitiative(nextInit)
+              }
+            
+  //           else {
+  // // populate Initiative summary display
+  //       let showInitEffortSum = formatNumber(initEffortSum)
+  //       let showInitCompleteSum = formatNumber(initCompleteSum)
+  //       waitingFlag = false;
+  //               $('#initResults').append('<br>')
+  //               $('#initResults').append('<strong>Initiative#: </strong>' + initID ); 
+  //               $('#initResults').append(';  <strong>  #Milestones: </strong>' + numMilestones);
+  //               $('#initResults').append(';  <strong>  Effort: </strong>' + showInitEffortSum + ' days' );
+  //               $('#initResults').append(';  <strong>  Done: </strong>' + showInitCompleteSum + ' days' );
+  //               $('#initResults').append(';  <strong>  Progress: </strong>' + mInitPercentComplete +"%");
+  //               $('#initResults').append('<br>')
+  // // populate Initiative summary object 
+
+  //               let initObject = {
+  //                   "productID" : initProductID,
+  //                   "productName" : initProductName,
+  //                   "initiativeID" : initID,
+  //                   "initiativeName" : initName,
+  //                   "initTotalEffort" :  initEffortSum,
+  //                   "initProgress" : initPercentComplete,
+  //                   "initTotalEffortDone" : initCompleteSum
+  //               };
+  //               initSummary.push(initObject)
+  //     }; 
   }
 
 
