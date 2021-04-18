@@ -378,7 +378,7 @@ api.get("/initiatives/" + productKey, {per_page: 50, fields: 'children'},
 
 // set first initative to parse
 
-let firstInit = portfolioInits[numInits].split(": ")[1]
+let firstInit = portfolioInits[numInits-1].split(": ")[1]
 
 console.log('calling parseInitiative for init#: ' + firstInit)
       parseInitiative(firstInit)
