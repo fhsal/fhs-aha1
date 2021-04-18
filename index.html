@@ -809,7 +809,7 @@ function parseMilestone(msToParse){
 
     console.log('parseMilestone, MS#: ' + msToParse); 
 
-  if(msToParse){ 
+  if(msToParse!=='n'){ 
 
     var settings = {
       "url": "https://optum.aha.io/api/v1/custom_object_records/" + msToParse,
