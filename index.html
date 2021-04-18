@@ -128,7 +128,7 @@
           <input type="submit" class="btn btn-secondary btn-sm"  value="Show initiatives for a portfolio">
         </form>
 
-        <form id="epic_controls2">
+        <form id="portfolio_update">
   <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain"> -->
           <input type="text" placeholder="Portfolio ID" id="product-key2">
           <input type="submit" class="btn btn-secondary  btn-sm" value="Update initiatives for portfolio">
@@ -242,7 +242,7 @@ waitingFlag ="";
 relatedMilestones = [];
 msToParse = "";
 initinfo = "";
-numInitiatives = 0;
+numInits = 0;
 portfolios = [];
 portfolioInits = [];
 initObject = [];
@@ -312,7 +312,7 @@ api.get("/products/" + productKey + "/initiatives", {per_page: 50, fields: 'refe
         return false;
       });
 
-// API call for epics by portfolio (roll-up initiative)
+// API call for initiatives by portfolio (within a roll-up initiative)
 $("#portfolio_controls").submit(function() { 
 
   portfolioInits = [];
@@ -348,8 +348,10 @@ api.get("/initiatives/" + productKey, {per_page: 50, fields: 'children'},
         return false;
       });
 
-// API call for initiatives by product 
-$("#epic_controls2").submit(function() { 
+// API call to update initiatives within a portfolio (rolled-up initiative)
+$("#portfolio_update").submit(function() { 
+ 
+  portfolioInits = [];
          new AhaApi({
           accountDomain: localStorage.subDomain,
           clientId: localStorage.clientID, // NOTE: replace this with your client ID.
@@ -358,14 +360,29 @@ $("#epic_controls2").submit(function() {
 
           console.log(success)
           console.log(message)
-          var productKey = $("#product-key2").val();
+          var productKey = $("#portfolio-key").val();
 
 // Fetch up to 50 initiatives in one fetch.
-          api.get("/products/" + productKey + "/initiatives", {per_page: 50, fields: 'reference_num,name,description, children'}, 
+api.get("/initiatives/" + productKey, {per_page: 50, fields: 'children'}, 
           function(response) {
             localStorage.ii = (JSON.stringify(response))
-            inits = response
+            let planItems = response
             console.log(response)
+// set number of initiatives within portfolio
+          numInits = planItems.initiative.children.length;
+
+      for (i = 0; i < numInits; i++){
+        let currentItem = planItems.initiative.children[i].name + ': ' + planItems.initiative.children[i].id
+        portfolioInits.push(currentItem)
+      }
+
+// set first initative to parse
+
+let firstInit = portfolioInits[numInits].split(": ")[1]
+
+console.log('calling parseInitiative for init#: ' + firstInit)
+      parseInitiative(firstInit)
+
           });
         });
         return false;
@@ -885,11 +902,11 @@ function checkMilestonesDone () {
 // function to count down initiatives as their milestones are complete
 
 function checkInitiativeDone(initCount) {
-    console.log('checkInitiativesDone, numInitiatives: ' + numInitiatives) 
+    console.log('checkInitiativesDone, numInits: ' + numInits) 
         if (initCount !== 0) {
             // waitingFlag = true;
             // setInterval(showWaiting, 500);
-            console.log('condition: ' + (intCount !==0))
+            console.log('initiatives complete: ' + (intCount !==0))
             initCount = (initCount-1)
             parseInitiative ()
 
