@@ -481,7 +481,6 @@ function displayInitiativeInfo () {
           }
         }
   
-
     msCount = numMilestones;
 
     console.log ('number of milestones: ' + numMilestones)
@@ -788,10 +787,9 @@ function parseInitiative(initToParse){
 
             msIndex = (numMilestones - msCount)
             msToParse = relatedMilestones[msIndex]
-       parseMilestone(msToParse)
-
+            if (msToParse !== 'n'){parseMilestone(msToParse)}
       })
-// check to see if milestones finished 
+// append output for epic 
   } 
       $('#msBody').append('<br>')
       msSummary.push(epicSummary)
@@ -904,7 +902,7 @@ function checkMilestonesDone () {
                   initCount =(initCount-1)
                   nextInit = portfolioInits[initCount].split(": ")[1]
 
-                console.log('milestones complete - callin parseInitiative, next init#: ' + nextInit)
+                console.log('milestones complete - calling parseInitiative, next init#: ' + nextInit)
 
                 parseInitiative(nextInit)
               }
