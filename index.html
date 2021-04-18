@@ -352,6 +352,8 @@ api.get("/initiatives/" + productKey, {per_page: 50, fields: 'children'},
 $("#portfolio_update").submit(function() { 
  
   portfolioInits = [];
+  numInits = 0;
+  initCount = 0;
          new AhaApi({
           accountDomain: localStorage.subDomain,
           clientId: localStorage.clientID, // NOTE: replace this with your client ID.
@@ -370,7 +372,9 @@ api.get("/initiatives/" + productKey, {per_page: 50, fields: 'children'},
             console.log(response)
 // set number of initiatives within portfolio
           numInits = planItems.initiative.children.length;
+          initCount = (numInits-1);
 
+// build portfolio initiative object           
       for (i = 0; i < numInits; i++){
         let currentItem = planItems.initiative.children[i].name + ': ' + planItems.initiative.children[i].id
         portfolioInits.push(currentItem)
@@ -894,7 +898,17 @@ function checkMilestonesDone () {
             if(msToParse){ parseMilestone(msToParse)}
             }
 
-            if (msCount ==0) {alert('milestones complete - could test next iniatiative?')}
+            if (msCount ==0) {
+              
+              if (initCount !==0){
+                  initCount =(initCount-1)
+                  nextInit = portfolioInits[initCount].split(": ")[1]
+
+                console.log('milestones complete - callin parseInitiative, next init#: ' + nextInit)
+
+                parseInitiative(nextInit)
+              }
+              }
 
 }
 
