@@ -754,6 +754,7 @@ function parseInitiative(initToParse){
     initEffortSum = 0;
     initCompleteSum = 0;
     initPercentComplete = 0;
+    relatedMilestones = [];
 
     console.log('parseInitiative, init#: ' + initToParse); 
 
@@ -793,7 +794,7 @@ function parseInitiative(initToParse){
 
             msIndex = (numMilestones - msCount)
             msToParse = relatedMilestones[msIndex]
-            if (msToParse !== 'n'){parseMilestone(msToParse)}
+            parseMilestone(msToParse)
       })
 // append output for epic 
   } 
@@ -815,8 +816,10 @@ function parseMilestone(msToParse){
 
     console.log('parseMilestone, MS#: ' + msToParse); 
 
-  if(msToParse!=='n'){ 
-
+    // if milestone not undefined
+  if(msToParse){ 
+   //if milestone not 'no related milestones'
+  if(msToParse !=='n'){
     var settings = {
       "url": "https://optum.aha.io/api/v1/custom_object_records/" + msToParse,
       "method": "GET",
@@ -877,7 +880,7 @@ if (numEpics == 0) { checkEpicsDone(epicCount)}
         };
       })
 // check to see if milestones finished 
-  } 
+  }}
       $('#msBody').append('<br>')
       msSummary.push(epicSummary)
 
