@@ -130,7 +130,7 @@
 
         <form id="portfolio_update">
   <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain"> -->
-          <input type="text" placeholder="Portfolio ID" id="product-key2">
+          <input type="text" placeholder="Portfolio ID" id="portfolio-key2">
           <input type="submit" class="btn btn-secondary  btn-sm" value="Update initiatives for portfolio">
         </form>
 
@@ -362,7 +362,7 @@ $("#portfolio_update").submit(function() {
 
           console.log(success)
           console.log(message)
-          var productKey = $("#portfolio-key").val();
+          var productKey = $("#portfolio-key2").val();
 
 // Fetch up to 50 initiatives in one fetch.
 api.get("/initiatives/" + productKey, {per_page: 50, fields: 'children'}, 
@@ -755,6 +755,7 @@ function parseInitiative(initToParse){
     initCompleteSum = 0;
     initPercentComplete = 0;
     relatedMilestones = [];
+    singleInit = [];
 
     console.log('parseInitiative, init#: ' + initToParse); 
 
@@ -785,7 +786,7 @@ function parseInitiative(initToParse){
               numMilestones = singleInit.initiative.custom_object_links[1].record_ids.length
               msCount = numMilestones
             }
-              console.log(response)
+              console.log(singleInit)
               initProductName = singleInit.initiative.project.name
               initProductID = singleInit.initiative.project.id
         displayInitiativeInfo()
