@@ -365,11 +365,11 @@ $("#portfolio_update").submit(function() {
           var productKey = $("#portfolio-key2").val();
 
 // Fetch up to 50 initiatives in one fetch.
-api.get("/initiatives/" + productKey, {per_page: 50, fields: 'children'}, 
+        api.get("/initiatives/" + productKey, {per_page: 50, fields: 'children'}, 
           function(response) {
             localStorage.ii = (JSON.stringify(response))
             let planItems = response
-            console.log(response)
+            console.log('Portfolio initiatives:' + planItems)
 // set number of initiatives within portfolio
           numInits = planItems.initiative.children.length;
           initCount = (numInits-1);
@@ -502,8 +502,8 @@ function displayInitiativeInfo () {
 
 // call function checkInitiativesDone
 
-console.log('from displayInitiativeInfo calling checkInitiativesDone')
-     checkInitiativesDone()
+// console.log('from displayInitiativeInfo calling checkInitiativesDone')
+//      checkInitiativesDone()
 
      }
 
