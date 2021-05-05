@@ -372,7 +372,10 @@ $("#portfolio_update").submit(function() {
             console.log('Portfolio initiatives:' + planItems)
 // set number of initiatives within portfolio
           numInits = planItems.initiative.children.length;
-          initCount = (numInits-1);
+
+// check this as a potential gap with overall counts  
+
+          initCount = (numInits);
 
 // build portfolio initiative object           
       for (i = 0; i < numInits; i++){
@@ -913,14 +916,6 @@ function checkMilestonesDone () {
 
               checkInitiativesDone()
               
-              // if (initCount !==0){
-              //     initCount =(initCount-1)
-              //     nextInit = portfolioInits[initCount].split(": ")[1]
-
-              //   console.log('milestones complete - calling parseInitiative, next init#: ' + nextInit)
-
-              //   parseInitiative(nextInit)
-              // }
               }
 
 }
