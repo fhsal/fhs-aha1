@@ -249,8 +249,6 @@ initObject = [];
 initCount = 0;
 initSummary = [];
 
-rallyCapabilityInfo = [];
-
 
 // function to display numbers with thousands comma separator
 function formatNumber(num) {
@@ -985,35 +983,6 @@ function checkInitiativesDone() {
       });
       return false;
     });
-
-// function Rally API call to get Solution Capability information
-function getRallyCap(capID){
-
-console.log('RallyAjax')
-
-  var settings = {
-    "url": "https://rally1.rallydev.com/slm/webservice/v2.0/portfolioitem/solutioncapability/" + capID,
-    "method": "GET",
-    // "timeout": 0,
-    "crossDomain": true,
-    "access-control-allow-origin": "*",
-    "headers": { "ZSESSIONID": "_E9ieM7LsSzGqq3yxmR5OEVTnymrRd0nnEDwqDHttgY", },
-    };
-    $.ajax(settings)
-    .then(function (response) {
-            solnCapInfo = response
-                      console.log(response)
-                      rallyCapabilityInfo = [] 
-    });
-}
-
-
-
-
-
-
-
-
     </script>
   </body>
 </html>
