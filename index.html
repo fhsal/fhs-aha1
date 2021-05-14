@@ -997,7 +997,7 @@ console.log('RallyAjax')
     // "timeout": 0,
     "crossDomain": true,
     "access-control-allow-origin": "*",
-    "headers": { "ZSESSIONID": "_E9ieM7LsSzGqq3yxmR5OEVTnymrRd0nnEDwqDHttgY", },
+    "headers": { "ZSESSIONID": localStorage.rallyID },
     };
     $.ajax(settings)
     .then(function (response) {
