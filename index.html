@@ -256,6 +256,7 @@ rallyObjectName= "";
 rallyObjectID = "";
 rallyFeatTotal = 0;
 rallylateDate = ""
+rallySummary = [];
 
 
 // function to display numbers with thousands comma separator
@@ -1030,14 +1031,16 @@ console.log('RallyCapDetail')
     };
     $.ajax(settings)
     .then(function (response) {
-            rallyCapChildren = response.QueryResults.Results
-                      console.log(response)
+            rallyCapChildren = response
+                  console.log(response)
+                rallySummary = rallyCapChildren.QueryResults.Results
+
 // identifying latest date in the Rally Solution Capability children response
-            rallylateDate = new Date(Math.max.apply(null, rallyCapChildren.map(function(e) {
+            rallylateDate = new Date(Math.max.apply(null, rallySummary.map(function(e) {
                       return new Date(e.PlannedEndDate);
                     })));
 // computing total Feature estimate in the Rally Solution Capability children response
-            rallyFeatTotal = rallyCapChildren.reduce(function(previousValue, currentValue) {
+            rallyFeatTotal = rallySummary.reduce(function(previousValue, currentValue) {
               return {PreliminaryEstimateValue: previousValue.PreliminaryEstimateValue + currentValue.PreliminaryEstimateValue}
             });
 
