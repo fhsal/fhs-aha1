@@ -1030,7 +1030,7 @@ console.log('RallyCapDetail')
     };
     $.ajax(settings)
     .then(function (response) {
-            rallyCapChildren = response
+            rallyCapChildren = response.QueryResults.Results
                       console.log(response)
 // identifying latest date in the Rally Solution Capability children response
             rallylateDate = new Date(Math.max.apply(null, rallyCapChildren.map(function(e) {
