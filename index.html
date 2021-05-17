@@ -1033,7 +1033,7 @@ console.log('RallyCapDetail')
     .then(function (response) {
             rallyCapChildren = response
                   console.log(response)
-                rallySummary = rallyCapChildren.QueryResults.Results
+                rallySummary = rallyCapChildren.QueryResult.Results
 
 // identifying latest date in the Rally Solution Capability children response
             rallylateDate = new Date(Math.max.apply(null, rallySummary.map(function(e) {
