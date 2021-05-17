@@ -249,7 +249,11 @@ initObject = [];
 initCount = 0;
 initSummary = [];
 
-solnCapInfo = [];
+rallySolnCapInfo = [];
+rallySolnCapChildren = [];
+rallyEpicID= "";
+rallyObjectName= "";
+rallyObjectID = "";
 
 
 // function to display numbers with thousands comma separator
@@ -572,13 +576,43 @@ function checkEpicsDone(epicCount) {
       }; 
   }
 
+function rallyEpicAjax(){
+
+console.log('rallyEpicAjax')
+
+  var settings = {
+    "url": "https://optum.aha.io/api/v1/epics/" + epicNum + "?fields=name,original_estimate,progress, integration_fields",
+    "method": "GET",
+    // "timeout": 0,
+    "crossDomain": true,
+    "access-control-allow-origin": "*",
+    "headers": { "Authorization": localStorage.ahaToken, },
+    };
+    $.ajax(settings)
+    .then(function (response) {
+            epicInfo = response
+                      console.log(response)
+
+            if(epicInfo.integration_fields){
+                rallyObjectID = epicInfo.integration_fields[1].value;
+                rallyObjectName =  epicInfo.integration_fields[3].value
+
+            getRallyCap(rallyObjectID)
+                
+            }
+    });
+}
+
+
+
+
 // function GETs info for a specific Epic
 function epicAjax(){
 
   console.log('epicAjax')
 
     var settings = {
-      "url": "https://optum.aha.io/api/v1/epics/" + epicNum + "?fields=name,original_estimate,progress",
+      "url": "https://optum.aha.io/api/v1/epics/" + epicNum + "?fields=name,original_estimate,progress, integration_fields",
       "method": "GET",
       // "timeout": 0,
       "crossDomain": true,
@@ -599,6 +633,11 @@ function epicAjax(){
               msEffortSum = msEffortSum + epicEffort;
               msCompleteSum = Math.round(msCompleteSum + epicEffortCompl)
               msPercentComplete = Math.round(100*msCompleteSum/msEffortSum)
+
+              if(epicInfo.integration_fields){
+                  rallyObjectID = epicInfo.integration_fields[1].value;
+                  rallyObjectName =  epicInfo.integration_fields[3].value
+              }
           console.log('epicID: ' + epicID);
           console.log('epic effort: ' + epicEffort);
           console.log('milestone effort subtotal: ' + msEffortSum);
@@ -936,19 +975,7 @@ function checkInitiativesDone() {
 
                 parseInitiative(nextInit)
               }
-            
-  //           else {
-  // // populate Initiative summary display
-  //       let showInitEffortSum = formatNumber(initEffortSum)
-  //       let showInitCompleteSum = formatNumber(initCompleteSum)
-  //       waitingFlag = false;
-  //               $('#initResults').append('<br>')
-  //               $('#initResults').append('<strong>Initiative#: </strong>' + initID ); 
-  //               $('#initResults').append(';  <strong>  #Milestones: </strong>' + numMilestones);
-  //               $('#initResults').append(';  <strong>  Effort: </strong>' + showInitEffortSum + ' days' );
-  //               $('#initResults').append(';  <strong>  Done: </strong>' + showInitCompleteSum + ' days' );
-  //               $('#initResults').append(';  <strong>  Progress: </strong>' + mInitPercentComplete +"%");
-  //               $('#initResults').append('<br>')
+    
   // // populate Initiative summary object 
 
   //               let initObject = {
@@ -992,7 +1019,7 @@ function getRallyCap(capID){
 console.log('RallyAjax')
 
   var settings = {
-    "url": "https://rally1.rallydev.com/slm/webservice/v2.0/portfolioitem/solutioncapability/" + capID,
+    "url": "https://rally1.rallydev.com/slm/webservice/v2.0/portfolioitem/solutioncapability/children" + capID,
     "method": "GET",
     // "timeout": 0,
     "crossDomain": true,
@@ -1001,9 +1028,21 @@ console.log('RallyAjax')
     };
     $.ajax(settings)
     .then(function (response) {
-            solnCapInfo = response
+            rallySolnCapChildren = response
                       console.log(response)
-                      rallyCapabilityInfo = [] 
+
+
+                      let lateDate = new Date(Math.max.apply(null, bb.map(function(e) {
+  return new Date(e.PlannedEndDate);
+
+  let res2 = bb.reduce(function(previousValue, currentValue) {
+  return {
+    PreliminaryEstimateValue: previousValue.PreliminaryEstimateValue + currentValue.PreliminaryEstimateValue
+  }
+});  console.log(res2)
+})));
+
+            
     });
 }
 
