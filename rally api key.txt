@@ -1,0 +1,46 @@
+_E9ieM7LsSzGqq3yxmR5OEVTnymrRd0nnEDwqDHttgY
+
+
+computing Feature-level estimates from children of a SolutionCapability
+
+let res2 = bb.reduce(function(previousValue, currentValue) {
+  return {
+    PreliminaryEstimateValue: previousValue.PreliminaryEstimateValue + currentValue.PreliminaryEstimateValue
+  }
+});  console.log(res2)
+
+
+new Date(Math.max.apply(null, bb.map(function(e) {
+  return new Date(e.PlannedEndDate);
+})));
+
+
+let lateDate = new Date(Math.max.apply(null, bb.map(function(e) {
+  return new Date(e.PlannedEndDate);
+})));
+undefined
+lateDate
+Sun Oct 19 2025 00:59:59 GMT-0400 (Eastern Daylight Time)
+var dateString = new Date(lateDate.getTime() - (lateDate.getTimezoneOffset() * 60000 ))
+                    .toISOString()
+
+
+
+
+Object.assign(z, epicSummary[0], g)
+
+
+
+
+Potential targets(within SolutionCapability):
+
+sum of Feature estimates ==> "RefinedEstimate"
+
+lastFeatureDate ==> either overwrite "PlannedEndDate" or "PlannedDeploymentDate" 
+
+percentComplete ==> 
+
+
+
+
+
