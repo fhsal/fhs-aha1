@@ -254,6 +254,8 @@ rallySolnCapChildren = [];
 rallyEpicID= "";
 rallyObjectName= "";
 rallyObjectID = "";
+rallyFeatTotal = 0;
+rallylateDate = ""
 
 
 // function to display numbers with thousands comma separator
@@ -1014,9 +1016,9 @@ function checkInitiativesDone() {
     });
 
 // function Rally API call to get Solution Capability information
-function getRallyCap(capID){
+function getRallyCapDetail(capID){
 
-console.log('RallyAjax')
+console.log('RallyCapDetail')
 
   var settings = {
     "url": "https://rally1.rallydev.com/slm/webservice/v2.0/portfolioitem/solutioncapability/children" + capID,
@@ -1028,30 +1030,22 @@ console.log('RallyAjax')
     };
     $.ajax(settings)
     .then(function (response) {
-            rallySolnCapChildren = response
+            rallyCapChildren = response
                       console.log(response)
+// identifying latest date in the Rally Solution Capability children response
+            rallylateDate = new Date(Math.max.apply(null, rallyCapChildren.map(function(e) {
+                      return new Date(e.PlannedEndDate);
+                    })));
+// computing total Feature estimate in the Rally Solution Capability children response
+            rallyFeatTotal = rallyCapChildren.reduce(function(previousValue, currentValue) {
+              return {PreliminaryEstimateValue: previousValue.PreliminaryEstimateValue + currentValue.PreliminaryEstimateValue}
+            });
 
-
-                      let lateDate = new Date(Math.max.apply(null, bb.map(function(e) {
-  return new Date(e.PlannedEndDate);
-
-  let res2 = bb.reduce(function(previousValue, currentValue) {
-  return {
-    PreliminaryEstimateValue: previousValue.PreliminaryEstimateValue + currentValue.PreliminaryEstimateValue
-  }
-});  console.log(res2)
-})));
-
-            
+            console.log("Rally Last Feature Date: " + rallylateDate)
+             console.log("Rally Feature Total: " + rallyFeatTotal)
+      
     });
-}
-
-
-
-
-
-
-
+  }
 
     </script>
   </body>
