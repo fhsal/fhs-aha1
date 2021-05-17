@@ -1036,16 +1036,20 @@ console.log('RallyCapDetail')
                 rallySummary = rallyCapChildren.QueryResult.Results
 
 // identifying latest date in the Rally Solution Capability children response
-            rallylateDate = new Date(Math.max.apply(null, rallySummary.map(function(e) {
+             var dateString = new Date(Math.max.apply(null, rallySummary.map(function(e) {
                       return new Date(e.PlannedEndDate);
                     })));
+
+            rallylateDate = new Date(dateString.getTime() - (dateString.getTimezoneOffset() * 60000 ))
+            .toISOString()
+
 // computing total Feature estimate in the Rally Solution Capability children response
             rallyFeatTotal = rallySummary.reduce(function(previousValue, currentValue) {
               return {PreliminaryEstimateValue: previousValue.PreliminaryEstimateValue + currentValue.PreliminaryEstimateValue}
             });
 
             console.log("Rally Last Feature Date: " + rallylateDate)
-             console.log("Rally Feature Total: " + rallyFeatTotal.PreliminaryEstimateValue)
+            console.log("Rally Feature Total: " + rallyFeatTotal.PreliminaryEstimateValue)
       
     });
   }
