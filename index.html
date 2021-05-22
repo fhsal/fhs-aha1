@@ -637,7 +637,8 @@ function epicAjax(){
               msCompleteSum = Math.round(msCompleteSum + epicEffortCompl)
               msPercentComplete = Math.round(100*msCompleteSum/msEffortSum)
 
-              if(epicInfo.integration_fields){
+ // if rally integration exists             
+              if(epicInfo.integration_fields[1]){
                   rallyObjectID = epicInfo.integration_fields[1].value;
                   rallyObjectName =  epicInfo.integration_fields[3].value
               }
