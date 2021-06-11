@@ -638,10 +638,10 @@ function epicAjax(){
               msPercentComplete = Math.round(100*msCompleteSum/msEffortSum)
 
  // if rally integration exists             
-              if(epicInfo.integration_fields[1]){
-                  rallyObjectID = epicInfo.integration_fields[1].value;
-                  rallyObjectName =  epicInfo.integration_fields[3].value
-              }
+              // if(epicInfo.integration_fields[1]){
+              //     rallyObjectID = epicInfo.integration_fields[1].value;
+              //     rallyObjectName =  epicInfo.integration_fields[3].value
+              // }
           console.log('epicID: ' + epicID);
           console.log('epic effort: ' + epicEffort);
           console.log('milestone effort subtotal: ' + msEffortSum);
@@ -1017,13 +1017,13 @@ function checkInitiativesDone() {
       return false;
     });
 
-// function Rally API call to get Solution Capability information
-function getRallyCapDetail(capID){
+// function Rally API call to get Solution Capability children information
+function getRallyCapapilityDetail(capID){
 
-console.log('RallyCapDetail')
+console.log('RallyCapabilityDetail')
 
   var settings = {
-    "url": "https://rally1.rallydev.com/slm/webservice/v2.0/portfolioitem/solutioncapability/" + capID + "/children",
+    "url": "https://rally1.rallydev.com/slm/webservice/v2.0/portfolioitem/solutioncapability/" + capID + "/children?pagesize=100",
     "method": "GET",
     // "timeout": 0,
     "crossDomain": true,
