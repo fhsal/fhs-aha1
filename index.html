@@ -1019,12 +1019,12 @@ function checkInitiativesDone() {
     });
 
 // function Rally API call to get Solution Capability children information
-function getRallyCapapilityDetail(capID){
+function getRallyCapapilityDetail(rallyCapID){
 
 console.log('RallyCapabilityDetail')
 
   var settings = {
-    "url": "https://rally1.rallydev.com/slm/webservice/v2.0/portfolioitem/solutioncapability/" + capID + "/children?pagesize=100",
+    "url": "https://rally1.rallydev.com/slm/webservice/v2.0/portfolioitem/solutioncapability/" + rallyCapID + "/children?pagesize=100",
     "method": "GET",
     // "timeout": 0,
     "crossDomain": true,
