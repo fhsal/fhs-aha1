@@ -1076,8 +1076,8 @@ console.log('RallyCapabilityDetail')
     .then(function (response) {
              rallyCapSummary = response
                   console.log(response)
-                rallyLeafStoryPoints = rallyCapSummary.LeafStoryPlanEstimateTotal;
-                rallyPercentComplete = rallyCapSummary.PercentDoneByStoryPlanEstimate;
+                rallyLeafStoryPoints = rallyCapSummary.SolutionCapability.LeafStoryPlanEstimateTotal;
+                rallyPercentComplete = rallyCapSummary.SolutionCapability.PercentDoneByStoryPlanEstimate;
                 rallyPointsDone = rallyLeafStoryPoints*rallyPercentComplete;
 
 
