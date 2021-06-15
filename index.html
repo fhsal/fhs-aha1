@@ -259,6 +259,12 @@ rallylateDate = ""
 rallySummary = [];
 
 
+rallyCapSummary = "";
+rallyLeafStoryPoints = "";
+rallyPercentComplete = "";
+rallyPointsDone = "";
+
+
 // function to display numbers with thousands comma separator
 function formatNumber(num) {
   return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
@@ -597,11 +603,11 @@ console.log('rallyEpicAjax')
             epicInfo = response
                       console.log(response)
 
-            if(epicInfo.integration_fields){
-                rallyObjectID = epicInfo.integration_fields[1].value;
-                rallyObjectName =  epicInfo.integration_fields[3].value
+            if(epicInfo.epic.integration_fields){
+                rallyObjectID = epicInfo.epic.integration_fields[4].value;
+                rallyObjectName =  epicInfo.epic.integration_fields[1].value
 
-            getRallyCap(rallyObjectID)
+                getRallyCapapilityDetail(rallyObjectID)
                 
             }
     });
@@ -1018,7 +1024,8 @@ function checkInitiativesDone() {
       return false;
     });
 
-// function Rally API call to get Solution Capability children information
+// function for two Rally API calls to get Solution Capability children information and summary-level % complete and LeafStoryPointsTotal
+
 function getRallyCapapilityDetail(rallyCapID){
 
 console.log('RallyCapabilityDetail')
@@ -1054,6 +1061,35 @@ console.log('RallyCapabilityDetail')
             console.log("Rally Feature Total: " + rallyFeatTotal.PreliminaryEstimateValue)
       
     });
+
+    // get % complete and base LeafStoryPointEstimateTotal 
+
+    var settings = {
+    "url": "https://rally1.rallydev.com/slm/webservice/v2.0/portfolioitem/solutioncapability/" + rallyCapID,
+    "method": "GET",
+    // "timeout": 0,
+    "crossDomain": true,
+    "access-control-allow-origin": "*",
+    "headers": { "ZSESSIONID": localStorage.rallyID },
+    };
+    $.ajax(settings)
+    .then(function (response) {
+             rallyCapSummary = response
+                  console.log(response)
+                rallyLeafStoryPoints = rallyCapSummary.LeafStoryPlanEstimateTotal;
+                rallyPercentComplete = rallyCapSummary.PercentDoneByStoryPlanEstimate;
+                rallyPointsDone = rallyLeafStoryPoints*rallyPercentComplete;
+
+
+            console.log("Rally Total Story Points: " + rallyLeafStoryPoints)
+            console.log("Rally Points Done: " + rallyPointsDone)
+      
+    });
+
+
+
+
+
   }
 
     </script>
