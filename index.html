@@ -1097,10 +1097,15 @@ if (rallySummary.length>0){
 
               newRallyPercentComplete = rallyPointsDone/rallyFeatTotal.PreliminaryEstimateValue}
 
-// else use the overall estimates for the capability for % complete 
+// else use the overall estimates for the capability for % complete, unless actuals are zero, in that case % complete is zero
 
             else { 
-              newRallyPercentComplete = rallyPointsDone/rallyLeafStoryPoints
+
+              if (rallyPointsDone !==0){
+                      newRallyPercentComplete = rallyPointsDone/rallyLeafStoryPoints}
+
+              else {newRallyPercentComplete = 0}
+
             }
             
             console.log("Rally Last Feature Date: " + rallylateDate)
@@ -1110,12 +1115,6 @@ if (rallySummary.length>0){
     });
 
     // get % complete and base LeafStoryPointEstimateTotal 
-
-
-
-
-
-
 
   }
 
