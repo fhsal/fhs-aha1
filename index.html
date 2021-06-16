@@ -1036,7 +1036,7 @@ function checkInitiativesDone() {
 
 // function for two Rally API calls to get Solution Capability children information and summary-level % complete and LeafStoryPointsTotal
 
-function getRallyCapapilityDetail(rallyCapID){
+function getRallyCapabilityDetail(rallyCapID){
 
 console.log('RallyCapabilityDetail')
 
@@ -1102,7 +1102,7 @@ if (rallySummary.length>0){
             else { 
 
               if (rallyPointsDone !==0){
-                      newRallyPercentComplete = rallyPointsDone/rallyLeafStoryPoints}
+                      newRallyPercentComplete = rallyCapSummary.SolutionCapability.PercentDoneByStoryPlanEstimate}
 
               else {newRallyPercentComplete = 0}
 
