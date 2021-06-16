@@ -200,6 +200,10 @@
               <input type="text" class="form-control" id="token" placeholder="Enter API token">
             </div>
             <div class="form-group">
+              <label for="psw"><span class="glyphicon glyphicon-user"></span> Rally API Token</label>
+              <input type="text" class="form-control" id="Rtoken" placeholder="Enter API token">
+            </div>
+            <div class="form-group">
               <label for="psw"><span class="glyphicon glyphicon-log-in"></span> Redirect URI</label>
               <input type="text" class="form-control" id="uri" placeholder="Enter redirect URI">
             </div class="button-group">
@@ -280,12 +284,14 @@ $(document).ready(function(){
           let clientID = $('#cid').val();
           let ahaToken = $('#token').val();
           let enteredURI = $('#uri').val();
-      console.log('save credentials: '  + ' Domain' + subDomain + ' ClientID' + clientID + ' Token' + ahaToken + ' URI' + enteredURI)
+          let rallyToken = $('#Rtoken').val();
+      console.log('save credentials: '  + ' Domain' + subDomain + ' ClientID' + clientID + ' Aha! Token' + ahaToken + ' Rally Token' + rallyToken + ' URI' + enteredURI)
 // saving credentials locally
           localStorage.subDomain=subDomain;
           localStorage.clientID=clientID;
           localStorage.redirectUri=enteredURI;
-          localStorage.ahaToken=ahaToken
+          localStorage.ahaToken=ahaToken;
+          localStorage.rallyID=rallyToken
       $("#myModal").modal("hide")
     })
   });
@@ -622,7 +628,7 @@ function epicAjax(){
   console.log('epicAjax')
 
     var settings = {
-      "url": "https://optum.aha.io/api/v1/epics/" + epicNum + "?fields=name,original_estimate,progress, integration_fields",
+      "url": "https://optum.aha.io/api/v1/epics/" + epicNum,
       "method": "GET",
       // "timeout": 0,
       "crossDomain": true,
@@ -635,6 +641,9 @@ function epicAjax(){
                         console.log(response)
               let epicID = epicInfo.epic.id;         
               let epicName = epicInfo.epic.name;
+
+// all this logic regarding effort and progress needs to be replaced with what comes from Rally 
+
               let epicEffort = Math.round(epicInfo.epic.original_estimate/480);
               if (epicEffort > 0) { epicEffort = epicEffort} else { epicEffort = 0} ;
               let epicProgress = parseInt(epicInfo.epic.progress)/100;
