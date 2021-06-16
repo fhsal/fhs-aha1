@@ -1054,22 +1054,33 @@ console.log('RallyCapabilityDetail')
                   console.log(response)
                 rallySummary = rallyCapChildren.QueryResult.Results
 
-// identifying latest date in the Rally Solution Capability children response - remonving as not focus and data in Rally is inconsistent, causing errors
-            //  var dateString = new Date(Math.max.apply(null, rallySummary.map(function(e) {
-            //           return new Date(e.PlannedEndDate);
-            //         })));
+// identifying latest date in the Rally Solution Capability children response 
+             var dateString = new Date(Math.max.apply(null, rallySummary.map(function(e) {
+                      return new Date(e.PlannedEndDate);
+                    })));
 
-            // rallylateDate = new Date(dateString.getTime() - (dateString.getTimezoneOffset() * 60000 ))
-            // .toISOString()
+            rallylateDate = new Date(dateString.getTime() - (dateString.getTimezoneOffset() * 60000 ))
+            .toISOString()
 
 // computing total Feature estimate in the Rally Solution Capability children response
+
+// test to see if there are children
+
+if (rallySummary.length>0){
+
             rallyFeatTotal = rallySummary.reduce(function(previousValue, currentValue) {
               return {PreliminaryEstimateValue: previousValue.PreliminaryEstimateValue + currentValue.PreliminaryEstimateValue}
             });
 
-            newRallyPercentComplete = rallyPointsDone/rallyFeatTotal.PreliminaryEstimateValue
+              newRallyPercentComplete = rallyPointsDone/rallyFeatTotal.PreliminaryEstimateValue}
+
+// else use the overall estimates for the capability for % complete 
+              
+            else { 
+              newRallyPercentComplete = rallyPointsDone/rallyLeafStoryPoints
+            }
             
-            // console.log("Rally Last Feature Date: " + rallylateDate)
+            console.log("Rally Last Feature Date: " + rallylateDate)
             console.log("Rally Feature Total: " + rallyFeatTotal.PreliminaryEstimateValue + ' points')
             console.log("New Rally Percent Complete: " + Math.round(100*newRallyPercentComplete) + "%")
             
