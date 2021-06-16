@@ -267,6 +267,7 @@ rallyCapSummary = "";
 rallyLeafStoryPoints = "";
 rallyPercentComplete = "";
 rallyPointsDone = "";
+newRallyPercentComplete = "";
 
 
 // function to display numbers with thousands comma separator
@@ -1066,7 +1067,7 @@ console.log('RallyCapabilityDetail')
               return {PreliminaryEstimateValue: previousValue.PreliminaryEstimateValue + currentValue.PreliminaryEstimateValue}
             });
 
-            let newRallyPercentComplete = rallyPointsDone/rallyFeatTotal.PreliminaryEstimateValue
+            newRallyPercentComplete = rallyPointsDone/rallyFeatTotal.PreliminaryEstimateValue
             
             console.log("Rally Last Feature Date: " + rallylateDate)
             console.log("Rally Feature Total: " + rallyFeatTotal.PreliminaryEstimateValue)
