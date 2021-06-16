@@ -1070,7 +1070,7 @@ console.log('RallyCapabilityDetail')
             
             console.log("Rally Last Feature Date: " + rallylateDate)
             console.log("Rally Feature Total: " + rallyFeatTotal.PreliminaryEstimateValue)
-            console.log("New Rally Percent Complete: " + 100*newRallyPercentComplete.toFixed(0) + "%")
+            console.log("New Rally Percent Complete: " + newRallyPercentComplete.toFixed(0) + "%")
             
       
     });
@@ -1091,7 +1091,7 @@ console.log('RallyCapabilityDetail')
                   console.log(response)
                 rallyLeafStoryPoints = rallyCapSummary.SolutionCapability.LeafStoryPlanEstimateTotal;
                 rallyPercentComplete = rallyCapSummary.SolutionCapability.PercentDoneByStoryPlanEstimate;
-                rallyPointsDone = rallyLeafStoryPoints*rallyPercentComplete.toFixed(0);
+                rallyPointsDone = rallyLeafStoryPoints*rallyPercentComplete;
 
 
             console.log("Rally Total Story Points: " + rallyLeafStoryPoints)
