@@ -1040,6 +1040,29 @@ function getRallyCapapilityDetail(rallyCapID){
 
 console.log('RallyCapabilityDetail')
 
+// api call to get capability summary information 
+
+var settings = {
+    "url": "https://rally1.rallydev.com/slm/webservice/v2.0/portfolioitem/solutioncapability/" + rallyCapID,
+    "method": "GET",
+    // "timeout": 0,
+    "crossDomain": true,
+    "access-control-allow-origin": "*",
+    "headers": { "ZSESSIONID": localStorage.rallyID },
+    };
+    $.ajax(settings)
+    .then(function (response) {
+             rallyCapSummary = response
+                  console.log(response)
+                rallyLeafStoryPoints = rallyCapSummary.SolutionCapability.LeafStoryPlanEstimateTotal;
+                rallyPercentComplete = rallyCapSummary.SolutionCapability.PercentDoneByStoryPlanEstimate;
+                rallyPointsDone = rallyLeafStoryPoints*rallyPercentComplete;
+
+            console.log("Rally Total Story Points: " + rallyLeafStoryPoints)
+            console.log("Rally Points Done: " + rallyPointsDone)
+      
+    });
+
   var settings = {
     "url": "https://rally1.rallydev.com/slm/webservice/v2.0/portfolioitem/solutioncapability/" + rallyCapID + "/children?pagesize=100",
     "method": "GET",
@@ -1088,27 +1111,7 @@ if (rallySummary.length>0){
 
     // get % complete and base LeafStoryPointEstimateTotal 
 
-    var settings = {
-    "url": "https://rally1.rallydev.com/slm/webservice/v2.0/portfolioitem/solutioncapability/" + rallyCapID,
-    "method": "GET",
-    // "timeout": 0,
-    "crossDomain": true,
-    "access-control-allow-origin": "*",
-    "headers": { "ZSESSIONID": localStorage.rallyID },
-    };
-    $.ajax(settings)
-    .then(function (response) {
-             rallyCapSummary = response
-                  console.log(response)
-                rallyLeafStoryPoints = rallyCapSummary.SolutionCapability.LeafStoryPlanEstimateTotal;
-                rallyPercentComplete = rallyCapSummary.SolutionCapability.PercentDoneByStoryPlanEstimate;
-                rallyPointsDone = rallyLeafStoryPoints*rallyPercentComplete;
 
-
-            console.log("Rally Total Story Points: " + rallyLeafStoryPoints)
-            console.log("Rally Points Done: " + rallyPointsDone)
-      
-    });
 
 
 
