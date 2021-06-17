@@ -642,6 +642,14 @@ function epicAjax(){
               let epicID = epicInfo.epic.id;         
               let epicName = epicInfo.epic.name;
 
+// if rally integration exists get rally object ID and call rally detail function             
+               if(epicInfo.epic.integration_fields.length>0){
+                  rallyObjectID = epicInfo.epic.integration_fields[4].value;
+                  rallyObjectName =  epicInfo.epic.integration_fields[1].value
+
+                getRallyCapabilityDetail(rallyObjectID)
+              }
+
 // all this logic regarding effort and progress needs to be replaced with what comes from Rally 
               let epicEffort = Math.round(epicInfo.epic.original_estimate/480);
               if (epicEffort > 0) { epicEffort = epicEffort} else { epicEffort = 0} ;
@@ -652,11 +660,7 @@ function epicAjax(){
               msCompleteSum = Math.round(msCompleteSum + epicEffortCompl)
               msPercentComplete = Math.round(100*msCompleteSum/msEffortSum)
 
- // if rally integration exists             
-              if(epicInfo.epic.integration_fields.length>0){
-                  rallyObjectID = epicInfo.epic.integration_fields[4].value;
-                  rallyObjectName =  epicInfo.epic.integration_fields[1].value
-              }
+
       console.log('epicID: ' + epicID);
       console.log('rallyID: ' + rallyObjectID);
       console.log('epic effort: ' + epicEffort);
