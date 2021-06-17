@@ -595,29 +595,29 @@ function checkEpicsDone(epicCount) {
 
 function rallyEpicAjax(){
 
-console.log('rallyEpicAjax')
+    console.log('rallyEpicAjax')
 
-  var settings = {
-    "url": "https://optum.aha.io/api/v1/epics/" + epicNum,
-    "method": "GET",
-    // "timeout": 0,
-    "crossDomain": true,
-    "access-control-allow-origin": "*",
-    "headers": { "Authorization": localStorage.ahaToken, },
-    };
-    $.ajax(settings)
-    .then(function (response) {
-            epicInfo = response
-                      console.log(response)
+      var settings = {
+        "url": "https://optum.aha.io/api/v1/epics/" + epicNum,
+        "method": "GET",
+        // "timeout": 0,
+        "crossDomain": true,
+        "access-control-allow-origin": "*",
+        "headers": { "Authorization": localStorage.ahaToken, },
+        };
+        $.ajax(settings)
+        .then(function (response) {
+                epicInfo = response
+                          console.log(response)
 
-            if(epicInfo.epic.integration_fields){
-                rallyObjectID = epicInfo.epic.integration_fields[4].value;
-                rallyObjectName =  epicInfo.epic.integration_fields[1].value
+                if(epicInfo.epic.integration_fields){
+                    rallyObjectID = epicInfo.epic.integration_fields[4].value;
+                    rallyObjectName =  epicInfo.epic.integration_fields[1].value
 
-                getRallyCapapilityDetail(rallyObjectID)
-                
-            }
-    });
+                    getRallyCapapilityDetail(rallyObjectID)
+                    
+                }
+        });
 }
 
 
@@ -627,7 +627,6 @@ console.log('rallyEpicAjax')
 function epicAjax(){
 
   console.log('epicAjax')
-
     var settings = {
       "url": "https://optum.aha.io/api/v1/epics/" + epicNum,
       "method": "GET",
@@ -644,7 +643,6 @@ function epicAjax(){
               let epicName = epicInfo.epic.name;
 
 // all this logic regarding effort and progress needs to be replaced with what comes from Rally 
-
               let epicEffort = Math.round(epicInfo.epic.original_estimate/480);
               if (epicEffort > 0) { epicEffort = epicEffort} else { epicEffort = 0} ;
               let epicProgress = parseInt(epicInfo.epic.progress)/100;
@@ -659,11 +657,11 @@ function epicAjax(){
               //     rallyObjectID = epicInfo.integration_fields[4].value;
               //     rallyObjectName =  epicInfo.epic.integration_fields[1].value
               // }
-          console.log('epicID: ' + epicID);
-          console.log('epic effort: ' + epicEffort);
-          console.log('milestone effort subtotal: ' + msEffortSum);
-          console.log('milestone complete: ' + msCompleteSum);
-          console.log('milestone % complete: ' + msPercentComplete + "%");
+      console.log('epicID: ' + epicID);
+      console.log('epic effort: ' + epicEffort);
+      console.log('milestone effort subtotal: ' + msEffortSum);
+      console.log('milestone complete: ' + msCompleteSum);
+      console.log('milestone % complete: ' + msPercentComplete + "%");
 
           let epicObject = {
               "epicID" : epicID,
@@ -672,10 +670,10 @@ function epicAjax(){
               "epicProgress" : epicProgress,
               "epicEffortDone" : epicEffortCompl
             }
-            console.log('from Ajax, epicCount: ' + epicCount )
+      console.log('from Ajax, epicCount: ' + epicCount )
             epicSummary.push(epicObject)
-        epicCount = epicCount-1 
-        checkEpicsDone(epicCount) 
+          epicCount = epicCount-1 
+          checkEpicsDone(epicCount) 
       });
 }
 
@@ -949,39 +947,32 @@ if (numEpics == 0) { checkEpicsDone(epicCount)}
   }}
 
   if (msToParse =='n'){ checkInitiativesDone()}
-
       $('#msBody').append('<br>')
       msSummary.push(epicSummary)
 
       // checkMilestonesDone()
-
       };
 
 function checkMilestonesDone () {
 // when milestone complete decrement msCount and parse next milestone if count != 0 
 
-            console.log('checkMilestone ->  ' ); 
-            console.log('milestone count: ' + msCount);  
+        console.log('checkMilestone ->  ' ); 
+        console.log('milestone count: ' + msCount);  
             if (msCount !==0){ 
                 msCount = msCount-1
                 msIndex = (numMilestones - msCount)
                 msToParse = relatedMilestones[msIndex]
-
-              console.log('call parseMilestone for next ms#: ' + msToParse)
-              console.log('with milestone count: ' + msCount);  
-              console.log('and milestone index: ' + msIndex);
+        console.log('call parseMilestone for next ms#: ' + msToParse)
+        console.log('with milestone count: ' + msCount);  
+        console.log('and milestone index: ' + msIndex);
 // call parseMilestone if msToParse is not undefined                    
             if(msToParse){ parseMilestone(msToParse)}
             }
-
             if (msCount ==0) {
-
-              checkInitiativesDone()
-              
+              checkInitiativesDone()  
               }
 
 }
-
 
 // function to count down initiatives as their milestones are complete
 
@@ -1012,7 +1003,6 @@ function checkInitiativesDone() {
   //     }; 
   }
 
-
 // input form listener to retrieve information for a single epic 
  $("#epic_detail").submit(function() { 
         new AhaApi({
@@ -1037,85 +1027,69 @@ function checkInitiativesDone() {
 // function for two Rally API calls to get Solution Capability children information and summary-level % complete and LeafStoryPointsTotal
 
 function getRallyCapabilityDetail(rallyCapID){
+  console.log('RallyCapabilityDetail')
+    // reset vars 
+    rallyLeafStoryPoints= 0;
+    rallyPointsDone = 0;
 
-console.log('RallyCapabilityDetail')
+    // api call to get capability summary information 
+    var settings = {
+        "url": "https://rally1.rallydev.com/slm/webservice/v2.0/portfolioitem/solutioncapability/" + rallyCapID,
+        "method": "GET",
+        // "timeout": 0,
+        "crossDomain": true,
+        "access-control-allow-origin": "*",
+        "headers": { "ZSESSIONID": localStorage.rallyID },
+        };
+        $.ajax(settings)
+        .then(function (response) {
+                rallyCapSummary = response
+                      console.log(response)
+                    rallyLeafStoryPoints = rallyCapSummary.SolutionCapability.LeafStoryPlanEstimateTotal;
+                    rallyPercentComplete = rallyCapSummary.SolutionCapability.PercentDoneByStoryPlanEstimate;
+                    rallyPointsDone = rallyLeafStoryPoints*rallyPercentComplete;
+                console.log("Rally Total Story Points: " + rallyLeafStoryPoints)
+                console.log("Rally Points Done: " + rallyPointsDone)
+        });
 
-// api call to get capability summary information 
+      var settings = {
+        "url": "https://rally1.rallydev.com/slm/webservice/v2.0/portfolioitem/solutioncapability/" + rallyCapID + "/children?pagesize=100",
+        "method": "GET",
+        // "timeout": 0,
+        "crossDomain": true,
+        "access-control-allow-origin": "*",
+        "headers": { "ZSESSIONID": localStorage.rallyID },
+        };
+        $.ajax(settings)
+        .then(function (response) {
+                rallyCapChildren = response
+                      console.log(response)
+                    rallySummary = rallyCapChildren.QueryResult.Results
 
-var settings = {
-    "url": "https://rally1.rallydev.com/slm/webservice/v2.0/portfolioitem/solutioncapability/" + rallyCapID,
-    "method": "GET",
-    // "timeout": 0,
-    "crossDomain": true,
-    "access-control-allow-origin": "*",
-    "headers": { "ZSESSIONID": localStorage.rallyID },
-    };
-    $.ajax(settings)
-    .then(function (response) {
-             rallyCapSummary = response
-                  console.log(response)
-                rallyLeafStoryPoints = rallyCapSummary.SolutionCapability.LeafStoryPlanEstimateTotal;
-                rallyPercentComplete = rallyCapSummary.SolutionCapability.PercentDoneByStoryPlanEstimate;
-                rallyPointsDone = rallyLeafStoryPoints*rallyPercentComplete;
+    // computing total Feature estimate in the Rally Solution Capability children response
+    // test to see if there are children, if yes then operate on result for date and total points for Features
+    if (rallySummary.length>0){
+      // identifying latest date in the Rally Solution Capability children response 
+      var dateString = new Date(Math.max.apply(null, rallySummary.map(function(e) {
+                          return new Date(e.PlannedEndDate);
+                        })));
+                rallylateDate = new Date(dateString.getTime() - (dateString.getTimezoneOffset() * 60000 ))
+                .toISOString()
+                rallyFeatTotal = rallySummary.reduce(function(previousValue, currentValue) {
+                  return {PreliminaryEstimateValue: previousValue.PreliminaryEstimateValue + currentValue.PreliminaryEstimateValue}
+                });
+                  newRallyPercentComplete = rallyPointsDone/rallyFeatTotal.PreliminaryEstimateValue}
 
-            console.log("Rally Total Story Points: " + rallyLeafStoryPoints)
-            console.log("Rally Points Done: " + rallyPointsDone)
-      
-    });
-
-  var settings = {
-    "url": "https://rally1.rallydev.com/slm/webservice/v2.0/portfolioitem/solutioncapability/" + rallyCapID + "/children?pagesize=100",
-    "method": "GET",
-    // "timeout": 0,
-    "crossDomain": true,
-    "access-control-allow-origin": "*",
-    "headers": { "ZSESSIONID": localStorage.rallyID },
-    };
-    $.ajax(settings)
-    .then(function (response) {
-            rallyCapChildren = response
-                  console.log(response)
-                rallySummary = rallyCapChildren.QueryResult.Results
-
-// computing total Feature estimate in the Rally Solution Capability children response
-
-// test to see if there are children, if yes then operate on result for date and total points for Features
-
-if (rallySummary.length>0){
-
-  // identifying latest date in the Rally Solution Capability children response 
-  var dateString = new Date(Math.max.apply(null, rallySummary.map(function(e) {
-                      return new Date(e.PlannedEndDate);
-                    })));
-
-            rallylateDate = new Date(dateString.getTime() - (dateString.getTimezoneOffset() * 60000 ))
-            .toISOString()
-
-            rallyFeatTotal = rallySummary.reduce(function(previousValue, currentValue) {
-              return {PreliminaryEstimateValue: previousValue.PreliminaryEstimateValue + currentValue.PreliminaryEstimateValue}
-            });
-
-              newRallyPercentComplete = rallyPointsDone/rallyFeatTotal.PreliminaryEstimateValue}
-
-// else use the overall estimates for the capability for % complete, unless actuals are zero, in that case % complete is zero
-
-            else { 
-
-              if (rallyPointsDone !==0){
-                      newRallyPercentComplete = rallyCapSummary.SolutionCapability.PercentDoneByStoryPlanEstimate}
-
-              else {newRallyPercentComplete = 0}
-
-            }
-            
-            console.log("Rally Last Feature Date: " + rallylateDate)
-            console.log("Rally Feature Total: " + rallyFeatTotal.PreliminaryEstimateValue + ' points')
-            console.log("New Rally Percent Complete: " + Math.round(100*newRallyPercentComplete) + "%")
-            
-    });
-
-    // get % complete and base LeafStoryPointEstimateTotal 
-
+    // else use the overall estimates for the capability for % complete, unless actuals are zero, in that case % complete is zero
+                else { 
+                  if (rallyPointsDone !==0){
+                          newRallyPercentComplete = rallyCapSummary.SolutionCapability.PercentDoneByStoryPlanEstimate}
+                  else {newRallyPercentComplete = 0}
+                }
+                console.log("Rally Last Feature Date: " + rallylateDate)
+                console.log("Rally Feature Total: " + rallyFeatTotal.PreliminaryEstimateValue + ' points')
+                console.log("New Rally Percent Complete: " + Math.round(100*newRallyPercentComplete) + "%")
+        });
   }
 
     </script>
