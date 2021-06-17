@@ -653,11 +653,12 @@ function epicAjax(){
               msPercentComplete = Math.round(100*msCompleteSum/msEffortSum)
 
  // if rally integration exists             
-              // if(epicInfo.integration_fields[1]){
-              //     rallyObjectID = epicInfo.integration_fields[4].value;
-              //     rallyObjectName =  epicInfo.epic.integration_fields[1].value
-              // }
+              if(epicInfo.epic.integration_fields.length>0){
+                  rallyObjectID = epicInfo.integration_fields[4].value;
+                  rallyObjectName =  epicInfo.epic.integration_fields[1].value
+              }
       console.log('epicID: ' + epicID);
+      console.log('rallyID: ' + rallyObjectID);
       console.log('epic effort: ' + epicEffort);
       console.log('milestone effort subtotal: ' + msEffortSum);
       console.log('milestone complete: ' + msCompleteSum);
