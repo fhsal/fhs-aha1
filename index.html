@@ -268,6 +268,7 @@ rallyLeafStoryPoints = "";
 rallyPercentComplete = "";
 rallyPointsDone = "";
 newRallyPercentComplete = "";
+rallyFormattedID = "";
 
 
 // function to display numbers with thousands comma separator
@@ -1036,6 +1037,7 @@ function getRallyCapabilityDetail(rallyCapID){
     // reset vars 
     rallyLeafStoryPoints= 0;
     rallyPointsDone = 0;
+    rallyFormattedID = '';
 
     // api call to get capability summary information 
     var settings = {
@@ -1052,7 +1054,9 @@ function getRallyCapabilityDetail(rallyCapID){
                       console.log(response)
                     rallyLeafStoryPoints = rallyCapSummary.SolutionCapability.LeafStoryPlanEstimateTotal;
                     rallyPercentComplete = rallyCapSummary.SolutionCapability.PercentDoneByStoryPlanEstimate;
+                    rallyFormattedID = rallyCapSummary.SolutionCapability.FormattedID;
                     rallyPointsDone = rallyLeafStoryPoints*rallyPercentComplete;
+                console.log("Rally FormattedID: " + rallyFormattedID)
                 console.log("Rally Total Story Points: " + rallyLeafStoryPoints)
                 console.log("Rally Points Done: " + rallyPointsDone)
         });
@@ -1093,7 +1097,7 @@ function getRallyCapabilityDetail(rallyCapID){
                 }
                 console.log("Rally Last Feature Date: " + rallylateDate)
                 console.log("Rally Feature Total: " + rallyFeatTotal.PreliminaryEstimateValue + ' points')
-                console.log("New Rally Percent Complete: " + Math.round(100*newRallyPercentComplete) + "%")
+                console.log("New Rally Feature-based Percent Complete: " + Math.round(100*newRallyPercentComplete) + "%")
         });
   }
 
