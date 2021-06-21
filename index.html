@@ -261,14 +261,13 @@ rallyObjectID = "";
 rallyFeatTotal = 0;
 rallylateDate = ""
 rallySummary = [];
-
-
 rallyCapSummary = "";
 rallyLeafStoryPoints = "";
 rallyPercentComplete = "";
 rallyPointsDone = "";
 newRallyPercentComplete = "";
 rallyFormattedID = "";
+rallyObjectErrorLog=[];
 
 
 // function to display numbers with thousands comma separator
@@ -951,7 +950,7 @@ if (numEpics == 0) { checkEpicsDone(epicCount)}
       })
 // check to see if milestones finished 
   }}
-
+// check condition where there are 'no related milestones', hence 'n' in the condition 
   if (msToParse =='n'){ checkInitiativesDone()}
       $('#msBody').append('<br>')
       msSummary.push(epicSummary)
@@ -1078,9 +1077,9 @@ function getRallyCapabilityDetail(rallyCapID){
 
     // computing total Feature estimate in the Rally Solution Capability children response
     // test to see if there are children, if yes then operate on result for date and total points for Features
-    if (rallySummary.length>0){
-      // identifying latest date in the Rally Solution Capability children response 
-      var dateString = new Date(Math.max.apply(null, rallySummary.map(function(e) {
+        if (rallySummary.length>0){
+          // identifying latest date in the Rally Solution Capability children response 
+            var dateString = new Date(Math.max.apply(null, rallySummary.map(function(e) {
                           return new Date(e.PlannedEndDate);
                         })));
                 rallylateDate = new Date(dateString.getTime() - (dateString.getTimezoneOffset() * 60000 ))
@@ -1089,19 +1088,30 @@ function getRallyCapabilityDetail(rallyCapID){
                   return {PreliminaryEstimateValue: previousValue.PreliminaryEstimateValue + currentValue.PreliminaryEstimateValue}
                 });
                   newRallyPercentComplete = rallyPointsDone/rallyFeatTotal.PreliminaryEstimateValue}
-
-    // else use the overall estimates for the capability for % complete, unless actuals are zero, in that case % complete is zero
-                else { 
-                  if (rallyPointsDone !==0){
-                          newRallyPercentComplete = rallyCapSummary.SolutionCapability.PercentDoneByStoryPlanEstimate}
-                  else {newRallyPercentComplete = 0}
-                }
+           // else use the overall estimates for the capability for % complete, unless actuals are zero, in that case % complete is zero
+           // and log the Rally object # and Formatted ID so that permissions can be changed to allow read access to Features 
+           // if the estimate is not zero but the returned object has a length of zero 
+           else { 
+                if (rallyPointsDone !==0){
+                    newRallyPercentComplete = rallyCapSummary.SolutionCapability.PercentDoneByStoryPlanEstimate}
+                else {newRallyPercentComplete = 0}
+              }
+              rallyFeatTotal=rallyFeatTotal.PreliminaryEstimateValue
                 console.log("Rally Last Feature Date: " + rallylateDate)
-                console.log("Rally Feature Total: " + rallyFeatTotal.PreliminaryEstimateValue + ' points')
+                console.log("Rally Feature Total: " + rallyFeatTotal + ' points')
                 console.log("New Rally Feature-based Percent Complete: " + Math.round(100*newRallyPercentComplete) + "%")
+
+          let EpicEffort = rallyFeatTotal;
+              if (epicEffort > 0) { epicEffort = epicEffort} else { epicEffort = 0} ;
+                let epicProgress = newRallyPercentComplete;
+                let epicEffortCompl = rallyPointsDone;
+              if (epicEffortCompl > 0) { epicEffortCompl = epicEffortCompl} else { epicEffortCompl = 0} ;
+                msEffortSum = msEffortSum + epicEffort;
+                msCompleteSum = Math.round(msCompleteSum + epicEffortCompl)
+              if (msEffortSum>0) {msPercentComplete = Math.round(100*msCompleteSum/msEffortSum)} else {msPercentComplete = 0}
+
         });
   }
-
     </script>
   </body>
 </html>
