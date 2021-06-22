@@ -1110,7 +1110,7 @@ function getRallyCapabilityDetail(rallyCapID){
                 let rallyEpicEffortCompl = rallyPointsDone;
               if (rallyEpicEffortCompl > 0) { rallyEpicEffortCompl = rallyEpicEffortCompl} else { rallyEpicEffortCompl = 0} ;
                 rallyMSeffortSum = rallyMSeffortSum + rallyEpicEffort;
-                rallyMSCompleteSum = Math.round(rallyMSCompleteSum + rallyEpicEffortCompl)
+                rallyMScompleteSum = Math.round(rallyMScompleteSum + rallyEpicEffortCompl)
               if (rallyMSeffortSum>0) {rallyMSpercentComplete = Math.round(100*rallyMScompleteSum/rallyMSeffortSum)} else {rallyMSpercentComplete = 0}
 
         });
