@@ -1120,9 +1120,10 @@ function getRallyCapabilityDetail(rallyCapID){
                 if (rallyPointsDone !==0){
                     newRallyPercentComplete = rallyCapSummary.SolutionCapability.PercentDoneByStoryPlanEstimate}
                 else {newRallyPercentComplete = 0}
+              rallyFeatTotal=rallyLeafStoryPoints;
               }
-        rallyFeatTotal=rallyFeatTotal.PreliminaryEstimateValue
-          console.log("Rally Last Feature Date: " + rallylateDate);
+
+          console.log("Rally Feature Points: " + rallylateDate);
           console.log("Rally Feature Total: " + rallyFeatTotal + ' points');
           console.log("Rally Points Done: " + rallyPointsDone);
           console.log("New Rally Feature-based Percent Complete: " + Math.round(100*newRallyPercentComplete) + "%");
