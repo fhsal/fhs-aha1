@@ -1102,19 +1102,20 @@ function getRallyCapabilityDetail(rallyCapID){
 
        console.log("has children")   
           // identifying latest date in the Rally Solution Capability children response 
-            var dateString = new Date(Math.max.apply(null, rallySummary.map(function(e) {
-                          return new Date(e.PlannedEndDate);
-                        })));
-              rallylateDate = new Date(dateString.getTime() - (dateString.getTimezoneOffset() * 60000 ))
-                .toISOString()
+            // var dateString = new Date(Math.max.apply(null, rallySummary.map(function(e) {
+            //               return new Date(e.PlannedEndDate);
+            //             })));
+            //   rallylateDate = new Date(dateString.getTime() - (dateString.getTimezoneOffset() * 60000 ))
+            //     .toISOString()
               rallyFeatTotal = rallySummary.reduce(function(previousValue, currentValue) {
                   return {PreliminaryEstimateValue: previousValue.PreliminaryEstimateValue + currentValue.PreliminaryEstimateValue}
                 });
+              rallyFeatTotal = rallyFeatTotal.PreliminaryEstimateValue;
               newRallyPercentComplete = rallyPointsDone/rallyFeatTotal.PreliminaryEstimateValue}
           // else use the overall estimates for the capability for % complete, unless actuals are zero, in that case % complete is zero
           // and log the Rally object # and Formatted ID so that permissions can be changed to allow read access to Features 
           // if the estimate is not zero but the returned object has a length of zero 
-           else { 
+           else { rally
             console.log("does not have children") 
             console.log("con")
                 if (rallyPointsDone !==0){
@@ -1123,7 +1124,7 @@ function getRallyCapabilityDetail(rallyCapID){
               rallyFeatTotal=rallyLeafStoryPoints;
               }
 
-          console.log("Rally Feature Points: " + rallylateDate);
+          // console.log("Rally Feature Points: " + rallylateDate);
           console.log("Rally Feature Total: " + rallyFeatTotal + ' points');
           console.log("Rally Points Done: " + rallyPointsDone);
           console.log("New Rally Feature-based Percent Complete: " + Math.round(100*newRallyPercentComplete) + "%");
