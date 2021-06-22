@@ -654,48 +654,49 @@ function epicAjax(){
               let epicID = epicInfo.epic.id;         
               let epicName = epicInfo.epic.name;
 
-// if rally integration exists get rally object ID and call rally detail function             
+// if rally integration exists get rally object ID and call rally detail function  
+// deriving rally ObjectID an Name (which can vary in position in the array in rally - hence need to use filter function to find)           
                if(epicInfo.epic.integration_fields.length>0){
-// deriving rally ObjectID an Name (which can vary in position in the array in rally - hence need to use filter function to find)
-
                   let rallyIntFields = epicInfo.epic.integration_fields
                   let rallyObjectRow = rallyIntFields.filter(p => p.name == "ObjectID")
                   let rallyNameRow = rallyIntFields.filter(p => p.name == "Name")
                   rallyObjectID = rallyObjectRow[0].value;
                   rallyObjectName =  rallyNameRow[0].value;
-
-                getRallyCapabilityDetail(rallyObjectID)
-              }
-
+                  getRallyCapabilityDetail(rallyObjectID)
+                  }
+               else{
 // all this logic regarding effort and progress needs to be replaced with what comes from Rally 
-              let epicEffort = Math.round(epicInfo.epic.original_estimate/480);
-              if (epicEffort > 0) { epicEffort = epicEffort} else { epicEffort = 0} ;
-              let epicProgress = parseInt(epicInfo.epic.progress)/100;
-              let epicEffortCompl = epicEffort*epicProgress;
-              if (epicEffortCompl > 0) { epicEffortCompl = epicEffortCompl} else { epicEffortCompl = 0} ;
-              msEffortSum = msEffortSum + epicEffort;
-              msCompleteSum = Math.round(msCompleteSum + epicEffortCompl)
-              msPercentComplete = Math.round(100*msCompleteSum/msEffortSum)
+                let epicEffort = Math.round(epicInfo.epic.original_estimate/480);
+                if (epicEffort > 0) { epicEffort = epicEffort} else { epicEffort = 0} ;
+                let epicProgress = parseInt(epicInfo.epic.progress)/100;
+                let epicEffortCompl = epicEffort*epicProgress;
+                if (epicEffortCompl > 0) { epicEffortCompl = epicEffortCompl} else { epicEffortCompl = 0} ;
+                msEffortSum = msEffortSum + epicEffort;
+                msCompleteSum = Math.round(msCompleteSum + epicEffortCompl)
+                msPercentComplete = Math.round(100*msCompleteSum/msEffortSum)
+
+              console.log('epicID: ' + epicID);
+              console.log('rallyID: ' + rallyObjectID);
+              console.log('old epic effort: ' + epicEffort);
+              console.log('old milestone effort subtotal: ' + msEffortSum);
+              console.log('old milestone complete: ' + msCompleteSum);
+              console.log('old milestone % complete: ' + msPercentComplete + "%");
+
+                let epicObject = {
+                    "epicID" : epicID,
+                    "epicName" :epicName.slice(0, 30),
+                    "epicEffort" :  epicEffort,
+                    "epicProgress" : epicProgress,
+                    "epicEffortDone" : epicEffortCompl
+                  }
+              console.log('from Ajax, epicCount: ' + epicCount )
+                      epicSummary.push(epicObject)
+                epicCount = epicCount-1 
+                checkEpicsDone(epicCount) 
+
+               }   
 
 
-      console.log('epicID: ' + epicID);
-      console.log('rallyID: ' + rallyObjectID);
-      console.log('old epic effort: ' + epicEffort);
-      console.log('old milestone effort subtotal: ' + msEffortSum);
-      console.log('old milestone complete: ' + msCompleteSum);
-      console.log('old milestone % complete: ' + msPercentComplete + "%");
-
-          let epicObject = {
-              "epicID" : epicID,
-              "epicName" :epicName.slice(0, 30),
-              "epicEffort" :  epicEffort,
-              "epicProgress" : epicProgress,
-              "epicEffortDone" : epicEffortCompl
-            }
-      console.log('from Ajax, epicCount: ' + epicCount )
-            epicSummary.push(epicObject)
-          epicCount = epicCount-1 
-          checkEpicsDone(epicCount) 
       });
 }
 
@@ -1130,6 +1131,18 @@ function getRallyCapabilityDetail(rallyCapID){
 
               console.log("Rally MS effort Sum subtotal: " + rallyMSeffortSum);
               console.log("Rally MS complete Sum subtotal: " + rallyMScompleteSum);
+
+              let epicObject = {
+                    "epicID" : epicInfo.epic.id,
+                    "epicName" :epicInfo.epic.name.slice(0, 30),
+                    "epicEffort" :  rallyEpicEffort,
+                    "epicProgress" : rallyEpicProgress,
+                    "epicEffortDone" : rallyEpicEffortCompl
+                  }
+              console.log('from Ajax, epicCount: ' + epicCount )
+                      epicSummary.push(epicObject)
+                epicCount = epicCount-1 
+                checkEpicsDone(epicCount) 
 
         });
   }
