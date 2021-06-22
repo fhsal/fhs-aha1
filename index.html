@@ -561,8 +561,8 @@ function postMilestoneUpdate(){
       console.log( "test_new_percent_complete: " + rallyMSpercentComplete);
       console.log( "total_rally_point_estimate" + rallyMSeffortSum);
     });
-
-    localStorage.rallyErrorItems(rallyErrorItems);
+// write rally logged items to local storage 
+    localStorage.rallyErrorItems(rallyObjectErrorLog);
 
   }
 
@@ -1113,8 +1113,12 @@ function getRallyCapabilityDetail(rallyCapID){
               rallyFeatTotal = rallySummary.reduce(function(previousValue, currentValue) {
                   return {PreliminaryEstimateValue: previousValue.PreliminaryEstimateValue + currentValue.PreliminaryEstimateValue}
                 });
-              rallyFeatTotal = rallyFeatTotal.PreliminaryEstimateValue;
+            // force total estimate for the Capabilility to be the larger of Feature Estimates or LeafStoryPoints  
+                if(rallyFeatTotal>rallyLeafStoryPoints)
+                  {rallyFeatTotal = rallyFeatTotal.PreliminaryEstimateValue }
+                else{rallyFeatTotal = rallyLeafStoryPoints}   
               newRallyPercentComplete = rallyPointsDone/rallyFeatTotal}
+
           // else use the overall estimates for the capability for % complete, unless actuals are zero, in that case % complete is zero
           // and log the Rally object # and Formatted ID so that permissions can be changed to allow read access to Features 
           // if the estimate is not zero but the returned object has a length of zero 
