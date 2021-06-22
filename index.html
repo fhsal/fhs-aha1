@@ -268,6 +268,9 @@ rallyPointsDone = "";
 newRallyPercentComplete = "";
 rallyFormattedID = "";
 rallyObjectErrorLog=[];
+rallyMSeffortSum = 0;
+rallyMScompleteSum = 0;
+rallyMSpercentComplete = 0;
 
 
 // function to display numbers with thousands comma separator
@@ -1101,14 +1104,14 @@ function getRallyCapabilityDetail(rallyCapID){
                 console.log("Rally Feature Total: " + rallyFeatTotal + ' points')
                 console.log("New Rally Feature-based Percent Complete: " + Math.round(100*newRallyPercentComplete) + "%")
 
-          let EpicEffort = rallyFeatTotal;
-              if (epicEffort > 0) { epicEffort = epicEffort} else { epicEffort = 0} ;
-                let epicProgress = newRallyPercentComplete;
-                let epicEffortCompl = rallyPointsDone;
-              if (epicEffortCompl > 0) { epicEffortCompl = epicEffortCompl} else { epicEffortCompl = 0} ;
-                msEffortSum = msEffortSum + epicEffort;
-                msCompleteSum = Math.round(msCompleteSum + epicEffortCompl)
-              if (msEffortSum>0) {msPercentComplete = Math.round(100*msCompleteSum/msEffortSum)} else {msPercentComplete = 0}
+          let rallyEpicEffort = rallyFeatTotal;
+              if (rallyEpicEffort > 0) { rallyEpicEffort = rallyEpicEffort} else { rallyEpicEffort = 0} ;
+                let rallyEpicProgress = newRallyPercentComplete;
+                let rallyEpicEffortCompl = rallyPointsDone;
+              if (rallyEpicEffortCompl > 0) { rallyEpicEffortCompl = rallyEpicEffortCompl} else { rallyEpicEffortCompl = 0} ;
+                rallyMSEffortSum = rallyMSEffortSum + rallyEpicEffort;
+                rallyMSCompleteSum = Math.round(rallyMSCompleteSum + rallyEpicEffortCompl)
+              if (rallyMSeffortSum>0) {rallyMSpercentComplete = Math.round(100*rallyMScompleteSum/rallyMSeffortSum)} else {rallyMSpercentComplete = 0}
 
         });
   }
