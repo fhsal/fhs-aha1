@@ -955,11 +955,11 @@ if (numEpics == 0) { checkEpicsDone(epicCount)}
             setTimeout(function(){
               let num = epicsToParse[i];
                     epicNum = num.toString()
-                    $('#msBody').append("Epic #: " + (i+1));
+                    $('#msBody').append("Epic #: " + (i+1))
                     $('#msBody').append(",  record_id: " + epicNum) ;
                     $('#msBody').append('<br>') ;
                     // $('#msResults').append('*') ;
-                  epicAjax(epicNumber)
+                  epicAjax(epicNum)
       //wait 100 milliseconds between calls (API limit is 'technically' 20ms)
             }, 700 * i);
         }(i)
