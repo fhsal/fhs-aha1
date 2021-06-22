@@ -555,7 +555,7 @@ function postMilestoneUpdate(){
         "total_rally_point_estimate": rallyMSeffortSum},
       }}), };
     $.ajax(settings).done(function (response) { 
-      console.log('PUT update: ' + JSON.parse(response))
+      console.log('PUT update: ' + response);
       console.log( "milestone_total_estimated_effort: " + msEffortSum);
       console.log( "no_capabilities: " + numEpics);
       console.log( "test_new_percent_complete: " + rallyMSpercentComplete);
