@@ -552,9 +552,15 @@ function postMilestoneUpdate(){
         "no_capabilities": numEpics,
         // new rally-derived values for effort and % complete from Feature Estimates (rather than stories)
         "test_new_percent_complete": rallyMSpercentComplete,
-        "total_rally_point_estimate":rallyMSeffortSum},
+        "total_rally_point_estimate": rallyMSeffortSum},
       }}), };
-    $.ajax(settings).done(function (response) { console.log('PUT update ' + response); });
+    $.ajax(settings).done(function (response) { 
+      console.log('PUT update: ' + JSON.parse(response))
+      console.log( "milestone_total_estimated_effort: " + msEffortSum);
+      console.log( "no_capabilities: " + numEpics);
+      console.log( "test_new_percent_complete: " + rallyMSpercentComplete);
+      console.log( "total_rally_point_estimate" + rallyMSeffortSum);
+    });
   }
 
 // function to count down epics as their responses are received, displaying an "*"
@@ -650,8 +656,13 @@ function epicAjax(){
 
 // if rally integration exists get rally object ID and call rally detail function             
                if(epicInfo.epic.integration_fields.length>0){
-                  rallyObjectID = epicInfo.epic.integration_fields[4].value;
-                  rallyObjectName =  epicInfo.epic.integration_fields[1].value
+// deriving rally ObjectID an Name (which can vary in position in the array in rally - hence need to use filter function to find)
+
+                  let rallyIntFields = epicInfo.epic.integration_fields
+                  let rallyObjectRow = rallyIntFields.filter(p => p.name == "ObjectID")
+                  let rallyNameRow = rallyIntFields.filter(p => p.name == "Name")
+                  rallyObjectID = rallyObjectRow[0].value;
+                  rallyObjectName =  rallyNameRow[0].value;
 
                 getRallyCapabilityDetail(rallyObjectID)
               }
