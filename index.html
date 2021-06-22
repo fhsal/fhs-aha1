@@ -1111,7 +1111,7 @@ function getRallyCapabilityDetail(rallyCapID){
                   return {PreliminaryEstimateValue: previousValue.PreliminaryEstimateValue + currentValue.PreliminaryEstimateValue}
                 });
               rallyFeatTotal = rallyFeatTotal.PreliminaryEstimateValue;
-              newRallyPercentComplete = rallyPointsDone/rallyFeatTotal.PreliminaryEstimateValue}
+              newRallyPercentComplete = rallyPointsDone/rallyFeatTotal}
           // else use the overall estimates for the capability for % complete, unless actuals are zero, in that case % complete is zero
           // and log the Rally object # and Formatted ID so that permissions can be changed to allow read access to Features 
           // if the estimate is not zero but the returned object has a length of zero 
