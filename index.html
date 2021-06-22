@@ -664,39 +664,36 @@ function epicAjax(epicNumber){
                   rallyObjectName =  rallyNameRow[0].value;
                   getRallyCapabilityDetail(rallyObjectID)
                   }
-//                else{
-// // all this logic regarding effort and progress needs to be replaced with what comes from Rally 
-//                 let epicEffort = Math.round(epicInfo.epic.original_estimate/480);
-//                 if (epicEffort > 0) { epicEffort = epicEffort} else { epicEffort = 0} ;
-//                 let epicProgress = parseInt(epicInfo.epic.progress)/100;
-//                 let epicEffortCompl = epicEffort*epicProgress;
-//                 if (epicEffortCompl > 0) { epicEffortCompl = epicEffortCompl} else { epicEffortCompl = 0} ;
-//                 msEffortSum = msEffortSum + epicEffort;
-//                 msCompleteSum = Math.round(msCompleteSum + epicEffortCompl)
-//                 msPercentComplete = Math.round(100*msCompleteSum/msEffortSum)
+               else{
+// all this logic regarding effort and progress needs to be replaced with what comes from Rally 
+                let epicEffort = Math.round(epicInfo.epic.original_estimate/480);
+                if (epicEffort > 0) { epicEffort = epicEffort} else { epicEffort = 0} ;
+                let epicProgress = parseInt(epicInfo.epic.progress)/100;
+                let epicEffortCompl = epicEffort*epicProgress;
+                if (epicEffortCompl > 0) { epicEffortCompl = epicEffortCompl} else { epicEffortCompl = 0} ;
+                msEffortSum = msEffortSum + epicEffort;
+                msCompleteSum = Math.round(msCompleteSum + epicEffortCompl)
+                msPercentComplete = Math.round(100*msCompleteSum/msEffortSum)
 
-//               console.log('epicID: ' + epicID);
-//               console.log('rallyID: ' + rallyObjectID);
-//               console.log('old epic effort: ' + epicEffort);
-//               console.log('old milestone effort subtotal: ' + msEffortSum);
-//               console.log('old milestone complete: ' + msCompleteSum);
-//               console.log('old milestone % complete: ' + msPercentComplete + "%");
+              console.log('epicID: ' + epicID);
+              console.log('rallyID: ' + rallyObjectID);
+              console.log('old epic effort: ' + epicEffort);
+              console.log('old milestone effort subtotal: ' + msEffortSum);
+              console.log('old milestone complete: ' + msCompleteSum);
+              console.log('old milestone % complete: ' + msPercentComplete + "%");
 
-//                 let epicObject = {
-//                     "epicID" : epicID,
-//                     "epicName" :epicName.slice(0, 30),
-//                     "epicEffort" :  epicEffort,
-//                     "epicProgress" : epicProgress,
-//                     "epicEffortDone" : epicEffortCompl
-//                   }
-//               console.log('from Ajax, epicCount: ' + epicCount )
-//                       epicSummary.push(epicObject)
-//                 epicCount = epicCount-1 
-//                 checkEpicsDone(epicCount) 
-
-//                }   
-
-
+                let epicObject = {
+                    "epicID" : epicID,
+                    "epicName" :epicName.slice(0, 30),
+                    "epicEffort" :  epicEffort,
+                    "epicProgress" : epicProgress,
+                    "epicEffortDone" : epicEffortCompl
+                  }
+              console.log('from Ajax, epicCount: ' + epicCount )
+                      epicSummary.push(epicObject)
+                epicCount = epicCount-1 
+                checkEpicsDone(epicCount) 
+               }   
       });
 }
 
@@ -1077,6 +1074,7 @@ function getRallyCapabilityDetail(rallyCapID){
                     rallyFormattedID = rallyCapSummary.SolutionCapability.FormattedID;
                     rallyPointsDone = rallyLeafStoryPoints*rallyPercentComplete;
                 console.log("Rally FormattedID: " + rallyFormattedID)
+                console.log("Rally ObjectID: " + rallyCapID)
                 console.log("Rally Capability Name: " + rallyObjectName)
                 console.log("Rally Total Story Points: " + rallyLeafStoryPoints)
                 console.log("Rally Points Done: " + rallyPointsDone)
@@ -1117,17 +1115,17 @@ function getRallyCapabilityDetail(rallyCapID){
           // and log the Rally object # and Formatted ID so that permissions can be changed to allow read access to Features 
           // if the estimate is not zero but the returned object has a length of zero 
            else { 
-
             console.log("does not have children") 
+            console.log("con")
                 if (rallyPointsDone !==0){
                     newRallyPercentComplete = rallyCapSummary.SolutionCapability.PercentDoneByStoryPlanEstimate}
                 else {newRallyPercentComplete = 0}
               }
-              rallyFeatTotal=rallyFeatTotal.PreliminaryEstimateValue
-                console.log("Rally Last Feature Date: " + rallylateDate);
-                console.log("Rally Feature Total: " + rallyFeatTotal + ' points');
-                console.log("Rally Points Done: " + rallyPointsDone);
-                console.log("New Rally Feature-based Percent Complete: " + Math.round(100*newRallyPercentComplete) + "%");
+        rallyFeatTotal=rallyFeatTotal.PreliminaryEstimateValue
+          console.log("Rally Last Feature Date: " + rallylateDate);
+          console.log("Rally Feature Total: " + rallyFeatTotal + ' points');
+          console.log("Rally Points Done: " + rallyPointsDone);
+          console.log("New Rally Feature-based Percent Complete: " + Math.round(100*newRallyPercentComplete) + "%");
 
           let rallyEpicEffort = rallyFeatTotal;
               if (rallyEpicEffort > 0) { rallyEpicEffort = rallyEpicEffort} else { rallyEpicEffort = 0} ;
