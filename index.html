@@ -638,7 +638,7 @@ function rallyEpicAjax(){
 // function GETs info for a specific Epic
 function epicAjax(){
 
-  console.log('epicAjax')
+  console.log('epicAjax, epicNum: ' + epicNum)
     var settings = {
       "url": "https://optum.aha.io/api/v1/epics/" + epicNum,
       "method": "GET",
@@ -664,37 +664,37 @@ function epicAjax(){
                   rallyObjectName =  rallyNameRow[0].value;
                   getRallyCapabilityDetail(rallyObjectID)
                   }
-               else{
-// all this logic regarding effort and progress needs to be replaced with what comes from Rally 
-                let epicEffort = Math.round(epicInfo.epic.original_estimate/480);
-                if (epicEffort > 0) { epicEffort = epicEffort} else { epicEffort = 0} ;
-                let epicProgress = parseInt(epicInfo.epic.progress)/100;
-                let epicEffortCompl = epicEffort*epicProgress;
-                if (epicEffortCompl > 0) { epicEffortCompl = epicEffortCompl} else { epicEffortCompl = 0} ;
-                msEffortSum = msEffortSum + epicEffort;
-                msCompleteSum = Math.round(msCompleteSum + epicEffortCompl)
-                msPercentComplete = Math.round(100*msCompleteSum/msEffortSum)
+//                else{
+// // all this logic regarding effort and progress needs to be replaced with what comes from Rally 
+//                 let epicEffort = Math.round(epicInfo.epic.original_estimate/480);
+//                 if (epicEffort > 0) { epicEffort = epicEffort} else { epicEffort = 0} ;
+//                 let epicProgress = parseInt(epicInfo.epic.progress)/100;
+//                 let epicEffortCompl = epicEffort*epicProgress;
+//                 if (epicEffortCompl > 0) { epicEffortCompl = epicEffortCompl} else { epicEffortCompl = 0} ;
+//                 msEffortSum = msEffortSum + epicEffort;
+//                 msCompleteSum = Math.round(msCompleteSum + epicEffortCompl)
+//                 msPercentComplete = Math.round(100*msCompleteSum/msEffortSum)
 
-              console.log('epicID: ' + epicID);
-              console.log('rallyID: ' + rallyObjectID);
-              console.log('old epic effort: ' + epicEffort);
-              console.log('old milestone effort subtotal: ' + msEffortSum);
-              console.log('old milestone complete: ' + msCompleteSum);
-              console.log('old milestone % complete: ' + msPercentComplete + "%");
+//               console.log('epicID: ' + epicID);
+//               console.log('rallyID: ' + rallyObjectID);
+//               console.log('old epic effort: ' + epicEffort);
+//               console.log('old milestone effort subtotal: ' + msEffortSum);
+//               console.log('old milestone complete: ' + msCompleteSum);
+//               console.log('old milestone % complete: ' + msPercentComplete + "%");
 
-                let epicObject = {
-                    "epicID" : epicID,
-                    "epicName" :epicName.slice(0, 30),
-                    "epicEffort" :  epicEffort,
-                    "epicProgress" : epicProgress,
-                    "epicEffortDone" : epicEffortCompl
-                  }
-              console.log('from Ajax, epicCount: ' + epicCount )
-                      epicSummary.push(epicObject)
-                epicCount = epicCount-1 
-                checkEpicsDone(epicCount) 
+//                 let epicObject = {
+//                     "epicID" : epicID,
+//                     "epicName" :epicName.slice(0, 30),
+//                     "epicEffort" :  epicEffort,
+//                     "epicProgress" : epicProgress,
+//                     "epicEffortDone" : epicEffortCompl
+//                   }
+//               console.log('from Ajax, epicCount: ' + epicCount )
+//                       epicSummary.push(epicObject)
+//                 epicCount = epicCount-1 
+//                 checkEpicsDone(epicCount) 
 
-               }   
+//                }   
 
 
       });
