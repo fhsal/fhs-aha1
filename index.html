@@ -1114,9 +1114,10 @@ function getRallyCapabilityDetail(rallyCapID){
                 else {newRallyPercentComplete = 0}
               }
               rallyFeatTotal=rallyFeatTotal.PreliminaryEstimateValue
-                console.log("Rally Last Feature Date: " + rallylateDate)
-                console.log("Rally Feature Total: " + rallyFeatTotal + ' points')
-                console.log("New Rally Feature-based Percent Complete: " + Math.round(100*newRallyPercentComplete) + "%")
+                console.log("Rally Last Feature Date: " + rallylateDate);
+                console.log("Rally Feature Total: " + rallyFeatTotal + ' points');
+                console.log("Rally Points Done: " + rallyPointsDone);
+                console.log("New Rally Feature-based Percent Complete: " + Math.round(100*newRallyPercentComplete) + "%");
 
           let rallyEpicEffort = rallyFeatTotal;
               if (rallyEpicEffort > 0) { rallyEpicEffort = rallyEpicEffort} else { rallyEpicEffort = 0} ;
