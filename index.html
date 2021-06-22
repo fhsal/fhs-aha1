@@ -272,7 +272,6 @@ rallyMSeffortSum = 0;
 rallyMScompleteSum = 0;
 rallyMSpercentComplete = 0;
 
-
 // function to display numbers with thousands comma separator
 function formatNumber(num) {
   return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
@@ -559,11 +558,10 @@ function postMilestoneUpdate(){
       console.log( "milestone_total_estimated_effort: " + msEffortSum);
       console.log( "no_capabilities: " + numEpics);
       console.log( "test_new_percent_complete: " + rallyMSpercentComplete);
-      console.log( "total_rally_point_estimate" + rallyMSeffortSum);
+      console.log( "total_rally_point_estimate: " + rallyMSeffortSum);
     });
 // write rally logged items to local storage 
     localStorage.setItem("rallyErrorItems", rallyObjectErrorLog);
-
   }
 
 // function to count down epics as their responses are received, displaying an "*"
@@ -900,6 +898,9 @@ function parseMilestone(msToParse){
     msEffortSum = 0;
     msCompleteSum = 0;
     msPercentComplete = 0;
+    rallyMSeffortSum = 0;
+    rallyMScompleteSum = 0;
+    rallyMSpercentComplete = 0;
 
     console.log('parseMilestone, MS#: ' + msToParse); 
 
@@ -1119,8 +1120,11 @@ function getRallyCapabilityDetail(rallyCapID){
                 if(rallyFeatTotal<rallyLeafStoryPoints){
                    rallyFeatTotal=rallyLeafStoryPoints
                    console.log("------------> adjusted estimate from " + originalRallyFeatTotal + " to " + rallyLeafStoryPoints) 
-                }  
-              newRallyPercentComplete = rallyPointsDone/rallyFeatTotal}
+                   }
+            // force percent complete for the Capabilility to be 100% if rally work is marked as 100%
+                // if(rallyPercentComplete=1){newRallyPercentComplete=1}
+                // else {newRallyPercentComplete = rallyPointsDone/rallyFeatTotal}
+                  }
 
           // else use the overall estimates for the capability for % complete, unless actuals are zero, in that case % complete is zero
           // and log the Rally object # and Formatted ID so that permissions can be changed to allow read access to Features 
