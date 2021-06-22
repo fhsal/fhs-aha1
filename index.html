@@ -575,15 +575,15 @@ function checkEpicsDone(epicCount) {
             } 
         else {
   // populate Milestone summary display
-        let showmsEffortSum = formatNumber(msEffortSum)
-        let showmsCompleteSum = formatNumber(msCompleteSum)
+        let showmsEffortSum = formatNumber(rallyMSeffortSum)
+        let showmsCompleteSum = formatNumber(rallyMScompleteSum)
         waitingFlag = false;
                 $('#msResults').append('<br>')
                 $('#msResults').append('<strong>Total MS: </strong>' + msID ); 
                 $('#msResults').append(';  <strong>  #Epics: </strong>' + (numEpics));
                 $('#msResults').append(';  <strong>  Effort: </strong>' + showmsEffortSum + ' days' );
                 $('#msResults').append(';  <strong>  Done: </strong>' + showmsCompleteSum + ' days' );
-                $('#msResults').append(';  <strong>  Progress: </strong>' + msPercentComplete +"%");
+                $('#msResults').append(';  <strong>  Progress: </strong>' + rallyMSpercentComplete +"%");
                 $('#msResults').append('<br>')
   // populate Milestone summary object 
                 let msObject = {
