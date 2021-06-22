@@ -960,8 +960,10 @@ if (numEpics == 0) { checkEpicsDone(epicCount)}
                     $('#msBody').append('<br>') ;
                     // $('#msResults').append('*') ;
                   epicAjax(epicNum)
-      //wait 100 milliseconds between calls (API limit is 'technically' 20ms)
-            }, 5000 * i);
+      //wait is to allow Aha API to pace and permit sufficient time for rally response
+      //may need to change this so that the rally response trigger is explicit rather than 
+      //assumed based upon an estimated time interval
+            }, 4000 * i);
         }(i)
         );
         };
