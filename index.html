@@ -1115,9 +1115,10 @@ function getRallyCapabilityDetail(rallyCapID){
                 });
             // force total estimate for the Capabilility to be the larger of Feature Estimates or LeafStoryPoints  
               rallyFeatTotal = rallyFeatTotal.PreliminaryEstimateValue
+              let originalRallyFeatTotal = rallyFeatTotal
                 if(rallyFeatTotal<rallyLeafStoryPoints){
                    rallyFeatTotal=rallyLeafStoryPoints
-                   console.log("adjusted estimate from " + rallyFeatTotal + " to " + rallyLeafStoryPoints) 
+                   console.log("------------> adjusted estimate from " + OriginalRallyFeatTotal + " to " + rallyLeafStoryPoints) 
                 }  
               newRallyPercentComplete = rallyPointsDone/rallyFeatTotal}
 
