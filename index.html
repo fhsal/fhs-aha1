@@ -561,6 +561,9 @@ function postMilestoneUpdate(){
       console.log( "test_new_percent_complete: " + rallyMSpercentComplete);
       console.log( "total_rally_point_estimate" + rallyMSeffortSum);
     });
+
+    localStorage.rallyErrorItems(rallyErrorItems);
+
   }
 
 // function to count down epics as their responses are received, displaying an "*"
@@ -1119,15 +1122,20 @@ function getRallyCapabilityDetail(rallyCapID){
             console.log("does not have children") 
             console.log("con")
                 if (rallyPointsDone !==0){
-                    newRallyPercentComplete = rallyCapSummary.SolutionCapability.PercentDoneByStoryPlanEstimate}
-                else {newRallyPercentComplete = 0}
+                    newRallyPercentComplete = rallyCapSummary.SolutionCapability.PercentDoneByStoryPlanEstimate
+          // log those Rally items where the app doesn't have permissions to see the children          
+                  let rallyLogItem = {rallyName: rallyObjectName, rallyID: rallyObjectID, rallyFrmatID: rallyFormattedID, ahaID: epicName}
+                  rallyObjectErrorLog.push(rallyLogItem)
+                 console.log("Rally error log item: " + rallyLogItem) 
+                }
+                    else {newRallyPercentComplete = 0}
               rallyFeatTotal=rallyLeafStoryPoints;
               }
 
           // console.log("Rally Feature Points: " + rallylateDate);
-          console.log("Rally Feature Total: " + rallyFeatTotal + ' points');
-          console.log("Rally Points Done: " + rallyPointsDone);
-          console.log("New Rally Feature-based Percent Complete: " + Math.round(100*newRallyPercentComplete) + "%");
+            console.log("Rally Feature Total: " + rallyFeatTotal + ' points');
+            console.log("Rally Points Done: " + rallyPointsDone);
+            console.log("New Rally Feature-based Percent Complete: " + Math.round(100*newRallyPercentComplete) + "%");
 
           let rallyEpicEffort = rallyFeatTotal;
               if (rallyEpicEffort > 0) { rallyEpicEffort = rallyEpicEffort} else { rallyEpicEffort = 0} ;
