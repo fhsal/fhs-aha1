@@ -1067,6 +1067,7 @@ function getRallyCapabilityDetail(rallyCapID){
         };
         $.ajax(settings)
         .then(function (response) {
+          console.log("rally 1st call")
                 rallyCapSummary = response
                       console.log(response)
                     rallyLeafStoryPoints = rallyCapSummary.SolutionCapability.LeafStoryPlanEstimateTotal;
@@ -1089,6 +1090,8 @@ function getRallyCapabilityDetail(rallyCapID){
         };
         $.ajax(settings)
         .then(function (response) {
+
+          console.log("rally 2nd call")
                 rallyCapChildren = response
                       console.log(response)
                     rallySummary = rallyCapChildren.QueryResult.Results
@@ -1096,20 +1099,24 @@ function getRallyCapabilityDetail(rallyCapID){
     // computing total Feature estimate in the Rally Solution Capability children response
     // test to see if there are children, if yes then operate on result for date and total points for Features
         if (rallySummary.length>0){
+
+       console.log("has children")   
           // identifying latest date in the Rally Solution Capability children response 
             var dateString = new Date(Math.max.apply(null, rallySummary.map(function(e) {
                           return new Date(e.PlannedEndDate);
                         })));
-                rallylateDate = new Date(dateString.getTime() - (dateString.getTimezoneOffset() * 60000 ))
+              rallylateDate = new Date(dateString.getTime() - (dateString.getTimezoneOffset() * 60000 ))
                 .toISOString()
-                rallyFeatTotal = rallySummary.reduce(function(previousValue, currentValue) {
+              rallyFeatTotal = rallySummary.reduce(function(previousValue, currentValue) {
                   return {PreliminaryEstimateValue: previousValue.PreliminaryEstimateValue + currentValue.PreliminaryEstimateValue}
                 });
-                  newRallyPercentComplete = rallyPointsDone/rallyFeatTotal.PreliminaryEstimateValue}
-           // else use the overall estimates for the capability for % complete, unless actuals are zero, in that case % complete is zero
-           // and log the Rally object # and Formatted ID so that permissions can be changed to allow read access to Features 
-           // if the estimate is not zero but the returned object has a length of zero 
+              newRallyPercentComplete = rallyPointsDone/rallyFeatTotal.PreliminaryEstimateValue}
+          // else use the overall estimates for the capability for % complete, unless actuals are zero, in that case % complete is zero
+          // and log the Rally object # and Formatted ID so that permissions can be changed to allow read access to Features 
+          // if the estimate is not zero but the returned object has a length of zero 
            else { 
+
+            console.log("does not have children") 
                 if (rallyPointsDone !==0){
                     newRallyPercentComplete = rallyCapSummary.SolutionCapability.PercentDoneByStoryPlanEstimate}
                 else {newRallyPercentComplete = 0}
