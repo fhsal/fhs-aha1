@@ -636,11 +636,11 @@ function rallyEpicAjax(){
 
 
 // function GETs info for a specific Epic
-function epicAjax(){
+function epicAjax(epicNumber){
 
   console.log('epicAjax, epicNum: ' + epicNum)
     var settings = {
-      "url": "https://optum.aha.io/api/v1/epics/" + epicNum,
+      "url": "https://optum.aha.io/api/v1/epics/" + epicNumber,
       "method": "GET",
       // "timeout": 0,
       "crossDomain": true,
@@ -959,7 +959,7 @@ if (numEpics == 0) { checkEpicsDone(epicCount)}
                     $('#msBody').append(",  record_id: " + epicNum) ;
                     $('#msBody').append('<br>') ;
                     // $('#msResults').append('*') ;
-                  epicAjax()
+                  epicAjax(epicNumber)
       //wait 100 milliseconds between calls (API limit is 'technically' 20ms)
             }, 700 * i);
         }(i)
