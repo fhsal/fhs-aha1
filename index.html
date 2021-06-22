@@ -562,7 +562,7 @@ function postMilestoneUpdate(){
       console.log( "total_rally_point_estimate" + rallyMSeffortSum);
     });
 // write rally logged items to local storage 
-    localStorage.rallyErrorItems(rallyObjectErrorLog);
+    localStorage.setItem("rallyErrorItems", rallyObjectErrorLog);
 
   }
 
