@@ -661,8 +661,10 @@ function epicAjax(epicNumber){
                   let rallyIntFields = epicInfo.epic.integration_fields
                   let rallyObjectRow = rallyIntFields.filter(p => p.name == "ObjectID")
                   let rallyNameRow = rallyIntFields.filter(p => p.name == "Name")
+                  let rallyFormattedIDRow = rallyIntFields.filter(p => p.name == "FormattedID")
                   rallyObjectID = rallyObjectRow[0].value;
                   rallyObjectName =  rallyNameRow[0].value;
+                  rallyFormattedID = rallyFormattedIDRow[0].value;
                   getRallyCapabilityDetail(rallyObjectID)
                   }
                else{
