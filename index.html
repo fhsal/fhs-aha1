@@ -1136,7 +1136,7 @@ function getRallyCapabilityDetail(rallyCapID){
                 if (rallyPointsDone !==0){
                     newRallyPercentComplete = rallyCapSummary.SolutionCapability.PercentDoneByStoryPlanEstimate
           // log those Rally items where the app doesn't have permissions to see the children          
-                  let rallyLogItem = {rallyName: rallyObjectName, rallyID: rallyObjectID, rallyFrmatID: rallyFormattedID, ahaID: epicName}
+                  let rallyLogItem = {rallyName: rallyObjectName, rallyID: rallyObjectID, rallyFrmatID: rallyFormattedID, ahaID: epicNum}
                   rallyObjectErrorLog.push(rallyLogItem)
                  console.log("Rally error log item: " + rallyLogItem) 
                 }
