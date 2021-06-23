@@ -1073,7 +1073,7 @@ function getRallyCapabilityDetail(rallyCapID){
           console.log("rally 1st call")
                 rallyCapSummary = response
                       console.log(response)
-            if(rallyCapSummary.OperationResult){'throw error and log Rally capability ID'}     
+            if(rallyCapSummary.OperationResult.Errors[0]){'throw error and log Rally capability ID'}     
                     rallyLeafStoryPoints = rallyCapSummary.SolutionCapability.LeafStoryPlanEstimateTotal;
                     rallyPercentComplete = rallyCapSummary.SolutionCapability.PercentDoneByStoryPlanEstimate;
                     rallyFormattedID = rallyCapSummary.SolutionCapability.FormattedID;
