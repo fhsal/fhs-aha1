@@ -582,8 +582,8 @@ function checkEpicsDone(epicCount) {
                 $('#msResults').append('<br>')
                 $('#msResults').append('<strong>Total MS: </strong>' + msID ); 
                 $('#msResults').append(';  <strong>  #Epics: </strong>' + (numEpics));
-                $('#msResults').append(';  <strong>  Effort: </strong>' + showmsEffortSum + ' days' );
-                $('#msResults').append(';  <strong>  Done: </strong>' + showmsCompleteSum + ' days' );
+                $('#msResults').append(';  <strong>  Effort: </strong>' + showmsEffortSum + ' points' );
+                $('#msResults').append(';  <strong>  Done: </strong>' + showmsCompleteSum + ' points' );
                 $('#msResults').append(';  <strong>  Progress: </strong>' + rallyMSpercentComplete +"%");
                 $('#msResults').append('<br>')
   // populate Milestone summary object 
@@ -1073,7 +1073,7 @@ function getRallyCapabilityDetail(rallyCapID){
           console.log("rally 1st call")
                 rallyCapSummary = response
                       console.log(response)
-            // if(rallyCapSummary.OperationResult.Errors){'throw error and log Rally capability ID'}     
+            if(rallyCapSummary.OperationResult){'throw error and log Rally capability ID'}     
                     rallyLeafStoryPoints = rallyCapSummary.SolutionCapability.LeafStoryPlanEstimateTotal;
                     rallyPercentComplete = rallyCapSummary.SolutionCapability.PercentDoneByStoryPlanEstimate;
                     rallyFormattedID = rallyCapSummary.SolutionCapability.FormattedID;
@@ -1132,7 +1132,6 @@ function getRallyCapabilityDetail(rallyCapID){
           // if the estimate is not zero but the returned object has a length of zero 
            else {
             console.log("does not have children") 
-            console.log("con")
                 if (rallyPointsDone !==0){
                     newRallyPercentComplete = rallyCapSummary.SolutionCapability.PercentDoneByStoryPlanEstimate
           // log those Rally items where the app doesn't have permissions to see the children          
