@@ -964,7 +964,7 @@ if (numEpics == 0) { checkEpicsDone(epicCount)}
       //wait is to allow Aha API to pace and permit sufficient time for rally response
       //may need to change this so that the rally response trigger is explicit rather than 
       //assumed based upon an estimated time interval
-            }, 2600 * i);
+            }, 3000 * i);
         }(i)
         );
         };
@@ -1123,7 +1123,7 @@ function getRallyCapabilityDetail(rallyCapID){
                    }
             // force percent complete for the Capabilility to be 100% if rally work is marked as 100%
                 // if(rallyPercentComplete=1){newRallyPercentComplete=1}
-                // else {newRallyPercentComplete = rallyPointsDone/rallyFeatTotal}
+                   newRallyPercentComplete = rallyPointsDone/rallyFeatTotal
                   }
 
           // else use the overall estimates for the capability for % complete, unless actuals are zero, in that case % complete is zero
