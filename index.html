@@ -568,10 +568,10 @@ function postMilestoneUpdate(){
 //  for each as completed & then the overall summary  
 function checkEpicsDone(epicCount) {
     console.log('checkEpicsDone, numEpics: ' + epicCount) 
-        if (epicCount !== 0) {
+        if (epicCount > 0) {
             // waitingFlag = true;
             // setInterval(showWaiting, 500);
-            console.log('waiting condition: ' + (epicCount !==0))
+            console.log('waiting condition: ' + (epicCount >0))
             $('#msResults').append('*') ;
             } 
         else {
