@@ -222,6 +222,7 @@ epics = "";
 inits = "";
 singleInit = "";
 msInfo = "";
+epicDone = false;
 epicInfo ="";
 epicSummary = [];
 epicEffortSum = 0;
@@ -606,13 +607,13 @@ function checkEpicsDone(epicCount) {
       }; 
   }
 
-function rallyEpicAjax(){
+function rallyPostAjax(){
 
     console.log('rallyEpicAjax')
 
       var settings = {
         "url": "https://optum.aha.io/api/v1/epics/" + epicNum,
-        "method": "GET",
+        "method": "PUT",
         // "timeout": 0,
         "crossDomain": true,
         "access-control-allow-origin": "*",
@@ -951,35 +952,33 @@ function parseMilestone(msToParse){
 
 if (numEpics == 0) { checkEpicsDone(epicCount)}
 
-// loop through epics, waiting between each fetch to stay within API limits
+// loop through epics, waiting 800MS if prior iteration is done (epicDone=true)
+// if prior iteration epicDone != true then wait an additional 4000MS 
       //wait is to allow Aha AP to pace and permit sufficient time for rally response
       //may need to change this so that the rally response trigger is explicit rather than 
-      //assumed based upon an estimated time interval
+
     var i;
     for(i = 0; i < (numEpics); i++){
+        let num = epicsToParse[i];
+          epicNum = num.toString()
+          $('#msBody').append("Epic #: " + (i+1))
+          $('#msBody').append(",  record_id: " + epicNum) ;
+          $('#msBody').append('<br>') ;
         (function(i){
-          let num = epicsToParse[i];
-                epicNum = num.toString()
-                $('#msBody').append("Epic #: " + (i+1))
-                $('#msBody').append(",  record_id: " + epicNum) ;
-                $('#msBody').append('<br>') ;
-          if (i=0){
-               epAjax(epicNum)}
-          else {
+// if epicDone = true wait 800MS before firing epicAjax
+            if(epicDone){
+      console.log('epicDone? ' + epicDone);
               setTimeout(function(){
-                if(epicDone){
                   epicAjax(epicNum)
-                }
                 }, 800 * i);
+              }
+// if epicDone != true wait add'l 4000MS before firing epicAjax 
             if(!epicDone){
               setTimeout(function(){
-                if(epicDone){
+      console.log('epicDone? ' + epicDone + 'wait 4000MS');               
                   epicAjax(epicNum)
-                }
-                }, 800 * i);
-
-            }  
-          }
+                }, 4000 * i);
+               }  
         }(i)
         );
         };
@@ -1073,6 +1072,7 @@ function getRallyCapabilityDetail(rallyCapID){
     rallyLeafStoryPoints= 0;
     rallyPointsDone = 0;
     rallyFormattedID = '';
+    epicDone = false;
 
     // api call to get capability summary information 
     var settings = {
@@ -1094,6 +1094,7 @@ function getRallyCapabilityDetail(rallyCapID){
                    let rallyLogItem = {rallyName: rallyObjectName, rallyID: rallyObjectID, rallyFrmatID: rallyFormattedID, ahaID: epicNum}
                    rallyObjectErrorLog.push(rallyLogItem)
               // call next Epic
+                   epicDone = true;
                    epicCount = epicCount-1 
                    checkEpicsDone(epicCount) 
                 }     
@@ -1192,6 +1193,7 @@ function getRallyCapabilityDetail(rallyCapID){
                   }
               console.log('from Ajax, epicCount: ' + epicCount )
                       epicSummary.push(epicObject)
+                epicDone = true;
                 epicCount = epicCount-1 
                 checkEpicsDone(epicCount) 
 
