@@ -904,6 +904,7 @@ function parseMilestone(msToParse){
     rallyMSeffortSum = 0;
     rallyMScompleteSum = 0;
     rallyMSpercentComplete = 0;
+    epicDone=false;
 
     console.log('parseMilestone, MS#: ' + msToParse); 
 
@@ -969,7 +970,7 @@ if (numEpics == 0) { checkEpicsDone(epicCount)}
           else {
               setTimeout(function(){
                 if(epicDone){epicAjax(epicNum)}
-               }, 800 * i);
+               }, 1000 * i);
             if(!epicDone){
               setTimeout(function(){
                   epicAjax(epicNum)
