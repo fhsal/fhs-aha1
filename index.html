@@ -959,24 +959,29 @@ if (numEpics == 0) { checkEpicsDone(epicCount)}
 
     var i;
     for(i = 0; i < (numEpics); i++){
-        let num = epicsToParse[i];
-          epicNum = num.toString()
-          $('#msBody').append("Epic #: " + (i+1))
-          $('#msBody').append(",  record_id: " + epicNum) ;
-          $('#msBody').append('<br>') ;
         (function(i){
 // if epicDone = true wait 800MS before firing epicAjax
-            if(epicDone){
+            if (epicDone){
       console.log('epicDone? ' + epicDone);
               setTimeout(function(){
-                  epicAjax(epicNum)
+                let num = epicsToParse[i];
+                  epicNum = num.toString()
+                  $('#msBody').append("Epic #: " + (i+1))
+                  $('#msBody').append(",  record_id: " + epicNum) ;
+                  $('#msBody').append('<br>') ;
+                epicAjax(epicNum)
                 }, 800 * i);
               }
 // if epicDone != true wait add'l 4000MS before firing epicAjax 
-            if(!epicDone){
+            else {
+      console.log('epicDone? ' + epicDone + 'wait 4000MS'); 
               setTimeout(function(){
-      console.log('epicDone? ' + epicDone + 'wait 4000MS');               
-                  epicAjax(epicNum)
+                let num = epicsToParse[i];
+                  epicNum = num.toString()
+                  $('#msBody').append("Epic #: " + (i+1))
+                  $('#msBody').append(",  record_id: " + epicNum) ;
+                  $('#msBody').append('<br>') ;
+                epicAjax(epicNum)
                 }, 4000 * i);
                }  
         }(i)
