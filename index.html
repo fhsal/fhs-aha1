@@ -967,8 +967,8 @@ if (numEpics == 0) { checkEpicsDone(epicCount)}
                 $('#msBody').append('<br>') ;
           if (i=0){
               setTimeout(function(){
-                if(epicDone){epicAjax(epicNum)}
-               }, 1500 * i);}
+                epicAjax(epicNum)
+               }, 1000 * i);}
           else {
               setTimeout(function(){
                 if(epicDone){epicAjax(epicNum)}
