@@ -971,55 +971,20 @@ if (numEpics == 0) { checkEpicsDone(epicCount)}
                     epicAjax(epicNum)}
                   else {
                     setTimeout(function(){
-                      console.log('>>>>>>>>>>>>>epicDone? ' + epicDone + ' wait 4000MS');
+                      console.log('>>>>>>>>>>>>>epicDone? ' + epicDone + ' wait 5000');
                        epicAjax(epicNum)
-                      }, 4000 * i);
+                      }, 5000 * i);
                   }         
             }, 1000 * i);
         }(i)
         );
         };
-//     for(i = 0; i < (numEpics); i++){
-//         (function(i){
-// // if epicDone = true wait 800MS before firing epicAjax
-
-//               setTimeout(function(){
-//                if(epicDone){ 
-//                 console.log('epicDone? ' + epicDone + ' wait 800MS');
-//                 let num = epicsToParse[i];
-//                   epicNum = num.toString()
-//                   $('#msBody').append("Epic #: " + (i+1))
-//                   $('#msBody').append(",  record_id: " + epicNum) ;
-//                   $('#msBody').append('<br>') ;
-//                 epicAjax(epicNum)
-//                 }}, 800 * i);
-
-// // if epicDone != true wait 4000MS before firing epicAjax 
-
-//               setTimeout(function(){
-//                if(!epicDone){ 
-//                 console.log('epicDone? ' + epicDone + ' wait 4000MS');
-//                 let num = epicsToParse[i];
-//                   epicNum = num.toString()
-//                   $('#msBody').append("Epic #: " + (i+1))
-//                   $('#msBody').append(",  record_id: " + epicNum) ;
-//                   $('#msBody').append('<br>') ;
-//                 epicAjax(epicNum)
-//                 }}, 4000 * i);
-    
-
-//         }(i)
-//         );
-//         };
       })
-// check to see if milestones finished 
   }}
 // check condition where there are 'no related milestones', hence 'n' in the condition 
   if (msToParse =='n'){ checkInitiativesDone()}
       $('#msBody').append('<br>')
       msSummary.push(epicSummary)
-
-      // checkMilestonesDone()
       };
 
 function checkMilestonesDone () {
