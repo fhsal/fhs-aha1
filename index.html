@@ -970,11 +970,11 @@ if (numEpics == 0) { checkEpicsDone(epicCount)}
           else {
               setTimeout(function(){
                 if(epicDone){epicAjax(epicNum)}
-               }, 1000 * i);
+               }, 2000 * i);
             if(!epicDone){
               setTimeout(function(){
                   epicAjax(epicNum)
-                }, 3000 * i);
+                }, 4000 * i);
             }  
           }
         }(i)
