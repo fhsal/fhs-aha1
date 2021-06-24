@@ -222,7 +222,6 @@ epics = "";
 inits = "";
 singleInit = "";
 msInfo = "";
-epicDone = false;
 epicInfo ="";
 epicSummary = [];
 epicEffortSum = 0;
@@ -952,30 +951,22 @@ function parseMilestone(msToParse){
 
 if (numEpics == 0) { checkEpicsDone(epicCount)}
 
-// loop through epics,first epic executes directly
-// subsequent loops are delayed by 800 MS and then execute if epicDone flag = true
-// if epicDone flag <> true then wait an additional 3000 MS to call next epic 
-
+// loop through epics, waiting between each fetch to stay within API limits
     var i;
     for(i = 0; i < (numEpics); i++){
         (function(i){
-          let num = epicsToParse[i];
-                epicNum = num.toString()
-                $('#msBody').append("Epic #: " + (i+1))
-                $('#msBody').append(",  record_id: " + epicNum) ;
-                $('#msBody').append('<br>') ;
-          if (i=0){
-               epAjax(epicNum)}
-          else {
-              setTimeout(function(){
-                if(epicDone){epicAjax(epicNum)}
-               }, 800 * i);
-            if(!epicDone){
-              setTimeout(function(){
+            setTimeout(function(){
+              let num = epicsToParse[i];
+                    epicNum = num.toString()
+                    $('#msBody').append("Epic #: " + (i+1))
+                    $('#msBody').append(",  record_id: " + epicNum) ;
+                    $('#msBody').append('<br>') ;
+                    // $('#msResults').append('*') ;
                   epicAjax(epicNum)
-                }, 3000 * i);
-            }  
-          }
+      //wait is to allow Aha AP to pace and permit sufficient time for rally response
+      //may need to change this so that the rally response trigger is explicit rather than 
+      //assumed based upon an estimated time interval
+            }, 3600 * i);
         }(i)
         );
         };
@@ -1114,7 +1105,7 @@ function getRallyCapabilityDetail(rallyCapID){
         };
         $.ajax(settings)
         .then(function (response) {
-epicDone = true;
+
           console.log("rally 2nd call")
                 rallyCapChildren = response
                       console.log(response)
