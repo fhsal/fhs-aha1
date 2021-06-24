@@ -568,6 +568,7 @@ function postMilestoneUpdate(){
 // function to count down epics as their responses are received, displaying an "*"
 //  for each as completed & then the overall summary  
 function checkEpicsDone(epicCount) {
+  epicDone = true;
     console.log('checkEpicsDone, numEpics: ' + epicCount) 
         if (epicCount > 0) {
             // waitingFlag = true;
@@ -954,8 +955,6 @@ if (numEpics == 0) { checkEpicsDone(epicCount)}
 
 // loop through epics, waiting 800MS if prior iteration is done (epicDone=true)
 // if prior iteration epicDone != true then wait an additional 4000MS 
-      //wait is to allow Aha AP to pace and permit sufficient time for rally response
-      //may need to change this so that the rally response trigger is explicit rather than 
 
     var i;
     for(i = 0; i < (numEpics); i++){
