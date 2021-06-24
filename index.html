@@ -966,11 +966,14 @@ if (numEpics == 0) { checkEpicsDone(epicCount)}
                     $('#msBody').append(",  record_id: " + epicNum) ;
                     $('#msBody').append('<br>') ;
                     // $('#msResults').append('*') ;
-                  if(epicDone){epicAjax(epicNum)}
+                  if(epicDone){
+                    console.log('**************epicDone? ' + epicDone + ' wait 1000MS');
+                    epicAjax(epicNum)}
                   else {
                     setTimeout(function(){
+                      console.log('>>>>>>>>>>>>>epicDone? ' + epicDone + ' wait 4000MS');
                        epicAjax(epicNum)
-                      }, 3600 * i);
+                      }, 4000 * i);
                   }         
             }, 1000 * i);
         }(i)
