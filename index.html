@@ -968,7 +968,7 @@ if (numEpics == 0) { checkEpicsDone(epicCount)}
           if (i=0){
               setTimeout(function(){
                 if(epicDone){epicAjax(epicNum)}
-               }, 1000 * i);}
+               }, 1500 * i);}
           else {
               setTimeout(function(){
                 if(epicDone){epicAjax(epicNum)}
@@ -1094,6 +1094,7 @@ function getRallyCapabilityDetail(rallyCapID){
                    rallyObjectErrorLog.push(rallyLogItem)
               // call next Epic
                    epicCount = epicCount-1 
+    epicDone=true;
                    checkEpicsDone(epicCount) 
                 }     
                     rallyLeafStoryPoints = rallyCapSummary.SolutionCapability.LeafStoryPlanEstimateTotal;
