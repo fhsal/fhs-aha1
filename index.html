@@ -962,7 +962,7 @@ if (numEpics == 0) { checkEpicsDone(epicCount)}
         (function(i){
 // if epicDone = true wait 800MS before firing epicAjax
             if (epicDone){
-      console.log('epicDone? ' + epicDone);
+      console.log('epicDone? ' + epicDone + ' wait 800MS');
               setTimeout(function(){
                 let num = epicsToParse[i];
                   epicNum = num.toString()
@@ -974,7 +974,7 @@ if (numEpics == 0) { checkEpicsDone(epicCount)}
               }
 // if epicDone != true wait add'l 4000MS before firing epicAjax 
             else {
-      console.log('epicDone? ' + epicDone + 'wait 4000MS'); 
+      console.log('epicDone? ' + epicDone + ' wait 4000MS'); 
               setTimeout(function(){
                 let num = epicsToParse[i];
                   epicNum = num.toString()
@@ -983,7 +983,8 @@ if (numEpics == 0) { checkEpicsDone(epicCount)}
                   $('#msBody').append('<br>') ;
                 epicAjax(epicNum)
                 }, 4000 * i);
-               }  
+               } 
+          epicDone = false; 
         }(i)
         );
         };
@@ -1077,7 +1078,7 @@ function getRallyCapabilityDetail(rallyCapID){
     rallyLeafStoryPoints= 0;
     rallyPointsDone = 0;
     rallyFormattedID = '';
-    epicDone = false;
+    // epicDone = false;
 
     // api call to get capability summary information 
     var settings = {
