@@ -966,7 +966,9 @@ if (numEpics == 0) { checkEpicsDone(epicCount)}
                 $('#msBody').append(",  record_id: " + epicNum) ;
                 $('#msBody').append('<br>') ;
           if (i=0){
-               epAjax(epicNum)}
+              setTimeout(function(){
+                if(epicDone){epicAjax(epicNum)}
+               }, 800 * i);}
           else {
               setTimeout(function(){
                 if(epicDone){epicAjax(epicNum)}
