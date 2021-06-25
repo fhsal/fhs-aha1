@@ -466,7 +466,7 @@ $("#init_info").submit(function() {
             let record_type = msInfo.custom_object_record.linked_records[i].record_type
         console.log('record type: ' + record_type)
             if(record_type == 'Epic') { 
-                // numEpics = (numEpics + 1);
+                numEpics = (numEpics + 1);
                 let num = msInfo.custom_object_record.linked_records[i].record_id;
         console.log('epic identified: ' + i + ', ' + num)
                 epicsToParse.push(num);
