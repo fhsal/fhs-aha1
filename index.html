@@ -960,34 +960,34 @@ if (numEpics == 0) { checkEpicsDone(epicCount)}
     for(i = 0; i < (numEpics); i++){
         (function(i){
             setTimeout(function(){
-              // let num = epicsToParse[i];
-              //       epicNum = num.toString()
-              //       $('#msBody').append("Epic #: " + (i+1))
-              //       $('#msBody').append(",  record_id: " + epicNum) ;
-              //       $('#msBody').append('<br>') ;
-                    // $('#msResults').append('*') ;
-                  if(epicDone){
-                    console.log('**************epicDone? ' + epicDone + ' wait 1000MS');
-                    let num = epicsToParse[i];
+              let num = epicsToParse[i];
                     epicNum = num.toString()
                     $('#msBody').append("Epic #: " + (i+1))
                     $('#msBody').append(",  record_id: " + epicNum) ;
                     $('#msBody').append('<br>') ;
-                    $('#msResults').append('*') 
+                    $('#msResults').append('*') ;
+                  if(epicDone){
+                    console.log('**************epicDone? ' + epicDone + ' wait 1200MS');
+                    // let num = epicsToParse[i];
+                    // epicNum = num.toString()
+                    // $('#msBody').append("Epic #: " + (i+1))
+                    // $('#msBody').append(",  record_id: " + epicNum) ;
+                    // $('#msBody').append('<br>') ;
+                    // $('#msResults').append('*') 
                     epicAjax(epicNum)}
                   else {
                     setTimeout(function(){
-                      console.log('>>>>>>>>>>>>>epicDone? ' + epicDone + ' wait 5000MS');
-                      let num = epicsToParse[i];
-                    epicNum = num.toString()
-                    $('#msBody').append("Epic #: " + (i+1))
-                    $('#msBody').append(",  record_id: " + epicNum) ;
-                    $('#msBody').append('<br>') ;
-                    $('#msResults').append('*') 
+                      console.log('>>>>>>>>>>>>>epicDone? ' + epicDone + ' wait 4000MS');
+                    //   let num = epicsToParse[i];
+                    // epicNum = num.toString()
+                    // $('#msBody').append("Epic #: " + (i+1))
+                    // $('#msBody').append(",  record_id: " + epicNum) ;
+                    // $('#msBody').append('<br>') ;
+                    // $('#msResults').append('*') 
                        epicAjax(epicNum)
-                      }, 5000 * i);
+                      }, 4000 * i);
                   }         
-            }, 1000 * i);
+            }, 1200 * i);
         }(i)
         );
         };
