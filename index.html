@@ -967,7 +967,7 @@ if (numEpics == 0) { checkEpicsDone(epicCount)}
               //       $('#msBody').append('<br>') ;
                     // $('#msResults').append('*') ;
                   if(epicDone){
-                    console.log('**************epicDone? ' + epicDone + ' wait 1000MS');
+                    console.log('**************epicDone? ' + epicDone + ' wait 800MS');
                     let num = epicsToParse[i];
                     epicNum = num.toString()
                     $('#msBody').append("Epic #: " + (i+1))
@@ -976,16 +976,16 @@ if (numEpics == 0) { checkEpicsDone(epicCount)}
                     epicAjax(epicNum)}
                   else {
                     setTimeout(function(){
-                      console.log('>>>>>>>>>>>>>epicDone? ' + epicDone + ' wait 3000MS');
+                      console.log('>>>>>>>>>>>>>epicDone? ' + epicDone + ' wait 2000MS');
                       let num = epicsToParse[i];
                     epicNum = num.toString()
                     $('#msBody').append("Epic #: " + (i+1))
                     $('#msBody').append(",  record_id: " + epicNum) ;
                     $('#msBody').append('<br>') ;
                        epicAjax(epicNum)
-                      }, 3000 * i);
+                      }, 2000 * i);
                   }         
-            }, 1000 * i);
+            }, 800 * i);
         }(i)
         );
         };
