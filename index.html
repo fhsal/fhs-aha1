@@ -979,38 +979,6 @@ if (numEpics == 0) { checkEpicsDone(epicCount)}
         }(i)
         );
         };
-//     for(i = 0; i < (numEpics); i++){
-//         (function(i){
-// // if epicDone = true wait 800MS before firing epicAjax
-
-//               setTimeout(function(){
-//                if(epicDone){ 
-//                 console.log('epicDone? ' + epicDone + ' wait 800MS');
-//                 let num = epicsToParse[i];
-//                   epicNum = num.toString()
-//                   $('#msBody').append("Epic #: " + (i+1))
-//                   $('#msBody').append(",  record_id: " + epicNum) ;
-//                   $('#msBody').append('<br>') ;
-//                 epicAjax(epicNum)
-//                 }}, 800 * i);
-
-// // if epicDone != true wait 4000MS before firing epicAjax 
-
-//               setTimeout(function(){
-//                if(!epicDone){ 
-//                 console.log('epicDone? ' + epicDone + ' wait 4000MS');
-//                 let num = epicsToParse[i];
-//                   epicNum = num.toString()
-//                   $('#msBody').append("Epic #: " + (i+1))
-//                   $('#msBody').append(",  record_id: " + epicNum) ;
-//                   $('#msBody').append('<br>') ;
-//                 epicAjax(epicNum)
-//                 }}, 4000 * i);
-    
-
-//         }(i)
-//         );
-//         };
       })
 // check to see if milestones finished 
   }}
@@ -1101,7 +1069,7 @@ function getRallyCapabilityDetail(rallyCapID){
     rallyLeafStoryPoints= 0;
     rallyPointsDone = 0;
     rallyFormattedID = '';
-    // epicDone = false;
+    epicDone = false;
 
     // api call to get capability summary information 
     var settings = {
@@ -1131,13 +1099,15 @@ function getRallyCapabilityDetail(rallyCapID){
                     rallyPercentComplete = rallyCapSummary.SolutionCapability.PercentDoneByStoryPlanEstimate;
                     rallyFormattedID = rallyCapSummary.SolutionCapability.FormattedID;
                     rallyPointsDone = rallyLeafStoryPoints*rallyPercentComplete;
-                console.log("Rally FormattedID: " + rallyFormattedID)
-                console.log("Rally ObjectID: " + rallyCapID)
-                console.log("Rally Capability Name: " + rallyObjectName)
-                console.log("Rally Total Story Points: " + rallyLeafStoryPoints)
-                console.log("Rally Points Done: " + rallyPointsDone)
-        ;
+                    rallyState = rallyCapSummary.SolutionCapability.State._refObjectName;
 
+                console.log("Rally FormattedID: " + rallyFormattedID);
+                console.log("Rally ObjectID: " + rallyCapID);
+                console.log("Rally Capability Name: " + rallyObjectName);
+                console.log("Rally Total Story Points: " + rallyLeafStoryPoints);
+                console.log("Rally Points Done: " + rallyPointsDone);
+                console.log("Rally State: " + rallyState);
+        
       var settings = {
         "url": "https://rally1.rallydev.com/slm/webservice/v2.0/portfolioitem/solutioncapability/" + rallyCapID + "/children?pagesize=100",
         "method": "GET",
