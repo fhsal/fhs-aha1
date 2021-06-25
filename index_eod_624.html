@@ -222,6 +222,7 @@ epics = "";
 inits = "";
 singleInit = "";
 msInfo = "";
+epicDone = false;
 epicInfo ="";
 epicSummary = [];
 epicEffortSum = 0;
@@ -466,7 +467,7 @@ $("#init_info").submit(function() {
             let record_type = msInfo.custom_object_record.linked_records[i].record_type
         console.log('record type: ' + record_type)
             if(record_type == 'Epic') { 
-                // numEpics = (numEpics + 1);
+                numEpics = (numEpics + 1);
                 let num = msInfo.custom_object_record.linked_records[i].record_id;
         console.log('epic identified: ' + i + ', ' + num)
                 epicsToParse.push(num);
@@ -567,6 +568,7 @@ function postMilestoneUpdate(){
 // function to count down epics as their responses are received, displaying an "*"
 //  for each as completed & then the overall summary  
 function checkEpicsDone(epicCount) {
+  epicDone = true;
     console.log('checkEpicsDone, numEpics: ' + epicCount) 
         if (epicCount > 0) {
             // waitingFlag = true;
@@ -606,13 +608,13 @@ function checkEpicsDone(epicCount) {
       }; 
   }
 
-function rallyEpicAjax(){
+function rallyPostAjax(){
 
     console.log('rallyEpicAjax')
 
       var settings = {
         "url": "https://optum.aha.io/api/v1/epics/" + epicNum,
-        "method": "GET",
+        "method": "PUT",
         // "timeout": 0,
         "crossDomain": true,
         "access-control-allow-origin": "*",
@@ -951,10 +953,12 @@ function parseMilestone(msToParse){
 
 if (numEpics == 0) { checkEpicsDone(epicCount)}
 
-// loop through epics, waiting between each fetch to stay within API limits
+// loop through epics, waiting 800MS if prior iteration is done (epicDone=true)
+// if prior iteration epicDone != true then wait an additional 4000MS 
+
     var i;
     for(i = 0; i < (numEpics); i++){
-        (function(i){
+       (function(i){
             setTimeout(function(){
               let num = epicsToParse[i];
                     epicNum = num.toString()
@@ -1060,6 +1064,7 @@ function getRallyCapabilityDetail(rallyCapID){
     rallyLeafStoryPoints= 0;
     rallyPointsDone = 0;
     rallyFormattedID = '';
+    epicDone = false;
 
     // api call to get capability summary information 
     var settings = {
@@ -1081,6 +1086,7 @@ function getRallyCapabilityDetail(rallyCapID){
                    let rallyLogItem = {rallyName: rallyObjectName, rallyID: rallyObjectID, rallyFrmatID: rallyFormattedID, ahaID: epicNum}
                    rallyObjectErrorLog.push(rallyLogItem)
               // call next Epic
+                   epicDone = true;
                    epicCount = epicCount-1 
                    checkEpicsDone(epicCount) 
                 }     
@@ -1088,13 +1094,15 @@ function getRallyCapabilityDetail(rallyCapID){
                     rallyPercentComplete = rallyCapSummary.SolutionCapability.PercentDoneByStoryPlanEstimate;
                     rallyFormattedID = rallyCapSummary.SolutionCapability.FormattedID;
                     rallyPointsDone = rallyLeafStoryPoints*rallyPercentComplete;
-                console.log("Rally FormattedID: " + rallyFormattedID)
-                console.log("Rally ObjectID: " + rallyCapID)
-                console.log("Rally Capability Name: " + rallyObjectName)
-                console.log("Rally Total Story Points: " + rallyLeafStoryPoints)
-                console.log("Rally Points Done: " + rallyPointsDone)
-        ;
+                    rallyState = rallyCapSummary.SolutionCapability.State._refObjectName;
 
+                console.log("Rally FormattedID: " + rallyFormattedID);
+                console.log("Rally ObjectID: " + rallyCapID);
+                console.log("Rally Capability Name: " + rallyObjectName);
+                console.log("Rally Total Story Points: " + rallyLeafStoryPoints);
+                console.log("Rally Points Done: " + rallyPointsDone);
+                console.log("Rally State: " + rallyState);
+        
       var settings = {
         "url": "https://rally1.rallydev.com/slm/webservice/v2.0/portfolioitem/solutioncapability/" + rallyCapID + "/children?pagesize=100",
         "method": "GET",
@@ -1179,6 +1187,7 @@ function getRallyCapabilityDetail(rallyCapID){
                   }
               console.log('from Ajax, epicCount: ' + epicCount )
                       epicSummary.push(epicObject)
+                epicDone = true;
                 epicCount = epicCount-1 
                 checkEpicsDone(epicCount) 
 
