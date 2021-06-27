@@ -637,10 +637,39 @@ function rallyEpicAjax(){
 
 // trying async/await function 
 
+// async function doAjax(rallyCapID) {
+//     let result;
+
+//     try {
+//  await $.ajax({
+//   "url": "https://rally1.rallydev.com/slm/webservice/v2.0/portfolioitem/solutioncapability/" + rallyCapID + "/children?pagesize=100",
+//         "method": "GET",
+//         // "timeout": 0,
+//         "crossDomain": true,
+//         "access-control-allow-origin": "*",
+//         "headers": { "ZSESSIONID": localStorage.rallyID },
+//         })
+
+        
+//   console.log('doAjax - ');
+//   rallyCapChildren = result
+//   console.log(result)
+// }
+
+//         // console.log('doAjax - ');
+
+//         // return result;
+// // .catch (error) {};
+//         // console.log(error);
+//     // }
+// return result
+
+
 async function doAjax(rallyCapID) {
     let result;
 
- await $.ajax({
+    try {
+        result = await $.ajax({
   "url": "https://rally1.rallydev.com/slm/webservice/v2.0/portfolioitem/solutioncapability/" + rallyCapID + "/children?pagesize=100",
         "method": "GET",
         // "timeout": 0,
@@ -648,21 +677,17 @@ async function doAjax(rallyCapID) {
         "access-control-allow-origin": "*",
         "headers": { "ZSESSIONID": localStorage.rallyID },
         }
-.then(function (response){
+        );
+        console.log('doAjax - ');
+  rallyCapChildren = result
+  console.log(result)
 
-  console.log('doAjax - ');
-  rallyCapChildren = response
-  console.log(response)
-})
 
-        // console.log('doAjax - ');
-
-        // return result;
-// .catch (error) {};
-        // console.log(error);
-    // }
-.return(response)
-,)}
+        return result;
+    } catch (error) {
+        console.error(error);
+    }
+}
 
 
 
