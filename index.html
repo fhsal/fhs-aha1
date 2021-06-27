@@ -676,12 +676,13 @@ async function doAjax(rallyCapID) {
         "crossDomain": true,
         "access-control-allow-origin": "*",
         "headers": { "ZSESSIONID": localStorage.rallyID },
-        }
+        },
+        setTimeout(function(){ alert("Hello"); }, 3000)
         );
         console.log('doAjax - ');
   rallyCapChildren = result
   console.log(result)
-  setTimeout(function(){ alert("Hello"); }, 3000);
+ 
 
 
         return result;
