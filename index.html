@@ -631,7 +631,39 @@ function rallyEpicAjax(){
                     
                 }
         });
+
 }
+
+
+// trying async/await function 
+
+async function doAjax(rallyCapID) {
+    let result;
+
+ await $.ajax({
+  "url": "https://rally1.rallydev.com/slm/webservice/v2.0/portfolioitem/solutioncapability/" + rallyCapID + "/children?pagesize=100",
+        "method": "GET",
+        // "timeout": 0,
+        "crossDomain": true,
+        "access-control-allow-origin": "*",
+        "headers": { "ZSESSIONID": localStorage.rallyID },
+        }
+.then(function (response){
+
+  console.log('doAjax - ');
+  rallyCapChildren = response
+  console.log(response)
+})
+
+        // console.log('doAjax - ');
+
+        // return result;
+// .catch (error) {};
+        // console.log(error);
+    // }
+.return(response)
+,)}
+
 
 
 
@@ -1149,7 +1181,7 @@ function getRallyCapabilityDetail(rallyCapID){
                   rallyObjectErrorLog.push(rallyLogItem)
                  console.log("Rally error log item: " + rallyLogItem) 
                 }
-                    else {newRallyPercentComplete = 0}
+                else {newRallyPercentComplete = 0}
               rallyFeatTotal=rallyLeafStoryPoints;
               }
 
@@ -1181,10 +1213,13 @@ function getRallyCapabilityDetail(rallyCapID){
                       epicSummary.push(epicObject)
                 epicCount = epicCount-1 
                 checkEpicsDone(epicCount) 
-
         })
       });
   }
+
+
+  
+  
     </script>
   </body>
 </html>
