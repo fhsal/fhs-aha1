@@ -664,6 +664,14 @@ function rallyEpicAjax(){
 //     // }
 // return result
 
+function cycleDoAjax (rallyCapID) {
+  var i;
+    for(i = 0; i < (numEpics); i++){
+
+      doAjax(rallyCapID)
+    }
+
+}
 
 async function doAjax(rallyCapID) {
     let result;
@@ -677,14 +685,11 @@ async function doAjax(rallyCapID) {
         "access-control-allow-origin": "*",
         "headers": { "ZSESSIONID": localStorage.rallyID },
         },
-        setTimeout(function(){ alert("Hello"); }, 3000)
+        setTimeout(function(){ console.log("Round: "+ i + " delay = " + i*1000); }, i*1000)
         );
         console.log('doAjax - ');
   rallyCapChildren = result
   console.log(result)
- 
-
-
         return result;
     } catch (error) {
         console.error(error);
