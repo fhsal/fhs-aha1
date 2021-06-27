@@ -664,16 +664,16 @@ function rallyEpicAjax(){
 //     // }
 // return result
 
-function cycleDoAjax (rallyCapID) {
+function cycleDoAjax(rallyCapID) {
   var i;
-    for(i = 0; i < (numEpics); i++){
+    for(i = 0; i < 4; i++){
 
-      doAjax(rallyCapID)
+      doAjax(rallyCapID, i)
     }
 
 }
 
-async function doAjax(rallyCapID) {
+async function doAjax(rallyCapID, i) {
     let result;
 
     try {
@@ -685,7 +685,8 @@ async function doAjax(rallyCapID) {
         "access-control-allow-origin": "*",
         "headers": { "ZSESSIONID": localStorage.rallyID },
         },
-        setTimeout(function(){ console.log("Round: "+ i + " delay = " + i*1000); }, i*1000)
+        setTimeout(function(){ 
+          console.log("Round: "+ i + " delay = " + i*1000); }, i*1000)
         );
         console.log('doAjax - ');
   rallyCapChildren = result
