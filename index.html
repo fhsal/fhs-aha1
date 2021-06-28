@@ -808,7 +808,7 @@ const rallyTwo =new Promise((resolve, reject)=>{
 // Promise.all([rallyOne,rallyTwo ])
 
 
-async function rallyCapFirstCall() {
+async function rallyCapFirstCall(rallyCapID) {
     let result;
 
     try {
@@ -858,7 +858,7 @@ async function rallyCapFirstCall() {
 
 
 // async function to gather Rally capability children information 
-async function rallyCapSecondCall() {
+async function rallyCapSecondCall(rallyCapID) {
     let result;
 
     try {
