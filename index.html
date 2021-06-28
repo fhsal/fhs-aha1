@@ -798,17 +798,17 @@ async function epicAsyncAjax(epicNumber) {
 
 
 const rallyOne =new Promise((resolve, reject)=>{
-      rallyCapFirstCall(rallyCapID)
+      rallyCapFirstCall()
 })
 
 const rallyTwo =new Promise((resolve, reject)=>{
-      rallyCapSecondCall(rallyCapID)
+      rallyCapSecondCall()
 })
 
 // Promise.all([rallyOne,rallyTwo ])
 
 
-async function rallyCapFirstCall(rallyCapID) {
+async function rallyCapFirstCall() {
     let result;
 
     try {
@@ -858,7 +858,7 @@ async function rallyCapFirstCall(rallyCapID) {
 
 
 // async function to gather Rally capability children information 
-async function rallyCapSecondCall(rallyCapID) {
+async function rallyCapSecondCall() {
     let result;
 
     try {
