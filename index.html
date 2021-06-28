@@ -699,12 +699,13 @@ async function doAjax(rallyCapID, i) {
 
 async function rallyCalls(rallyObjectID){
   let res = null;
-  try{(await rallyCapFirstCall(rallyObjectID))
-  try{(await rallyCapSecondCall(rallyObjectID))}
+  try{
+    (await rallyCapFirstCall(rallyObjectID))
+    (await rallyCapSecondCall(rallyObjectID))}
   catch (err) {
     console.log("fail>>", res, err);
   }}
-finally {}}
+
 
 // await Promise.all([
 //   (async() => {
@@ -837,6 +838,13 @@ async function rallyCapFirstCall(rallyCapID) {
         console.error(error);
     }
 }
+
+const rallyCall2Promise = new Promise(resolve,reject) 
+
+
+
+
+
 
 // async function to gather Rally capability children information 
 async function rallyCapSecondCall(rallyCapID) {
