@@ -702,7 +702,7 @@ async function rallyCapFirstCall(rallyCapID) {
 
     try {
         result = await $.ajax({
-  "url": "https://rally1.rallydev.com/slm/webservice/v2.0/portfolioitem/solutioncapability/" + rallyCapID + "/children?pagesize=100",
+  "url": "https://rally1.rallydev.com/slm/webservice/v2.0/portfolioitem/solutioncapability/" + rallyCapID,
         "method": "GET",
         // "timeout": 0,
         "crossDomain": true,
