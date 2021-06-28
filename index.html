@@ -746,12 +746,12 @@ async function epicAsyncAjax(epicNumber) {
                   rallyFormattedID = rallyFormattedIDRow[0].value;
                   // getRallyCapabilityDetail(rallyObjectID)
 
-                  // await Promise.all([
-                  //       (async() => {
-                  //         await  rallyCapFirstCall(rallyObjectID);
-                  //         await rallyCapSecondCall(rallyObjectID);
-                  //       }),
-                  //     ]);
+                  await Promise.all([
+                        (async() => {
+                          await  rallyCapFirstCall(rallyObjectID);
+                          await rallyCapSecondCall(rallyObjectID);
+                        }),
+                      ]);
 
                   let rally1 = await rallyCapFirstCall(rallyObjectID);
                   let rally2 = await rallyCapSecondCall(rallyObjectID);
