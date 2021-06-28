@@ -723,11 +723,13 @@ async function rallyCapFirstCall(rallyCapID) {
                 }     
                   rallyLeafStoryPoints = rallyCapSummary.SolutionCapability.LeafStoryPlanEstimateTotal;
                   rallyPercentComplete = rallyCapSummary.SolutionCapability.PercentDoneByStoryPlanEstimate;
+                  let rallyChildren = rallyPercentComplete = rallyCapSummary.SolutionCapability.Children.Count;
                   rallyFormattedID = rallyCapSummary.SolutionCapability.FormattedID;
                   rallyPointsDone = rallyLeafStoryPoints*rallyPercentComplete;
                 console.log("Rally FormattedID: " + rallyFormattedID)
                 console.log("Rally ObjectID: " + rallyCapID)
                 console.log("Rally Capability Name: " + rallyObjectName)
+                console.log("Rally Number of Children: " + rallyChildren)
                 console.log("Rally Total Story Points: " + rallyLeafStoryPoints)
                 console.log("Rally Points Done: " + rallyPointsDone)
         ;
