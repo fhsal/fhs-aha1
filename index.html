@@ -708,10 +708,10 @@ async function rallyCapFirstCall(rallyCapID) {
         "crossDomain": true,
         "access-control-allow-origin": "*",
         "headers": { "ZSESSIONID": localStorage.rallyID },
-        },
+        }),
         console.log("rally 1st call"),
                   rallyCapSummary = result,
-                console.log(result));
+                console.log(result);
         if(rallyCapSummary.OperationResult){
                   console.log('======> Rally access error, rallyObjectID: ' + rallyCapID)
               // log error     
