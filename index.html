@@ -748,9 +748,9 @@ async function epicAsyncAjax(epicNumber) {
 
                   await Promise.all([
                         (async() => {
-                          let rally1 = await  rallyCapFirstCall(rallyObjectID);
-                          let rally2 = await rallyCapSecondCall(rallyObjectID);
-                        })(),
+                          await  rallyCapFirstCall(rallyObjectID);
+                          await rallyCapSecondCall(rallyObjectID);
+                        }),
                       ]);
                  }
                else{
