@@ -631,326 +631,8 @@ function rallyEpicAjax(){
                     
                 }
         });
-
 }
 
-
-// trying async/await function 
-
-// async function doAjax(rallyCapID) {
-//     let result;
-
-//     try {
-//  await $.ajax({
-//   "url": "https://rally1.rallydev.com/slm/webservice/v2.0/portfolioitem/solutioncapability/" + rallyCapID + "/children?pagesize=100",
-//         "method": "GET",
-//         // "timeout": 0,
-//         "crossDomain": true,
-//         "access-control-allow-origin": "*",
-//         "headers": { "ZSESSIONID": localStorage.rallyID },
-//         })
-
-        
-//   console.log('doAjax - ');
-//   rallyCapChildren = result
-//   console.log(result)
-// }
-
-//         // console.log('doAjax - ');
-
-//         // return result;
-// // .catch (error) {};
-//         // console.log(error);
-//     // }
-// return result
-
-function cycleDoAjax(rallyCapID) {
-  var i;
-    for(i = 0; i < 4; i++){
-
-      rallyCalls(rallyCapID)
-    }
-
-}
-
-async function doAjax(rallyCapID, i) {
-    let result;
-
-    try {
-        result = await $.ajax({
-  "url": "https://rally1.rallydev.com/slm/webservice/v2.0/portfolioitem/solutioncapability/" + rallyCapID + "/children?pagesize=100",
-        "method": "GET",
-        // "timeout": 0,
-        "crossDomain": true,
-        "access-control-allow-origin": "*",
-        "headers": { "ZSESSIONID": localStorage.rallyID },
-        },
-        setTimeout(function(){ 
-          console.log("Round: "+ i + " delay = " + i*1000); }, i*1000)
-        );
-        console.log('doAjax - ');
-  rallyCapChildren = result
-  console.log(result)
-        return result;
-    } catch (error) {
-        console.error(error);
-    }
-}
-
-async function rallyCalls(rallyObjectID){
-  let res = null;
-  try{
-    (await rallyCapFirstCall(rallyObjectID))
-    (await rallyCapSecondCall(rallyObjectID))}
-  catch (err) {
-    console.log("fail>>", res, err);
-  }}
-
-
-// await Promise.all([
-//   (async() => {
-//     let rally1 = await  rallyCapFirstCall(rallyObjectID);
-//     let rally2 = await rallyCapSecondCall(rallyObjectID);
-//   })(),
-// ]);
-
-
-  
-    
-  
-async function epicAsyncAjax(epicNumber) {
-    let result;
-
-    try {
-        result = await $.ajax({
-      "url": "https://optum.aha.io/api/v1/epics/" + epicNumber,
-      "method": "GET",
-      "crossDomain": true,
-      "access-control-allow-origin": "*",
-      "headers": { "Authorization": localStorage.ahaToken, },
-        }),
-  console.log('epicAjax, epicNum: ' + epicNum)
-  epicInfo = result
-                        console.log(result)
-              let epicID = epicInfo.epic.id;         
-              let epicName = epicInfo.epic.name;
-
-// if rally integration exists get rally object ID and call rally detail function  
-// deriving rally ObjectID an Name (which can vary in position in the array in rally - hence need to use filter function to find)           
-               if(epicInfo.epic.integration_fields.length>0){
-                  let rallyIntFields = epicInfo.epic.integration_fields
-                  let rallyObjectRow = rallyIntFields.filter(p => p.name == "ObjectID")
-                  let rallyNameRow = rallyIntFields.filter(p => p.name == "Name")
-                  let rallyFormattedIDRow = rallyIntFields.filter(p => p.name == "FormattedID")
-                  rallyObjectID = rallyObjectRow[0].value;
-                  rallyObjectName =  rallyNameRow[0].value;
-                  rallyFormattedID = rallyFormattedIDRow[0].value;
-                  // getRallyCapabilityDetail(rallyObjectID)
-
-                  await Promise.all([
-                        (async() => {
-                          await  rallyCapFirstCall(rallyObjectID);
-                          await rallyCapSecondCall(rallyObjectID);
-                        }),
-                      ]);
-
-                  // let rally1 = await rallyCapFirstCall(rallyObjectID);
-                  // let rally2 = await rallyCapSecondCall(rallyObjectID);
-
-
-                 }
-               else{
-// all this logic regarding effort and progress needs to be replaced with what comes from Rally 
-                let epicEffort = Math.round(epicInfo.epic.original_estimate/480);
-                if (epicEffort > 0) { epicEffort = epicEffort} else { epicEffort = 0} ;
-                let epicProgress = parseInt(epicInfo.epic.progress)/100;
-                let epicEffortCompl = epicEffort*epicProgress;
-                if (epicEffortCompl > 0) { epicEffortCompl = epicEffortCompl} else { epicEffortCompl = 0} ;
-                msEffortSum = msEffortSum + epicEffort;
-                msCompleteSum = Math.round(msCompleteSum + epicEffortCompl)
-                msPercentComplete = Math.round(100*msCompleteSum/msEffortSum)
-
-              console.log('epicID: ' + epicID);
-              console.log('rallyID: ' + rallyObjectID);
-              console.log('old epic effort: ' + epicEffort);
-              console.log('old milestone effort subtotal: ' + msEffortSum);
-              console.log('old milestone complete: ' + msCompleteSum);
-              console.log('old milestone % complete: ' + msPercentComplete + "%");
-
-                let epicObject = {
-                    "epicID" : epicID,
-                    "epicName" :epicName.slice(0, 30),
-                    "epicEffort" :  epicEffort,
-                    "epicProgress" : epicProgress,
-                    "epicEffortDone" : epicEffortCompl
-                  }
-              console.log('from Ajax, epicCount: ' + epicCount )
-                      epicSummary.push(epicObject)
-                epicCount = epicCount-1 
-                checkEpicsDone(epicCount) 
-               }   
-        ;
-        return result;
-    } catch (error) {
-        // console.error(error);
-    }
-}
-
-
-// const rallyOne =new Promise((resolve, reject)=>{
-//       rallyCapFirstCall()
-// })
-
-// const rallyTwo =new Promise((resolve, reject)=>{
-//       rallyCapSecondCall()
-// })
-
-// Promise.all([rallyOne,rallyTwo ])
-
-
-async function rallyCapFirstCall(rallyCapID) {
-    let result;
-
-    try {
-        result = await $.ajax({
-  "url": "https://rally1.rallydev.com/slm/webservice/v2.0/portfolioitem/solutioncapability/" + rallyCapID,
-        "method": "GET",
-        // "timeout": 0,
-        "crossDomain": true,
-        "access-control-allow-origin": "*",
-        "headers": { "ZSESSIONID": localStorage.rallyID },
-        }),
-        console.log("rally 1st call"),
-                  rallyCapSummary = result,
-                console.log(result);
-        if(rallyCapSummary.OperationResult){
-                  console.log('======> Rally access error, rallyObjectID: ' + rallyCapID)
-              // log error     
-                   let rallyLogItem = {rallyName: rallyObjectName, rallyID: rallyObjectID, rallyFrmatID: rallyFormattedID, ahaID: epicNum}
-                   rallyObjectErrorLog.push(rallyLogItem)
-              // call next Epic
-                   epicCount = epicCount-1 
-                   checkEpicsDone(epicCount) 
-                }     
-                  rallyLeafStoryPoints = rallyCapSummary.SolutionCapability.LeafStoryPlanEstimateTotal;
-                  rallyPercentComplete = rallyCapSummary.SolutionCapability.PercentDoneByStoryPlanEstimate;
-                  let rallyChildren = rallyPercentComplete = rallyCapSummary.SolutionCapability.Children.Count;
-                  rallyFormattedID = rallyCapSummary.SolutionCapability.FormattedID;
-                  rallyPointsDone = rallyLeafStoryPoints*rallyPercentComplete;
-                console.log("Rally FormattedID: " + rallyFormattedID)
-                console.log("Rally ObjectID: " + rallyCapID)
-                console.log("Rally Capability Name: " + rallyObjectName)
-                console.log("Rally Number of Children: " + rallyChildren)
-                console.log("Rally Total Story Points: " + rallyLeafStoryPoints)
-                console.log("Rally Points Done: " + rallyPointsDone)
-        ;
-        return result;
-    } catch (error) {
-        console.error(error);
-    }
-}
-
-// const rallyCall2Promise = new Promise(resolve,reject) 
-
-
-
-
-
-
-// async function to gather Rally capability children information 
-async function rallyCapSecondCall(rallyCapID) {
-    let result;
-
-    try {
-        result = await $.ajax({
-        "url": "https://rally1.rallydev.com/slm/webservice/v2.0/portfolioitem/solutioncapability/" + rallyCapID + "/children?pagesize=100",
-        "method": "GET",
-        // "timeout": 0,
-        "crossDomain": true,
-        "access-control-allow-origin": "*",
-        "headers": { "ZSESSIONID": localStorage.rallyID },
-        }),
-        console.log("rally 2nd call"),
-        rallyCapChildren = result
-                      console.log(result)
-                    rallySummary = rallyCapChildren.QueryResult.Results
-
-    // computing total Feature estimate in the Rally Solution Capability children response
-    // test to see if there are children, if yes then operate on result for date and total points for Features
-        if (rallySummary.length>0){
-
-       console.log("has children")   
-          // identifying latest date in the Rally Solution Capability children response 
-            // var dateString = new Date(Math.max.apply(null, rallySummary.map(function(e) {
-            //               return new Date(e.PlannedEndDate);
-            //             })));
-            //   rallylateDate = new Date(dateString.getTime() - (dateString.getTimezoneOffset() * 60000 ))
-            //     .toISOString()
-              rallyFeatTotal = rallySummary.reduce(function(previousValue, currentValue) {
-                  return {PreliminaryEstimateValue: previousValue.PreliminaryEstimateValue + currentValue.PreliminaryEstimateValue}
-                });
-            // force total estimate for the Capabilility to be the larger of Feature Estimates or LeafStoryPoints  
-              rallyFeatTotal = rallyFeatTotal.PreliminaryEstimateValue
-              let originalRallyFeatTotal = rallyFeatTotal
-                if(rallyFeatTotal<rallyLeafStoryPoints){
-                   rallyFeatTotal=rallyLeafStoryPoints
-                   console.log("------------> adjusted estimate from " + originalRallyFeatTotal + " to " + rallyLeafStoryPoints) 
-                   }
-            // force percent complete for the Capabilility to be 100% if rally work is marked as 100%
-                // if(rallyPercentComplete=1){newRallyPercentComplete=1}
-                   newRallyPercentComplete = rallyPointsDone/rallyFeatTotal
-                  }
-
-          // else use the overall estimates for the capability for % complete, unless actuals are zero, in that case % complete is zero
-          // and log the Rally object # and Formatted ID so that permissions can be changed to allow read access to Features 
-          // if the estimate is not zero but the returned object has a length of zero 
-           else {
-            console.log("does not have children") 
-                if (rallyPointsDone !==0){
-                    newRallyPercentComplete = rallyCapSummary.SolutionCapability.PercentDoneByStoryPlanEstimate
-          // log those Rally items where the app doesn't have permissions to see the children          
-                  let rallyLogItem = {rallyName: rallyObjectName, rallyID: rallyObjectID, rallyFrmatID: rallyFormattedID, ahaID: epicNum}
-                  rallyObjectErrorLog.push(rallyLogItem)
-                 console.log("Rally error log item: " + rallyLogItem) 
-                }
-                else {newRallyPercentComplete = 0}
-              rallyFeatTotal=rallyLeafStoryPoints;
-              }
-
-          // console.log("Rally Feature Points: " + rallylateDate);
-            console.log("Rally Feature Total: " + rallyFeatTotal + ' points');
-            console.log("Rally Points Done: " + rallyPointsDone);
-            console.log("New Rally Feature-based Percent Complete: " + Math.round(100*newRallyPercentComplete) + "%");
-
-          let rallyEpicEffort = rallyFeatTotal;
-              if (rallyEpicEffort > 0) { rallyEpicEffort = rallyEpicEffort} else { rallyEpicEffort = 0} ;
-                let rallyEpicProgress = newRallyPercentComplete;
-                let rallyEpicEffortCompl = rallyPointsDone;
-              if (rallyEpicEffortCompl > 0) { rallyEpicEffortCompl = rallyEpicEffortCompl} else { rallyEpicEffortCompl = 0} ;
-                rallyMSeffortSum = rallyMSeffortSum + rallyEpicEffort;
-                rallyMScompleteSum = Math.round(rallyMScompleteSum + rallyEpicEffortCompl)
-              if (rallyMSeffortSum>0) {rallyMSpercentComplete = Math.round(100*rallyMScompleteSum/rallyMSeffortSum)} else {rallyMSpercentComplete = 0}
-
-              console.log("Rally MS effort Sum subtotal: " + rallyMSeffortSum);
-              console.log("Rally MS complete Sum subtotal: " + rallyMScompleteSum);
-
-              let epicObject = {
-                    "epicID" : epicInfo.epic.id,
-                    "epicName" :epicInfo.epic.name.slice(0, 30),
-                    "epicEffort" :  rallyEpicEffort,
-                    "epicProgress" : rallyEpicProgress,
-                    "epicEffortDone" : rallyEpicEffortCompl
-                  }
-              console.log('from Ajax, epicCount: ' + epicCount )
-                      epicSummary.push(epicObject)
-                epicCount = epicCount-1 
-                checkEpicsDone(epicCount) 
-        ;
-        return result;
-    } catch (error) {
-        console.error(error);
-    }
-}
 
 
 
@@ -983,8 +665,7 @@ function epicAjax(epicNumber){
                   rallyObjectID = rallyObjectRow[0].value;
                   rallyObjectName =  rallyNameRow[0].value;
                   rallyFormattedID = rallyFormattedIDRow[0].value;
-                  rallyCapFirstCall(rallyObjectID);
-                  rallyCapSecondCall(rallyObjectID)
+                  getRallyCapabilityDetail(rallyObjectID)
                   }
                else{
 // all this logic regarding effort and progress needs to be replaced with what comes from Rally 
@@ -1285,7 +966,7 @@ if (numEpics == 0) { checkEpicsDone(epicCount)}
       //wait is to allow Aha AP to pace and permit sufficient time for rally response
       //may need to change this so that the rally response trigger is explicit rather than 
       //assumed based upon an estimated time interval
-            }, 4000 * i);
+            }, 3600 * i);
         }(i)
         );
         };
@@ -1435,6 +1116,12 @@ function getRallyCapabilityDetail(rallyCapID){
         if (rallySummary.length>0){
 
        console.log("has children")   
+          // identifying latest date in the Rally Solution Capability children response 
+            // var dateString = new Date(Math.max.apply(null, rallySummary.map(function(e) {
+            //               return new Date(e.PlannedEndDate);
+            //             })));
+            //   rallylateDate = new Date(dateString.getTime() - (dateString.getTimezoneOffset() * 60000 ))
+            //     .toISOString()
               rallyFeatTotal = rallySummary.reduce(function(previousValue, currentValue) {
                   return {PreliminaryEstimateValue: previousValue.PreliminaryEstimateValue + currentValue.PreliminaryEstimateValue}
                 });
@@ -1462,7 +1149,7 @@ function getRallyCapabilityDetail(rallyCapID){
                   rallyObjectErrorLog.push(rallyLogItem)
                  console.log("Rally error log item: " + rallyLogItem) 
                 }
-                else {newRallyPercentComplete = 0}
+                    else {newRallyPercentComplete = 0}
               rallyFeatTotal=rallyLeafStoryPoints;
               }
 
@@ -1494,142 +1181,10 @@ function getRallyCapabilityDetail(rallyCapID){
                       epicSummary.push(epicObject)
                 epicCount = epicCount-1 
                 checkEpicsDone(epicCount) 
+
         })
       });
   }
-
-
-
-  function newGetRallyCapabilityDetail(rallyCapID){
-  console.log('RallyCapabilityDetail')
-    // reset vars 
-    rallyLeafStoryPoints= 0;
-    rallyPointsDone = 0;
-    rallyFormattedID = '';
-
-    // api call to get capability summary information 
-    var settings = {
-        "url": "https://rally1.rallydev.com/slm/webservice/v2.0/portfolioitem/solutioncapability/" + rallyCapID,
-        "method": "GET",
-        // "timeout": 0,
-        "crossDomain": true,
-        "access-control-allow-origin": "*",
-        "headers": { "ZSESSIONID": localStorage.rallyID },
-        };
-        $.ajax(settings)
-        .then(function (response) {
-          console.log("rally 1st call")
-                rallyCapSummary = response
-                      console.log(response)
-            if(rallyCapSummary.OperationResult){
-                  console.log('======> Rally access error, rallyObjectID: ' + rallyCapID)
-              // log error     
-                   let rallyLogItem = {rallyName: rallyObjectName, rallyID: rallyObjectID, rallyFrmatID: rallyFormattedID, ahaID: epicNum}
-                   rallyObjectErrorLog.push(rallyLogItem)
-              // call next Epic
-                   epicCount = epicCount-1 
-                   checkEpicsDone(epicCount) 
-                }     
-                    rallyLeafStoryPoints = rallyCapSummary.SolutionCapability.LeafStoryPlanEstimateTotal;
-                    rallyPercentComplete = rallyCapSummary.SolutionCapability.PercentDoneByStoryPlanEstimate;
-                    rallyFormattedID = rallyCapSummary.SolutionCapability.FormattedID;
-                    rallyPointsDone = rallyLeafStoryPoints*rallyPercentComplete;
-                console.log("Rally FormattedID: " + rallyFormattedID)
-                console.log("Rally ObjectID: " + rallyCapID)
-                console.log("Rally Capability Name: " + rallyObjectName)
-                console.log("Rally Total Story Points: " + rallyLeafStoryPoints)
-                console.log("Rally Points Done: " + rallyPointsDone)
-        ;      })
-
-  // second Rally call       
-       .then (function (response) {
-      var settings = {
-        "url": "https://rally1.rallydev.com/slm/webservice/v2.0/portfolioitem/solutioncapability/" + rallyCapID + "/children?pagesize=100",
-        "method": "GET",
-        // "timeout": 0,
-        "crossDomain": true,
-        "access-control-allow-origin": "*",
-        "headers": { "ZSESSIONID": localStorage.rallyID },
-        };
-        $.ajax(settings)
-        .then(function (response) {
-
-          console.log("rally 2nd call")
-                rallyCapChildren = response
-                      console.log(response)
-                    rallySummary = rallyCapChildren.QueryResult.Results
-
-    // computing total Feature estimate in the Rally Solution Capability children response
-    // test to see if there are children, if yes then operate on result for date and total points for Features
-        if (rallySummary.length>0){
-
-       console.log("has children")   
-              rallyFeatTotal = rallySummary.reduce(function(previousValue, currentValue) {
-                  return {PreliminaryEstimateValue: previousValue.PreliminaryEstimateValue + currentValue.PreliminaryEstimateValue}
-                });
-            // force total estimate for the Capabilility to be the larger of Feature Estimates or LeafStoryPoints  
-              rallyFeatTotal = rallyFeatTotal.PreliminaryEstimateValue
-              let originalRallyFeatTotal = rallyFeatTotal
-                if(rallyFeatTotal<rallyLeafStoryPoints){
-                   rallyFeatTotal=rallyLeafStoryPoints
-                   console.log("------------> adjusted estimate from " + originalRallyFeatTotal + " to " + rallyLeafStoryPoints) 
-                   }
-            // force percent complete for the Capabilility to be 100% if rally work is marked as 100%
-                // if(rallyPercentComplete=1){newRallyPercentComplete=1}
-                   newRallyPercentComplete = rallyPointsDone/rallyFeatTotal
-                  }
-
-          // else use the overall estimates for the capability for % complete, unless actuals are zero, in that case % complete is zero
-          // and log the Rally object # and Formatted ID so that permissions can be changed to allow read access to Features 
-          // if the estimate is not zero but the returned object has a length of zero 
-           else {
-            console.log("does not have children") 
-                if (rallyPointsDone !==0){
-                    newRallyPercentComplete = rallyCapSummary.SolutionCapability.PercentDoneByStoryPlanEstimate
-          // log those Rally items where the app doesn't have permissions to see the children          
-                  let rallyLogItem = {rallyName: rallyObjectName, rallyID: rallyObjectID, rallyFrmatID: rallyFormattedID, ahaID: epicNum}
-                  rallyObjectErrorLog.push(rallyLogItem)
-                 console.log("Rally error log item: " + rallyLogItem) 
-                }
-                else {newRallyPercentComplete = 0}
-              rallyFeatTotal=rallyLeafStoryPoints;
-              }
-
-          // console.log("Rally Feature Points: " + rallylateDate);
-            console.log("Rally Feature Total: " + rallyFeatTotal + ' points');
-            console.log("Rally Points Done: " + rallyPointsDone);
-            console.log("New Rally Feature-based Percent Complete: " + Math.round(100*newRallyPercentComplete) + "%");
-
-          let rallyEpicEffort = rallyFeatTotal;
-              if (rallyEpicEffort > 0) { rallyEpicEffort = rallyEpicEffort} else { rallyEpicEffort = 0} ;
-                let rallyEpicProgress = newRallyPercentComplete;
-                let rallyEpicEffortCompl = rallyPointsDone;
-              if (rallyEpicEffortCompl > 0) { rallyEpicEffortCompl = rallyEpicEffortCompl} else { rallyEpicEffortCompl = 0} ;
-                rallyMSeffortSum = rallyMSeffortSum + rallyEpicEffort;
-                rallyMScompleteSum = Math.round(rallyMScompleteSum + rallyEpicEffortCompl)
-              if (rallyMSeffortSum>0) {rallyMSpercentComplete = Math.round(100*rallyMScompleteSum/rallyMSeffortSum)} else {rallyMSpercentComplete = 0}
-
-              console.log("Rally MS effort Sum subtotal: " + rallyMSeffortSum);
-              console.log("Rally MS complete Sum subtotal: " + rallyMScompleteSum);
-
-              let epicObject = {
-                    "epicID" : epicInfo.epic.id,
-                    "epicName" :epicInfo.epic.name.slice(0, 30),
-                    "epicEffort" :  rallyEpicEffort,
-                    "epicProgress" : rallyEpicProgress,
-                    "epicEffortDone" : rallyEpicEffortCompl
-                  }
-              console.log('from Ajax, epicCount: ' + epicCount )
-                      epicSummary.push(epicObject)
-                epicCount = epicCount-1 
-                checkEpicsDone(epicCount) 
-        })
-      })
-;
-  }
-
-  
-  
     </script>
   </body>
 </html>
