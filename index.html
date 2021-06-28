@@ -697,6 +697,11 @@ async function doAjax(rallyCapID, i) {
     }
 }
 
+async function rallyCalls(rallyObjectID){
+              await rallyCapFirstCall(rallyObjectID);
+              await rallyCapSecondCall(rallyObjectID) 
+                  }
+
 async function epicAsyncAjax(epicNumber) {
     let result;
 
@@ -725,10 +730,7 @@ async function epicAsyncAjax(epicNumber) {
                   rallyObjectName =  rallyNameRow[0].value;
                   rallyFormattedID = rallyFormattedIDRow[0].value;
                   // getRallyCapabilityDetail(rallyObjectID)
-            async function rallyCalls(rallyObjectID){
-              await rallyCapFirstCall(rallyObjectID);
-              await rallyCapSecondCall(rallyObjectID) 
-                  }
+
             rallyCalls(rallyObjectID)}
                else{
 // all this logic regarding effort and progress needs to be replaced with what comes from Rally 
