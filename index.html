@@ -699,16 +699,15 @@ async function doAjax(rallyCapID, i) {
 
 async function rallyCalls(rallyObjectID){
   let res = null;
-  try{
-    res =[];
-    res.push(await rallyCapFirstCall(rallyObjectID));
-    res.push(await rallyCapSecondCall(rallyObjectID));
-  }
+  try{(await rallyCapFirstCall(rallyObjectID))
+  try{(await rallyCapSecondCall(rallyObjectID))}
   catch (err) {
     console.log("fail>>", res, err);
-  }
-  }
-              
+  }}
+finally {}}
+  
+    
+  
 async function epicAsyncAjax(epicNumber) {
     let result;
 
