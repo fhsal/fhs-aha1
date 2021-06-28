@@ -983,7 +983,8 @@ function epicAjax(epicNumber){
                   rallyObjectID = rallyObjectRow[0].value;
                   rallyObjectName =  rallyNameRow[0].value;
                   rallyFormattedID = rallyFormattedIDRow[0].value;
-                  getRallyCapabilityDetail(rallyObjectID)
+                  rallyCapfirstCall(rallyObjectID);
+                  rallyCapSecondCall(rallyObjectID)
                   }
                else{
 // all this logic regarding effort and progress needs to be replaced with what comes from Rally 
