@@ -697,6 +697,46 @@ async function doAjax(rallyCapID, i) {
     }
 }
 
+async function rallyCapFirstCall(rallyCapID) {
+    let result;
+
+    try {
+        result = await $.ajax({
+  "url": "https://rally1.rallydev.com/slm/webservice/v2.0/portfolioitem/solutioncapability/" + rallyCapID + "/children?pagesize=100",
+        "method": "GET",
+        // "timeout": 0,
+        "crossDomain": true,
+        "access-control-allow-origin": "*",
+        "headers": { "ZSESSIONID": localStorage.rallyID },
+        },
+        console.log("rally 1st call"),
+                  rallyCapSummary = result,
+                console.log(result));
+        if(rallyCapSummary.OperationResult){
+                  console.log('======> Rally access error, rallyObjectID: ' + rallyCapID)
+              // log error     
+                   let rallyLogItem = {rallyName: rallyObjectName, rallyID: rallyObjectID, rallyFrmatID: rallyFormattedID, ahaID: epicNum}
+                   rallyObjectErrorLog.push(rallyLogItem)
+              // call next Epic
+                   epicCount = epicCount-1 
+                   checkEpicsDone(epicCount) 
+                }     
+                  rallyLeafStoryPoints = rallyCapSummary.SolutionCapability.LeafStoryPlanEstimateTotal;
+                  rallyPercentComplete = rallyCapSummary.SolutionCapability.PercentDoneByStoryPlanEstimate;
+                  rallyFormattedID = rallyCapSummary.SolutionCapability.FormattedID;
+                  rallyPointsDone = rallyLeafStoryPoints*rallyPercentComplete;
+                console.log("Rally FormattedID: " + rallyFormattedID)
+                console.log("Rally ObjectID: " + rallyCapID)
+                console.log("Rally Capability Name: " + rallyObjectName)
+                console.log("Rally Total Story Points: " + rallyLeafStoryPoints)
+                console.log("Rally Points Done: " + rallyPointsDone)
+        ;
+        return result;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 
 
 
