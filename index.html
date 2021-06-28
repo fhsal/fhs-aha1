@@ -725,9 +725,10 @@ async function epicAsyncAjax(epicNumber) {
                   rallyObjectName =  rallyNameRow[0].value;
                   rallyFormattedID = rallyFormattedIDRow[0].value;
                   // getRallyCapabilityDetail(rallyObjectID)
+            async function rallyCalls(){
               await rallyCapFirstCall(rallyObjectID);
               await rallyCapSecondCall(rallyObjectID) 
-                  }
+                  }}
                else{
 // all this logic regarding effort and progress needs to be replaced with what comes from Rally 
                 let epicEffort = Math.round(epicInfo.epic.original_estimate/480);
