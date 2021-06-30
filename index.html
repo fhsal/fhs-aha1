@@ -1455,9 +1455,9 @@ async function epicAwaitAjax(rallyCapID) {
     }
 }
 
-function testIteration(epicNum){
+async function testIteration(epicNum){
   for (i = 0; i < 4; i++){
-        epicAwaitAjax(epicNum)
+        await epicAwaitAjax(epicNum)
 
       }
 
