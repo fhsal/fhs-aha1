@@ -700,6 +700,71 @@ function epicAjax(epicNumber){
       });
 }
 
+function currentEpicAjax(epicNumber, result){
+
+console.log('epicAjax, epicNum: ' + epicNum)
+  var settings = {
+    "url": "https://optum.aha.io/api/v1/epics/" + epicNumber,
+    "method": "GET",
+    // "timeout": 0,
+    "crossDomain": true,
+    "access-control-allow-origin": "*",
+    "headers": { "Authorization": localStorage.ahaToken, },
+    };
+    $.ajax(settings)
+    .then(function (response) {
+            epicInfo = response
+                      console.log(response)
+            let epicID = epicInfo.epic.id;         
+            let epicName = epicInfo.epic.name;
+
+// if rally integration exists get rally object ID and call rally detail function  
+// deriving rally ObjectID an Name (which can vary in position in the array in rally - hence need to use filter function to find)           
+             if(epicInfo.epic.integration_fields.length>0){
+                let rallyIntFields = epicInfo.epic.integration_fields
+                let rallyObjectRow = rallyIntFields.filter(p => p.name == "ObjectID")
+                let rallyNameRow = rallyIntFields.filter(p => p.name == "Name")
+                let rallyFormattedIDRow = rallyIntFields.filter(p => p.name == "FormattedID")
+                rallyObjectID = rallyObjectRow[0].value;
+                rallyObjectName =  rallyNameRow[0].value;
+                rallyFormattedID = rallyFormattedIDRow[0].value;
+                getRallyCapabilityDetail(rallyObjectID)
+                }
+             else{
+// all this logic regarding effort and progress needs to be replaced with what comes from Rally 
+              let epicEffort = Math.round(epicInfo.epic.original_estimate/480);
+              if (epicEffort > 0) { epicEffort = epicEffort} else { epicEffort = 0} ;
+              let epicProgress = parseInt(epicInfo.epic.progress)/100;
+              let epicEffortCompl = epicEffort*epicProgress;
+              if (epicEffortCompl > 0) { epicEffortCompl = epicEffortCompl} else { epicEffortCompl = 0} ;
+              msEffortSum = msEffortSum + epicEffort;
+              msCompleteSum = Math.round(msCompleteSum + epicEffortCompl)
+              msPercentComplete = Math.round(100*msCompleteSum/msEffortSum)
+
+            console.log('epicID: ' + epicID);
+            console.log('rallyID: ' + rallyObjectID);
+            console.log('old epic effort: ' + epicEffort);
+            console.log('old milestone effort subtotal: ' + msEffortSum);
+            console.log('old milestone complete: ' + msCompleteSum);
+            console.log('old milestone % complete: ' + msPercentComplete + "%");
+
+              let epicObject = {
+                  "epicID" : epicID,
+                  "epicName" :epicName.slice(0, 30),
+                  "epicEffort" :  epicEffort,
+                  "epicProgress" : epicProgress,
+                  "epicEffortDone" : epicEffortCompl
+                }
+            console.log('from Ajax, epicCount: ' + epicCount )
+                    epicSummary.push(epicObject)
+              epicCount = epicCount-1 
+              checkEpicsDone(epicCount) 
+             }   
+    });
+
+    return (result)
+}
+
 // input form listener to retrieve information for a single milestone, iterating through epic detail 
 $("#ms_controls").submit(function() { 
 
@@ -1094,7 +1159,8 @@ function getRallyCapabilityDetail(rallyCapID){
                 console.log("Rally Total Story Points: " + rallyLeafStoryPoints)
                 console.log("Rally Points Done: " + rallyPointsDone)
         ;
-
+//wait for first call to complete prior to second call 
+          setTimeout(function(){console.log("rally capability simulate wait")}, 600)
       var settings = {
         "url": "https://rally1.rallydev.com/slm/webservice/v2.0/portfolioitem/solutioncapability/" + rallyCapID + "/children?pagesize=100",
         "method": "GET",
@@ -1457,6 +1523,14 @@ async function epicAwaitAjax(rallyCapID) {
 async function testIteration(epicNum){
   for (i = 0; i < 4; i++){
         await epicAwaitAjax(epicNum)
+
+      }
+
+}
+
+async function testIteration2(epicNum){
+  for (i = 0; i < 4; i++){
+        await currentEpicAjax(epicNum)
 
       }
 
