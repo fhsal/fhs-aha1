@@ -1372,10 +1372,10 @@ function getRallyCapabilityDetail(rallyCapID, resp){
           "access-control-allow-origin": "*",
           "headers": { "Authorization": localStorage.ahaToken, },
             })
-        .then          
-                epicInfo = result
+        .then(function (response) {       
+                epicInfo = response
                 console.log('epicAjax, epicNum: ' + ahaEpicNumber)
-                console.log(result)
+                console.log(response)
                   let epicID = epicInfo.epic.id;         
                   let epicName = epicInfo.epic.name;
     
@@ -1432,6 +1432,7 @@ function getRallyCapabilityDetail(rallyCapID, resp){
               //   epicCount = epicCount-1 
                 // checkEpicsDone(epicCount) 
                };
+              })
       return result;
         } 
       catch (error) {
