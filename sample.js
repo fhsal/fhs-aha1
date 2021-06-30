@@ -123,10 +123,14 @@ function asyncSample(epicNumber) {
       .then(function (response) {
               epicInfo = response
                         console.log(response)
+              let rallyObjectRow = rallyIntFields.filter(p => p.name == "ObjectID")
               let epicID = epicInfo.epic.id;         
               let epicName = epicInfo.epic.name;
                   rallyCapID = rallyObjectRow[0].value;
                   rallyObjectName =  rallyNameRow[0].value;
+                  console.log("Aha! epicID: " = epicID)
+                  console.log("Aha! epicID: " = epicName)
+
         $.ajax({
         "url": "htps://rally1.rallydev.com/slm/webservice/v2.0/portfolioitem/solutioncapability/" + rallyCapID,
         "method": "GET",
