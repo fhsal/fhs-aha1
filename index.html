@@ -1388,9 +1388,9 @@ async function epicAwaitAjax(epicNum) {
           "headers": { "Authorization": localStorage.ahaToken, },
             })
         .then (function(resp) {          
-                epicInfo = result
+                epicInfo = resp
                 console.log('epicAjax, epicNum: ' + epicNum)
-                console.log(result)
+                console.log(resp)
                   let epicID = epicInfo.epic.id;         
                   let epicName = epicInfo.epic.name;
 
