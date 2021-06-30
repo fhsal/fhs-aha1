@@ -1376,12 +1376,12 @@ function getRallyCapabilityDetail(rallyCapID){
     }
 }
 
-async function epicAwaitAjax(epicNumber) {
+async function epicAwaitAjax(epicNum) {
     let result;
     try {result = 
       await 
        $.ajax({
-          "url": "https://optum.aha.io/api/v1/epics/" + epicNumber,
+          "url": "https://optum.aha.io/api/v1/epics/" + epicNum,
           "method": "GET",
           "crossDomain": true,
           "access-control-allow-origin": "*",
