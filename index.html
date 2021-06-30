@@ -1310,9 +1310,7 @@ function getRallyCapabilityDetail(rallyCapID){
                 console.log(result)
                   let epicID = epicInfo.epic.id;         
                   let epicName = epicInfo.epic.name;
-
-
-        }
+        })
 
         .then (function(resp2){
 
@@ -1369,7 +1367,7 @@ function getRallyCapabilityDetail(rallyCapID){
                 // checkEpicsDone(epicCount) 
                }  
               })
-            ) 
+        
         ;
         return result;
     } catch (error) {
