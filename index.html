@@ -1444,17 +1444,17 @@ async function rallyCapSecondCall(rallyCapID) {
               console.log("Rally MS effort Sum subtotal: " + rallyMSeffortSum);
               console.log("Rally MS complete Sum subtotal: " + rallyMScompleteSum);
 
-              // let epicObject = {
-              //       "epicID" : epicInfo.epic.id,
-              //       "epicName" :epicInfo.epic.name.slice(0, 30),
-              //       "epicEffort" :  rallyEpicEffort,
-              //       "epicProgress" : rallyEpicProgress,
-              //       "epicEffortDone" : rallyEpicEffortCompl
-              //     }
-              // console.log('from Ajax, epicCount: ' + epicCount )
-              //         epicSummary.push(epicObject)
-              //   epicCount = epicCount-1 
-                // checkEpicsDone(epicCount) 
+              let epicObject = {
+                    "epicID" : epicInfo.epic.id,
+                    "epicName" :epicInfo.epic.name.slice(0, 30),
+                    "epicEffort" :  rallyEpicEffort,
+                    "epicProgress" : rallyEpicProgress,
+                    "epicEffortDone" : rallyEpicEffortCompl
+                  }
+              console.log('from Ajax, epicCount: ' + epicCount )
+                      epicSummary.push(epicObject)
+                epicCount = epicCount-1 
+                checkEpicsDone(epicCount) 
         ;
         return result;
     } catch (error) {
