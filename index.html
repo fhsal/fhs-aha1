@@ -1119,7 +1119,7 @@ function checkInitiativesDone() {
 
 // function for two Rally API calls to get Solution Capability children information and summary-level % complete and LeafStoryPointsTotal
 
-function getRallyCapabilityDetail(rallyCapID){
+function getRallyCapabilityDetail(rallyCapID, resp){
   console.log('RallyCapabilityDetail')
     // reset vars 
     rallyLeafStoryPoints= 0;
@@ -1240,6 +1240,8 @@ function getRallyCapabilityDetail(rallyCapID){
 
         })
       });
+      return (resp)
+      console.log(resp)
   }
 
   function newGetRallyCapabilityDetail(rallyCapID){
