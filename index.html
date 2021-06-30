@@ -1809,18 +1809,18 @@ async function rallyCapSecondCall(rallyCapID) {
               console.log('from Ajax, epicCount: ' + epicCount )
                       epicSummary.push(epicObject)
                 epicCount = epicCount-1 
-                checkEpicsDone(epicCount) 
+                // checkEpicsDone(epicCount) 
         ;
         return result;
     } catch (error) {
-        console.error(error);
+        console.log(error);
     }
 }
 
 async function rallyCalls(rallyObjectID){
   let res = null;
   try{
-    (await rallyCapFirstCall(rallyObjectID))
+    (await rallyCapFirstCall(rallyObjectID));
     (await rallyCapSecondCall(rallyObjectID))
   return(res)}
   catch (err) {
