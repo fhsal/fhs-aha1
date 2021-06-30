@@ -1160,7 +1160,7 @@ function getRallyCapabilityDetail(rallyCapID){
                 console.log("Rally Points Done: " + rallyPointsDone)
         ;
 //wait for first call to complete prior to second call 
-          setTimeout(function(){console.log("rally capability simulate wait")}, 600)
+          setTimeout(function(){console.log("rally capability simulate wait")}, 1000)
       var settings = {
         "url": "https://rally1.rallydev.com/slm/webservice/v2.0/portfolioitem/solutioncapability/" + rallyCapID + "/children?pagesize=100",
         "method": "GET",
