@@ -1372,13 +1372,13 @@ function getRallyCapabilityDetail(rallyCapID, resp){
           "access-control-allow-origin": "*",
           "headers": { "Authorization": localStorage.ahaToken, },
             })
-        .then (function(resp) {          
+        .then          
                 epicInfo = result
                 console.log('epicAjax, epicNum: ' + ahaEpicNumber)
                 console.log(result)
                   let epicID = epicInfo.epic.id;         
                   let epicName = epicInfo.epic.name;
-        })
+    
 
 // if rally integration exists get rally object ID and call rally detail function  
 // deriving rally ObjectID an Name (which can vary in position in the array in rally - hence need to use filter function to find)           
