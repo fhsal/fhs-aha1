@@ -108,7 +108,7 @@ function sample(rallyCapID) {
     })}
 
 
-function asyncSample(rallyCapID) {
+function asyncSample(epicNumber) {
 
   console.log('asyncSample, Aha! epicNum: ' + epicNumber)
     
@@ -125,7 +125,7 @@ function asyncSample(rallyCapID) {
                         console.log(response)
               let epicID = epicInfo.epic.id;         
               let epicName = epicInfo.epic.name;
-                  rallyObjectID = rallyObjectRow[0].value;
+                  rallyCapID = rallyObjectRow[0].value;
                   rallyObjectName =  rallyNameRow[0].value;
         $.ajax({
         "url": "htps://rally1.rallydev.com/slm/webservice/v2.0/portfolioitem/solutioncapability/" + rallyCapID,
