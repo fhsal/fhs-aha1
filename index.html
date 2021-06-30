@@ -1379,7 +1379,7 @@ function getRallyCapabilityDetail(rallyCapID, resp){
                   let epicID = epicInfo.epic.id;         
                   let epicName = epicInfo.epic.name;
     
-
+setTimeout(function(){console.log("simulate wait")}, 3000)
 // if rally integration exists get rally object ID and call rally detail function  
 // deriving rally ObjectID an Name (which can vary in position in the array in rally - hence need to use filter function to find)           
                if(epicInfo.epic.integration_fields.length>0){
@@ -1527,9 +1527,9 @@ async function testIteration(epicNum){
 
 }
 
-async function testIteration2(epicNum){
+async function testIteration2(ahaEpicNumber){
   for (i = 0; i < 4; i++){
-        await currentEpicAjax(epicNum)
+        await workingEpicAsyncAjax(ahaEpicNumber)
 
       }
 
