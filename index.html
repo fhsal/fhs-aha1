@@ -606,7 +606,7 @@ function postAhaCapabilityUpdate(ahaCapabilityID, rallyFeatTotal, rallyEpicProgr
             $.ajax(settings)
                 .done(function (response) { 
                 console.log('Rally Capability PUT update: ' + response);
-                console.log( "Rally Feature % Complete: " + rallyEpicProgress);
+                console.log( "Rally Feature % Complete: " + rallyCapabilityProgress);
                 console.log( "Rally Rollup Feature Estimate Total: " + rallyFeatTotal);
             });
  }
@@ -982,7 +982,7 @@ if (numEpics == 0) { checkEpicsDone(epicCount)}
       //async/await call for Aha! Epic and then related Rally Solution Capability and Rally Solution Capability children 
                   todayEpicAsyncAjax(epicNum)
       //wait is to allow Aha API to pace - may no longer be needed with updated async/await changes to epicAjax (above)
-            }, 2000 * i);
+            }, 1000 * i);
         }(i)
         );
         };
