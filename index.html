@@ -1267,10 +1267,12 @@ async function todayEpicAsyncAjax(epicNumber) {
 
 async function rallyCapFirstCall(rallyCapID) {
     let result;
-
+    rallyLeafStoryPoints= 0;
+    rallyPointsDone = 0;
+    rallyFormattedID = '';
     try {
         result = await $.ajax({
-  "url": "https://rally1.rallydev.com/slm/webservice/v2.0/portfolioitem/solutioncapability/" + rallyCapID,
+        "url": "https://rally1.rallydev.com/slm/webservice/v2.0/portfolioitem/solutioncapability/" + rallyCapID,
         "method": "GET",
         // "timeout": 0,
         "crossDomain": true,
