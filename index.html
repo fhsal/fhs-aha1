@@ -587,6 +587,30 @@ function postAhaCapabilityUpdate(ahaCapabilityID, rallyFeatTotal, rallyEpicProgr
             });
  }
 
+
+
+ function postRallyCapabilityUpdate(rallyCapID, rallyFeatTotal, rallyCapabilityProgress){
+ var settings = {   
+        "url": "https://rally1.rallydev.com/slm/webservice/v2.0/portfolioitem/solutioncapability/" + rallyCapID,
+        "method": "PUT",
+        // "timeout": 0,
+        "crossDomain": true,
+        "access-control-allow-origin": "*",
+        "headers": { "ZSESSIONID": localStorage.rallyID },
+        "data": JSON.stringify(
+                {"SolutionCapability": {
+                  "c_PercentDonebyPreliminaryRollupValue": rallyCapabilityProgress,
+                  "c_PreliminaryEstimateRollupValue": rallyFeatTotal
+                }}), 
+            };
+            $.ajax(settings)
+                .done(function (response) { 
+                console.log('Rally Capability PUT update: ' + response);
+                console.log( "Rally Feature % Complete: " + rallyCapabilityProgress);
+                console.log( "Rally Rollup Feature Estimate Total: " + rallyFeatTotal);
+            });
+ }
+
 // function to count down epics as their responses are received, displaying an "*"
 //  for each as completed & then the overall summary  
 function checkEpicsDone(epicCount) {
@@ -622,41 +646,10 @@ function checkEpicsDone(epicCount) {
               msSummary.push(msObject);
 // call function to post milestone updated information into custom table 
               postMilestoneUpdate();
-
           console.log('time to call next milestone')
-
               checkMilestonesDone()
       }; 
   }
-
-function rallyEpicAjax(){
-
-    console.log('rallyEpicAjax')
-
-      var settings = {
-        "url": "https://optum.aha.io/api/v1/epics/" + epicNum,
-        "method": "GET",
-        // "timeout": 0,
-        "crossDomain": true,
-        "access-control-allow-origin": "*",
-        "headers": { "Authorization": localStorage.ahaToken, },
-        };
-        $.ajax(settings)
-        .then(function (response) {
-                epicInfo = response
-                          console.log(response)
-
-                if(epicInfo.epic.integration_fields){
-                    rallyObjectID = epicInfo.epic.integration_fields[4].value;
-                    rallyObjectName =  epicInfo.epic.integration_fields[1].value
-
-                    getRallyCapabilityDetail(rallyObjectID)
-                    
-                }
-        });
-}
-
-
 
 
 // function GETs info for a specific Epic
@@ -723,70 +716,6 @@ function epicAjax(epicNum){
       });
 }
 
-function currentEpicAjax(epicNumber, result){
-
-console.log('epicAjax, epicNum: ' + epicNum)
-  var settings = {
-    "url": "https://optum.aha.io/api/v1/epics/" + epicNumber,
-    "method": "GET",
-    // "timeout": 0,
-    "crossDomain": true,
-    "access-control-allow-origin": "*",
-    "headers": { "Authorization": localStorage.ahaToken, },
-    };
-    $.ajax(settings)
-    .then(function (response) {
-            epicInfo = response
-                      console.log(response)
-            let epicID = epicInfo.epic.id;         
-            let epicName = epicInfo.epic.name;
-
-// if rally integration exists get rally object ID and call rally detail function  
-// deriving rally ObjectID an Name (which can vary in position in the array in rally - hence need to use filter function to find)           
-             if(epicInfo.epic.integration_fields.length>0){
-                let rallyIntFields = epicInfo.epic.integration_fields
-                let rallyObjectRow = rallyIntFields.filter(p => p.name == "ObjectID")
-                let rallyNameRow = rallyIntFields.filter(p => p.name == "Name")
-                let rallyFormattedIDRow = rallyIntFields.filter(p => p.name == "FormattedID")
-                rallyObjectID = rallyObjectRow[0].value;
-                rallyObjectName =  rallyNameRow[0].value;
-                rallyFormattedID = rallyFormattedIDRow[0].value;
-                getRallyCapabilityDetail(rallyObjectID)
-                }
-             else{
-// all this logic regarding effort and progress needs to be replaced with what comes from Rally 
-              let epicEffort = Math.round(epicInfo.epic.original_estimate/480);
-              if (epicEffort > 0) { epicEffort = epicEffort} else { epicEffort = 0} ;
-              let epicProgress = parseInt(epicInfo.epic.progress)/100;
-              let epicEffortCompl = epicEffort*epicProgress;
-              if (epicEffortCompl > 0) { epicEffortCompl = epicEffortCompl} else { epicEffortCompl = 0} ;
-              msEffortSum = msEffortSum + epicEffort;
-              msCompleteSum = Math.round(msCompleteSum + epicEffortCompl)
-              msPercentComplete = Math.round(100*msCompleteSum/msEffortSum)
-
-            console.log('epicID: ' + epicID);
-            console.log('rallyID: ' + rallyObjectID);
-            console.log('old epic effort: ' + epicEffort);
-            console.log('old milestone effort subtotal: ' + msEffortSum);
-            console.log('old milestone complete: ' + msCompleteSum);
-            console.log('old milestone % complete: ' + msPercentComplete + "%");
-
-              let epicObject = {
-                  "epicID" : epicID,
-                  "epicName" :epicName.slice(0, 30),
-                  "epicEffort" :  epicEffort,
-                  "epicProgress" : epicProgress,
-                  "epicEffortDone" : epicEffortCompl
-                }
-            console.log('from Ajax, epicCount: ' + epicCount )
-                    epicSummary.push(epicObject)
-              epicCount = epicCount-1 
-              checkEpicsDone(epicCount) 
-             }   
-    });
-
-    return (result)
-}
 
 // input form listener to retrieve information for a single milestone, iterating through epic detail 
 $("#ms_controls").submit(function() { 
@@ -1053,7 +982,7 @@ if (numEpics == 0) { checkEpicsDone(epicCount)}
       //async/await call for Aha! Epic and then related Rally Solution Capability and Rally Solution Capability children 
                   todayEpicAsyncAjax(epicNum)
       //wait is to allow Aha API to pace - may no longer be needed with updated async/await changes to epicAjax (above)
-            }, 500 * i);
+            }, 1000 * i);
         }(i)
         );
         };
@@ -1086,7 +1015,6 @@ function checkMilestonesDone () {
             if (msCount ==0) {
               checkInitiativesDone()  
               }
-
 }
 
 // function to count down initiatives as their milestones are complete
@@ -1259,20 +1187,11 @@ function getRallyCapabilityDetail(rallyCapID, resp){
                       epicSummary.push(epicObject)
                 epicCount = epicCount-1 
                 checkEpicsDone(epicCount) 
-
         })
       });
       return (resp)
       console.log(resp)
   }
-
-async function testIteration(epicNum){
-  for (i = 0; i < 4; i++){
-        await epicAwaitAjax(epicNum)
-
-      }
-
-}
 
 async function todayEpicAsyncAjax(epicNumber) {
     let result;
@@ -1287,10 +1206,9 @@ async function todayEpicAsyncAjax(epicNumber) {
         }),
   console.log('epicAjax, epicNum: ' + epicNum)
   epicInfo = result
-                        console.log(result)
+            console.log(result)
               let epicID = epicInfo.epic.id;         
               let epicName = epicInfo.epic.name;
-
 // if rally integration exists get rally object ID and call rally detail function  
 // deriving rally ObjectID an Name (which can vary in position in the array in rally - hence need to use filter function to find)           
                if(epicInfo.epic.integration_fields.length>0){
@@ -1349,10 +1267,12 @@ async function todayEpicAsyncAjax(epicNumber) {
 
 async function rallyCapFirstCall(rallyCapID) {
     let result;
-
+    rallyLeafStoryPoints= 0;
+    rallyPointsDone = 0;
+    rallyFormattedID = '';
     try {
         result = await $.ajax({
-  "url": "https://rally1.rallydev.com/slm/webservice/v2.0/portfolioitem/solutioncapability/" + rallyCapID,
+        "url": "https://rally1.rallydev.com/slm/webservice/v2.0/portfolioitem/solutioncapability/" + rallyCapID,
         "method": "GET",
         // "timeout": 0,
         "crossDomain": true,
@@ -1412,12 +1332,6 @@ async function rallyCapSecondCall(rallyCapID) {
         if (rallySummary.length>0){
 
        console.log("has children")   
-          // identifying latest date in the Rally Solution Capability children response 
-            // var dateString = new Date(Math.max.apply(null, rallySummary.map(function(e) {
-            //               return new Date(e.PlannedEndDate);
-            //             })));
-            //   rallylateDate = new Date(dateString.getTime() - (dateString.getTimezoneOffset() * 60000 ))
-            //     .toISOString()
               rallyFeatTotal = rallySummary.reduce(function(previousValue, currentValue) {
                   return {PreliminaryEstimateValue: previousValue.PreliminaryEstimateValue + currentValue.PreliminaryEstimateValue}
                 });
@@ -1453,19 +1367,25 @@ async function rallyCapSecondCall(rallyCapID) {
             console.log("Rally Feature Total: " + rallyFeatTotal + ' points');
             console.log("Rally Points Done: " + rallyPointsDone);
             console.log("New Rally Feature-based Percent Complete: " + Math.round(100*newRallyPercentComplete) + "%");
-
+//calculate Rally Capability-level (Epic) stats
           let rallyEpicEffort = rallyFeatTotal;
               if (rallyEpicEffort > 0) { rallyEpicEffort = rallyEpicEffort} else { rallyEpicEffort = 0} ;
                 let rallyEpicProgress = newRallyPercentComplete;
                 let rallyEpicEffortCompl = rallyPointsDone;
               if (rallyEpicEffortCompl > 0) { rallyEpicEffortCompl = rallyEpicEffortCompl} else { rallyEpicEffortCompl = 0} ;
-                rallyMSeffortSum = rallyMSeffortSum + rallyEpicEffort;
+//update Rally Milestone-level stats
+              rallyMSeffortSum = rallyMSeffortSum + rallyEpicEffort;
                 rallyMScompleteSum = Math.round(rallyMScompleteSum + rallyEpicEffortCompl)
               if (rallyMSeffortSum>0) {rallyMSpercentComplete = Math.round(100*rallyMScompleteSum/rallyMSeffortSum)} else {rallyMSpercentComplete = 0}
 
               console.log("Rally MS effort Sum subtotal: " + rallyMSeffortSum);
               console.log("Rally MS complete Sum subtotal: " + rallyMScompleteSum);
 
+//post Feature derived totals to the new custom fields in the Rally Solution Capability
+
+            // postRallyCapabilityUpdate(rallyCapID, rallyFeatTotal, rallyEpicProgress)
+
+//update and save epic-level information 
               let epicObject = {
                     "epicID" : epicInfo.epic.id,
                     "epicName" :epicInfo.epic.name.slice(0, 30),
