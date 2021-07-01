@@ -757,17 +757,17 @@ $("#ms_info").submit(function() {
             msProduct = msInfo.custom_object_record.product_id
             msInitiative = msInfo.custom_object_record.linked_records[0].record_id
 // populate display block
-            $('#msBody').append('<br>') ;
-            $('#msBody').append('<strong>MilestoneID: </strong>' + productKey)
-            $('#msBody').append('<br>') ;       
-            $('#msBody').append(',  <strong> Name: </strong>' + msName.slice(0, 50))
-            $('#msBody').append('<br>') ;
-            $('#msBody').append('<strong># Epics: </strong>' + (numEpics))
-            $('#msBody').append('<br>') ;
-            $('#msBody').append("==========================================");
-            $('#msBody').append('<br>') ;
-            $('#msBody').append(epicsToParse)
-            $('#msBody').append('<br>') ;
+        $('#msResults').append('<br>') ;
+        $('#msResults').append('<strong>MilestoneID: </strong>' + productKey)
+        $('#msResults').append('<br>') ;       
+        $('#msResults').append(',  <strong> Name: </strong>' + msName.slice(0, 50))
+        $('#msResults').append('<br>') ;
+        $('#msResults').append('<strong># Epics: </strong>' + (numEpics))
+        $('#msResults').append('<br>') ;
+        $('#msResults').append("==========================================");
+        $('#msResults').append('<br>') ;
+        $('#msResults').append(epicsToParse)
+        $('#msBody').append('<br>') ;
 
   if (numEpics == 0) { checkEpicsDone(epicCount)}
 
