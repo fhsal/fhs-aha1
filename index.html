@@ -760,12 +760,10 @@ $("#ms_info").submit(function() {
         if (numEpics !== 0){
 // populate display block
             $('#msResults').append('<br>') ;
-            $('#msResults').append('<strong>MilestoneID: </strong>' + productKey)
-            $('#msResults').append('<br>') ;       
+            $('#msResults').append('<strong>MilestoneID: </strong>' + productKey)     
             $('#msResults').append(',  <strong> Name: </strong>' + msName.slice(0, 50))
             $('#msResults').append('<br>') ;
             $('#msResults').append('<strong># Epics: </strong>' + (numEpics))
-            $('#msResults').append('<br>') ;
             $('#msResults').append("==========================================");
             $('#msResults').append('<br>') ;
             $('#msResults').append(JSON.stringify(epicsToParse))
@@ -774,8 +772,7 @@ $("#ms_info").submit(function() {
 
         else { 
               $('#msResults').append('<br>') ;
-              $('#msResults').append('<strong>MilestoneID: </strong>' + productKey)
-              $('#msResults').append('<br>') ;       
+              $('#msResults').append('<strong>MilestoneID: </strong>' + productKey)      
               $('#msResults').append(',  <strong> Name: </strong>' + msName.slice(0, 50))
               $('#msResults').append('<br>') ;
               $('#msResults').append('no related Epics: </strong>')
