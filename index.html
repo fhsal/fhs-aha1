@@ -114,7 +114,7 @@
   <div class="row" id = inputForms style = "margin-top: -25px">
 
 <br><br>
-    <div class="col-sm-5"  style= "width: 425px; padding-left: 0px";>
+    <div class="col-sm-5"  style= "width: 425px; height: 300px; padding-left: 0px";>
 
       <form id="portfolio_list">
         <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain"> -->
@@ -152,26 +152,26 @@
           <input type="submit" class="btn btn-success  btn-sm" value="Update progress for a milestone">
         </form>
 
-        <!-- <form id="epic_detail">
+        <form id="epic_info">
   <input type="text" placeholder="Aha! subdomain" id="subdomain5">
-          <input type="text" placeholder="Epic number" id="epicNum">
-          <input type="submit" class="btn btn-info  btn-sm" value="Console.log info for an epic">
-        </form> -->
+          <input type="text" placeholder="Milestone number" id="msNum">
+          <input type="submit" class="btn btn-info  btn-sm" value="Epics related to a Milestone">
+        </form>
       </div>
   <!-- display area for MS results on right -->
       <div class="col-sm-6" id = "prodResults" style="height: 180px;margin-bottom: 5px;overflow-y: scroll;word-wrap: break-word;width: 720px;background-color:darkgoldenrod;border-color: black;color:white;"><strong>Portfolio summary<br>---------------------------------------------------------------------------------------------------------------------------------------------</strong><br></div>
-      <div class="col-sm-6" id = "initResults" style="height: 180px;margin-top: 5px;overflow-y: scroll;word-wrap: break-word;width: 720px;background-color:teal;border-color: black;color:white;top: 0px;bottom: -50;"><strong>Initiative summary<br>---------------------------------------------------------------------------------------------------------------------------------------------</strong><br></div>
+      <div class="col-sm-6" id = "initResults" style="height: 250px;margin-top: 5px;overflow-y: scroll;word-wrap: break-word;width: 720px;background-color:teal;border-color: black;color:white;top: 0px;bottom: -50;"><strong>Initiative summary<br>---------------------------------------------------------------------------------------------------------------------------------------------</strong><br></div>
 </div>
  
     <div class="row">
 
       <!-- display area for epic parsing display on left -->
-         <div class="col-sm-3" style="height: 365px;overflow-y: scroll;background-color:steelblue;color:white;width: 410px;top: -110;" id="msBody"> <strong>Epics related to selected Milestones<br>------------------------------------------------------------------------</strong></div>
+         <div class="col-sm-3" style="height: 425px;overflow-y: scroll;background-color:steelblue;color:white;width: 410px;top: -130;" id="msBody"> <strong>Epics related to selected Milestones<br>------------------------------------------------------------------------</strong></div>
 
          <div class="col-sm-1" style="width: 15px; padding-left: 0px; padding-right: 0px"></div>
 
       <!-- display area for MS results on right -->
-         <div class="col-sm-8" id = "msResults" style="height: 245px;overflow-y: scroll;word-wrap: break-word;width: 720px;padding-right: 0px;background-color:darkslategray;border-color: black;color:white;top: 10px;"><strong>Milestone summaries<br>---------------------------------------------------------------------------------------------------------------------------------------------</strong><br></div>
+         <div class="col-sm-8" id = "msResults" style="height: 285px;overflow-y: scroll;word-wrap: break-word;width: 720px;padding-right: 0px;background-color:darkslategray;border-color: black;color:white;top: 10px;"><strong>Milestone summaries<br>---------------------------------------------------------------------------------------------------------------------------------------------</strong><br></div>
     </div>
     <div class = "row" style="height: 25px;"></div> 
 
@@ -982,7 +982,7 @@ if (numEpics == 0) { checkEpicsDone(epicCount)}
       //async/await call for Aha! Epic and then related Rally Solution Capability and Rally Solution Capability children 
                   todayEpicAsyncAjax(epicNum)
       //wait is to allow Aha API to pace - may no longer be needed with updated async/await changes to epicAjax (above)
-            }, 1000 * i);
+            }, 1200 * i);
         }(i)
         );
         };
@@ -1219,13 +1219,10 @@ async function todayEpicAsyncAjax(epicNumber) {
                   rallyObjectID = rallyObjectRow[0].value;
                   rallyObjectName =  rallyNameRow[0].value;
                   rallyFormattedID = rallyFormattedIDRow[0].value;
-                  // getRallyCapabilityDetail(rallyObjectID)
+
+// getRally Capability Details via async/await function that calls for Capability summary first and then children
 
                   await rallyCalls(rallyObjectID)
-
-                  // let rally1 = await rallyCapFirstCall(rallyObjectID);
-                  // let rally2 = await rallyCapSecondCall(rallyObjectID);
-
 
                  }
                else{
@@ -1300,7 +1297,7 @@ async function rallyCapFirstCall(rallyCapID) {
                 console.log("Rally ObjectID: " + rallyCapID)
                 console.log("Rally Capability Name: " + rallyObjectName)
                 console.log("Rally Number of Children: " + rallyChildren)
-                console.log("Rally Total Story Points: " + rallyLeafStoryPoints)
+                console.log("Rally Leaf Story Points Total: " + rallyLeafStoryPoints)
                 console.log("Rally Points Done: " + rallyPointsDone)
         ;
         return result;
@@ -1331,7 +1328,7 @@ async function rallyCapSecondCall(rallyCapID) {
     // test to see if there are children, if yes then operate on result for date and total points for Features
         if (rallySummary.length>0){
 
-       console.log("has children")   
+          console.log("has children")   
               rallyFeatTotal = rallySummary.reduce(function(previousValue, currentValue) {
                   return {PreliminaryEstimateValue: previousValue.PreliminaryEstimateValue + currentValue.PreliminaryEstimateValue}
                 });
@@ -1340,7 +1337,7 @@ async function rallyCapSecondCall(rallyCapID) {
               let originalRallyFeatTotal = rallyFeatTotal
                 if(rallyFeatTotal<rallyLeafStoryPoints){
                    rallyFeatTotal=rallyLeafStoryPoints
-                   console.log("------------> adjusted estimate from " + originalRallyFeatTotal + " to " + rallyLeafStoryPoints) 
+          console.log("------------> adjusted estimate from " + originalRallyFeatTotal + " to " + rallyLeafStoryPoints) 
                    }
             // force percent complete for the Capabilility to be 100% if rally work is marked as 100%
                 // if(rallyPercentComplete=1){newRallyPercentComplete=1}
@@ -1351,22 +1348,22 @@ async function rallyCapSecondCall(rallyCapID) {
           // and log the Rally object # and Formatted ID so that permissions can be changed to allow read access to Features 
           // if the estimate is not zero but the returned object has a length of zero 
            else {
-            console.log("does not have children") 
+          console.log("does not have children") 
                 if (rallyPointsDone !==0){
                     newRallyPercentComplete = rallyCapSummary.SolutionCapability.PercentDoneByStoryPlanEstimate
           // log those Rally items where the app doesn't have permissions to see the children          
                   let rallyLogItem = {rallyName: rallyObjectName, rallyID: rallyObjectID, rallyFrmatID: rallyFormattedID, ahaID: epicNum}
                   rallyObjectErrorLog.push(rallyLogItem)
-                 console.log("Rally error log item: " + rallyLogItem) 
+          console.log("Rally error log item: " + rallyLogItem) 
                 }
                 else {newRallyPercentComplete = 0}
               rallyFeatTotal=rallyLeafStoryPoints;
               }
 
-          // console.log("Rally Feature Points: " + rallylateDate);
-            console.log("Rally Feature Total: " + rallyFeatTotal + ' points');
-            console.log("Rally Points Done: " + rallyPointsDone);
-            console.log("New Rally Feature-based Percent Complete: " + Math.round(100*newRallyPercentComplete) + "%");
+// console.log("Rally Feature Points: " + rallylateDate);
+          console.log("Rally Feature Total: " + rallyFeatTotal + ' points');
+          console.log("Rally Points Done: " + rallyPointsDone);
+          console.log("New Rally Feature-based Percent Complete: " + Math.round(100*newRallyPercentComplete) + "%");
 //calculate Rally Capability-level (Epic) stats
           let rallyEpicEffort = rallyFeatTotal;
               if (rallyEpicEffort > 0) { rallyEpicEffort = rallyEpicEffort} else { rallyEpicEffort = 0} ;
@@ -1378,8 +1375,8 @@ async function rallyCapSecondCall(rallyCapID) {
                 rallyMScompleteSum = Math.round(rallyMScompleteSum + rallyEpicEffortCompl)
               if (rallyMSeffortSum>0) {rallyMSpercentComplete = Math.round(100*rallyMScompleteSum/rallyMSeffortSum)} else {rallyMSpercentComplete = 0}
 
-              console.log("Rally MS effort Sum subtotal: " + rallyMSeffortSum);
-              console.log("Rally MS complete Sum subtotal: " + rallyMScompleteSum);
+          console.log("Rally MS effort Sum subtotal: " + rallyMSeffortSum);
+          console.log("Rally MS complete Sum subtotal: " + rallyMScompleteSum);
 
 //post Feature derived totals to the new custom fields in the Rally Solution Capability
 
@@ -1393,7 +1390,7 @@ async function rallyCapSecondCall(rallyCapID) {
                     "epicProgress" : rallyEpicProgress,
                     "epicEffortDone" : rallyEpicEffortCompl
                   }
-              console.log('from Ajax, epicCount: ' + epicCount )
+          console.log('from Ajax, epicCount: ' + epicCount )
                       epicSummary.push(epicObject)
                 epicCount = epicCount-1 
                 checkEpicsDone(epicCount) 
@@ -1403,6 +1400,9 @@ async function rallyCapSecondCall(rallyCapID) {
         console.log(error);
     }
 }
+
+// async/await function to call for rally Capability details: First the summary; Second, children - awaiting until complete to proceed, 
+// used within ParseMilestone as it loops through Epics related to a Milestone
 
 async function rallyCalls(rallyObjectID){
   let res = null;
