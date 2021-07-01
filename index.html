@@ -982,7 +982,7 @@ if (numEpics == 0) { checkEpicsDone(epicCount)}
       //async/await call for Aha! Epic and then related Rally Solution Capability and Rally Solution Capability children 
                   todayEpicAsyncAjax(epicNum)
       //wait is to allow Aha API to pace - may no longer be needed with updated async/await changes to epicAjax (above)
-            }, 500 * i);
+            }, 1200 * i);
         }(i)
         );
         };
@@ -1382,7 +1382,7 @@ async function rallyCapSecondCall(rallyCapID) {
 //post Feature derived totals to the new custom fields in the Rally Solution Capability
 
             postRallyCapabilityUpdate(rallyCapID, rallyFeatTotal, rallyEpicProgress)
-            
+
 //update and save epic-level information 
               let epicObject = {
                     "epicID" : epicInfo.epic.id,
