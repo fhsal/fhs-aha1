@@ -598,7 +598,7 @@ function postAhaCapabilityUpdate(ahaCapabilityID, rallyFeatTotal, rallyEpicProgr
         // "timeout": 0,
         "crossDomain": true,
         "access-control-allow-origin": "*",
-        "headers": { "Accept": "application/json", "Content-Type": "application/json","ZSESSIONID": localStorage.rallyID },
+        "headers": { "Content-Type": "application/json","ZSESSIONID": localStorage.rallyID },
         "data": JSON.stringify(
                 {"SolutionCapability": 
                 [{"c_PercentDonebyPreliminaryRollupValue": rallyCapabilityProgress,
