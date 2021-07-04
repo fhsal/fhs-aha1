@@ -602,11 +602,10 @@ function postAhaCapabilityUpdate(ahaCapabilityID, rallyFeatTotal, rallyEpicProgr
                 //  "Content-Type": "application/json",
                 //  "Accept": "*/*",
                  "ZSESSIONID": localStorage.rallyID },
-        "data": JSON.stringify(
-                {"SolutionCapability": 
+        "data": {"SolutionCapability": 
                 {"c_PercentDonebyPreliminaryRollupValue": rallyCapabilityProgress,
                   "c_PreliminaryEstimateRollupValue": rallyFeatTotal}
-              }), 
+              }, 
             };
             $.ajax(settings)
                 .done(function (response) { 
