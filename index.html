@@ -604,8 +604,8 @@ function postAhaCapabilityUpdate(ahaCapabilityID, rallyFeatTotal, rallyEpicProgr
                  "ZSESSIONID": localStorage.rallyID },
         "data": JSON.stringify(
                 {"SolutionCapability": 
-                [{"c_PercentDonebyPreliminaryRollupValue": rallyCapabilityProgress,
-                  "c_PreliminaryEstimateRollupValue": rallyFeatTotal}]
+                {"c_PercentDonebyPreliminaryRollupValue": rallyCapabilityProgress,
+                  "c_PreliminaryEstimateRollupValue": rallyFeatTotal}
               }), 
             };
             $.ajax(settings)
