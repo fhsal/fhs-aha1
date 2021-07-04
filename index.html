@@ -599,13 +599,13 @@ function postAhaCapabilityUpdate(ahaCapabilityID, rallyFeatTotal, rallyEpicProgr
         "crossDomain": true,
         "access-control-allow-origin": "*",
         "headers": { 
-                //  "Content-Type": "application/json",
+                 "contentType": "application/json",
                 //  "Accept": "*/*",
                  "ZSESSIONID": localStorage.rallyID },
-        "data": {"SolutionCapability": 
+        "data": JSON.stringify({"SolutionCapability": 
                 {"c_PercentDonebyPreliminaryRollupValue": rallyCapabilityProgress,
                   "c_PreliminaryEstimateRollupValue": rallyFeatTotal}
-              }, 
+              }), 
             };
             $.ajax(settings)
                 .done(function (response) { 
