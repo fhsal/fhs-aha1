@@ -604,10 +604,10 @@ function postAhaCapabilityUpdate(ahaCapabilityID, rallyFeatTotal, rallyEpicProgr
                  "ZSESSIONID": localStorage.rallyID,
                 //  "Access-Control-Allow-Origin": "https://fhsal/github.io" 
                 },
-        "data": JSON.stringify({"SolutionCapability": 
+        "data": {"SolutionCapability": 
                 {"c_PercentDonebyPreliminaryRollupValue": rallyCapabilityProgress,
                   "c_PreliminaryEstimateRollupValue": rallyFeatTotal}
-              }), 
+              }, 
             };
             $.ajax(settings)
                 .done(function (response) { 
