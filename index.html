@@ -602,7 +602,7 @@ function postAhaCapabilityUpdate(ahaCapabilityID, rallyFeatTotal, rallyEpicProgr
                  "contentType": "application/json",
                 //  "Accept": "*/*",
                  "ZSESSIONID": localStorage.rallyID,
-                 "Access-Control-Allow-Credentials": true },
+                 "Access-Control-Allow-Origin": "https://fhsal/github.io" },
         "data": JSON.stringify({"SolutionCapability": 
                 {"c_PercentDonebyPreliminaryRollupValue": rallyCapabilityProgress,
                   "c_PreliminaryEstimateRollupValue": rallyFeatTotal}
