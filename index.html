@@ -594,7 +594,7 @@ function postAhaCapabilityUpdate(ahaCapabilityID, rallyFeatTotal, rallyEpicProgr
  function postRallyCapabilityUpdate(rallyCapID, rallyFeatTotal, rallyCapabilityProgress){
  var settings = {   
         "url": "https://rally1.rallydev.com/slm/webservice/v2.0/portfolioitem/solutioncapability/" + rallyCapID,
-        "method": "PUT",
+        "method": "POST",
         // "timeout": 0,
         "crossDomain": true,
         "access-control-allow-origin": "*",
@@ -602,7 +602,8 @@ function postAhaCapabilityUpdate(ahaCapabilityID, rallyFeatTotal, rallyEpicProgr
                  "contentType": "application/json",
                 //  "Accept": "*/*",
                  "ZSESSIONID": localStorage.rallyID,
-                 "Access-Control-Allow-Origin": "https://fhsal/github.io" },
+                //  "Access-Control-Allow-Origin": "https://fhsal/github.io" 
+                },
         "data": JSON.stringify({"SolutionCapability": 
                 {"c_PercentDonebyPreliminaryRollupValue": rallyCapabilityProgress,
                   "c_PreliminaryEstimateRollupValue": rallyFeatTotal}
