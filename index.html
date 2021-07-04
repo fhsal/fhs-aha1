@@ -601,7 +601,8 @@ function postAhaCapabilityUpdate(ahaCapabilityID, rallyFeatTotal, rallyEpicProgr
         "headers": { 
                  "contentType": "application/json",
                 //  "Accept": "*/*",
-                 "ZSESSIONID": localStorage.rallyID },
+                 "ZSESSIONID": localStorage.rallyID,
+                 "Access-Control-Allow-Credentials": true },
         "data": JSON.stringify({"SolutionCapability": 
                 {"c_PercentDonebyPreliminaryRollupValue": rallyCapabilityProgress,
                   "c_PreliminaryEstimateRollupValue": rallyFeatTotal}
