@@ -1130,7 +1130,7 @@ async function asynchEpicAjax(epicNumber) {
                     "epicProgress" : epicProgress,
                     "epicEffortDone" : epicEffortCompl
                   }
-              console.log('from Ajax, epicCount: ' + epicCount )
+              console.log('++++++++++++++++++++++++++from asyncAjax, epicCount: ' + epicCount )
                       epicSummary.push(epicObject)
                 epicCount = epicCount-1 
                 checkEpicsDone(epicCount) 
@@ -1165,6 +1165,7 @@ async function rallyCapFirstCall(rallyCapID) {
                    let rallyLogItem = {rallyName: rallyObjectName, rallyID: rallyObjectID, rallyFrmatID: rallyFormattedID, ahaID: epicNum}
                    rallyObjectErrorLog.push(rallyLogItem)
               // call next Epic
+              console.log('1111111111111111111111111111111111from 1st Rally call, epicCount: ' + epicCount )
                    epicCount = epicCount-1 
                    checkEpicsDone(epicCount) 
                 }     
@@ -1270,7 +1271,7 @@ async function rallyCapSecondCall(rallyCapID) {
                     "epicProgress" : rallyEpicProgress,
                     "epicEffortDone" : rallyEpicEffortCompl
                   }
-          console.log('from Ajax, epicCount: ' + epicCount )
+          console.log('222222222222222222222222222222222from 2nd Rally call, epicCount: ' + epicCount )
                       epicSummary.push(epicObject)
                 epicCount = epicCount-1 
                 checkEpicsDone(epicCount) 
