@@ -983,8 +983,8 @@ async function asyncParseMilestone(msToParse){
 
                   var i;
                   for(i = 0; i < (numEpics); i++){
-                      (function(i){
-                          setTimeout(function(){
+                      (await function(i){
+                          setTimeout(await function(){
                             let num = epicsToParse[i];
                                   epicNum = num.toString()
                                   $('#msBody').append("Epic #: " + (i+1))
