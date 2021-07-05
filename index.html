@@ -995,8 +995,12 @@ async function parseMilestone(msToParse){
                     //async/await call for Aha! Epic and then related Rally Solution Capability and Rally Solution Capability children 
                         console.log('ParseMilestone, iteration # ' + (i+1) + " of" + numEpics)
                     
-                              asyncEpicAjax(epicNum)
-
+           try{
+              result = await asyncEpicAjax(epicNum);
+              return result;}
+              catch (error) {
+            console.log(error);
+                 }
                     //wait is to allow Aha API to pace - may no longer be needed with updated async/await changes to epicAjax (above)
                           }, 1500 * i);
                       }(i)
