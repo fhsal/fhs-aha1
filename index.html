@@ -1019,7 +1019,7 @@ return result;
 
 async function loopEpics (numEpics, epicsToParse){
   let res = null;
-          try{
+
             var i;
               for(i = 0; i < (numEpics); i++){
                   (function(i){
@@ -1033,16 +1033,17 @@ async function loopEpics (numEpics, epicsToParse){
                 //async/await call for Aha! Epic and then related Rally Solution Capability and Rally Solution Capability children 
                     console.log('ParseMilestone, iteration # ' + (i+1) + " of" + numEpics)
                 
-                          await asyncEpicAjax(epicNum)
+                    try{await asyncEpicAjax(epicNum)
+                        return(res)}
+                        catch (err) {
+                          console.log("fail loopEpics>>", res, err);
+                        }
                 //wait is to allow Aha API to pace - may no longer be needed with updated async/await changes to epicAjax (above)
                       }, 1200 * i);
                   }(i)
                   );
                   };
-  return(res)}
-  catch (err) {
-    console.log("fail loopEpics>>", res, err);
-  }}
+}
 
 function checkMilestonesDone () {
 // when milestone complete decrement msCount and parse next milestone if count != 0 
