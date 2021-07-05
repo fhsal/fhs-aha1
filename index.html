@@ -1114,32 +1114,6 @@ return;
       // checkMilestonesDone()
       };
 
-async function loopEpics (numEpics, epicsToParse){
-  let res = null;
-  var i;
-
-        for(i = 0; i < (numEpics); i++){
-          (function(i){
-              setTimeout(function(){
-                let num = epicsToParse[i];
-                      epicNum = num.toString()
-                      $('#msBody').append("Epic #: " + (i+1))
-                      $('#msBody').append(",  record_id: " + epicNum) ;
-                      $('#msBody').append('<br>') ;
-                      // $('#msResults').append('*') ;
-        //async/await call for Aha! Epic and then related Rally Solution Capability and Rally Solution Capability children 
-            console.log('ParseMilestone, iteration # ' + (i+1) + " of" + numEpics)
-        
-          asyncEpicAjax(epicNum); 
-           
-        //wait is to allow Aha API to pace - may no longer be needed with updated async/await changes to epicAjax (above)
-              }, 1200 * i);
-          }(i)
-          );
-          };
-        }
-
-
 function checkMilestonesDone () {
 // when milestone complete decrement msCount and parse next milestone if count != 0 
 
@@ -1295,7 +1269,7 @@ async function rallyCapFirstCall(rallyCapID) {
         }),
         console.log("rally 1st call"),
                   rallyCapSummary = result,
-                console.log(result);
+                console.log(JSON.stringify(result));
         if(rallyCapSummary.OperationResult){
                   console.log('======> Rally access error, rallyObjectID: ' + rallyCapID)
               // log error     
@@ -1426,7 +1400,7 @@ async function rallyCalls(rallyObjectID){
   let res = null;
   try{
     (await rallyCapFirstCall(rallyObjectID),
-    rallyCapSecondCall(rallyObjectID))
+     await rallyCapSecondCall(rallyObjectID))
   return(res)}
   catch (err) {
     console.log("fail>>", res, err);
