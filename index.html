@@ -984,7 +984,7 @@ async function asyncParseMilestone(msToParse){
                   var i;
                   for(i = 0; i < (numEpics); i++){
                       (await function(i){
-                          setTimeout(await function(){
+                          // setTimeout(await function(){
                             let num = epicsToParse[i];
                                   epicNum = num.toString()
                                   $('#msBody').append("Epic #: " + (i+1))
@@ -997,7 +997,7 @@ async function asyncParseMilestone(msToParse){
                           await asyncEpicAjax(epicNum)
 
                     //wait is to allow Aha API to pace - may no longer be needed with updated async/await changes to epicAjax (above)
-                          }, 1500 * i);
+                          // }, 1500 * i);
                       }(i)
                       );
                       };
