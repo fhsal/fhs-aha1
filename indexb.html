@@ -917,6 +917,109 @@ function parseInitiative(initToParse){
 
 
 // function to parse in individual milestone and update it's progress (a partial copy of #ms_info listener abpve)      
+async function asyncParseMilestone(msToParse){
+
+// Initializing milestone information
+    msEffortSum = 0;
+    msCompleteSum = 0;
+    msPercentComplete = 0;
+    rallyMSeffortSum = 0;
+    rallyMScompleteSum = 0;
+    rallyMSpercentComplete = 0;
+
+    console.log('parseMilestone, MS#: ' + msToParse); 
+
+    // if milestone not undefined
+  if(msToParse){ 
+          //if milestone not 'no related milestones'
+      if(msToParse !=='n'){
+          try{
+            result = await $.ajax( {
+                      "url": "https://optum.aha.io/api/v1/custom_object_records/" + msToParse,
+                      "method": "GET",
+                      // "timeout": 0,
+                      "crossDomain": true,
+                      "access-control-allow-origin": "*",
+                      "headers": { "Authorization": localStorage.ahaToken}
+                    }),
+                    msInfo = result 
+                    localStorage.msInfo = (JSON.stringify(result))
+
+              // call function countEpics to determine the number of epics and assing to var numEpics
+              // and create the object epicsToParse
+                    countEpics()
+                        epicCount = numEpics;
+                  console.log ('number of epics: ' + numEpics)
+
+              //if there are related Epics then display information 
+                      if (numEpics !== 0){msName = msInfo.custom_object_record.custom_fields[0].value}
+                      msID = msInfo.custom_object_record.id
+                      msProduct = msInfo.custom_object_record.product_id
+                      msInitiative = msInfo.custom_object_record.linked_records[0].record_id
+
+              // populate display block
+                  $('#msBody').append('<br>') ;
+                  $('#msBody').append('<strong>MilestoneID: </strong>' + msToParse)
+                  $('#msResults').append('<br>') ;
+                  $('#msResults').append('<strong>MilestoneID: </strong>' + msToParse)
+                  $('#msBody').append('<br>') ;
+                  $('#msBody').append('<strong># Epics: </strong>' + (numEpics))
+                  $('#msResults').append(',  <strong># Epics: </strong>' + (numEpics))
+                  $('#msBody').append('<br>') ;       
+                  $('#msBody').append('<strong>MS Name: </strong>' + msName)
+                  $('#msResults').append(',  <strong> Name: </strong>' + msName.slice(0, 50))
+                  $('#msResults').append('<br>') ;
+                  $('#msBody').append('<br>') ;
+                  $('#msBody').append("==========================================");
+                  $('#msBody').append('<br>') ;
+
+            // if no Epics then checkEpicsDone
+              if (numEpics == 0) { checkEpicsDone(epicCount)}
+
+            // loop through epics, waiting between each fetch to stay within API limits
+
+//trying async loop epics function
+//commenting out below functionality 
+
+                  var i;
+                  for(i = 0; i < (numEpics); i++){
+                      (function(i){
+                          setTimeout(function(){
+                            let num = epicsToParse[i];
+                                  epicNum = num.toString()
+                                  $('#msBody').append("Epic #: " + (i+1))
+                                  $('#msBody').append(",  record_id: " + epicNum) ;
+                                  $('#msBody').append('<br>') ;
+                                  // $('#msResults').append('*') ;
+                    //async/await call for Aha! Epic and then related Rally Solution Capability and Rally Solution Capability children 
+                        console.log('ParseMilestone, iteration # ' + (i+1) + " of" + numEpics)
+                    
+                           asyncEpicAjax(epicNum)
+
+                    //wait is to allow Aha API to pace - may no longer be needed with updated async/await changes to epicAjax (above)
+                          }, 1500 * i);
+                      }(i)
+                      );
+                      };
+                    
+// check condition where there are 'no related milestones', hence 'n' in the condition 
+          if (msToParse =='n'){ checkInitiativesDone()}
+              $('#msBody').append('<br>')
+              msSummary.push(epicSummary);
+
+      return result;}
+      catch (error) {
+              // console.error(error);
+    }
+      }}};
+
+
+
+
+
+
+
+// function to parse in individual milestone and update it's progress (a partial copy of #ms_info listener abpve)      
 async function parseMilestone(msToParse){
 
 // Initializing milestone information
@@ -1031,8 +1134,13 @@ async function loopEpics (numEpics, epicsToParse){
         //async/await call for Aha! Epic and then related Rally Solution Capability and Rally Solution Capability children 
             console.log('ParseMilestone, iteration # ' + (i+1) + " of" + numEpics)
         
-          asyncEpicAjax(epicNum); 
-           
+            try{
+                (await asyncEpicAjax(epicNum)); 
+                return(res)}
+                catch (err) {
+                  console.log("fail>>", res, err);
+                }
+
         //wait is to allow Aha API to pace - may no longer be needed with updated async/await changes to epicAjax (above)
               }, 1200 * i);
           }(i)
