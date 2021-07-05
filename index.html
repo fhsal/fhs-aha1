@@ -998,8 +998,8 @@ async function asyncParseMilestone(msToParse){
 
                     //wait is to allow Aha API to pace - may no longer be needed with updated async/await changes to epicAjax (above)
                           // }, 1500 * i);
-                      }(i)
-                      );
+                             }(i), 
+                      response);
                       };
                     
 // check condition where there are 'no related milestones', hence 'n' in the condition 
