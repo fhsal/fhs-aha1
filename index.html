@@ -1288,8 +1288,8 @@ async function rallyCapSecondCall(rallyCapID) {
 async function rallyCalls(rallyObjectID){
   let res = null;
   try{
-    (await rallyCapFirstCall(rallyObjectID));
-    (await rallyCapSecondCall(rallyObjectID))
+    (await rallyCapFirstCall(rallyObjectID),
+    rallyCapSecondCall(rallyObjectID))
   return(res)}
   catch (err) {
     console.log("fail>>", res, err);
