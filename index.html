@@ -520,8 +520,7 @@ function displayInitiativeInfo () {
         initRef = initInfo.initiative.reference_num;
 // populate initiative summary for display block
         // $('#initResults').append('<br>') ;
-        $('#initResults').append('<strong>InitID: </strong>' + initID);
-        $('#initResults').append('<strong>InitRef: </strong>' + initRef);
+        $('#initResults').append('<strong>InitiativeID: </strong>' + initID +" ("+ initRef +")");
         $('#initResults').append(',  <strong> Name: </strong>' + initName.slice(0, 50));
         $('#initResults').append(',  <strong># Milestones: </strong>' + (numMilestones));
         $('#initResults').append('<br>') ;
