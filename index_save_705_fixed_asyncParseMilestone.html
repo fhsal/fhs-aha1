@@ -916,8 +916,8 @@ function parseInitiative(initToParse){
       };
 
 
-// new async (replacing old ParseMilestone) function to parse in individual milestone and update it's progress (a partial copy of #ms_info listener abpve)      
-async function ParseMilestone(msToParse){
+// function to parse in individual milestone and update it's progress (a partial copy of #ms_info listener abpve)      
+async function asyncParseMilestone(msToParse){
 
 // Initializing milestone information
     msEffortSum = 0;
