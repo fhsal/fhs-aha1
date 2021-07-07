@@ -886,14 +886,15 @@ function parseInitiative(initToParse){
       function(response) {
         localStorage.singleInit = (JSON.stringify(response))
             singleInit = response
+            let singleInitEpics = singleInit.filter(p => p.key == "milestones")
 // still need to check the below as there may be other custom_object_links
             if (!singleInit.initiative.custom_object_links){
               console.log('initiative ' + initToParse + ' has no related milestones')
             }
             else {
 // if there are milestones, push id's into relatedMilestones and set numMilestones = msCount
-              relatedMilestones = singleInit.initiative.custom_object_links[1].record_ids
-              numMilestones = singleInit.initiative.custom_object_links[1].record_ids.length
+              relatedMilestones = singleInit.filter(p => p.key == "milestones").record_ids
+              numMilestones = relatedMilestones.length
               msCount = numMilestones
             }
               console.log(singleInit)
@@ -1141,18 +1142,15 @@ function checkInitiativesDone() {
     console.log('checkInitiativesDone, numInits: ' + numInits)
     console.log('checkInitiativesDone, initCount: ' + initCount)
         if (initCount !==0){
-                  initCount =(initCount-1);
-// identify last element within the next object of PortfolioInits, which should be next initID 
-                let nextInitObject = portfolioInits[initCount].split(": ");
-                let nextInitIndex = nextInitObject.length - 1;
-                  nextInit = nextInitObject[nextInitIndex]
+                  initCount =(initCount-1)
+                  nextInit = portfolioInits[initCount].split(": ")[1]
 
-                console.log('checkInitiativesDone: milestones complete - calling parseInitiative, next init#: ' + nextInit)
+                console.log('milestones complete - calling parseInitiative, next init#: ' + nextInit)
 
                 parseInitiative(nextInit)
               }
     
-  // populate Initiative summary object 
+  // // populate Initiative summary object 
 
   //               let initObject = {
   //                   "productID" : initProductID,
