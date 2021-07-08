@@ -231,8 +231,8 @@ epicCompleteSum = 0;
 epicNum = "";
 numEpics = 0;
 epicCount = 0;
-epicObject = [];
 epicsToParse = [];
+epicObject = [];
 msEffortSum = 0;
 msCompleteSum = 0;
 msPercentComplete = 0;
@@ -248,7 +248,8 @@ numMilestones = 0;
 waitingFlag ="";
 relatedMilestones = [];
 msToParse = "";
-initinfo = "";
+initName = "";
+initInfo = "";
 numInits = 0;
 portfolios = [];
 portfolioInits = [];
@@ -653,7 +654,7 @@ function checkEpicsDone(epicCount) {
                     "msProgress" : msPercentComplete,
                     "msTotalEffortDone" : msCompleteSum
                 };
-              msSummary.push(msObject);
+              // msSummary.push(msObject);
 // call function to post milestone updated information into custom table 
               postMilestoneUpdate();
           console.log('time to call next milestone')
@@ -800,7 +801,7 @@ $("#ms_update").submit(function() {
             };
           })
           $('#msBody').append('<br>')
-          msSummary.push(epicSummary)
+          // msSummary.push(epicSummary)
           });
         return false;
       });
@@ -911,7 +912,7 @@ function parseInitiative(initToParse){
 // append output for epic 
   } 
       $('#msBody').append('<br>')
-      msSummary.push(epicSummary)
+      // msSummary.push(epicSummary)
 
       // checkMilestonesDone()
 
@@ -1007,7 +1008,7 @@ async function ParseMilestone(msToParse){
 // check condition where there are 'no related milestones', hence 'n' in the condition 
           if (msToParse =='n'){ checkInitiativesDone()}
               $('#msBody').append('<br>')
-              msSummary.push(epicSummary);
+              // msSummary.push(epicSummary);
 
       return result;}
       catch (error) {
@@ -1026,6 +1027,7 @@ async function parseMilestone(msToParse){
     rallyMSeffortSum = 0;
     rallyMScompleteSum = 0;
     rallyMSpercentComplete = 0;
+    epicSummary = [];
 
     console.log('parseMilestone, MS#: ' + msToParse); 
 
@@ -1108,7 +1110,7 @@ async function parseMilestone(msToParse){
 // check condition where there are 'no related milestones', hence 'n' in the condition 
   if (msToParse =='n'){ checkInitiativesDone()}
       $('#msBody').append('<br>')
-      msSummary.push(epicSummary);
+      // msSummary.push(epicSummary);
 
 return;
 
@@ -1191,6 +1193,7 @@ function checkInitiativesDone() {
 
 async function asyncEpicAjax(epicNumber) {
     let result;
+    epicObject = [];
 
     try {
         result = await $.ajax({
@@ -1381,11 +1384,18 @@ async function rallyCapSecondCall(rallyCapID) {
 
 //update and save epic-level information 
               let epicObject = {
-                    "epicID" : epicInfo.epic.id,
-                    "epicName" :epicInfo.epic.name.slice(0, 30),
+                    "initName" : initName,
+                    "initID" : initID,
+                    "initRef" : initRef,
+                    "Milestone" : msToParse,
+                    "epicName" : epicInfo.epic.name.slice(0, 60),
+                    "epicRef"  : epicInfo.epic.reference_num,
+                    "ahaEpicID" : epicInfo.epic.id,
+                    "RallyRef" : rallyFormattedID,
+                    "RallyID" : rallyCapID,
                     "epicEffort" :  rallyEpicEffort,
-                    "epicProgress" : rallyEpicProgress,
-                    "epicEffortDone" : rallyEpicEffortCompl
+                    "epicEffortDone" : rallyEpicEffortCompl,
+                    "epicProgress" : rallyEpicProgress
                   }
           console.log('222222222222222222222222222222222from 2nd Rally call, epicCount: ' + epicCount )
 //append information for current Epic to epicSummary object
