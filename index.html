@@ -644,16 +644,16 @@ function checkEpicsDone(epicCount) {
                 $('#msResults').append(';  <strong>  Progress: </strong>' + rallyMSpercentComplete +"%");
                 $('#msResults').append('<br>')
   // populate Milestone summary object 
-                let msObject = {
-                    "productID" : msProduct,
-                    "initiativeID" : msInitiative,
-                    "msID" : msID,
-                    "msName" : msName,
-                    "msTotalEffort" :  msEffortSum,
-                    "msProgress" : msPercentComplete,
-                    "msTotalEffortDone" : msCompleteSum
-                };
-              msSummary.push(msObject);
+              //   let msObject = {
+              //       "productID" : msProduct,
+              //       "initiativeID" : msInitiative,
+              //       "msID" : msID,
+              //       "msName" : msName,
+              //       "msTotalEffort" :  msEffortSum,
+              //       "msProgress" : msPercentComplete,
+              //       "msTotalEffortDone" : msCompleteSum
+              //   };
+              // msSummary.push(msObject);
 // call function to post milestone updated information into Aha Initiative Milestone table 
               postMilestoneUpdate();
           console.log('time to call next milestone')
@@ -1010,6 +1010,8 @@ async function ParseMilestone(msToParse){
 // check condition where there are 'no related milestones', hence 'n' in the condition 
           if (msToParse =='n'){ checkInitiativesDone()}
               $('#msBody').append('<br>')
+
+//              
               msSummary.push(epicSummary);
 
       return result;}
@@ -1152,6 +1154,9 @@ function checkInitiativesDone() {
                   nextInit = nextInitObject[nextInitIndex]
 
                 console.log('checkInitiativesDone: milestones complete - calling parseInitiative, next init#: ' + nextInit)
+
+// add prior initiative Milestone summary to aggregate object 
+    localStorage.initMilestones=JSON.stringify(msSummary)
 
                 parseInitiative(nextInit)
               }
