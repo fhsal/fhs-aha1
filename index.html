@@ -654,7 +654,7 @@ function checkEpicsDone(epicCount) {
                     "msTotalEffortDone" : msCompleteSum
                 };
               msSummary.push(msObject);
-// call function to post milestone updated information into custom table 
+// call function to post milestone updated information into Aha Initiative Milestone table 
               postMilestoneUpdate();
           console.log('time to call next milestone')
               checkMilestonesDone()
@@ -911,7 +911,7 @@ function parseInitiative(initToParse){
 // append output for epic 
   } 
       $('#msBody').append('<br>')
-      msSummary.push(epicSummary)
+//      msSummary.push(epicSummary)
 
       // checkMilestonesDone()
 
@@ -928,6 +928,9 @@ async function ParseMilestone(msToParse){
     rallyMSeffortSum = 0;
     rallyMScompleteSum = 0;
     rallyMSpercentComplete = 0;
+// Initialize objects used to accumulate summary information    
+    epicSummary =[];
+    msSummary = [];
 
     console.log('parseMilestone, MS#: ' + msToParse); 
 
@@ -1153,19 +1156,6 @@ function checkInitiativesDone() {
                 parseInitiative(nextInit)
               }
     
-  // populate Initiative summary object 
-
-  //               let initObject = {
-  //                   "productID" : initProductID,
-  //                   "productName" : initProductName,
-  //                   "initiativeID" : initID,
-  //                   "initiativeName" : initName,
-  //                   "initTotalEffort" :  initEffortSum,
-  //                   "initProgress" : initPercentComplete,
-  //                   "initTotalEffortDone" : initCompleteSum
-  //               };
-  //               initSummary.push(initObject)
-  //     }; 
   }
 
 // input form listener to retrieve information for a single epic 
@@ -1239,15 +1229,15 @@ async function asyncEpicAjax(epicNumber) {
               console.log('old milestone complete: ' + msCompleteSum);
               console.log('old milestone % complete: ' + msPercentComplete + "%");
 
-                let epicObject = {
-                    "epicID" : epicID,
-                    "epicName" :epicName.slice(0, 30),
-                    "epicEffort" :  epicEffort,
-                    "epicProgress" : epicProgress,
-                    "epicEffortDone" : epicEffortCompl
-                  }
+                // let epicObject = {
+                //     "epicID" : epicID,
+                //     "epicName" :epicName.slice(0, 30),
+                //     "epicEffort" :  epicEffort,
+                //     "epicProgress" : epicProgress,
+                //     "epicEffortDone" : epicEffortCompl
+                //   }
               console.log('++++++++++++++++++++++++++from asyncAjax, epicCount: ' + epicCount )
-                      epicSummary.push(epicObject)
+                      // epicSummary.push(epicObject)
                 epicCount = epicCount-1 
                 checkEpicsDone(epicCount) 
                }   
@@ -1380,12 +1370,19 @@ async function rallyCapSecondCall(rallyCapID) {
             // postRallyCapabilityUpdate(rallyCapID, rallyFeatTotal, rallyEpicProgress)
 
 //update and save epic-level information 
-              let epicObject = {
-                    "epicID" : epicInfo.epic.id,
-                    "epicName" :epicInfo.epic.name.slice(0, 30),
+       epicObject = {
+                    "initName" : initName,
+                    "initID" : initID,
+                    "initRef" : initRef,
+                    "Milestone" : msToParse,
+                    "epicName" : epicInfo.epic.name.slice(0, 60),
+                    "epicRef"  : epicInfo.epic.reference_num,
+                    "ahaEpicID" : epicInfo.epic.id,
+                    "RallyRef" : rallyFormattedID,
+                    "RallyID" : rallyCapID,
                     "epicEffort" :  rallyEpicEffort,
-                    "epicProgress" : rallyEpicProgress,
-                    "epicEffortDone" : rallyEpicEffortCompl
+                    "epicEffortDone" : rallyEpicEffortCompl,
+                    "epicProgress" : rallyEpicProgress
                   }
           console.log('222222222222222222222222222222222from 2nd Rally call, epicCount: ' + epicCount )
 //append information for current Epic to epicSummary object
