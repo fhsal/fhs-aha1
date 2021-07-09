@@ -646,16 +646,16 @@ function checkEpicsDone(epicCount) {
                 $('#msResults').append(';  <strong>  Progress: </strong>' + rallyMSpercentComplete +"%");
                 $('#msResults').append('<br>')
   // populate Milestone summary object 
-              //   let msObject = {
-              //       "productID" : msProduct,
-              //       "initiativeID" : msInitiative,
-              //       "msID" : msID,
-              //       "msName" : msName,
-              //       "msTotalEffort" :  msEffortSum,
-              //       "msProgress" : msPercentComplete,
-              //       "msTotalEffortDone" : msCompleteSum
-              //   };
-              // msSummary.push(msObject);
+                let msObject = {
+                    "productID" : msProduct,
+                    "initiativeID" : msInitiative,
+                    "msID" : msID,
+                    "msName" : msName,
+                    "msTotalEffort" :  msEffortSum,
+                    "msProgress" : msPercentComplete,
+                    "msTotalEffortDone" : msCompleteSum
+                };
+              msSummary.push(msObject);
 // call function to post milestone updated information into Aha Initiative Milestone table 
               postMilestoneUpdate();
           console.log('time to call next milestone')
