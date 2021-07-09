@@ -655,7 +655,11 @@ function checkEpicsDone(epicCount) {
                     "msProgress" : msPercentComplete,
                     "msTotalEffortDone" : msCompleteSum
                 };
+
+//build consolidated Milestone Summary object and save to local storage
               msSummary.push(msObject);
+              msSummary.push(epicSummary);
+              localStorage.msArray= JSON.stringify(msSummary);
 // call function to post milestone updated information into Aha Initiative Milestone table 
               postMilestoneUpdate();
           console.log('time to call next milestone')
@@ -802,7 +806,7 @@ $("#ms_update").submit(function() {
             };
           })
           $('#msBody').append('<br>')
-          msSummary.push(epicSummary)
+          // msSummary.push(epicSummary)
           });
         return false;
       });
@@ -1016,7 +1020,7 @@ async function parseMilestone(msToParse){
               $('#msBody').append('<br>')
 
 //              
-              msSummary.push(epicSummary);
+              // msSummary.push(epicSummary);
 
       return result;}
       catch (error) {
