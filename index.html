@@ -910,12 +910,16 @@ function parseInitiative(initToParse){
               console.log(singleInit)
               initProductName = singleInit.initiative.project.name
               initProductID = singleInit.initiative.project.id
+              initName = singleInit.initiative.name;
+              initID = singleInit.initiative.id;
+              initRef = singleInit.initiative.reference_num;
         displayInitiativeInfo()
 
 // set the index and ID of the milestone to parse and call parseMilestone 
 
             msIndex = (numMilestones - msCount)
             msToParse = relatedMilestones[msIndex]
+
             parseMilestone(msToParse)
       })
 // append output for epic 
