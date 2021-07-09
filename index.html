@@ -660,9 +660,10 @@ function checkEpicsDone(epicCount) {
 //build consolidated Milestone Summary object and save to local storage
               msSummary.push(msObject);
               msSummary.push(epicSummary);
-               if(localStorage.msConsolidatedObject){msConsolidatedObject=JSON.parse(localStorage.msConsolidatedObject)}
+               if(localStorage.msArray){msConsolidatedObject=JSON.parse(localStorage.msArray)}
+               msConsolidatedObject=JSON.parse(localStorage.msArray)
                   msConsolidatedObject = msConsolidatedObject.push(msSummary)
-                  localStorage.msConsolidatedObject= JSON.stringify(msConsolidatedObject)
+                  localStorage.msArray= JSON.stringify(msConsolidatedObject)
 // call function to post milestone updated information into Aha Initiative Milestone table 
               postMilestoneUpdate();
           console.log('time to call next milestone')
