@@ -661,7 +661,7 @@ function checkEpicsDone(epicCount) {
               msSummary.push(msObject);
               msSummary.push(epicSummary);
                if(localStorage.msArray){msConsolidatedObject=JSON.parse(localStorage.msArray)}
-               msConsolidatedObject=JSON.parse(localStorage.msArray)
+               else{msConsolidatedObject=JSON.parse(localStorage.msArray)}
                   msConsolidatedObject = msConsolidatedObject.push(msSummary)
                   localStorage.msArray= JSON.stringify(msConsolidatedObject)
 // call function to post milestone updated information into Aha Initiative Milestone table 
