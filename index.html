@@ -236,6 +236,7 @@ epicsToParse = [];
 msEffortSum = 0;
 msCompleteSum = 0;
 msPercentComplete = 0;
+msConsolidatedObject = [];
 msCount = 0;
 msName = "";
 msID = "";
@@ -243,7 +244,7 @@ msIndex = 0;
 msObject = [];
 msSummary = [];
 msInitiative = "";
-msProduct = "";
+msProduct = ""
 numMilestones = 0;
 waitingFlag ="";
 relatedMilestones = [];
@@ -659,7 +660,11 @@ function checkEpicsDone(epicCount) {
 //build consolidated Milestone Summary object and save to local storage
               msSummary.push(msObject);
               msSummary.push(epicSummary);
-              localStorage.msArray= JSON.stringify(msSummary);
+               if(localStorage.msArray){
+                     let tempArray=JSON.parse(localStorage.msArray)}
+               else {let tempArray=[]};   
+                msConsolidatedObject = tempArray.push(msSummary)
+                localStorage.msArray= JSON.stringify(msConsolidatedObject);
 // call function to post milestone updated information into Aha Initiative Milestone table 
               postMilestoneUpdate();
           console.log('time to call next milestone')
