@@ -646,7 +646,7 @@ function checkEpicsDone(epicCount) {
                 $('#msResults').append(';  <strong>  Progress: </strong>' + rallyMSpercentComplete +"%");
                 $('#msResults').append('<br>')
   // populate Milestone summary object 
-                let msObject = {
+                msObject = {
                     "productID" : msProduct,
                     "initiativeID" : msInitiative,
                     "msID" : msID,
@@ -931,6 +931,7 @@ async function parseMilestone(msToParse){
     rallyMSeffortSum = 0;
     rallyMScompleteSum = 0;
     rallyMSpercentComplete = 0;
+    msObject = [];
 // Initialize objects used to accumulate summary information    
     epicSummary =[];
     msSummary = [];
