@@ -992,7 +992,6 @@ async function parseMilestone(msToParse){
 
                   var i;
                   for(i = 0; i < (numEpics); i++){
-                    setTimeout(function(){
                             let num = epicsToParse[i];
                                   epicNum = num.toString()
                                   $('#msBody').append("Epic #: " + (i+1))
@@ -1000,7 +999,6 @@ async function parseMilestone(msToParse){
                                   $('#msBody').append('<br>') ;
                         console.log('ParseMilestone, iteration # ' + (i+1) + " of" + numEpics)
                       await asyncEpicAjax(epicNum)
-                    }, 1200 * i);
                       };
                     
 // check condition where there are 'no related milestones', hence 'n' in the condition 
