@@ -998,25 +998,26 @@ async function parseMilestone(msToParse){
                       };
                     
 // check condition where there are 'no related milestones', hence 'n' in the condition 
-          if (msToParse =='n'){checkInitiativesDone()}
+          if (msToParse =='n'){ 
             
-            // msObject = {
-            //         "productID" : msProduct,
-            //         "initiativeID" : initID,
-            //         "msID" : msID,
-            //         "msName" : msName.slice(0, 50),
-            //         "msTotalEffort" :  0,
-            //         "msProgress" : 0,
-            //         "msTotalEffortDone" : 0
-            //     };
+            msObject = {
+                    "productID" : msProduct,
+                    "initiativeID" : initID,
+                    "msID" : msID,
+                    "msName" : msName.slice(0, 50),
+                    "msTotalEffort" :  0,
+                    "msProgress" : 0,
+                    "msTotalEffortDone" : 0
+                };
                 
-// // Create Milestone Summary object with no Epics and save to local storage
-//               msSummary.push(msObject);
-//               if(localStorage.msArray){msConsolidatedObject=JSON.parse(localStorage.msArray)}
-//               //  else{msConsolidatedObject=JSON.parse(localStorage.msArray)}
-//               msConsolidatedObject.push(msSummary)
-//               localStorage.msArray= JSON.stringify(msConsolidatedObject)
+// Create Milestone Summary object with no Epics and save to local storage
+              msSummary.push(msObject);
+              if(localStorage.msArray){msConsolidatedObject=JSON.parse(localStorage.msArray)}
+              //  else{msConsolidatedObject=JSON.parse(localStorage.msArray)}
+              msConsolidatedObject.push(msSummary)
+              localStorage.msArray= JSON.stringify(msConsolidatedObject)
             
+            checkInitiativesDone()}
 
               $('#msBody').append('<br>')
 
