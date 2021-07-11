@@ -641,7 +641,7 @@ function checkEpicsDone(epicCount) {
   // populate Milestone summary object 
                 msObject = {
                     "productID" : msProduct,
-                    "initiativeID" : msInitiative,
+                    "initiativeID" : initID,
                     "initiativeName" : initName,
                     "initRef" : initRef,
                     "msID" : msID,
@@ -701,7 +701,7 @@ $("#ms_info").submit(function() {
             msName = msInfo.custom_object_record.custom_fields[0].value
             msID = msInfo.custom_object_record.id
             msProduct = msInfo.custom_object_record.product_id
-            msInitiative = msInfo.custom_object_record.linked_records[0].record_id
+            msInitiative = initID
 
         if (numEpics !== 0){
 // populate display block
@@ -766,7 +766,7 @@ $("#ms_update").submit(function() {
         if (numEpics !== 0){msName = msInfo.custom_object_record.custom_fields[0].value}
             msID = msInfo.custom_object_record.id
             msProduct = msInfo.custom_object_record.product_id
-            msInitiative = msInfo.custom_object_record.linked_records[0].record_id
+            msInitiative = initID
 // populate display block
         $('#msBody').append('<br>') ;
         $('#msBody').append('<strong>MilestoneID: </strong>' + productKey)
