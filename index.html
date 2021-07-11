@@ -971,7 +971,7 @@ async function parseMilestone(msToParse){
                       msID = msInfo.custom_object_record.id;
                       msProduct = msInfo.custom_object_record.product_id;
                       msInitiative = initID;
-                      execReporting = msInfo.custom_object_record.custom_fields[4].value;
+                      if(msInfo.custom_object_record.custom_fields[4].value){execReporting = msInfo.custom_object_record.custom_fields[4].value};
 
               // populate display block
                   $('#msBody').append('<br>') ;
