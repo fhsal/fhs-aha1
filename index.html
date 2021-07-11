@@ -649,7 +649,7 @@ function checkEpicsDone(epicCount) {
                     "msTotalEffort" :  showmsEffortSum,
                     "msProgress" : rallyMSpercentComplete,
                     "msTotalEffortDone" : showmsCompleteSum,
-                    "execReporting" : execReporting
+                    // "execReporting" : execReporting
                 };
 
 //build consolidated Milestone Summary object and save to local storage
@@ -971,7 +971,7 @@ async function parseMilestone(msToParse){
                       msID = msInfo.custom_object_record.id;
                       msProduct = msInfo.custom_object_record.product_id;
                       msInitiative = initID;
-                      if(msInfo.custom_object_record.custom_fields[4].value){execReporting = msInfo.custom_object_record.custom_fields[4].value};
+                      // if(msInfo.custom_object_record.custom_fields[4].value){execReporting = msInfo.custom_object_record.custom_fields[4].value};
 
               // populate display block
                   $('#msBody').append('<br>') ;
@@ -1016,7 +1016,7 @@ async function parseMilestone(msToParse){
                     "initiativeName" : initName,
                     "initRef" : initRef,
                     "msID" : msID,
-                    "execReporting" : "No",
+                    // "execReporting" : "No",
                     "msName" : msName.slice(0, 50),
                     "msTotalEffort" :  0,
                     "msProgress" : 0,
