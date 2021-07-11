@@ -372,7 +372,6 @@ api.get("/initiatives/" + productKey, {per_page: 50, fields: 'children'},
       $('#prodResults').append('<br>')
       $('#prodResults').append(JSON.stringify(portfolioInits))
       $('#prodResults').append('<br><br>')
-
           });
         });
         return false;
@@ -587,9 +586,6 @@ function postAhaCapabilityUpdate(ahaCapabilityID, rallyFeatTotal, rallyEpicProgr
                 console.log( "Rally Rollup Feature Estimate Total: " + rallyFeatTotal);
             });
  }
-
-
-
  function postRallyCapabilityUpdate(rallyCapID, rallyFeatTotal, rallyCapabilityProgress){
  var settings = {   
         "url": "https://rally1.rallydev.com/slm/webservice/v2.0/portfolioitem/solutioncapability/" + rallyCapID,
@@ -664,7 +660,6 @@ function checkEpicsDone(epicCount) {
               checkMilestonesDone()
       }; 
   }
-
 
 // input form listener to retrieve epic summary information for a single milestone
 $("#ms_info").submit(function() { 
@@ -809,7 +804,6 @@ $("#ms_update").submit(function() {
         return false;
       });
 
-
 // API call to update milestones for an initiative by iterating through each related milestone
 $("#init_update").submit(function() { 
 
@@ -860,7 +854,6 @@ console.log('init update');
       });
     return false;
   });
-
 
 // function to parse in individual initiative and update it's progress (similar to parseMilestone)      
 function parseInitiative(initToParse){
@@ -916,15 +909,11 @@ function parseInitiative(initToParse){
 
             parseMilestone(msToParse)
       })
-// append output for epic 
+
   } 
       $('#msBody').append('<br>')
-//      msSummary.push(epicSummary)
-
-      // checkMilestonesDone()
 
       };
-
 
 // new async (replacing old ParseMilestone) function to parse in individual milestone and update it's progress (a partial copy of #ms_info listener abpve)      
 
@@ -996,27 +985,16 @@ async function parseMilestone(msToParse){
             // loop through epics, waiting between each fetch to stay within API limits
 
 //trying async loop epics function
-//commenting out below functionality 
 
                   var i;
                   for(i = 0; i < (numEpics); i++){
-                      // (await function(i){
-                          // setTimeout(await function(){
                             let num = epicsToParse[i];
                                   epicNum = num.toString()
                                   $('#msBody').append("Epic #: " + (i+1))
                                   $('#msBody').append(",  record_id: " + epicNum) ;
                                   $('#msBody').append('<br>') ;
-                                  // $('#msResults').append('*') ;
-                    //async/await call for Aha! Epic and then related Rally Solution Capability and Rally Solution Capability children 
                         console.log('ParseMilestone, iteration # ' + (i+1) + " of" + numEpics)
-                    
-                        await asyncEpicAjax(epicNum)
-
-                    //wait is to allow Aha API to pace - may no longer be needed with updated async/await changes to epicAjax (above)
-                          // }, 1500 * i);
-                            //  }(i), 
-                      // response);
+                      await asyncEpicAjax(epicNum)
                       };
                     
 // check condition where there are 'no related milestones', hence 'n' in the condition 
@@ -1304,7 +1282,7 @@ async function rallyCapSecondCall(rallyCapID) {
 
 //post Feature derived totals to the new custom fields in the Rally Solution Capability
 
-            // postRallyCapabilityUpdate(rallyCapID, rallyFeatTotal, rallyEpicProgress)
+// postRallyCapabilityUpdate(rallyCapID, rallyFeatTotal, rallyEpicProgress)
 
 //update and save epic-level information 
        epicObject = {
@@ -1349,9 +1327,6 @@ async function rallyCalls(rallyObjectID){
   catch (err) {
     console.log("fail>>", res, err);
   }}
-
-
-    
     </script>
   </body>
 </html>
