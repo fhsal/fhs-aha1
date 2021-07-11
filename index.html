@@ -884,30 +884,34 @@ function parseInitiative(initToParse){
       function(response) {
         localStorage.singleInit = (JSON.stringify(response))
             singleInit = response
+            console.log(singleInit)
+            initProductName = singleInit.initiative.project.name
+            initProductID = singleInit.initiative.project.id
+            initName = singleInit.initiative.name;
+            initID = singleInit.initiative.id;
+            initRef = singleInit.initiative.reference_num;
+
 // still need to check the below as there may be other custom_object_links
             if (!singleInit.initiative.custom_object_links){
               console.log('initiative ' + initToParse + ' has no related milestones')
+              displayInitiativeInfo()
+              checkInitiativesDone()
             }
             else {
 // if there are milestones, push id's into relatedMilestones and set numMilestones = msCount
               relatedMilestones = singleInit.initiative.custom_object_links[1].record_ids
               numMilestones = singleInit.initiative.custom_object_links[1].record_ids.length
               msCount = numMilestones
-            }
-              console.log(singleInit)
-              initProductName = singleInit.initiative.project.name
-              initProductID = singleInit.initiative.project.id
-              initName = singleInit.initiative.name;
-              initID = singleInit.initiative.id;
-              initRef = singleInit.initiative.reference_num;
-        displayInitiativeInfo()
+              displayInitiativeInfo()
 
+            }
 // set the index and ID of the milestone to parse and call parseMilestone 
 
             msIndex = (numMilestones - msCount)
             msToParse = relatedMilestones[msIndex]
 
             parseMilestone(msToParse)
+
       })
 
   } 
@@ -998,25 +1002,27 @@ async function parseMilestone(msToParse){
                       };
                     
 // check condition where there are 'no related milestones', hence 'n' in the condition 
-          if (msToParse =='n'){checkInitiativesDone()}
+          if (msToParse =='n'){ 
             
-            // msObject = {
-            //         "productID" : msProduct,
-            //         "initiativeID" : initID,
-            //         "msID" : msID,
-            //         "msName" : msName.slice(0, 50),
-            //         "msTotalEffort" :  0,
-            //         "msProgress" : 0,
-            //         "msTotalEffortDone" : 0
-            //     };
+            msObject = {
+                    "productID" : msProduct,
+                    "initiativeID" : initID,
+                    "msID" : msID,
+                    "msName" : msName.slice(0, 50),
+                    "msTotalEffort" :  0,
+                    "msProgress" : 0,
+                    "msTotalEffortDone" : 0
+                };
                 
-// // Create Milestone Summary object with no Epics and save to local storage
-//               msSummary.push(msObject);
-//               if(localStorage.msArray){msConsolidatedObject=JSON.parse(localStorage.msArray)}
-//               //  else{msConsolidatedObject=JSON.parse(localStorage.msArray)}
-//               msConsolidatedObject.push(msSummary)
-//               localStorage.msArray= JSON.stringify(msConsolidatedObject)
+// Create Milestone Summary object with no Epics and save to local storage
+              msSummary.push(msObject);
+              if(localStorage.msArray){msConsolidatedObject=JSON.parse(localStorage.msArray)}
+              //  else{msConsolidatedObject=JSON.parse(localStorage.msArray)}
+              msConsolidatedObject.push(msSummary)
+              localStorage.msArray= JSON.stringify(msConsolidatedObject)
             
+            checkInitiativesDone()
+          }
 
               $('#msBody').append('<br>')
 
