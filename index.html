@@ -238,6 +238,8 @@ msCompleteSum = 0;
 msPercentComplete = 0;
 msConsolidatedObject = [];
 msCount = 0;
+msFlatArray = [];
+msPreviouslyFound = [];
 msName = "";
 msID = "";
 msIndex = 0;
@@ -1332,6 +1334,38 @@ async function rallyCalls(rallyObjectID){
   catch (err) {
     console.log("fail>>", res, err);
   }}
+
+
+// create flat array of Milestones from msConsolidatedObject, passed in as param
+function msFlatten(obj){
+  {for (i=0; i<(obj.length-1); i++){
+        msFlatArray.push(obj[i][0])
+        console.log('msFlatArray: ' + msFlatArray)
+  }}
+}
+
+function findMS(ms){
+  msPreviouslyFound = msFlatArray.find( ( {msID}) => msID === ms);
+  // console.log("msPreviouslyFound: " + msPreviouslyFound)
+
+  return msPreviouslyFound
+  }
+
+
+function searchObject(object, param){
+  var i;
+        for(i = 0; i < 50; i++){
+            (function(i){
+               if(object[0].msID = param){
+
+                console.log(object[0])
+               }
+              ;
+            }(i)
+            );
+            };
+}
+
     </script>
   </body>
 </html>
