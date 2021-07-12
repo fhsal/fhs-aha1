@@ -567,6 +567,7 @@ function postMilestoneUpdate(){
     });
 // write rally logged items to local storage 
     localStorage.setItem("rallyErrorItems", JSON.stringify(rallyObjectErrorLog));
+
   }
 
 function postAhaCapabilityUpdate(ahaCapabilityID, rallyFeatTotal, rallyEpicProgress){
@@ -664,6 +665,8 @@ function checkEpicsDone(epicCount) {
               localStorage.msArray= JSON.stringify(msConsolidatedObject)
 // call function to post milestone updated information into Aha Initiative Milestone table 
               postMilestoneUpdate();
+
+              postAhaCapabilityUpdate(ahaCapabilityID, rallyFeatTotal, rallyEpicProgress)
           console.log('time to call next milestone')
               checkMilestonesDone()
       }; 
@@ -1137,6 +1140,12 @@ async function asyncEpicAjax(epicNumber) {
 // getRally Capability Details via async/await function that calls for Capability summary first and then children
 
                   await rallyCalls(rallyObjectID)
+
+// post updates to aha and Rally
+
+console.log('posting to Aha! and Rally: ----------------------------------------------')
+                  postAhaCapabilityUpdate(epicID, rallyEpicEffort, rallyEpicProgress);
+                  postRallyCapabilityUpdate(rallyObjectID, rallyEpicEffort, rallyEpicProgress)
 
                  }
                else{
