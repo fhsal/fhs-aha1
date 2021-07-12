@@ -587,7 +587,7 @@ function postAhaCapabilityUpdate(ahaCapabilityID, rallyFeatTotal, rallyEpicProgr
             };
             $.ajax(settings)
                 .done(function (response) { 
-                console.log('Aha! Capbility PUT update: ' + JSON.stringify(response));
+                console.log('Aha! Capbility PUT update: ');
                 console.log( "Rally Feature % Complete: " + rallyEpicProgress);
                 console.log( "Rally Rollup Feature Estimate Total: " + rallyFeatTotal);
             });
