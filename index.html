@@ -1358,20 +1358,18 @@ function findMS(ms){
   return msPreviouslyFound
   }
 
+  function epicFlatten (obj){
+    {for (i=0; i<(obj.length-1); i++){
+        console.log ('i= ' + i)
+        if(obj[i][1]){
+          obj[i][1].forEach(element => {
+              let fullEpic = { ...obj[i][0], ...element}
+          epicFlatArray.push(fullEpic)    
+          });
+      }}}
 
-function searchObject(object, param){
-  var i;
-        for(i = 0; i < 50; i++){
-            (function(i){
-               if(object[0].msID = param){
-
-                console.log(object[0])
-               }
-              ;
-            }(i)
-            );
-            };
-}
+      return epicFlatArray
+  }
 
     </script>
   </body>
