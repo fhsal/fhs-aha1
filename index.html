@@ -1144,8 +1144,8 @@ async function asyncEpicAjax(epicNumber) {
 // post updates to aha and Rally
 
 console.log('posting to Aha! and Rally: ----------------------------------------------')
-                  postAhaCapabilityUpdate(epicID, rallyFeatTotal, rallyEpicProgress);
-                  postRallyCapabilityUpdate(rallyObjectID, rallyFeatTotal, rallyEpicProgress)
+                  postAhaCapabilityUpdate(epicID, rallyFeatTotal, newRallyPercentComplete);
+                  postRallyCapabilityUpdate(rallyObjectID, rallyFeatTotal, newRallyPercentComplete)
 
                  }
                else{
