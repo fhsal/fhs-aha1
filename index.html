@@ -230,7 +230,9 @@ epicEffortSum = 0;
 epicCompleteSum = 0;
 epicNum = "";
 numEpics = 0;
+epicConsolidatedObject = [];
 epicCount = 0;
+epicFlatArray = [];
 epicObject = [];
 epicsToParse = [];
 msEffortSum = 0;
@@ -1316,6 +1318,10 @@ async function rallyCapSecondCall(rallyCapID) {
           console.log('222222222222222222222222222222222from 2nd Rally call, epicCount: ' + epicCount )
 //append information for current Epic to epicSummary object
           epicSummary.push(epicObject)
+
+//append information for current Epic to epicConsolidatedObject object
+          epicConsolidatedObject.push(epicObject)
+
 //post updates to Aha! and Rally Capability (Epic) custom fields by calling update functions 
               // postAhaCapabilityUpdate(epicID, rallyEpicEffort, rallyEpicProgress);
               // postRallyCapabilityUpdate(rallyCapID, rallyFeatTotal, rallyEpicProgress);
