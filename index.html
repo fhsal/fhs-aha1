@@ -1143,9 +1143,9 @@ async function asyncEpicAjax(epicNumber) {
 
 // post updates to aha and Rally
 
-console.log('posting to Aha! and Rally: ----------------------------------------------')
-                  postAhaCapabilityUpdate(epicID, rallyFeatTotal, newRallyPercentComplete);
-                  postRallyCapabilityUpdate(rallyObjectID, rallyFeatTotal, newRallyPercentComplete)
+// console.log('posting to Aha! and Rally: ----------------------------------------------')
+//                   postAhaCapabilityUpdate(epicID, rallyFeatTotal, newRallyPercentComplete);
+//                   postRallyCapabilityUpdate(rallyObjectID, rallyFeatTotal, newRallyPercentComplete)
 
                  }
                else{
@@ -1306,10 +1306,6 @@ async function rallyCapSecondCall(rallyCapID) {
           console.log("Rally MS effort Sum subtotal: " + rallyMSeffortSum);
           console.log("Rally MS complete Sum subtotal: " + rallyMScompleteSum);
 
-//post Feature derived totals to the new custom fields in the Rally Solution Capability
-
-// postRallyCapabilityUpdate(rallyCapID, rallyFeatTotal, rallyEpicProgress)
-
 //update and save epic-level information 
        epicObject = {
                     "initName" : initName,
@@ -1327,14 +1323,17 @@ async function rallyCapSecondCall(rallyCapID) {
                   }
           console.log('222222222222222222222222222222222from 2nd Rally call, epicCount: ' + epicCount )
 //append information for current Epic to epicSummary object
-          epicSummary.push(epicObject)
+                epicSummary.push(epicObject)
 
 //append information for current Epic to epicConsolidatedObject object
-          epicConsolidatedObject.push(epicObject)
+                epicConsolidatedObject.push(epicObject)
 
-//post updates to Aha! and Rally Capability (Epic) custom fields by calling update functions 
-              // postAhaCapabilityUpdate(epicID, rallyEpicEffort, rallyEpicProgress);
-              // postRallyCapabilityUpdate(rallyCapID, rallyFeatTotal, rallyEpicProgress);
+// post Feature derived totals to the new custom fields in the Rally Solution Capability
+// postRallyCapabilityUpdate(rallyCapID, rallyFeatTotal, rallyEpicProgress)
+
+         console.log('posting to Aha! and Rally: ----------------------------------------------')
+                  postAhaCapabilityUpdate(epicInfo.epic.id, rallyEpicEffort, rallyEpicProgress);
+                  postRallyCapabilityUpdate(rallyCapID, rallyEpicEffort, rallyEpicProgress)
 
                 epicCount = epicCount-1 
                 checkEpicsDone(epicCount) 
