@@ -234,6 +234,7 @@ epicConsolidatedObject = [];
 epicCount = 0;
 epicFlatArray = [];
 epicObject = [];
+epicPreviouslyFound = [];
 epicsToParse = [];
 msEffortSum = 0;
 msCompleteSum = 0;
@@ -1357,11 +1358,19 @@ function msFlatten(obj){
   }}
 }
 
+//function to parse msConsolidatedObject and return input milestone object if found
 function findMS(ms){
   msPreviouslyFound = msFlatArray.find( ( {msID}) => msID === ms);
   // console.log("msPreviouslyFound: " + msPreviouslyFound)
 
   return msPreviouslyFound
+  }
+
+  //function to parse epicConsolidatedObject and return input epic object if found
+  function findEpic(epic){
+  epicPreviouslyFound = epicConsolidatedObject.find( ( {ahaEpicID}) => ahaEpicID === epic);
+
+  return epicPreviouslyFound
   }
 
   function epicFlatten (obj){
