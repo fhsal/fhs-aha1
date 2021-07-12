@@ -1295,7 +1295,7 @@ async function rallyCapSecondCall(rallyCapID) {
 //calculate Rally Capability-level (Epic) stats
           let rallyEpicEffort = rallyFeatTotal;
               if (rallyEpicEffort > 0) { rallyEpicEffort = rallyEpicEffort} else { rallyEpicEffort = 0} ;
-                let rallyEpicProgress = newRallyPercentComplete;
+                let rallyEpicProgress = Math.round(100*newRallyPercentComplete);
                 let rallyEpicEffortCompl = rallyPointsDone;
               if (rallyEpicEffortCompl > 0) { rallyEpicEffortCompl = rallyEpicEffortCompl} else { rallyEpicEffortCompl = 0} ;
 //update Rally Milestone-level stats
