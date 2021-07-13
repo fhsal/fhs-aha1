@@ -410,9 +410,9 @@ $("#portfolio_update").submit(function() {
 // set number of initiatives within portfolio
           numInits = planItems.initiative.children.length;
 
-// set the initCount to numInits -1 so that the array count-down will terminate at zero origin  
+// set the initCount to numInits  
 
-          initCount = (numInits-1);
+          initCount = (numInits);
 
 // build portfolio initiative object           
       for (i = 0; i < numInits; i++){
@@ -1089,6 +1089,12 @@ function checkInitiativesDone() {
 
                 parseInitiative(nextInit)
               }
+        else {
+          $('#msResults').append('<br>')
+          $('#msResults').append('<strong>  Initiatives Complete:  </strong>' + numInits + "total");
+          $('#msResults').append('<br>')
+
+        }
     
   }
 
