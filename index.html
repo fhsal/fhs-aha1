@@ -1100,11 +1100,10 @@ function checkInitiativesDone() {
               }
         else {
           $('#msResults').append('<br>')
-          $('#msResults').append('<strong>  Initiatives Complete:  </strong>' + numInits + "total");
+          $('#msResults').append('<strong>  Initiatives Complete !  </strong>' );
           $('#msResults').append('<br>')
 
         }
-    
   }
 
 // input form listener to retrieve information for a single epic 
@@ -1159,12 +1158,6 @@ async function asyncEpicAjax(epicNumber) {
 
                   await rallyCalls(rallyObjectID)
 
-// post updates to aha and Rally
-
-// console.log('posting to Aha! and Rally: ----------------------------------------------')
-//                   postAhaCapabilityUpdate(epicID, rallyFeatTotal, newRallyPercentComplete);
-//                   postRallyCapabilityUpdate(rallyObjectID, rallyFeatTotal, newRallyPercentComplete)
-
                  }
                else{
 // all this logic regarding effort and progress needs to be replaced with what comes from Rally 
@@ -1183,14 +1176,6 @@ async function asyncEpicAjax(epicNumber) {
               console.log('old milestone effort subtotal: ' + msEffortSum);
               console.log('old milestone complete: ' + msCompleteSum);
               console.log('old milestone % complete: ' + msPercentComplete + "%");
-
-                // let epicObject = {
-                //     "epicID" : epicID,
-                //     "epicName" :epicName.slice(0, 30),
-                //     "epicEffort" :  epicEffort,
-                //     "epicProgress" : epicProgress,
-                //     "epicEffortDone" : epicEffortCompl
-                //   }
               console.log('++++++++++++++++++++++++++from asyncAjax, epicCount: ' + epicCount )
                       // epicSummary.push(epicObject)
                 epicCount = epicCount-1 
@@ -1241,7 +1226,7 @@ async function rallyCapFirstCall(rallyCapID) {
                   rallyPercentComplete = rallyCapSummary.SolutionCapability.PercentDoneByStoryPlanEstimate;
                   rallyChildren = rallyCapSummary.SolutionCapability.Children.Count;
                   // rallyFormattedID = rallyCapSummary.SolutionCapability.FormattedID;
-                  rallyPointsDone = rallyLeafStoryPoints*rallyPercentComplete;
+                  rallyPointsDone = Math.round(rallyLeafStoryPoints*rallyPercentComplete);
                 }     ;
             console.log("Rally FormattedID: " + rallyFormattedID)
             console.log("Rally ObjectID: " + rallyCapID)
@@ -1424,8 +1409,7 @@ function findMS(ms){
       return epicFlatArray
   }
 
- 
-  
+ // ================================================================================================================
   // read from file functions ......
   function dispFile(contents) {
   document.getElementById('contents').innerHTML=contents
