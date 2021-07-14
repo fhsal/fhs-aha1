@@ -1018,36 +1018,7 @@ async function parseMilestone(msToParse){
                                   $('#msBody').append(",  record_id: " + epicNum) ;
                                   $('#msBody').append('<br>') ;
                         console.log('ParseMilestone, iteration # ' + (i+1) + " of" + numEpics)
-// adding lookup to see if Epic has previously been found in this run; if so then use those values                      
-                    if(findEpic(epicNum)){
-                        let e=epicPreviouslyFound
-                      console.log('Epic prevously found! ******************************' + epicNum) 
-//update Rally Milestone-level stats
-                        rallyMSeffortSum = rallyMSeffortSum + e.epicEffort;
-                        rallyMScompleteSum = Math.round(rallyMScompleteSum + e.epicEffortDone)
-                          if (rallyMSeffortSum>0) {rallyMSpercentComplete = Math.round(100*rallyMScompleteSum/rallyMSeffortSum)} else {rallyMSpercentComplete = 0}
-
-//update epicObject and epicSummary                             
-                              epicObject = {
-                                  "initName" : e.initName,
-                                  "initID" : e.initID,
-                                  "initRef" : e.initRef,
-                                  "Milestone" : e.msToParse,
-                                  "epicName" : e.epicName,
-                                  "epicRef"  : e.epicRef,
-                                  "ahaEpicID" : e.epicId,
-                                  "RallyRef" : e.rallyRef,
-                                  "RallyID" : e.rallyID,
-                                  "epicEffort" :  e.epicEffort,
-                                  "epicEffortDone" : e.epicEffortDone,
-                                  "epicProgress" : e.epicProgress
-                              }
-//append information for current Epic to epicSummary object
-                            epicSummary.push(epicObject)
-                        }
-//if epic not previously found, then make API calls
-                    else{ 
-                          await asyncEpicAjax(epicNum)}
+                      await asyncEpicAjax(epicNum)
                       };
                     
 // check condition where there are 'no related milestones', hence 'n' in the condition 
