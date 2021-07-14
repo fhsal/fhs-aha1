@@ -1207,6 +1207,7 @@ async function rallyCapFirstCall(rallyCapID) {
     let result;
     rallyLeafStoryPoints= 0;
     rallyPointsDone = 0;
+    let rallyChildren = 0;
     // rallyFormattedID = '';
     try {
         result = await $.ajax({
@@ -1228,7 +1229,7 @@ async function rallyCapFirstCall(rallyCapID) {
               // set rally values to zero since no access
                   rallyLeafStoryPoints = 0;
                   rallyPercentComplete = 0;
-                  let rallyChildren = 0;
+                  rallyChildren = 0;
                   rallyPointsDone = 0;
               // call next Epic
                    epicCount = epicCount-1 
@@ -1238,7 +1239,7 @@ async function rallyCapFirstCall(rallyCapID) {
         else{
                   rallyLeafStoryPoints = rallyCapSummary.SolutionCapability.LeafStoryPlanEstimateTotal;
                   rallyPercentComplete = rallyCapSummary.SolutionCapability.PercentDoneByStoryPlanEstimate;
-                  let rallyChildren = rallyCapSummary.SolutionCapability.Children.Count;
+                  rallyChildren = rallyCapSummary.SolutionCapability.Children.Count;
                   // rallyFormattedID = rallyCapSummary.SolutionCapability.FormattedID;
                   rallyPointsDone = rallyLeafStoryPoints*rallyPercentComplete;
                 }     ;
