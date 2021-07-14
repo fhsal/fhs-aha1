@@ -1207,7 +1207,7 @@ async function rallyCapFirstCall(rallyCapID) {
     let result;
     rallyLeafStoryPoints= 0;
     rallyPointsDone = 0;
-    rallyFormattedID = '';
+    // rallyFormattedID = '';
     try {
         result = await $.ajax({
         "url": "https://rally1.rallydev.com/slm/webservice/v2.0/portfolioitem/solutioncapability/" + rallyCapID,
@@ -1217,7 +1217,7 @@ async function rallyCapFirstCall(rallyCapID) {
         "access-control-allow-origin": "*",
         "headers": { "ZSESSIONID": localStorage.rallyID },
         }),
-        console.log("rally 1st call"),
+        console.log('1111111111111111111111111111111111from 1st Rally call, epicCount: ' + epicCount )
                   rallyCapSummary = result,
                 console.log(result);
         if(rallyCapSummary.OperationResult){
@@ -1225,24 +1225,31 @@ async function rallyCapFirstCall(rallyCapID) {
               // log error     
                    let rallyLogItem = {rallyName: rallyObjectName, rallyID: rallyObjectID, rallyFrmatID: rallyFormattedID, ahaID: epicNum}
                    rallyObjectErrorLog.push(rallyLogItem)
+              // set rally values to zero since no access
+                  rallyLeafStoryPoints = 0;
+                  rallyPercentComplete = 0;
+                  let rallyChildren = 0;
+                  rallyPointsDone = 0;
               // call next Epic
-              console.log('1111111111111111111111111111111111from 1st Rally call, epicCount: ' + epicCount )
                    epicCount = epicCount-1 
                    checkEpicsDone(epicCount) 
-                }     
+                }
+              // else use rally values from the children that we do have access to  
+        else{
                   rallyLeafStoryPoints = rallyCapSummary.SolutionCapability.LeafStoryPlanEstimateTotal;
                   rallyPercentComplete = rallyCapSummary.SolutionCapability.PercentDoneByStoryPlanEstimate;
                   let rallyChildren = rallyCapSummary.SolutionCapability.Children.Count;
-                  rallyFormattedID = rallyCapSummary.SolutionCapability.FormattedID;
+                  // rallyFormattedID = rallyCapSummary.SolutionCapability.FormattedID;
                   rallyPointsDone = rallyLeafStoryPoints*rallyPercentComplete;
-                console.log("Rally FormattedID: " + rallyFormattedID)
-                console.log("Rally ObjectID: " + rallyCapID)
-                console.log("Aha ObjectID: " + epicInfo.epic.id)
-                console.log("Aha EpicRef: " + epicInfo.epic.reference_num)
-                console.log("Rally Capability Name: " + rallyObjectName)
-                console.log("Rally Number of Children: " + rallyChildren)
-                console.log("Rally Leaf Story Points Total: " + rallyLeafStoryPoints)
-                console.log("Rally Points Done: " + rallyPointsDone)
+                }     ;
+            console.log("Rally FormattedID: " + rallyFormattedID)
+            console.log("Rally ObjectID: " + rallyCapID)
+            console.log("Aha ObjectID: " + epicInfo.epic.id)
+            console.log("Aha EpicRef: " + epicInfo.epic.reference_num)
+            console.log("Rally Capability Name: " + rallyObjectName)
+            console.log("Rally Number of Children: " + rallyChildren)
+            console.log("Rally Leaf Story Points Total: " + rallyLeafStoryPoints)
+            console.log("Rally Points Done: " + rallyPointsDone)
         ;
         return result;
     } catch (error) {
@@ -1270,11 +1277,13 @@ async function rallyCapSecondCall(rallyCapID) {
         console.log("rally 2nd call"),
         rallyCapChildren = result
                       console.log(result)
-                    rallySummary = rallyCapChildren.QueryResult.Results
+                //  if(rallyCapChildren.QueryResult.Results) {    
+                //     rallySummary = rallyCapChildren.QueryResult.Results}
+                //  else{rallySummary = []}
 
     // computing total Feature estimate in the Rally Solution Capability children response
     // test to see if there are children, if yes then operate on result for date and total points for Features
-        if (rallySummary.length>0){
+        if (rallyCapChildren.QueryResult.Results){
 
           console.log("has children")   
               rallyFeatTotal = rallySummary.reduce(function(previousValue, currentValue) {
