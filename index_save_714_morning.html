@@ -1044,6 +1044,9 @@ async function parseMilestone(msToParse){
                               }
 //append information for current Epic to epicSummary object
                             epicSummary.push(epicObject)
+
+                            epicCount = epicCount-1 
+                            checkEpicsDone(epicCount)
                         }
 //if epic not previously found, then make API calls
                     else{ 
@@ -1125,7 +1128,7 @@ function checkInitiativesDone() {
               }
         else {
           $('#msResults').append('<br>')
-          $('#msResults').append('<strong>  Initiatives Complete:  </strong>' + numInits + "total");
+          $('#msResults').append('<strong>  Initiatives Complete:  </strong>');
           $('#msResults').append('<br>')
 
         }
@@ -1419,7 +1422,36 @@ function findMS(ms){
   return msPreviouslyFound
   }
 
-  //function to parse epicConsolidatedObject and return input epic object if found
+//function to process an Epic that was previously processed without calling api's again 
+function processFoundEpic(e){
+
+  console.log('Epic prevously found! ******************************' + epicNum) 
+//update Rally Milestone-level stats
+                        rallyMSeffortSum = rallyMSeffortSum + e.epicEffort;
+                        rallyMScompleteSum = Math.round(rallyMScompleteSum + e.epicEffortDone)
+                          if (rallyMSeffortSum>0) {rallyMSpercentComplete = Math.round(100*rallyMScompleteSum/rallyMSeffortSum)} else {rallyMSpercentComplete = 0}
+
+//update epicObject and epicSummary                             
+                              epicObject = {
+                                  "initName" : e.initName,
+                                  "initID" : e.initID,
+                                  "initRef" : e.initRef,
+                                  "Milestone" : e.msToParse,
+                                  "epicName" : e.epicName,
+                                  "epicRef"  : e.epicRef,
+                                  "ahaEpicID" : e.epicId,
+                                  "RallyRef" : e.rallyRef,
+                                  "RallyID" : e.rallyID,
+                                  "epicEffort" :  e.epicEffort,
+                                  "epicEffortDone" : e.epicEffortDone,
+                                  "epicProgress" : e.epicProgress
+                              }
+//append information for current Epic to epicSummary object
+                            epicSummary.push(epicObject)
+
+}
+
+//function to parse epicConsolidatedObject and return input epic object if found
   function findEpic(epic){
   epicPreviouslyFound = epicConsolidatedObject.find( ( {ahaEpicID}) => ahaEpicID === epic);
 
