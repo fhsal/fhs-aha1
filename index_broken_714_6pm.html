@@ -1100,11 +1100,10 @@ function checkInitiativesDone() {
               }
         else {
           $('#msResults').append('<br>')
-          $('#msResults').append('<strong>  Initiatives Complete:  </strong>' + numInits + "total");
+          $('#msResults').append('<strong>  Initiatives Complete !  </strong>' );
           $('#msResults').append('<br>')
 
         }
-    
   }
 
 // input form listener to retrieve information for a single epic 
@@ -1159,12 +1158,6 @@ async function asyncEpicAjax(epicNumber) {
 
                   await rallyCalls(rallyObjectID)
 
-// post updates to aha and Rally
-
-// console.log('posting to Aha! and Rally: ----------------------------------------------')
-//                   postAhaCapabilityUpdate(epicID, rallyFeatTotal, newRallyPercentComplete);
-//                   postRallyCapabilityUpdate(rallyObjectID, rallyFeatTotal, newRallyPercentComplete)
-
                  }
                else{
 // all this logic regarding effort and progress needs to be replaced with what comes from Rally 
@@ -1183,14 +1176,6 @@ async function asyncEpicAjax(epicNumber) {
               console.log('old milestone effort subtotal: ' + msEffortSum);
               console.log('old milestone complete: ' + msCompleteSum);
               console.log('old milestone % complete: ' + msPercentComplete + "%");
-
-                // let epicObject = {
-                //     "epicID" : epicID,
-                //     "epicName" :epicName.slice(0, 30),
-                //     "epicEffort" :  epicEffort,
-                //     "epicProgress" : epicProgress,
-                //     "epicEffortDone" : epicEffortCompl
-                //   }
               console.log('++++++++++++++++++++++++++from asyncAjax, epicCount: ' + epicCount )
                       // epicSummary.push(epicObject)
                 epicCount = epicCount-1 
@@ -1207,6 +1192,7 @@ async function rallyCapFirstCall(rallyCapID) {
     let result;
     rallyLeafStoryPoints= 0;
     rallyPointsDone = 0;
+    let rallyChildren = 0;
     // rallyFormattedID = '';
     try {
         result = await $.ajax({
@@ -1217,7 +1203,7 @@ async function rallyCapFirstCall(rallyCapID) {
         "access-control-allow-origin": "*",
         "headers": { "ZSESSIONID": localStorage.rallyID },
         }),
-        console.log("rally 1st call"),
+        console.log('1111111111111111111111111111111111from 1st Rally call, epicCount: ' + epicCount )
                   rallyCapSummary = result,
                 console.log(result);
         if(rallyCapSummary.OperationResult){
@@ -1225,24 +1211,31 @@ async function rallyCapFirstCall(rallyCapID) {
               // log error     
                    let rallyLogItem = {rallyName: rallyObjectName, rallyID: rallyObjectID, rallyFrmatID: rallyFormattedID, ahaID: epicNum}
                    rallyObjectErrorLog.push(rallyLogItem)
+              // set rally values to zero since no access
+                  rallyLeafStoryPoints = 0;
+                  rallyPercentComplete = 0;
+                  rallyChildren = 0;
+                  rallyPointsDone = 0;
               // call next Epic
-              console.log('1111111111111111111111111111111111from 1st Rally call, epicCount: ' + epicCount )
                    epicCount = epicCount-1 
                    checkEpicsDone(epicCount) 
-                }     
+                }
+              // else use rally values from the children that we do have access to  
+        else{
                   rallyLeafStoryPoints = rallyCapSummary.SolutionCapability.LeafStoryPlanEstimateTotal;
                   rallyPercentComplete = rallyCapSummary.SolutionCapability.PercentDoneByStoryPlanEstimate;
-                  let rallyChildren = rallyCapSummary.SolutionCapability.Children.Count;
-                  rallyFormattedID = rallyCapSummary.SolutionCapability.FormattedID;
-                  rallyPointsDone = rallyLeafStoryPoints*rallyPercentComplete;
-                console.log("Rally FormattedID: " + rallyFormattedID)
-                console.log("Rally ObjectID: " + rallyCapID)
-                console.log("Aha ObjectID: " + epicInfo.epic.id)
-                console.log("Aha EpicRef: " + epicInfo.epic.reference_num)
-                console.log("Rally Capability Name: " + rallyObjectName)
-                console.log("Rally Number of Children: " + rallyChildren)
-                console.log("Rally Leaf Story Points Total: " + rallyLeafStoryPoints)
-                console.log("Rally Points Done: " + rallyPointsDone)
+                  rallyChildren = rallyCapSummary.SolutionCapability.Children.Count;
+                  // rallyFormattedID = rallyCapSummary.SolutionCapability.FormattedID;
+                  rallyPointsDone = Math.round(rallyLeafStoryPoints*rallyPercentComplete);
+                }     ;
+            console.log("Rally FormattedID: " + rallyFormattedID)
+            console.log("Rally ObjectID: " + rallyCapID)
+            console.log("Aha ObjectID: " + epicInfo.epic.id)
+            console.log("Aha EpicRef: " + epicInfo.epic.reference_num)
+            console.log("Rally Capability Name: " + rallyObjectName)
+            console.log("Rally Number of Children: " + rallyChildren)
+            console.log("Rally Leaf Story Points Total: " + rallyLeafStoryPoints)
+            console.log("Rally Points Done: " + rallyPointsDone)
         ;
         return result;
     } catch (error) {
@@ -1270,11 +1263,13 @@ async function rallyCapSecondCall(rallyCapID) {
         console.log("rally 2nd call"),
         rallyCapChildren = result
                       console.log(result)
-                    rallySummary = rallyCapChildren.QueryResult.Results
+                //  if(rallyCapChildren.QueryResult.Results) {    
+                //     rallySummary = rallyCapChildren.QueryResult.Results}
+                //  else{rallySummary = []}
 
     // computing total Feature estimate in the Rally Solution Capability children response
     // test to see if there are children, if yes then operate on result for date and total points for Features
-        if (rallySummary.length>0){
+        if (!rallyCapSummary.OperationResult){
 
           console.log("has children")   
               rallyFeatTotal = rallySummary.reduce(function(previousValue, currentValue) {
@@ -1351,7 +1346,7 @@ async function rallyCapSecondCall(rallyCapID) {
 // post Feature derived totals to the new custom fields in the Rally Solution Capability
 // postRallyCapabilityUpdate(rallyCapID, rallyFeatTotal, rallyEpicProgress)
 
-         console.log('posting to Aha! and Rally: ----------------------------------------------')
+         console.log('posting to Aha! and Rally: ---------------------------------------------->>>')
                   postAhaCapabilityUpdate(epicInfo.epic.id, rallyEpicEffort, rallyEpicProgress);
                   postRallyCapabilityUpdate(rallyCapID, rallyEpicEffort, rallyEpicProgress)
 
@@ -1414,8 +1409,7 @@ function findMS(ms){
       return epicFlatArray
   }
 
- 
-  
+ // ================================================================================================================
   // read from file functions ......
   function dispFile(contents) {
   document.getElementById('contents').innerHTML=contents
