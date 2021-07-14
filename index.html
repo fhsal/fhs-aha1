@@ -985,7 +985,7 @@ async function parseMilestone(msToParse){
               //if the related milestone is                    
                         if (msInfo.custom_object_record.custom_fields[0]){msName = msInfo.custom_object_record.custom_fields[0].value}
                         else {msName = 'no MS name'}
-                      msName = msInfo.custom_object_record.custom_fields[0].value;
+                      // msName = msInfo.custom_object_record.custom_fields[0].value;
                       msID = msInfo.custom_object_record.id;
                       msProduct = msInfo.custom_object_record.product_id;
                       msInitiative = initID;
