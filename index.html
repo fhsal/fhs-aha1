@@ -1283,7 +1283,7 @@ async function rallyCapSecondCall(rallyCapID) {
 
     // computing total Feature estimate in the Rally Solution Capability children response
     // test to see if there are children, if yes then operate on result for date and total points for Features
-        if (rallyCapChildren.QueryResult.Results){
+        if (!rallyCapSummary.OperationResult){
 
           console.log("has children")   
               rallyFeatTotal = rallySummary.reduce(function(previousValue, currentValue) {
