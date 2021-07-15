@@ -1287,11 +1287,13 @@ async function rallyCapSecondCall(rallyCapID) {
 
           // update Feature points done based upon % complete for each Feature estimated 
               rallyPointsDone = rallySummary.reduce(function(previousValue, currentValue) {
-                  return {PreliminaryEstimateValue: previousValue.PreliminaryEstimateValue + 
+                  return {PreliminaryEstimateValue: previousValue.PreliminaryEstimateValue*previousValue.PercentDoneByStoryPlanEstimate + 
                            currentValue.PreliminaryEstimateValue*currentValue.PercentDoneByStoryPlanEstimate}
                 });
 
                 rallyPointsDone = rallyPointsDone.PreliminaryEstimateValue
+
+                if (rallySummary.length=1){rallyPointsDone = rallySummary.PreliminaryEstimateValue*rallySummary.PercentDoneByStoryPlanEstimate}
 
             // force total estimate for the Capabilility to be the larger of Feature Estimates or LeafStoryPoints  
 
