@@ -1208,7 +1208,6 @@ async function rallyCapFirstCall(rallyCapID) {
     rallyLeafStoryPoints= 0;
     rallyPointsDone = 0;
     // rallyFormattedID = '';
-    console.log('1111111111111111111111111111111111from 1st Rally call, rallyCapID: ' + rallyCapID )
     try {
         result = await $.ajax({
         "url": "https://rally1.rallydev.com/slm/webservice/v2.0/portfolioitem/solutioncapability/" + rallyCapID,
@@ -1227,7 +1226,7 @@ async function rallyCapFirstCall(rallyCapID) {
                    let rallyLogItem = {rallyName: rallyObjectName, rallyID: rallyObjectID, rallyFrmatID: rallyFormattedID, ahaID: epicNum}
                    rallyObjectErrorLog.push(rallyLogItem)
               // call next Epic
-
+              console.log('1111111111111111111111111111111111from 1st Rally call, epicCount: ' + epicCount )
                    epicCount = epicCount-1 
                    checkEpicsDone(epicCount) 
                 }     
@@ -1278,31 +1277,19 @@ async function rallyCapSecondCall(rallyCapID) {
         if (rallySummary.length>0){
 
           console.log("has children")   
-          // calc roll-up of PrelimaryEstimateValue for all features 
               rallyFeatTotal = rallySummary.reduce(function(previousValue, currentValue) {
                   return {PreliminaryEstimateValue: previousValue.PreliminaryEstimateValue + currentValue.PreliminaryEstimateValue}
                 });
-
-                rallyFeatTotal = rallyFeatTotal.PreliminaryEstimateValue
-
-          // update Feature points done based upon % complete for each Feature estimated 
-              rallyPointsDone = rallySummary.reduce(function(previousValue, currentValue) {
-                  return {PreliminaryEstimateValue: previousValue.PreliminaryEstimateValue + 
-                           currentValue.PreliminaryEstimateValue*currentValue.PercentDoneByStoryPlanEstimate}
-                });
-
-                rallyPointsDone = rallyPointsDone.PreliminaryEstimateValue
-
             // force total estimate for the Capabilility to be the larger of Feature Estimates or LeafStoryPoints  
-
-                    let originalRallyFeatTotal = rallyFeatTotal
-                      if(rallyFeatTotal<rallyLeafStoryPoints){
-                        rallyFeatTotal=rallyLeafStoryPoints
-                console.log("------------> adjusted estimate from " + originalRallyFeatTotal + " to " + rallyLeafStoryPoints) 
-                        }
-
-              newRallyPercentComplete = rallyPointsDone/rallyFeatTotal
-              
+              rallyFeatTotal = rallyFeatTotal.PreliminaryEstimateValue
+              let originalRallyFeatTotal = rallyFeatTotal
+                if(rallyFeatTotal<rallyLeafStoryPoints){
+                   rallyFeatTotal=rallyLeafStoryPoints
+          console.log("------------> adjusted estimate from " + originalRallyFeatTotal + " to " + rallyLeafStoryPoints) 
+                   }
+            // force percent complete for the Capabilility to be 100% if rally work is marked as 100%
+                // if(rallyPercentComplete=1){newRallyPercentComplete=1}
+                   newRallyPercentComplete = rallyPointsDone/rallyFeatTotal
                   }
 
           // else use the overall estimates for the capability for % complete, unless actuals are zero, in that case % complete is zero
