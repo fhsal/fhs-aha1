@@ -244,7 +244,6 @@ epicFlatArray = [];
 epicObject = [];
 epicPreviouslyFound = [];
 epicsToParse = [];
-epicParked = false,
 msEffortSum = 0;
 msCompleteSum = 0;
 msPercentComplete = 0;
@@ -1155,7 +1154,6 @@ async function asyncEpicAjax(epicNumber) {
                   rallyObjectID = rallyObjectRow[0].value;
                   rallyObjectName =  rallyNameRow[0].value;
                   rallyFormattedID = rallyFormattedIDRow[0].value;
-                  epicParked = epicInfo.release.parking_lot
 
 // getRally Capability Details via async/await function that calls for Capability summary first and then children
 
@@ -1259,8 +1257,8 @@ async function rallyCapSecondCall(rallyCapID) {
 
                 console.log("Rally FormattedID: " + rallyFormattedID)
                 console.log("Rally ObjectID: " + rallyCapID)
-                // console.log("Rally Points Done: " + rallyPointsDone)
-                console.log('222222222222222222222222222222222from 2nd Rally call, epicCount: ' + epicCount )
+                console.log("Rally Points Done: " + rallyPointsDone)
+
     try {
         result = await $.ajax({
         "url": "https://rally1.rallydev.com/slm/webservice/v2.0/portfolioitem/solutioncapability/" + rallyCapID + "/children?pagesize=100",
@@ -1357,10 +1355,9 @@ console.log('new rally points done =============================================
                     "RallyID" : rallyCapID,
                     "epicEffort" :  rallyEpicEffort,
                     "epicEffortDone" : rallyEpicEffortCompl,
-                    "epicProgress" : rallyEpicProgress,
-                    "epicParked" : epicParked
+                    "epicProgress" : rallyEpicProgress
                   }
-
+          console.log('222222222222222222222222222222222from 2nd Rally call, epicCount: ' + epicCount )
 //append information for current Epic to epicSummary object
                 epicSummary.push(epicObject)
 
@@ -1371,15 +1368,11 @@ console.log('new rally points done =============================================
 // postRallyCapabilityUpdate(rallyCapID, rallyFeatTotal, rallyEpicProgress)
 
          console.log('posting to Aha! and Rally: ----------------------------------------------')
-        console.log('Epic parked?: ' + 'epicParked')
-
-//only post updates if epic is not in parking lot             
-         if(!epicParked){
                   postAhaCapabilityUpdate(epicInfo.epic.id, rallyEpicEffort, rallyEpicProgress);
                   postRallyCapabilityUpdate(rallyCapID, rallyEpicEffort, rallyEpicProgress)
-                  }
-            epicCount = epicCount-1 
-            checkEpicsDone(epicCount) 
+
+                epicCount = epicCount-1 
+                checkEpicsDone(epicCount) 
         ;
         return result;
     } catch (error) {
