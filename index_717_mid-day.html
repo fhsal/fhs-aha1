@@ -1344,19 +1344,6 @@ console.log('new rally points done =============================================
           console.log("Rally MS effort Sum subtotal: " + rallyMSeffortSum);
           console.log("Rally MS complete Sum subtotal: " + rallyMScompleteSum);
 
-
-// post Feature derived totals to the new custom fields in the Rally Solution Capability
-// postRallyCapabilityUpdate(rallyCapID, rallyFeatTotal, rallyEpicProgress)
-
-        console.log('posting to Aha! and Rally: ----------------------------------------------')
-        console.log('Epic parked?: ' + epicParked)
-
-//only post updates if epic is not in parking lot             
-         if(!epicParked){
-                  postAhaCapabilityUpdate(epicInfo.epic.id, rallyEpicEffort, rallyEpicProgress);
-                  postRallyCapabilityUpdate(rallyCapID, rallyEpicEffort, rallyEpicProgress)
-                  }
-
 //update and save epic-level information 
        epicObject = {
                     "initName" : initName,
@@ -1380,6 +1367,17 @@ console.log('new rally points done =============================================
 //append information for current Epic to epicConsolidatedObject object
                 epicConsolidatedObject.push(epicObject)
 
+// post Feature derived totals to the new custom fields in the Rally Solution Capability
+// postRallyCapabilityUpdate(rallyCapID, rallyFeatTotal, rallyEpicProgress)
+
+         console.log('posting to Aha! and Rally: ----------------------------------------------')
+        console.log('Epic parked?: ' + epicParked)
+
+//only post updates if epic is not in parking lot             
+         if(!epicParked){
+                  postAhaCapabilityUpdate(epicInfo.epic.id, rallyEpicEffort, rallyEpicProgress);
+                  postRallyCapabilityUpdate(rallyCapID, rallyEpicEffort, rallyEpicProgress)
+                  }
             epicCount = epicCount-1 
             checkEpicsDone(epicCount) 
         ;
