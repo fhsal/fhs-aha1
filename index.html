@@ -748,14 +748,83 @@ $("#ms_info").submit(function() {
 
 // input form listener to retrieve information for a single milestone, iterating through epic detail 
 $("#ms_update").submit(
-  async function () {
-  
-msToParse=toString($("#msNum").val()),
-console.log('function ms_update,  msToParse: ' + msToParse)
+  async function () {// Initializing milestone information for this listener which is for a single milestone
+    msEffortSum = 0;
+    msCompleteSum = 0;
+    msPercentComplete = 0;
+    rallyMSeffortSum = 0;
+    rallyMScompleteSum = 0;
+    rallyMSpercentComplete = 0;
+    msObject = [];
+// Initialize objects used to accumulate summary information    
+    epicSummary =[];
+    msSummary = [];
+    relatedMilestones = [];
+    msCount = 1;
+    numMilestones = 1;
 
-await parseMilestone(msToParse)}
+         new AhaApi({
+          accountDomain: localStorage.subDomain,
+          clientId: localStorage.clientID, // NOTE: replace this with your client ID.
+          redirectUri: localStorage.redirectUri
+        }).authenticate(function(api, success, message) {
+      console.log(success)
+      console.log(message)
+          var productKey = $("#msNum").val();
 
-      );
+// Fetch milestone information
+          api.get("/custom_object_records/" + productKey , {per_page: 50}, 
+          function(response) {
+            localStorage.msInfo = (JSON.stringify(response))
+            msInfo = response
+
+// call function countEpics to determine the number of epics and assing to var numEpics
+// and create the object epicsToParse
+          countEpics()
+            epicCount = numEpics;  
+            // numEpics = (msInfo.custom_object_record.linked_records["length"] -1);
+            // epicCount = (numEpics-1);
+        console.log ('number of epics: ' + numEpics)
+        console.log(response)
+        if (numEpics !== 0){msName = msInfo.custom_object_record.custom_fields[0].value}
+            msID = msInfo.custom_object_record.id
+            msProduct = msInfo.custom_object_record.product_id
+            msInitiative = initID
+// populate display block
+        $('#msBody').append('<br>') ;
+        $('#msBody').append('<strong>MilestoneID: </strong>' + productKey)
+        $('#msResults').append('<br>') ;
+        $('#msResults').append('<strong>MilestoneID: </strong>' + productKey)
+        $('#msBody').append('<br>') ;
+        $('#msBody').append('<strong># Epics: </strong>' + (numEpics))
+        $('#msResults').append(',  <strong># Epics: </strong>' + (numEpics))
+        $('#msBody').append('<br>') ;       
+        $('#msBody').append('<strong>MS Name: </strong>' + msName)
+        $('#msResults').append(',  <strong> Name: </strong>' + msName.slice(0, 50))
+        $('#msResults').append('<br>') ;
+        $('#msBody').append('<br>') ;
+        $('#msBody').append("==========================================");
+        $('#msBody').append('<br>') ;
+
+  if (numEpics == 0) { checkEpicsDone(epicCount)}
+
+// loop through epics, waiting between each fetch to stay within API limits
+var i;
+                  for(i = 0; i < (numEpics); i++){
+                            let num = epicsToParse[i];
+                                  epicNum = num.toString()
+                                  $('#msBody').append("Epic #: " + (i+1))
+                                  $('#msBody').append(",  record_id: " + epicNum) ;
+                                  $('#msBody').append('<br>') ;
+                        console.log('ParseMilestone, iteration # ' + (i+1) + " of" + numEpics)
+                      await asyncEpicAjax(epicNum)
+                      };
+          })
+          $('#msBody').append('<br>')
+          // msSummary.push(epicSummary)
+          });
+        return false;
+      });;
 
 // API call to update milestones for an initiative by iterating through each related milestone
 $("#init_update").submit(function() { 
