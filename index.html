@@ -813,9 +813,9 @@ $("#ms_update").submit(function() {
                         $('#msBody').append(",  record_id: " + epicNum) ;
                         $('#msBody').append('<br>') ;
                         $('#msResults').append('*') ;
-                      epicAjax()
+                      asyncEpicAjax()
           //wait 100 milliseconds between calls (API limit is 'technically' 20ms)
-                }, 2000 * i);
+                }, 1200 * i);
             }(i)
             );
             };
