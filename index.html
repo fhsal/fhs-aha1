@@ -749,7 +749,8 @@ $("#ms_info").submit(function() {
 // input form listener to retrieve information for a single milestone, iterating through epic detail 
 $("#ms_update").submit(function() { 
 
-msToParse=$("#msNum").val()
+msToParse=toString($("#msNum").val())
+
 
 console.log('function ms_update,  msToParse: ' + msToParse)
 
