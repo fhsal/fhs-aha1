@@ -752,13 +752,6 @@ $("#ms_update").submit(
     msEffortSum = 0;
     msCompleteSum = 0;
     msPercentComplete = 0;
-    rallyMSeffortSum = 0;
-    rallyMScompleteSum = 0;
-    rallyMSpercentComplete = 0;
-    msObject = [];
-// Initialize objects used to accumulate summary information    
-    epicSummary =[];
-    msSummary = [];
     relatedMilestones = [];
     msCount = 1;
     numMilestones = 1;
@@ -774,7 +767,7 @@ $("#ms_update").submit(
 
 // Fetch milestone information
           api.get("/custom_object_records/" + productKey , {per_page: 50}, 
-          async function(response) {
+          function(response) {
             localStorage.msInfo = (JSON.stringify(response))
             msInfo = response
 
@@ -809,16 +802,22 @@ $("#ms_update").submit(
   if (numEpics == 0) { checkEpicsDone(epicCount)}
 
 // loop through epics, waiting between each fetch to stay within API limits
-var i;
-                  for(i = 0; i < (numEpics); i++){
-                            let num = epicsToParse[i];
-                                  epicNum = num.toString()
-                                  $('#msBody').append("Epic #: " + (i+1))
-                                  $('#msBody').append(",  record_id: " + epicNum) ;
-                                  $('#msBody').append('<br>') ;
-                        console.log('ParseMilestone, iteration # ' + (i+1) + " of" + numEpics)
-                      await asyncEpicAjax(epicNum)
-                      };
+        var i;
+        for(i = 0; i < (numEpics); i++){
+            (function(i){
+                setTimeout(function(){
+                  let num = msInfo.custom_object_record.linked_records[i].record_id;
+                        epicNum = num.toString()
+                        $('#msBody').append("Epic #: " + (i+1));
+                        $('#msBody').append(",  record_id: " + epicNum) ;
+                        $('#msBody').append('<br>') ;
+                        $('#msResults').append('*') ;
+                      asyncEpicAjax()
+          //wait 100 milliseconds between calls (API limit is 'technically' 20ms)
+                }, 4000 * i);
+            }(i)
+            );
+            };
           })
           $('#msBody').append('<br>')
           // msSummary.push(epicSummary)
