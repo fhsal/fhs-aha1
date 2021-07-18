@@ -750,7 +750,9 @@ $("#ms_info").submit(function() {
 $("#ms_update").submit(function() { 
 
 // Initializing milestone information for this listener which is for a single milestone
-
+    msEffortSum = 0;
+    msCompleteSum = 0;
+    msPercentComplete = 0;
     relatedMilestones = [];
     msCount = 1;
     numMilestones = 1;
@@ -762,7 +764,7 @@ $("#ms_update").submit(function() {
         }).authenticate(function(api, success, message) {
       console.log(success)
       console.log(message)
-          var productKey = $("#msInfoNum").val();
+          var productKey = $("#msNum").val();
 
 // Fetch milestone information
           api.get("/custom_object_records/" + productKey , {per_page: 50}, 
@@ -778,33 +780,48 @@ $("#ms_update").submit(function() {
             // epicCount = (numEpics-1);
         console.log ('number of epics: ' + numEpics)
         console.log(response)
-            msName = msInfo.custom_object_record.custom_fields[0].value
+        if (numEpics !== 0){msName = msInfo.custom_object_record.custom_fields[0].value}
             msID = msInfo.custom_object_record.id
             msProduct = msInfo.custom_object_record.product_id
-            msInitiative = initID
-
-        if (numEpics !== 0){
+            msInitiative = msInfo.custom_object_record.linked_records[0].record_id
 // populate display block
-            $('#msResults').append('<br>') ;
-            $('#msResults').append('<strong>MilestoneID: </strong>' + productKey)     
-            $('#msResults').append(',  <strong> Name: </strong>' + msName.slice(0, 50))
-            $('#msResults').append(', <strong> # Epics: </strong>' + (numEpics))
-            $('#msResults').append('<br>') ;
-            $('#msResults').append("========================================================");
-            $('#msResults').append('<br>') ;
-            $('#msResults').append(JSON.stringify(epicsToParse))
-            $('#msResults').append('<br>') ;
-          }
+        $('#msBody').append('<br>') ;
+        $('#msBody').append('<strong>MilestoneID: </strong>' + productKey)
+        $('#msResults').append('<br>') ;
+        $('#msResults').append('<strong>MilestoneID: </strong>' + productKey)
+        $('#msBody').append('<br>') ;
+        $('#msBody').append('<strong># Epics: </strong>' + (numEpics))
+        $('#msResults').append(',  <strong># Epics: </strong>' + (numEpics))
+        $('#msBody').append('<br>') ;       
+        $('#msBody').append('<strong>MS Name: </strong>' + msName)
+        $('#msResults').append(',  <strong> Name: </strong>' + msName.slice(0, 50))
+        $('#msResults').append('<br>') ;
+        $('#msBody').append('<br>') ;
+        $('#msBody').append("==========================================");
+        $('#msBody').append('<br>') ;
 
-        else { 
-              $('#msResults').append('<br>') ;
-              $('#msResults').append('<strong>MilestoneID: </strong>' + productKey)      
-              $('#msResults').append(',  <strong> Name: </strong>' + msName.slice(0, 50))
-              $('#msResults').append('<br>') ;
-              $('#msResults').append('no related Epics: </strong>')
-              $('#msResults').append('<br>') ;
-            }
+  if (numEpics == 0) { checkEpicsDone(epicCount)}
+
+// loop through epics, waiting between each fetch to stay within API limits
+        var i;
+        for(i = 0; i < (numEpics); i++){
+            (function(i){
+                setTimeout(function(){
+                  let num = msInfo.custom_object_record.linked_records[i].record_id;
+                        epicNum = num.toString()
+                        $('#msBody').append("Epic #: " + (i+1));
+                        $('#msBody').append(",  record_id: " + epicNum) ;
+                        $('#msBody').append('<br>') ;
+                        $('#msResults').append('*') ;
+                      epicAjax()
+          //wait 100 milliseconds between calls (API limit is 'technically' 20ms)
+                }, 2000 * i);
+            }(i)
+            );
+            };
           })
+          $('#msBody').append('<br>')
+          msSummary.push(epicSummary)
           });
         return false;
       });
