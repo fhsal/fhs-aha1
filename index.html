@@ -747,16 +747,15 @@ $("#ms_info").submit(function() {
       });
 
 // input form listener to retrieve information for a single milestone, iterating through epic detail 
-$("#ms_update").submit(function() { 
-
-msToParse=toString($("#msNum").val())
-
-
+$("#ms_update").submit(
+  async function () {
+  
+msToParse=toString($("#msNum").val()),
 console.log('function ms_update,  msToParse: ' + msToParse)
 
-    //  parseMilestone(msToParse)
+await parseMilestone(msToParse)}
 
-      });
+      );
 
 // API call to update milestones for an initiative by iterating through each related milestone
 $("#init_update").submit(function() { 
