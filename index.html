@@ -774,7 +774,7 @@ $("#ms_update").submit(
 
 // Fetch milestone information
           api.get("/custom_object_records/" + productKey , {per_page: 50}, 
-          function(response) {
+          async function(response) {
             localStorage.msInfo = (JSON.stringify(response))
             msInfo = response
 
