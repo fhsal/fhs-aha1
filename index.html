@@ -767,7 +767,8 @@ $("#ms_update").submit(function() {
           var productKey = $("#msNum").val();
 
 // Fetch milestone information
-          api.get("/custom_object_records/" + productKey , {per_page: 50}, 
+ 
+       api.get("/custom_object_records/" + productKey , {per_page: 50}, 
           function(response) {
             localStorage.msInfo = (JSON.stringify(response))
             msInfo = response
@@ -803,22 +804,16 @@ $("#ms_update").submit(function() {
   if (numEpics == 0) { checkEpicsDone(epicCount)}
 
 // loop through epics, waiting between each fetch to stay within API limits
-        var i;
-        for(i = 0; i < (numEpics); i++){
-            (function(i){
-                setTimeout(function(){
-                  let num = msInfo.custom_object_record.linked_records[i].record_id;
-                        epicNum = num.toString()
-                        $('#msBody').append("Epic #: " + (i+1));
-                        $('#msBody').append(",  record_id: " + epicNum) ;
-                        $('#msBody').append('<br>') ;
-                        $('#msResults').append('*') ;
-                      epicAjax()
-          //wait 100 milliseconds between calls (API limit is 'technically' 20ms)
-                }, 700 * i);
-            }(i)
-            );
-            };
+               var i;
+                  for(i = 0; i < (numEpics); i++){
+                            let num = epicsToParse[i];
+                                  epicNum = num.toString()
+                                  $('#msBody').append("Epic #: " + (i+1))
+                                  $('#msBody').append(",  record_id: " + epicNum) ;
+                                  $('#msBody').append('<br>') ;
+                        console.log('ParseMilestone, iteration # ' + (i+1) + " of" + numEpics)
+                      await asyncEpicAjax(epicNum)
+                      };
           })
           $('#msBody').append('<br>')
           // msSummary.push(epicSummary)
@@ -1104,6 +1099,8 @@ function checkInitiativesDone() {
           $('#msResults').append('<strong>  Initiatives Complete !  </strong>');
           $('#msResults').append('<br>')
 
+          console.log('Initiatives Complete !')
+
         }
     
   }
@@ -1225,8 +1222,8 @@ async function rallyCapFirstCall(rallyCapID) {
                 console.log(result);
         if(rallyCapSummary.OperationResult){
                   console.log('======> Rally access error, rallyObjectID: ' + rallyCapID)
-              // log error     
-                   let rallyLogItem = {rallyName: rallyObjectName, rallyID: rallyObjectID, rallyFrmatID: rallyFormattedID, ahaID: epicNum}
+              // log error where crawler doesn't have access to a Solution Capability    
+                   let rallyLogItem = {rallyName: rallyObjectName, rallyID: rallyObjectID, rallyFrmatID: rallyFormattedID, ahaID: epicNum, codeSpot: 'rallyFirstCall'}
                    rallyObjectErrorLog.push(rallyLogItem)
               // call next Epic
 
@@ -1318,7 +1315,7 @@ console.log('new rally points done =============================================
                 if (rallyPointsDone !==0){
                     newRallyPercentComplete = rallyCapSummary.SolutionCapability.PercentDoneByStoryPlanEstimate
           // log those Rally items where the app doesn't have permissions to see the children          
-                  let rallyLogItem = {rallyName: rallyObjectName, rallyID: rallyObjectID, rallyFrmatID: rallyFormattedID, ahaID: epicNum}
+                  let rallyLogItem = {rallyName: rallyObjectName, rallyID: rallyObjectID, rallyFrmatID: rallyFormattedID, ahaID: epicNum, codeSpot: 'rallySecondCall'}
                   rallyObjectErrorLog.push(rallyLogItem)
           console.log("Rally error log item: " + rallyLogItem) 
                 }
