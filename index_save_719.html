@@ -1109,6 +1109,12 @@ async function asyncEpicAjax(epicNumber) {
 
                   await rallyCalls(rallyObjectID)
 
+// post updates to aha and Rally
+
+// console.log('posting to Aha! and Rally: ----------------------------------------------')
+//                   postAhaCapabilityUpdate(epicID, rallyFeatTotal, newRallyPercentComplete);
+//                   postRallyCapabilityUpdate(rallyObjectID, rallyFeatTotal, newRallyPercentComplete)
+
                  }
                else{
 // all this logic regarding effort and progress needs to be replaced with what comes from Rally 
@@ -1127,8 +1133,16 @@ async function asyncEpicAjax(epicNumber) {
               console.log('old milestone effort subtotal: ' + msEffortSum);
               console.log('old milestone complete: ' + msCompleteSum);
               console.log('old milestone % complete: ' + msPercentComplete + "%");
+
+                // let epicObject = {
+                //     "epicID" : epicID,
+                //     "epicName" :epicName.slice(0, 30),
+                //     "epicEffort" :  epicEffort,
+                //     "epicProgress" : epicProgress,
+                //     "epicEffortDone" : epicEffortCompl
+                //   }
               console.log('++++++++++++++++++++++++++from asyncAjax, epicCount: ' + epicCount )
-      
+                      // epicSummary.push(epicObject)
                 epicCount = epicCount-1 
                 checkEpicsDone(epicCount) 
                }   
@@ -1143,13 +1157,13 @@ async function rallyCapFirstCall(rallyCapID) {
     let result;
     rallyLeafStoryPoints= 0;
     rallyPointsDone = 0;
-    
+    // rallyFormattedID = '';
     console.log('1111111111111111111111111111111111from 1st Rally call, rallyCapID: ' + rallyCapID )
     try {
         result = await $.ajax({
         "url": "https://rally1.rallydev.com/slm/webservice/v2.0/portfolioitem/solutioncapability/" + rallyCapID,
         "method": "GET",
-       
+        // "timeout": 0,
         "crossDomain": true,
         "access-control-allow-origin": "*",
         "headers": { "ZSESSIONID": localStorage.rallyID },
@@ -1239,7 +1253,9 @@ console.log('new rally points done =============================================
                         rallyFeatTotal=rallyLeafStoryPoints
                 console.log("------------> adjusted estimate from " + originalRallyFeatTotal + " to " + rallyLeafStoryPoints) 
                         }
-                    newRallyPercentComplete = rallyPointsDone/rallyFeatTotal
+
+              newRallyPercentComplete = rallyPointsDone/rallyFeatTotal
+
                   }
 
           // else use the overall estimates for the capability for % complete, unless actuals are zero, in that case % complete is zero
