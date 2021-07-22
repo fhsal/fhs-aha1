@@ -1129,9 +1129,12 @@ async function asyncEpicAjax(epicNumber) {
               console.log('old milestone % complete: ' + msPercentComplete + "%");
               console.log('++++++++++++++++++++++++++from asyncAjax, epicCount: ' + epicCount )
       
-                epicCount = epicCount-1 
-                checkEpicsDone(epicCount) 
-               }   
+                // epicCount = epicCount-1 
+                // checkEpicsDone(epicCount) 
+               }
+
+          epicCount = epicCount-1 
+          checkEpicsDone(epicCount)    
         ;
         return result;
     } catch (error) {
@@ -1164,8 +1167,8 @@ async function rallyCapFirstCall(rallyCapID) {
                    rallyObjectErrorLog.push(rallyLogItem)
               // call next Epic
 
-                   epicCount = epicCount-1 
-                   checkEpicsDone(epicCount) 
+                  //  epicCount = epicCount-1 
+                  //  checkEpicsDone(epicCount) 
                 }     
                   rallyLeafStoryPoints = rallyCapSummary.SolutionCapability.LeafStoryPlanEstimateTotal;
                   rallyPercentComplete = rallyCapSummary.SolutionCapability.PercentDoneByStoryPlanEstimate;
@@ -1312,8 +1315,8 @@ console.log('new rally points done =============================================
 //append information for current Epic to epicConsolidatedObject object
                 epicConsolidatedObject.push(epicObject)
 
-            epicCount = epicCount-1 
-            checkEpicsDone(epicCount) 
+            // epicCount = epicCount-1 
+            // checkEpicsDone(epicCount) 
         ;
         return result;
     } catch (error) {
