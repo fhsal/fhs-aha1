@@ -1,0 +1,1414 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+    <title>Aha! API Crawler</title>
+
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" type="text/css"></link>
+    <script type="text/javascript" charset="utf-8" src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="https://secure.aha.io/assets/javascript_api/aha-api.latest.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+      .feature {
+        border-top: 1px solid #0073cf;
+        margin-top: 10px;
+        margin-bottom: 30px;
+      }
+      .feature .reference-num {
+        float: left;
+        padding-right: 10px;
+      }
+      .feature .name {
+        float: left;
+        font-weight: bold;
+      }
+      .feature > .description {
+        clear: left;
+        margin-left: 20px;
+      }
+      .requirement {
+        position: relative;
+        margin-top: 15px;
+        margin-left: 20px;
+        
+      }
+      .requirement .reference-num {
+        position: absolute;
+        font-weight: bold;
+      }
+      .requirement .description {
+        margin-left: 120px;
+      }
+
+      .anyClass {
+        height:150px;
+        overflow-y: scroll;
+      }
+
+       .btn-primary {
+        color: white;
+        background-color: teal;
+        border-color: teal;
+        width: 212px;
+        }
+
+        .btn-secondary {
+        color: white;
+        background-color: darkgoldenrod;
+        border-color: darkgoldenrod;
+        width: 212px;
+        }
+
+        .btn-secondary:hover {
+          background-color: rgb(218, 122, 32);
+          color: white;
+        }
+
+        .btn-success {
+        color: white;
+        background-color: darkslategray;
+        border-color: darkslategray;
+        width: 212px;
+        }
+
+        .btn-info {
+        color: white;
+        background-color: darkgreen;
+        border-color: darkgreen;
+        width: 212px;
+        }
+
+        .btn-warning {
+        color: white;
+        background-color: darkgreen;
+        border-color: darkgreen;
+        width: 212px;
+        }
+
+        .modal-header, h4, .close {
+        background-color: steelblue;
+        color:white !important;
+        text-align: center;
+        font-size: 30px;
+        }
+        .modal-footer {
+        background-color: #f9f9f9;
+        }
+    </style>
+
+  </head>
+<div class = "row">
+  <div class = "col-sm-8">
+<h1>Aha! Milestone API Crawler</h1>
+<hr style = "margin-top: -5px; margin-bottom: 0px; width: 1135px; border-top: 1px solid cadetblue; margin-left: -15"> 
+</div>
+
+  <div class = "col-sm-4" style = "float:right right">
+    <button id = "credentials" style = "background-color: steelblue;color: white;margin-top: 30px;margin-left: 160px;width: 166px;">add API credentials </button>
+  </div>
+
+  </div>
+    <body class="container">
+  <div class="row" id = inputForms style = "margin-top: -25px">
+
+<br><br>
+    <div class="col-sm-5"  style= "width: 425px; height: 300px; padding-left: 0px; padding-top: 3px";>
+
+      <form id="portfolio_list">
+        <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain"> -->
+                <input type="text" placeholder="Portfolio group (e.g.,UHC)" id="portfolio-name">
+                <input type="submit" class="btn btn-secondary btn-sm" value="Show defined portfolios">
+              </form>
+
+        <form id="portfolio_controls">
+  <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain"> -->
+          <input type="text" placeholder="Portfolio ID" id="portfolio-key">
+          <input type="submit" class="btn btn-secondary btn-sm"  value="Show initiatives for a portfolio">
+        </form>
+
+        <form id="portfolio_update">
+  <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain"> -->
+          <input type="text" placeholder="Portfolio ID" id="portfolio-key2">
+          <input type="submit" class="btn btn-secondary  btn-sm" value="Update initiatives for portfolio">
+        </form>
+
+        <form id="init_info">
+  <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain"> -->
+          <input type="text" placeholder="Initiative number" id="init-num">
+          <input type="submit" class="btn btn-primary  btn-sm" value="Show milestones for an initiative">
+        </form>
+
+        <form id="init_update">
+  <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain"> -->
+                  <input type="text" placeholder="Initiative number" id="init-num2">
+                  <input type="submit" class="btn btn-primary  btn-sm"value="Update milestones for an initiative">
+                </form>
+
+        <form id="ms_info">
+          <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain5"> -->
+                  <input type="text" placeholder="Milestone number" id="msInfoNum">
+                  <input type="submit" class="btn btn-success  btn-sm" value="Show epics related to a milestone">
+                </form>
+
+        <form id="ms_update">
+  <!-- <input type="text" placeholder="Aha! subdomain" id="subdomain4"> -->
+          <input type="text" placeholder="Milestone number" id="msNum">
+          <input type="submit" class="btn btn-success  btn-sm" value="Update progress for a milestone">
+        </form>
+
+
+      </div>
+  <!-- display area for MS results on right -->
+      <div class="col-sm-6" id = "prodResults" style="height: 228px;margin-bottom: 5px; padding-top: 3px; overflow-y: scroll;word-wrap: break-word;width: 720px;background-color:#d08300; border-color: black;color:white;"><strong>Portfolio summary<br>---------------------------------------------------------------------------------------------------------------------------------------------</strong><br></div>
+      <div class="col-sm-6" id = "initResults" style="height: 250px;margin-top: 5px; padding-top: 3px; overflow-y: scroll;word-wrap: break-word;width: 720px;background-color:teal;border-color: black;color:white;top: 0px;bottom: -50;"><strong>Initiative summary<br>---------------------------------------------------------------------------------------------------------------------------------------------</strong><br></div>
+</div>
+ 
+    <div class="row">
+
+      <!-- display area for epic parsing display on left -->
+         <div class="col-sm-3" style="height: 473px; padding-top: 3px; overflow-y: scroll;background-color:steelblue;color:white;width: 410px;top: -180;" id="msBody"> <strong>Epics related to selected Milestones<br>------------------------------------------------------------------------</strong></div>
+
+         <div class="col-sm-1" style="width: 15px; padding-left: 0px; padding-right: 0px"></div>
+
+      <!-- display area for MS results on right -->
+         <div class="col-sm-8" id = "msResults" style="height: 285px; padding-top: 3px; overflow-y: scroll;word-wrap: break-word;width: 720px;padding-right: 0px;background-color:darkslategray;border-color: black;color:white;top: 10px;"><strong>Milestone summaries<br>---------------------------------------------------------------------------------------------------------------------------------------------</strong><br></div>
+    </div>
+    <div class = "row" style="height: 25px;"></div> 
+
+    <!-- Click the button then choose a file to see its contents displayed below.
+<button onclick="openFile(dispFile)">Load Credentials from a file</button>
+<pre id="contents"></pre> -->
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header" style="padding:20px 30px;">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4><span class="glyphicon glyphicon-lock"></span> Enter API credentials </h5>
+        </div>
+        <div class="modal-body" style="padding:40px 50px;">
+          <form role="form">
+            <div class="form-group">
+              <label for="usrname"><span class="glyphicon glyphicon-home"></span> Aha! Account Domain</label>
+              <input type="text" class="form-control" id="domain" placeholder="Enter domain">
+            </div>
+            <div class="form-group">
+              <label for="psw"><span class="glyphicon glyphicon-user"></span> Application Client ID</label>
+              <input type="text" class="form-control" id="cid" placeholder="Enter client ID">
+            </div>
+            <div class="form-group">
+              <label for="psw"><span class="glyphicon glyphicon-user"></span> Aha! API Token</label>
+              <input type="text" class="form-control" id="token" placeholder="Enter API token">
+            </div>
+            <div class="form-group">
+              <label for="psw"><span class="glyphicon glyphicon-user"></span> Rally API Token</label>
+              <input type="text" class="form-control" id="Rtoken" placeholder="Enter API token">
+            </div>
+            <div class="form-group">
+              <label for="psw"><span class="glyphicon glyphicon-log-in"></span> Redirect URI</label>
+              <input type="text" class="form-control" id="uri" placeholder="Enter redirect URI">
+            </div class="button-group">
+              <button type="button" class="btn btn-success" id="saveCredentials"> <span class="glyphicon glyphicon-off"></span> Save Credentials</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+          </form>
+
+          Click the button then choose a file to see its contents displayed below.
+          <button onclick="openFile(dispFile)">Load Credentials from a file</button>
+          <pre id="contents"></pre>
+      </div>
+    </div>
+  </div> 
+</div>
+
+
+<script>
+
+epics = "";
+inits = "";
+singleInit = "";
+msInfo = "";
+epicInfo ="";
+epicSummary = [];
+epicEffortSum = 0;
+epicCompleteSum = 0;
+epicNum = "";
+numEpics = 0;
+epicConsolidatedObject = [];
+epicCount = 0;
+epicFlatArray = [];
+epicObject = [];
+epicPreviouslyFound = [];
+epicsToParse = [];
+epicParked = false,
+msEffortSum = 0;
+msCompleteSum = 0;
+msPercentComplete = 0;
+msConsolidatedObject = [];
+msCount = 0;
+msFlatArray = [];
+msPreviouslyFound = [];
+msName = "";
+msID = "";
+msIndex = 0;
+msObject = [];
+msSummary = [];
+msInitiative = "";
+msProduct = ""
+numMilestones = 0;
+waitingFlag ="";
+relatedMilestones = [];
+msToParse = "";
+initinfo = "";
+numInits = 0;
+portfolios = [];
+portfolioInits = [];
+initObject = [];
+initCount = 0;
+initSummary = [];
+initName = "";
+initID = "";
+initRef = "";
+rallySolnCapInfo = [];
+rallySolnCapChildren = [];
+rallyEpicID= "";
+rallyObjectName= "";
+rallyObjectID = "";
+rallyFeatTotal = 0;
+rallylateDate = ""
+rallySummary = [];
+rallyCapSummary = "";
+rallyLeafStoryPoints = "";
+rallyPercentComplete = "";
+rallyPointsDone = "";
+newRallyPercentComplete = "";
+rallyFormattedID = "";
+rallyObjectErrorLog=[];
+rallyMSeffortSum = 0;
+rallyMScompleteSum = 0;
+rallyMSpercentComplete = 0;
+
+// function to display numbers with thousands comma separator
+function formatNumber(num) {
+  return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+}
+
+// Credentials entry modal 
+
+$(document).ready(function(){
+  $("#credentials").click(function(){
+    $("#myModal").modal();
+    $("#saveCredentials").click(function() { 
+          let subDomain = $('#domain').val();
+          let clientID = $('#cid').val();
+          let ahaToken = $('#token').val();
+          let enteredURI = $('#uri').val();
+          let rallyToken = $('#Rtoken').val();
+      console.log('save credentials: '  + ' Domain' + subDomain + ' ClientID' + clientID + ' Aha! Token' + ahaToken + ' Rally Token' + rallyToken + ' URI' + enteredURI)
+// saving credentials locally
+          localStorage.subDomain=subDomain;
+          localStorage.clientID=clientID;
+          localStorage.redirectUri=enteredURI;
+          localStorage.ahaToken=ahaToken;
+          localStorage.rallyID=rallyToken
+      $("#myModal").modal("hide")
+    })
+  });
+});
+
+// API call for defined portfolios (defined roll-up initiatives)
+$("#portfolio_list").submit(function() { 
+
+// clearing prior portfolio information 
+         portfolios = [];
+// authentication 
+         new AhaApi({
+          accountDomain: localStorage.subDomain,
+          clientId: localStorage.clientID, // NOTE: replace this with your client ID.
+          redirectUri: localStorage.redirectUri
+        }).authenticate(function(api, success, message) {
+
+          console.log(success)
+          console.log(message)
+          var productKey = $("#portfolio-name").val();
+
+// calling API with Portfolio ID 
+api.get("/products/" + productKey + "/initiatives", {per_page: 50, fields: 'reference_num,name, children'}, 
+          function(response) {
+            localStorage.portfolios = (JSON.stringify(response))
+            let planItems = response
+            console.log(response)
+
+            let n = planItems.initiatives.length;
+      for (i = 0; i < n; i++){
+        let currentItem = planItems.initiatives[i].name + ': ' + planItems.initiatives[i].id
+        portfolios.push(currentItem)
+      }
+      $('#prodResults').append('<strong>' + productKey + ' - Related Portfolios:  </strong>')
+      $('#prodResults').append(JSON.stringify(portfolios))
+      $('#prodResults').append('<br><br>')
+          });
+        });
+        return false;
+      });
+
+// API call for initiatives by portfolio (within a roll-up initiative)
+$("#portfolio_controls").submit(function() { 
+
+  portfolioInits = [];
+         new AhaApi({
+          accountDomain: localStorage.subDomain,
+          clientId: localStorage.clientID, // NOTE: replace this with your client ID.
+          redirectUri: localStorage.redirectUri
+        }).authenticate(function(api, success, message) {
+
+          console.log(success)
+          console.log(message)
+          var productKey = $("#portfolio-key").val();
+
+// Fetch up to 50 initiatives in one fetch.
+api.get("/initiatives/" + productKey, {per_page: 50, fields: 'children'}, 
+          function(response) {
+            localStorage.ii = (JSON.stringify(response))
+            let planItems = response
+            console.log(response)
+
+            let n = planItems.initiative.children.length;
+      for (i = 0; i < n; i++){
+        let currentItem = planItems.initiative.children[i].name + ': ' + planItems.initiative.children[i].id
+        portfolioInits.push(currentItem)
+      }
+      $('#prodResults').append('<strong> Portfolio: ' + planItems.initiative.name + ",  # Initiatives: " + n + '</strong>')
+      $('#prodResults').append('<br>')
+      $('#prodResults').append(JSON.stringify(portfolioInits))
+      $('#prodResults').append('<br><br>')
+          });
+        });
+        return false;
+      });
+
+// API call to update initiatives within a portfolio (rolled-up initiative)
+$("#portfolio_update").submit(function() { 
+ 
+  portfolioInits = [];
+  numInits = 0;
+  initCount = 0;
+         new AhaApi({
+          accountDomain: localStorage.subDomain,
+          clientId: localStorage.clientID, // NOTE: replace this with your client ID.
+          redirectUri: localStorage.redirectUri
+        }).authenticate(function(api, success, message) {
+
+          console.log(success)
+          console.log(message)
+          var productKey = $("#portfolio-key2").val();
+
+// Fetch up to 50 initiatives in one fetch.
+        api.get("/initiatives/" + productKey, {per_page: 50, fields: 'children'}, 
+          function(response) {
+            localStorage.ii = (JSON.stringify(response))
+            let planItems = response
+            console.log('Portfolio initiatives:' + planItems)
+// set number of initiatives within portfolio
+          numInits = planItems.initiative.children.length;
+
+// set the initCount to numInits  
+
+          initCount = (numInits);
+
+// build portfolio initiative object           
+      for (i = 0; i < numInits; i++){
+        let currentItem = planItems.initiative.children[i].name + ': ' + planItems.initiative.children[i].id
+        portfolioInits.push(currentItem)
+      }
+
+// set first initative to parse
+
+let firstInit = portfolioInits[numInits-1].split(": ")[1]
+
+console.log('calling parseInitiative for init#: ' + firstInit)
+      parseInitiative(firstInit)
+
+          });
+        });
+        return false;
+      });
+
+// API call to display a single initiative milestone information and update msSummary object 
+$("#init_info").submit(function() { 
+         new AhaApi({
+          accountDomain: localStorage.subDomain,
+          clientId: localStorage.clientID, // NOTE: replace this with your client ID.
+          redirectUri: localStorage.redirectUri
+        }).authenticate(function(api, success, message) {
+
+          console.log(success)
+          console.log(message)
+          var productKey = $("#init-num").val();
+
+// Fetch up to 50 initiatives in one fetch.
+        api.get("/initiatives/" + productKey , {per_page: 50}, 
+          function(response) {
+            localStorage.singleInit = (JSON.stringify(response))
+            singleInit = response
+
+            if (!singleInit.initiative.custom_object_links){
+              console.log('initiative ' + productKey + ' has no related milestones')
+            }
+            else {
+            relatedMilestones = singleInit.initiative.custom_object_links[1].record_ids
+            }
+            console.log(response)
+            initProductName = singleInit.initiative.project.name
+            initProductID = singleInit.initiative.project.id
+            displayInitiativeInfo()
+          });
+        });
+        return false;
+      });
+
+// function to parse custom object records and return only actual milestone records in an object
+
+  function countEpics() {
+
+    console.log('function = countEpics ')
+      let numObjects = msInfo.custom_object_record.linked_records.length
+      epicCount = 0;
+      numEpics = 0;
+      epicsToParse = [];
+// loop through milestone response, count number of epics where related record_type = 'Epic' and append 
+// the found epic # to the epicsToParse array
+      var i;
+          for( i = 0; i < (numObjects); i++){
+            let record_type = msInfo.custom_object_record.linked_records[i].record_type
+        console.log('record type: ' + record_type)
+            if(record_type == 'Epic') { 
+                numEpics = (numEpics + 1);
+                let num = msInfo.custom_object_record.linked_records[i].record_id;
+        console.log('epic identified: ' + i + ', ' + num)
+                epicsToParse.push(num);
+        console.log('building epic array: ' + JSON.stringify(epicsToParse))
+            }
+          }
+        console.log('total # of epics: ' + epicCount)
+        console.log('final epic array: ' + JSON.stringify(epicsToParse))
+
+  }
+
+
+// function which displays milestones related to an initiative in the initiative summary block
+function displayInitiativeInfo () {
+
+// Initializing initiative information
+    initEffortSum = 0;
+    initCompleteSum = 0;
+    initPercentComplete = 0;
+
+    initInfo=singleInit
+
+    // check to see if initiative has any related records (milestones or outcomes
+        if (!singleInit.initiative.custom_object_links){
+              console.log('initiative ' + initInfo.initiative.id + ' has no related milestones');
+              numMilestones = 0;
+              relatedMilestones = 'no related milestones'
+            }
+        else {
+// check to see if the related records are milestones 
+          if(initInfo.initiative.custom_object_links[1].key == "milestones"){
+
+              numMilestones = initInfo.initiative.custom_object_links[1].record_ids.length}
+
+          else {
+              console.log('initiative ' + initInfo.initiative.id + ' has no related milestones');
+              numMilestones = 0;
+              relatedMilestones = 'no related milestones'
+          }
+        }
+  
+    msCount = numMilestones;
+
+    console.log ('number of milestones: ' + numMilestones)
+   
+        initName = initInfo.initiative.name;
+        initID = initInfo.initiative.id;
+        initProduct = initInfo.initiative.product_id;
+        initRef = initInfo.initiative.reference_num;
+// populate initiative summary for display block
+
+        $('#initResults').append('<strong>InitiativeID: </strong>' + initID +" ("+ initRef +")");
+        $('#initResults').append(',  <strong> Name: </strong>' + initName.slice(0, 50));
+        $('#initResults').append(',  <strong># Milestones: </strong>' + (numMilestones));
+        $('#initResults').append('<br>') ;
+        $('#initResults').append("-------------------------------------------------------------------------------------------------------------------------------");
+        $('#initResults').append('<br>') ;
+        $('#initResults').append(JSON.stringify(relatedMilestones));
+        $('#initResults').append('<br><br>');
+        ; 
+     }
+
+// function to update Milestone % complete via PUT 
+function postMilestoneUpdate(){
+ 
+  var settings = { "url": "https://optum.aha.io/api/v1/custom_object_records/" + msID, 
+        "method": "PUT", 
+        "timeout": 0, 
+        "headers": { "Authorization": localStorage.ahaToken, 
+        "Content-Type": "application/json", 
+          }, 
+        "data": JSON.stringify({"custom_object_record":
+        {"custom_fields":
+        {
+          // "milestone_percent_complete": msPercentComplete,
+        "milestone_total_estimated_effort": msEffortSum,
+        "no_capabilities": numEpics,
+        // new rally-derived values for effort and % complete from Feature Estimates (rather than stories)
+        "test_new_percent_complete": rallyMSpercentComplete,
+        "total_rally_point_estimate": rallyMSeffortSum},
+      }}), };
+    $.ajax(settings).done(function (response) { 
+      console.log('PUT update: ' + response);
+      console.log( "milestone_total_estimated_effort: " + msEffortSum);
+      console.log( "no_capabilities: " + numEpics);
+      console.log( "test_new_percent_complete: " + rallyMSpercentComplete);
+      console.log( "total_rally_point_estimate: " + rallyMSeffortSum);
+    });
+// write rally logged items to local storage 
+    localStorage.setItem("rallyErrorItems", JSON.stringify(rallyObjectErrorLog));
+
+  }
+
+function postAhaCapabilityUpdate(ahaCapabilityID, rallyFeatTotal, rallyEpicProgress){
+ var settings = {   
+        "url": "https://optum.aha.io/api/v1/epics/" + ahaCapabilityID, 
+        "method": "PUT", 
+        "timeout": 0, 
+        "headers":  {"Authorization": localStorage.ahaToken, 
+                    "Content-Type": "application/json",
+                    }, 
+        "data": JSON.stringify(
+                {"epic":  
+                {"custom_fields":
+                [{"key": "rally_feature_percent_complete", "name": "Rally Feature % Complete", "value": rallyEpicProgress},
+                 {"key": "rally_rollup_feature_estimate_total", "name": "Rally Rollup Feature Estimate Total", "value": rallyFeatTotal}]
+                }}), 
+            };
+            $.ajax(settings)
+                .done(function (response) { 
+                console.log('Aha! Capbility PUT update: ');
+                console.log( "Rally Feature % Complete: " + rallyEpicProgress);
+                console.log( "Rally Rollup Feature Estimate Total: " + rallyFeatTotal);
+            });
+ }
+ function postRallyCapabilityUpdate(rallyCapID, rallyFeatTotal, rallyCapabilityProgress){
+ var settings = {   
+        "url": "https://rally1.rallydev.com/slm/webservice/v2.0/portfolioitem/solutioncapability/" + rallyCapID,
+        "method": "POST",
+        // "timeout": 0,
+        "crossDomain": true,
+        "access-control-allow-origin": "*",
+        "headers": { 
+                "Content-Type": "application/json",
+                //  "contentType": "application/json",
+                //  "Accept": "*/*",
+                 "ZSESSIONID": localStorage.rallyID,
+                //  "Access-Control-Allow-Origin": "https://fhsal/github.io" 
+                },
+        "data": JSON.stringify({"SolutionCapability": 
+                {"c_PercentDonebyPreliminaryRollupValue": rallyCapabilityProgress,
+                  "c_PreliminaryEstimateRollupValue": rallyFeatTotal}
+              }), 
+            };
+            $.ajax(settings)
+                .done(function (response) { 
+                  
+                console.log('Rally Capability PUT update: ' );
+                console.log( "Rally Feature % Complete: " + rallyCapabilityProgress);
+                console.log( "Rally Rollup Feature Estimate Total: " + rallyFeatTotal);
+            });
+ }
+
+// function to count down epics as their responses are received, displaying an "*"
+//  for each as completed & then the overall summary  
+function checkEpicsDone(epicCount) {
+    console.log('checkEpicsDone, numEpics: ' + epicCount) 
+        if (epicCount > 0) {
+            // waitingFlag = true;
+            // setInterval(showWaiting, 500);
+            console.log('waiting condition: ' + (epicCount >0))
+            $('#msResults').append('*') ;
+            } 
+        else {
+  // populate Milestone summary display
+        let showmsEffortSum = formatNumber(rallyMSeffortSum)
+        let showmsCompleteSum = formatNumber(rallyMScompleteSum)
+        waitingFlag = false;
+                $('#msResults').append('<br>')
+                $('#msResults').append('<strong>Total MS: </strong>' + msID ); 
+                $('#msResults').append(';  <strong>  #Epics: </strong>' + (numEpics));
+                $('#msResults').append(';  <strong>  Effort: </strong>' + showmsEffortSum + ' points' );
+                $('#msResults').append(';  <strong>  Done: </strong>' + showmsCompleteSum + ' points' );
+                $('#msResults').append(';  <strong>  Progress: </strong>' + rallyMSpercentComplete +"%");
+                $('#msResults').append('<br>')
+  // populate Milestone summary object 
+                msObject = {
+                    "productID" : msProduct,
+                    "initiativeID" : initID,
+                    "initiativeName" : initName,
+                    "initRef" : initRef,
+                    "msID" : msID,
+                    "msName" : msName,
+                    "msTotalEffort" :  showmsEffortSum,
+                    "msProgress" : rallyMSpercentComplete,
+                    "msTotalEffortDone" : showmsCompleteSum,
+                    // "execReporting" : execReporting
+                };
+
+//build consolidated Milestone Summary object and save to local storage
+              msSummary.push(msObject);
+              msSummary.push(epicSummary);
+              if(localStorage.msArray){msConsolidatedObject=JSON.parse(localStorage.msArray)}
+              //  else{msConsolidatedObject=JSON.parse(localStorage.msArray)}
+              msConsolidatedObject.push(msSummary)
+              localStorage.msArray= JSON.stringify(msConsolidatedObject)
+// call function to post milestone updated information into Aha Initiative Milestone table 
+              postMilestoneUpdate();
+
+              // postAhaCapabilityUpdate(ahaCapabilityID, rallyFeatTotal, rallyEpicProgress)
+          console.log('time to call next milestone')
+              checkMilestonesDone()
+      }; 
+  }
+
+// input form listener to retrieve epic summary information for a single milestone
+$("#ms_info").submit(function() { 
+
+// Initializing milestone information for this listener which is for a single milestone
+
+    relatedMilestones = [];
+    msCount = 1;
+    numMilestones = 1;
+
+         new AhaApi({
+          accountDomain: localStorage.subDomain,
+          clientId: localStorage.clientID, // NOTE: replace this with your client ID.
+          redirectUri: localStorage.redirectUri
+        }).authenticate(function(api, success, message) {
+      console.log(success)
+      console.log(message)
+          var productKey = $("#msInfoNum").val();
+
+// Fetch milestone information
+          api.get("/custom_object_records/" + productKey , {per_page: 50}, 
+          function(response) {
+            localStorage.msInfo = (JSON.stringify(response))
+            msInfo = response
+
+// call function countEpics to determine the number of epics and assing to var numEpics
+// and create the object epicsToParse
+          countEpics()
+            epicCount = numEpics;  
+            // numEpics = (msInfo.custom_object_record.linked_records["length"] -1);
+            // epicCount = (numEpics-1);
+        console.log ('number of epics: ' + numEpics)
+        console.log(response)
+            msName = msInfo.custom_object_record.custom_fields[0].value
+            msID = msInfo.custom_object_record.id
+            msProduct = msInfo.custom_object_record.product_id
+            msInitiative = initID
+
+        if (numEpics !== 0){
+// populate display block
+            $('#msResults').append('<br>') ;
+            $('#msResults').append('<strong>MilestoneID: </strong>' + productKey)     
+            $('#msResults').append(',  <strong> Name: </strong>' + msName.slice(0, 50))
+            $('#msResults').append(', <strong> # Epics: </strong>' + (numEpics))
+            $('#msResults').append('<br>') ;
+            $('#msResults').append("========================================================");
+            $('#msResults').append('<br>') ;
+            $('#msResults').append(JSON.stringify(epicsToParse))
+            $('#msResults').append('<br>') ;
+          }
+
+        else { 
+              $('#msResults').append('<br>') ;
+              $('#msResults').append('<strong>MilestoneID: </strong>' + productKey)      
+              $('#msResults').append(',  <strong> Name: </strong>' + msName.slice(0, 50))
+              $('#msResults').append('<br>') ;
+              $('#msResults').append('no related Epics: </strong>')
+              $('#msResults').append('<br>') ;
+            }
+          })
+          });
+        return false;
+      });
+
+// input form listener to retrieve information for a single milestone, iterating through epic detail 
+$("#ms_update").submit(function() { 
+
+// Initializing milestone information for this listener which is for a single milestone
+    msEffortSum = 0;
+    msCompleteSum = 0;
+    msPercentComplete = 0;
+    relatedMilestones = [];
+    msCount = 1;
+    numMilestones = 1;
+
+         new AhaApi({
+          accountDomain: localStorage.subDomain,
+          clientId: localStorage.clientID, // NOTE: replace this with your client ID.
+          redirectUri: localStorage.redirectUri
+        }).authenticate(function(api, success, message) {
+      console.log(success)
+      console.log(message)
+          var productKey = $("#msNum").val();
+
+      parseMilestone(productKey)
+
+          });
+        return false;
+      });
+
+// API call to update milestones for an initiative by iterating through each related milestone
+$("#init_update").submit(function() { 
+
+console.log('init update');
+
+// Initializing milestone information
+    initEffortSum = 0;
+    initCompleteSum = 0;
+    initPercentComplete = 0;
+    relatedMilestones = [];
+
+     new AhaApi({
+      accountDomain: localStorage.subDomain,
+      clientId: localStorage.clientID, // NOTE: replace this with your client ID.
+      redirectUri: localStorage.redirectUri
+    }).authenticate(function(api, success, message) {
+  console.log(success)
+  console.log(message)
+      var productKey = $("#init-num2").val();
+
+// Fetch milestone information
+      api.get("/initiatives/" + productKey , {per_page: 50}, 
+      function(response) {
+        localStorage.singleInit = (JSON.stringify(response))
+            singleInit = response
+// still need to check the below as there may be other custom_object_links
+            if (!singleInit.initiative.custom_object_links){
+              console.log('initiative ' + productKey + ' has no related milestones')
+            }
+            else {
+// if there are milestones, push id's into relatedMilestones and set numMilestones = msCount
+              relatedMilestones = singleInit.initiative.custom_object_links[1].record_ids
+              numMilestones = singleInit.initiative.custom_object_links[1].record_ids.length
+              msCount = numMilestones
+            }
+              console.log(response)
+              initProductName = singleInit.initiative.project.name
+              initProductID = singleInit.initiative.project.id
+        displayInitiativeInfo()
+
+// set the index and ID of the milestone to parse and call parseMilestone 
+
+            msIndex = (numMilestones - msCount)
+            msToParse = relatedMilestones[msIndex]
+       parseMilestone(msToParse)
+
+      })
+      });
+    return false;
+  });
+
+// function to parse in individual initiative and update it's progress (similar to parseMilestone)      
+function parseInitiative(initToParse){
+
+// Initializing milestone information
+    initEffortSum = 0;
+    initCompleteSum = 0;
+    initPercentComplete = 0;
+    relatedMilestones = [];
+    singleInit = [];
+
+    console.log('parseInitiative, init#: ' + initToParse); 
+
+  if(initToParse){ 
+
+// fetch initiative inforamation
+
+    var settings = {
+      "url": "https://optum.aha.io/api/v1/initiatives/" + initToParse,
+      "method": "GET",
+      // "timeout": 0,
+      "crossDomain": true,
+      "access-control-allow-origin": "*",
+      "headers": { "Authorization": localStorage.ahaToken, },
+      };
+      $.ajax(settings)
+      .then(
+      function(response) {
+        localStorage.singleInit = (JSON.stringify(response))
+            singleInit = response
+            console.log(singleInit)
+            initProductName = singleInit.initiative.project.name
+            initProductID = singleInit.initiative.project.id
+            initName = singleInit.initiative.name;
+            initID = singleInit.initiative.id;
+            initRef = singleInit.initiative.reference_num;
+
+// still need to check the below as there may be other custom_object_links
+            if (!singleInit.initiative.custom_object_links){
+              console.log('initiative ' + initToParse + ' has no related milestones')
+              displayInitiativeInfo()
+              checkInitiativesDone()
+            }
+            else {
+// if there are milestones, push id's into relatedMilestones and set numMilestones = msCount
+              relatedMilestones = singleInit.initiative.custom_object_links[1].record_ids
+              numMilestones = singleInit.initiative.custom_object_links[1].record_ids.length
+              msCount = numMilestones
+              displayInitiativeInfo()
+
+            }
+// set the index and ID of the milestone to parse and call parseMilestone 
+
+            msIndex = (numMilestones - msCount)
+            msToParse = relatedMilestones[msIndex]
+
+            parseMilestone(msToParse)
+
+      })
+
+  } 
+      $('#msBody').append('<br>')
+
+      };
+
+// new async (replacing old ParseMilestone) function to parse in individual milestone and update it's progress (a partial copy of #ms_info listener abpve)      
+
+async function parseMilestone(msToParse){
+
+// Initializing milestone information
+    msEffortSum = 0;
+    msCompleteSum = 0;
+    msPercentComplete = 0;
+    rallyMSeffortSum = 0;
+    rallyMScompleteSum = 0;
+    rallyMSpercentComplete = 0;
+    msObject = [];
+// Initialize objects used to accumulate summary information    
+    epicSummary =[];
+    msSummary = [];
+
+    console.log('parseMilestone, MS#: ' + msToParse); 
+
+    // if milestone not undefined
+  if(msToParse){ 
+          //if milestone not 'no related milestones'
+      if(msToParse !=='n'){
+          try{
+            result = await $.ajax( {
+                      "url": "https://optum.aha.io/api/v1/custom_object_records/" + msToParse,
+                      "method": "GET",
+                      // "timeout": 0,
+                      "crossDomain": true,
+                      "access-control-allow-origin": "*",
+                      "headers": { "Authorization": localStorage.ahaToken}
+                    }),
+                    msInfo = result 
+                    localStorage.msInfo = (JSON.stringify(result))
+
+              // call function countEpics to determine the number of epics and assing to var numEpics
+              // and create the object epicsToParse
+                    countEpics()
+                        epicCount = numEpics;
+                  console.log ('number of epics: ' + numEpics)
+
+              //if there are related Epics then display information 
+                      if (numEpics !== 0){msName = msInfo.custom_object_record.custom_fields[0].value};
+              //if the related milestone is                    
+                        if (msInfo.custom_object_record.custom_fields[0]){msName = msInfo.custom_object_record.custom_fields[0].value}
+                        else {msName = 'no MS name'}
+                      // msName = msInfo.custom_object_record.custom_fields[0].value;
+                      msID = msInfo.custom_object_record.id;
+                      msProduct = msInfo.custom_object_record.product_id;
+                      msInitiative = initID;
+                      // if(msInfo.custom_object_record.custom_fields[4].value){execReporting = msInfo.custom_object_record.custom_fields[4].value};
+
+              // populate display block
+                  $('#msBody').append('<br>') ;
+                  $('#msBody').append('<strong>MilestoneID: </strong>' + msToParse)
+                  $('#msResults').append('<br>') ;
+                  $('#msResults').append('<strong>MilestoneID: </strong>' + msToParse)
+                  $('#msBody').append('<br>') ;
+                  $('#msBody').append('<strong># Epics: </strong>' + (numEpics))
+                  $('#msResults').append(',  <strong># Epics: </strong>' + (numEpics))
+                  $('#msBody').append('<br>') ;       
+                  $('#msBody').append('<strong>MS Name: </strong>' + msName)
+                  $('#msResults').append(',  <strong> Name: </strong>' + msName.slice(0, 50))
+                  $('#msResults').append('<br>') ;
+                  $('#msBody').append('<br>') ;
+                  $('#msBody').append("==========================================");
+                  $('#msBody').append('<br>') ;
+
+            // if no Epics then checkEpicsDone
+              if (numEpics == 0) { checkEpicsDone(epicCount)}
+
+            // loop through epics, waiting between each fetch to stay within API limits
+
+//trying async loop epics function
+
+                  var i;
+                  for(i = 0; i < (numEpics); i++){
+                            let num = epicsToParse[i];
+                                  epicNum = num.toString()
+                                  $('#msBody').append("Epic #: " + (i+1))
+                                  $('#msBody').append(",  record_id: " + epicNum) ;
+                                  $('#msBody').append('<br>') ;
+                        console.log('ParseMilestone, iteration # ' + (i+1) + " of" + numEpics)
+                      await asyncEpicAjax(epicNum)
+                      };
+                    
+// check condition where there are 'no related milestones', hence 'n' in the condition 
+          if (msToParse =='n'){ 
+            
+            msObject = {
+                    "productID" : msProduct,
+                    "initiativeID" : initID,
+                    "initiativeName" : initName,
+                    "initRef" : initRef,
+                    "msID" : msID,
+                    // "execReporting" : "No",
+                    "msName" : msName.slice(0, 50),
+                    "msTotalEffort" :  0,
+                    "msProgress" : 0,
+                    "msTotalEffortDone" : 0
+                };
+                
+// Create Milestone Summary object with no Epics and save to local storage
+              msSummary.push(msObject);
+              if(localStorage.msArray){msConsolidatedObject=JSON.parse(localStorage.msArray)}
+              //  else{msConsolidatedObject=JSON.parse(localStorage.msArray)}
+              msConsolidatedObject.push(msSummary)
+              localStorage.msArray= JSON.stringify(msConsolidatedObject)
+            
+            checkInitiativesDone()
+          }
+
+              $('#msBody').append('<br>')
+
+      return result;}
+      catch (error) {
+              console.log(error);
+    }
+      }}};      
+
+function checkMilestonesDone () {
+// when milestone complete decrement msCount and parse next milestone if count != 0 
+
+        console.log('checkMilestone ->  ' ); 
+        console.log('milestone count: ' + msCount);  
+            if (msCount !==0){ 
+                msCount = msCount-1
+                msIndex = (numMilestones - msCount)
+                msToParse = relatedMilestones[msIndex]
+        console.log('call parseMilestone for next ms#: ' + msToParse)
+        console.log('with milestone count: ' + msCount);  
+        console.log('and milestone index: ' + msIndex);
+// call parseMilestone if msToParse is not undefined                    
+            if(msToParse){ parseMilestone(msToParse)}
+            }
+            if (msCount ==0) {
+              checkInitiativesDone()  
+              }
+}
+
+// function to count down initiatives as their milestones are complete
+
+function checkInitiativesDone() {
+    console.log('checkInitiativesDone, numInits: ' + numInits)
+    console.log('checkInitiativesDone, initCount: ' + initCount)
+        if (initCount !==0){
+                  initCount =(initCount-1);
+// identify last element within the next object of PortfolioInits, which should be next initID 
+                let nextInitObject = portfolioInits[initCount].split(": ");
+                let nextInitIndex = nextInitObject.length - 1;
+                  nextInit = nextInitObject[nextInitIndex]
+
+                console.log('checkInitiativesDone: milestones complete - calling parseInitiative, next init#: ' + nextInit)
+
+// add prior initiative Milestone summary to aggregate object 
+    localStorage.initMilestones=JSON.stringify(msSummary)
+
+                parseInitiative(nextInit)
+              }
+        else {
+          $('#msResults').append('<br>')
+          $('#msResults').append('<strong>  Initiatives Complete !  </strong>');
+          $('#msResults').append('<br>')
+
+          console.log('Initiatives Complete !')
+
+        }
+    
+  }
+
+// input form listener to retrieve information for a single epic 
+ $("#epic_detail").submit(function() { 
+        new AhaApi({
+        accountDomain: $("#subdomain").val(),
+        clientId: localStorage.clientID, // NOTE: replace this with your client ID.
+        redirectUri: localStorage.redirectUri
+      }).authenticate(function(api, success, message) {
+    console.log(success)
+    console.log(message)
+        var productKey = $("#epicNum").val();
+// Fetch epic information
+        api.get("/epics/" + productKey , {per_page: 50}, 
+        function(response) {
+          localStorage.epicInfo = (JSON.stringify(response))
+          epicInfo = response
+    console.log(response)
+        });
+      });
+      return false;
+    });
+
+async function asyncEpicAjax(epicNumber) {
+    let result;
+
+    try {
+        result = await $.ajax({
+      "url": "https://optum.aha.io/api/v1/epics/" + epicNumber,
+      "method": "GET",
+      "crossDomain": true,
+      "access-control-allow-origin": "*",
+      "headers": { "Authorization": localStorage.ahaToken, },
+        }),
+  console.log('epicAjax, epicNum: ' + epicNum)
+  epicInfo = result
+            console.log(result)
+              let epicID = epicInfo.epic.id;         
+              let epicName = epicInfo.epic.name;
+// if rally integration exists get rally object ID and call rally detail function  
+// deriving rally ObjectID an Name (which can vary in position in the array in rally - hence need to use filter function to find)           
+               if(epicInfo.epic.integration_fields.length>0){
+                  let rallyIntFields = epicInfo.epic.integration_fields
+                  let rallyObjectRow = rallyIntFields.filter(p => p.name == "ObjectID")
+                  let rallyNameRow = rallyIntFields.filter(p => p.name == "Name")
+                  let rallyFormattedIDRow = rallyIntFields.filter(p => p.name == "FormattedID")
+                  rallyObjectID = rallyObjectRow[0].value;
+                  rallyObjectName =  rallyNameRow[0].value;
+                  rallyFormattedID = rallyFormattedIDRow[0].value;
+                  epicParked = epicInfo.epic.release.parking_lot
+
+// getRally Capability Details via async/await function that calls for Capability summary first and then children
+
+                  await rallyCalls(rallyObjectID)
+
+                 }
+               else{
+// all this logic regarding effort and progress needs to be replaced with what comes from Rally 
+                let epicEffort = Math.round(epicInfo.epic.original_estimate/480);
+                if (epicEffort > 0) { epicEffort = epicEffort} else { epicEffort = 0} ;
+                let epicProgress = parseInt(epicInfo.epic.progress)/100;
+                let epicEffortCompl = epicEffort*epicProgress;
+                if (epicEffortCompl > 0) { epicEffortCompl = epicEffortCompl} else { epicEffortCompl = 0} ;
+                msEffortSum = msEffortSum + epicEffort;
+                msCompleteSum = Math.round(msCompleteSum + epicEffortCompl)
+                msPercentComplete = Math.round(100*msCompleteSum/msEffortSum)
+
+              console.log('epicID: ' + epicID);
+              console.log('rallyID: ' + rallyObjectID);
+              console.log('old epic effort: ' + epicEffort);
+              console.log('old milestone effort subtotal: ' + msEffortSum);
+              console.log('old milestone complete: ' + msCompleteSum);
+              console.log('old milestone % complete: ' + msPercentComplete + "%");
+              console.log('++++++++++++++++++++++++++from asyncAjax, epicCount: ' + epicCount )
+      
+                // epicCount = epicCount-1 
+                // checkEpicsDone(epicCount) 
+               }
+
+          epicCount = epicCount-1 
+          checkEpicsDone(epicCount)    
+        ;
+        return result;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function rallyCapFirstCall(rallyCapID) {
+    let result;
+    rallyLeafStoryPoints= 0;
+    rallyPointsDone = 0;
+    
+    console.log('1111111111111111111111111111111111from 1st Rally call, rallyCapID: ' + rallyCapID )
+    try {
+        result = await $.ajax({
+        "url": "https://rally1.rallydev.com/slm/webservice/v2.0/portfolioitem/solutioncapability/" + rallyCapID,
+        "method": "GET",
+       
+        "crossDomain": true,
+        "access-control-allow-origin": "*",
+        "headers": { "ZSESSIONID": localStorage.rallyID },
+        }),
+        console.log("rally 1st call"),
+                  rallyCapSummary = result,
+                console.log(result);
+        if(rallyCapSummary.OperationResult){
+                  console.log('======> Rally access error, rallyObjectID: ' + rallyCapID)
+              // log error where crawler doesn't have access to a Solution Capability    
+                   let rallyLogItem = {rallyName: rallyObjectName, rallyID: rallyObjectID, rallyFrmatID: rallyFormattedID, ahaID: epicNum, codeSpot: 'rallyFirstCall'}
+                   rallyObjectErrorLog.push(rallyLogItem)
+              // call next Epic
+
+                  //  epicCount = epicCount-1 
+                  //  checkEpicsDone(epicCount) 
+                }     
+                  rallyLeafStoryPoints = rallyCapSummary.SolutionCapability.LeafStoryPlanEstimateTotal;
+                  rallyPercentComplete = rallyCapSummary.SolutionCapability.PercentDoneByStoryPlanEstimate;
+                  let rallyChildren = rallyCapSummary.SolutionCapability.Children.Count;
+                  rallyFormattedID = rallyCapSummary.SolutionCapability.FormattedID;
+                  rallyPointsDone = rallyLeafStoryPoints*rallyPercentComplete;
+                console.log("Rally FormattedID: " + rallyFormattedID)
+                console.log("Rally ObjectID: " + rallyCapID)
+                console.log("Aha ObjectID: " + epicInfo.epic.id)
+                console.log("Aha EpicRef: " + epicInfo.epic.reference_num)
+                console.log("Rally Capability Name: " + rallyObjectName)
+                console.log("Rally Number of Children: " + rallyChildren)
+                console.log("Rally Leaf Story Points Total: " + rallyLeafStoryPoints)
+                console.log("Rally Points Done: " + rallyPointsDone)
+        ;
+        return result;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+// async function to gather Rally capability children information 
+async function rallyCapSecondCall(rallyCapID) {
+    let result;
+
+                console.log("Rally FormattedID: " + rallyFormattedID)
+                console.log("Rally ObjectID: " + rallyCapID)
+                // console.log("Rally Points Done: " + rallyPointsDone)
+                console.log('222222222222222222222222222222222from 2nd Rally call, epicCount: ' + epicCount )
+    try {
+        result = await $.ajax({
+        "url": "https://rally1.rallydev.com/slm/webservice/v2.0/portfolioitem/solutioncapability/" + rallyCapID + "/children?pagesize=100",
+        "method": "GET",
+        // "timeout": 0,
+        "crossDomain": true,
+        "access-control-allow-origin": "*",
+        "headers": { "ZSESSIONID": localStorage.rallyID },
+        }),
+        console.log("rally 2nd call"),
+        rallyCapChildren = result
+                      console.log(result)
+                    rallySummary = rallyCapChildren.QueryResult.Results
+
+    // computing total Feature estimate in the Rally Solution Capability children response
+    // test to see if there are children, if yes then operate on result for date and total points for Features
+        if (rallySummary.length>0){
+
+          console.log("has children")   
+          // calc roll-up of PrelimaryEstimateValue for all features 
+              rallyFeatTotal = rallySummary.reduce(function(previousValue, currentValue) {
+                  return {PreliminaryEstimateValue: previousValue.PreliminaryEstimateValue + currentValue.PreliminaryEstimateValue}
+                });
+
+                rallyFeatTotal = rallyFeatTotal.PreliminaryEstimateValue
+
+          // update Feature points done based upon % complete for each Feature estimated 
+              rallyPointsDone = rallySummary.reduce(function(previousValue, currentValue) {
+                  return {PreliminaryEstimateValue: previousValue.PreliminaryEstimateValue + 
+                           currentValue.PreliminaryEstimateValue*currentValue.PercentDoneByStoryPlanEstimate}
+                });
+
+                rallyPointsDone = rallyPointsDone.PreliminaryEstimateValue - rallySummary[0].PreliminaryEstimateValue +
+                                    rallySummary[0].PercentDoneByStoryPlanEstimate*rallySummary[0].PreliminaryEstimateValue 
+console.log('new rally points done ===================================================== ' + rallyPointsDone)
+                // if (rallySummary.length=1){rallyPointsDone = rallySummary.PreliminaryEstimateValue*rallySummary.PercentDoneByStoryPlanEstimate}
+
+            // force total estimate for the Capabilility to be the larger of Feature Estimates or LeafStoryPoints  
+
+                    let originalRallyFeatTotal = rallyFeatTotal
+                      if(rallyFeatTotal<rallyLeafStoryPoints){
+                        rallyFeatTotal=rallyLeafStoryPoints
+                console.log("------------> adjusted estimate from " + originalRallyFeatTotal + " to " + rallyLeafStoryPoints) 
+                        }
+                    newRallyPercentComplete = rallyPointsDone/rallyFeatTotal
+                  }
+
+          // else use the overall estimates for the capability for % complete, unless actuals are zero, in that case % complete is zero
+          // and log the Rally object # and Formatted ID so that permissions can be changed to allow read access to Features 
+          // if the estimate is not zero but the returned object has a length of zero 
+           else {
+          console.log("does not have children") 
+                if (rallyPointsDone !==0){
+                    newRallyPercentComplete = rallyCapSummary.SolutionCapability.PercentDoneByStoryPlanEstimate
+          // log those Rally items where the app doesn't have permissions to see the children          
+                  let rallyLogItem = {rallyName: rallyObjectName, rallyID: rallyObjectID, rallyFrmatID: rallyFormattedID, ahaID: epicNum, codeSpot: 'rallySecondCall'}
+                  rallyObjectErrorLog.push(rallyLogItem)
+          console.log("Rally error log item: " + rallyLogItem) 
+                }
+                else {newRallyPercentComplete = 0}
+              rallyFeatTotal=rallyLeafStoryPoints;
+              }
+
+// console.log("Rally Feature Points: " + rallylateDate);
+          console.log("Rally Feature Total: " + rallyFeatTotal + ' points');
+          console.log("Rally Points Done: " + rallyPointsDone);
+          console.log("New Rally Feature-based Percent Complete: " + Math.round(100*newRallyPercentComplete) + "%");
+//calculate Rally Capability-level (Epic) stats
+          let rallyEpicEffort = rallyFeatTotal;
+              if (rallyEpicEffort > 0) { rallyEpicEffort = rallyEpicEffort} else { rallyEpicEffort = 0} ;
+                let rallyEpicProgress = Math.round(100*newRallyPercentComplete);
+                let rallyEpicEffortCompl = Math.round(rallyPointsDone);
+              if (rallyEpicEffortCompl > 0) { rallyEpicEffortCompl = rallyEpicEffortCompl} else { rallyEpicEffortCompl = 0} ;
+//update Rally Milestone-level stats
+              rallyMSeffortSum = rallyMSeffortSum + rallyEpicEffort;
+                rallyMScompleteSum = Math.round(rallyMScompleteSum + rallyEpicEffortCompl)
+              if (rallyMSeffortSum>0) {rallyMSpercentComplete = Math.round(100*rallyMScompleteSum/rallyMSeffortSum)} else {rallyMSpercentComplete = 0}
+
+          console.log("Rally MS effort Sum subtotal: " + rallyMSeffortSum);
+          console.log("Rally MS complete Sum subtotal: " + rallyMScompleteSum);
+
+
+// post Feature derived totals to the new custom fields in the Rally Solution Capability
+// postRallyCapabilityUpdate(rallyCapID, rallyFeatTotal, rallyEpicProgress)
+
+        console.log('posting to Aha! and Rally: ----------------------------------------------')
+        console.log('Epic parked?: ' + epicParked)
+
+//only post updates if epic is not in parking lot             
+         if(!epicParked){
+                  postAhaCapabilityUpdate(epicInfo.epic.id, rallyEpicEffort, rallyEpicProgress);
+                  postRallyCapabilityUpdate(rallyCapID, rallyEpicEffort, rallyEpicProgress)
+                  }
+
+//update and save epic-level information 
+       epicObject = {
+                    "initName" : initName,
+                    "initID" : initID,
+                    "initRef" : initRef,
+                    "Milestone" : msToParse,
+                    "epicName" : epicInfo.epic.name.slice(0, 60),
+                    "epicRef"  : epicInfo.epic.reference_num,
+                    "ahaEpicID" : epicInfo.epic.id,
+                    "RallyRef" : rallyFormattedID,
+                    "RallyID" : rallyCapID,
+                    "epicEffort" :  rallyEpicEffort,
+                    "epicEffortDone" : rallyEpicEffortCompl,
+                    "epicProgress" : rallyEpicProgress,
+                    "epicParked" : epicParked
+                  }
+
+//append information for current Epic to epicSummary object
+                epicSummary.push(epicObject)
+
+//append information for current Epic to epicConsolidatedObject object
+                epicConsolidatedObject.push(epicObject)
+
+            // epicCount = epicCount-1 
+            // checkEpicsDone(epicCount) 
+        ;
+        return result;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+// async/await function to call for rally Capability details: First the summary; Second, children - awaiting until complete to proceed, 
+// used within ParseMilestone as it loops through Epics related to a Milestone
+
+async function rallyCalls(rallyObjectID){
+  let res = null;
+  try{
+    (await rallyCapFirstCall(rallyObjectID),
+     await rallyCapSecondCall(rallyObjectID))
+  return(res)}
+  catch (err) {
+    console.log("fail>>", res, err);
+  }}
+
+
+// create flat array of Milestones from msConsolidatedObject, passed in as param
+function msFlatten(obj){
+  {for (i=0; i<(obj.length); i++){
+        msFlatArray.push(obj[i][0])
+        console.log('msFlatArray: ' + msFlatArray)
+  }}
+}
+
+//function to parse msConsolidatedObject and return input milestone object if found
+function findMS(ms){
+  msPreviouslyFound = msFlatArray.find( ( {msID}) => msID === ms);
+  // console.log("msPreviouslyFound: " + msPreviouslyFound)
+
+  return msPreviouslyFound
+  }
+
+  //function to parse epicConsolidatedObject and return input epic object if found
+  function findEpic(epic){
+  epicPreviouslyFound = epicConsolidatedObject.find( ( {ahaEpicID}) => ahaEpicID === epic);
+
+  return epicPreviouslyFound
+  }
+
+  function epicFlatten (obj){
+    {for (i=0; i<(obj.length); i++){
+        console.log ('i= ' + i)
+        if(obj[i][1]){
+          obj[i][1].forEach(element => {
+              let fullEpic = { ...obj[i][0], ...element}
+          epicFlatArray.push(fullEpic)    
+          });
+      }}}
+
+      return epicFlatArray
+  }
+
+ 
+  
+  // read from file functions ......
+  function dispFile(contents) {
+  document.getElementById('contents').innerHTML=contents
+}
+function clickElem(elem) {
+	// Thx user1601638 on Stack Overflow (6/6/2018 - https://stackoverflow.com/questions/13405129/javascript-create-and-save-file )
+	var eventMouse = document.createEvent("MouseEvents")
+	eventMouse.initMouseEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null)
+	elem.dispatchEvent(eventMouse)
+}
+function openFile(func) {
+	readFile = function(e) {
+		var file = e.target.files[0];
+		if (!file) {
+			return;
+		}
+		var reader = new FileReader();
+		reader.onload = function(e) {
+			var contents = e.target.result;
+			fileInput.func(contents)
+			document.body.removeChild(fileInput)
+		}
+		reader.readAsText(file)
+	}
+	fileInput = document.createElement("input")
+	fileInput.type='file'
+	fileInput.style.display='none'
+	fileInput.onchange=readFile
+	fileInput.func=func
+	document.body.appendChild(fileInput)
+	clickElem(fileInput)
+}
+
+    </script>
+  </body>
+</html>
