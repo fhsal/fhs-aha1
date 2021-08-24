@@ -550,7 +550,7 @@ function displayInitiativeInfo () {
         ; 
      }
 
-// function to update aha! Milestone % complete via PUT 
+// function to update Milestone % complete via PUT 
 function postMilestoneUpdate(){
  
   var settings = { "url": "https://optum.aha.io/api/v1/custom_object_records/" + msID, 
@@ -562,7 +562,7 @@ function postMilestoneUpdate(){
         "data": JSON.stringify({"custom_object_record":
         {"custom_fields":
         {
-        "milestone_percent_complete": rallyMSPercentComplete,
+          // "milestone_percent_complete": msPercentComplete,
         "milestone_total_estimated_effort": msEffortSum,
         "no_capabilities": numEpics,
         // new rally-derived values for effort and % complete from Feature Estimates (rather than stories)
