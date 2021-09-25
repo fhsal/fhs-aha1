@@ -1298,7 +1298,7 @@ console.log('new rally points done =============================================
                 {rallyEpicEffort = 0;
                   rallyEpicEffortCompl = 0;
                   rallyEpicProgress = 0;
-                  
+
                   console.log("<<<<<<<<<<<<<<<<  override effort to zero - status marked 'Will Not Implement' >>>>>>>>>>>>>>>>>")};
 
 //update Rally Milestone-level stats
@@ -1338,7 +1338,8 @@ console.log('new rally points done =============================================
                     "epicProgress" : rallyEpicProgress,
                     "epicParked" : epicParked,
                     "epicState" : rallyState,
-                    "workspace" : epicInfo.epic.release.project.name
+                    "workspace" : epicInfo.epic.release.project.name,
+                    "Release" :epicInfo.epic.release.reference_num
                   }
 
 //append information for current Epic to epicSummary object
