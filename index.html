@@ -1055,6 +1055,12 @@ function checkInitiativesDone() {
 
           console.log('Initiatives Complete !')
 
+// produce flattened epic object
+
+          epicFlatten(msConsolidatedObject)
+
+          console.log(msFlatArray)
+
         }
     
   }
@@ -1330,6 +1336,7 @@ console.log('new rally points done =============================================
                     "epicProgress" : rallyEpicProgress,
                     "epicParked" : epicParked,
                     "epicState" : rallyState,
+                    "workspace" : epicInfo.epic.release.project.name
                   }
 
 //append information for current Epic to epicSummary object
