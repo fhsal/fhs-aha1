@@ -1177,6 +1177,7 @@ async function rallyCapFirstCall(rallyCapID) {
                   let rallyChildren = rallyCapSummary.SolutionCapability.Children.Count;
                   rallyFormattedID = rallyCapSummary.SolutionCapability.FormattedID;
                   rallyPointsDone = rallyLeafStoryPoints*rallyPercentComplete;
+                  rallyState = rallyCapSummary.SolutionCapability.State._refObjectName
                 console.log("Rally FormattedID: " + rallyFormattedID)
                 console.log("Rally ObjectID: " + rallyCapID)
                 console.log("Aha ObjectID: " + epicInfo.epic.id)
