@@ -601,7 +601,7 @@ function postAhaCapabilityUpdate(ahaCapabilityID, rallyFeatTotal, rallyEpicProgr
             };
             $.ajax(settings)
                 .done(function (response) { 
-                console.log('Aha! Capbility PUT update: ');
+                console.log('Aha! Capbility PUT update: ' + rallyEpicProgress);
                 console.log( "Rally Feature % Complete: " + rallyEpicProgress);
                 console.log( "Rally Rollup Feature Estimate Total: " + rallyFeatTotal);
             });
@@ -1327,7 +1327,8 @@ console.log('new rally points done =============================================
                     "epicEffort" :  rallyEpicEffort,
                     "epicEffortDone" : rallyEpicEffortCompl,
                     "epicProgress" : rallyEpicProgress,
-                    "epicParked" : epicParked
+                    "epicParked" : epicParked,
+                    "epicState" : rallyState,
                   }
 
 //append information for current Epic to epicSummary object
