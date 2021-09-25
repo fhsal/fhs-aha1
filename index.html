@@ -282,6 +282,7 @@ rallyObjectID = "";
 rallyFeatTotal = 0;
 rallylateDate = ""
 rallySummary = [];
+rallyState = "";
 rallyCapSummary = "";
 rallyLeafStoryPoints = "";
 rallyPercentComplete = "";
@@ -1148,6 +1149,7 @@ async function rallyCapFirstCall(rallyCapID) {
     let result;
     rallyLeafStoryPoints= 0;
     rallyPointsDone = 0;
+    rallyState = '';
     
     console.log('1111111111111111111111111111111111from 1st Rally call, rallyCapID: ' + rallyCapID )
     try {
@@ -1236,7 +1238,12 @@ async function rallyCapSecondCall(rallyCapID) {
                 rallyPointsDone = rallyPointsDone.PreliminaryEstimateValue - rallySummary[0].PreliminaryEstimateValue +
                                     rallySummary[0].PercentDoneByStoryPlanEstimate*rallySummary[0].PreliminaryEstimateValue 
 console.log('new rally points done ===================================================== ' + rallyPointsDone)
-                // if (rallySummary.length=1){rallyPointsDone = rallySummary.PreliminaryEstimateValue*rallySummary.PercentDoneByStoryPlanEstimate}
+
+      //override rallyPointsDone to 100% if status in Rally is marked 'Capability Done'
+
+                if (rallyState='Capability Done') 
+                        {rallyPointsDone = rallyFeatTotal
+                         console.log("<<<<<<<<<<<<<<<<  override to 100% - status marked 'Capability Done' >>>>>>>>>>>>>>>>>")};
 
             // force total estimate for the Capabilility to be the larger of Feature Estimates or LeafStoryPoints  
 
@@ -1274,6 +1281,15 @@ console.log('new rally points done =============================================
                 let rallyEpicProgress = Math.round(100*newRallyPercentComplete);
                 let rallyEpicEffortCompl = Math.round(rallyPointsDone);
               if (rallyEpicEffortCompl > 0) { rallyEpicEffortCompl = rallyEpicEffortCompl} else { rallyEpicEffortCompl = 0} ;
+
+
+//override rallyEpicEffort to zero if status in Rally is marked 'Will Not Implement'
+
+            if (rallyState='Will Not Implement') 
+                {rallyEpicEffort = 0;
+                  rallyEpicEffortCompl = 0;
+                  console.log("<<<<<<<<<<<<<<<<  override effort to zero - status marked 'Will Not Implement' >>>>>>>>>>>>>>>>>")};
+
 //update Rally Milestone-level stats
               rallyMSeffortSum = rallyMSeffortSum + rallyEpicEffort;
                 rallyMScompleteSum = Math.round(rallyMScompleteSum + rallyEpicEffortCompl)
