@@ -264,6 +264,7 @@ waitingFlag ="";
 relatedMilestones = [];
 msToParse = "";
 initinfo = "";
+initPrefix = '';
 numInits = 0;
 portfolios = [];
 portfolioInits = [];
@@ -537,6 +538,7 @@ function displayInitiativeInfo () {
         initID = initInfo.initiative.id;
         initProduct = initInfo.initiative.product_id;
         initRef = initInfo.initiative.reference_num;
+        initPrefix = initInfo.initiative.project.reference_prefix
 // populate initiative summary for display block
 
         $('#initResults').append('<strong>InitiativeID: </strong>' + initID +" ("+ initRef +")");
@@ -655,7 +657,7 @@ function checkEpicsDone(epicCount) {
                 $('#msResults').append('<br>')
   // populate Milestone summary object 
                 msObject = {
-                    "productID" : msProduct,
+                    "productID" : initPrefix,
                     "initiativeID" : initID,
                     "initiativeName" : initName,
                     "initRef" : initRef,
@@ -1360,6 +1362,8 @@ function findMS(ms){
 
   return epicPreviouslyFound
   }
+
+// create a flat array of Epics from msConsolidatedObject which is saved in local storage as msArray (this is the big consolidation function) 
 
   function epicFlatten (obj){
     {for (i=0; i<(obj.length); i++){
