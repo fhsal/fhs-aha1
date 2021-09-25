@@ -1239,19 +1239,21 @@ async function rallyCapSecondCall(rallyCapID) {
                                     rallySummary[0].PercentDoneByStoryPlanEstimate*rallySummary[0].PreliminaryEstimateValue 
 console.log('new rally points done ===================================================== ' + rallyPointsDone)
 
-      //override rallyPointsDone to 100% if status in Rally is marked 'Capability Done'
 
-                if (rallyState =='Capability Done') 
-                        {rallyPointsDone = rallyFeatTotal
-                         console.log("<<<<<<<<<<<<<<<<  override to 100% - status marked 'Capability Done' >>>>>>>>>>>>>>>>>")};
-
-            // force total estimate for the Capabilility to be the larger of Feature Estimates or LeafStoryPoints  
+      // force total estimate for the Capabilility to be the larger of Feature Estimates or LeafStoryPoints  
 
                     let originalRallyFeatTotal = rallyFeatTotal
                       if(rallyFeatTotal<rallyLeafStoryPoints){
                         rallyFeatTotal=rallyLeafStoryPoints
                 console.log("------------> adjusted estimate from " + originalRallyFeatTotal + " to " + rallyLeafStoryPoints) 
                         }
+
+      //override rallyPointsDone to 100% if status in Rally is marked 'Capability Done'
+
+      if (rallyState =='Capability Done') 
+                        {rallyPointsDone = rallyFeatTotal
+                         console.log("<<<<<<<<<<<<<<<<  override to 100% - status marked 'Capability Done' >>>>>>>>>>>>>>>>>")};
+
                     newRallyPercentComplete = rallyPointsDone/rallyFeatTotal
                   }
 
