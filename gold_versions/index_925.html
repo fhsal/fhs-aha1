@@ -1115,10 +1115,6 @@ async function asyncEpicAjax(epicNumber) {
                   rallyFormattedID = rallyFormattedIDRow[0].value;
                   epicParked = epicInfo.epic.release.parking_lot
 
-// look in consolidatedEpicObject to see if object has been previously found 
-
-                  if (findEpic(epicID)){console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@' + epicPreviouslyFound)}
-
 // getRally Capability Details via async/await function that calls for Capability summary first and then children
 
                   await rallyCalls(rallyObjectID)
