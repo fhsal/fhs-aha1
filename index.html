@@ -569,14 +569,14 @@ function postMilestoneUpdate(){
         "milestone_total_estimated_effort": msEffortSum,
         "no_capabilities": numEpics,
         // new rally-derived values for effort and % complete from Feature Estimates (rather than stories)
-        "test_new_percent_complete": rallyMSpercentComplete,
+        // "test_new_percent_complete": rallyMSpercentComplete,
         "total_rally_point_estimate": rallyMSeffortSum},
       }}), };
     $.ajax(settings).done(function (response) { 
       console.log('PUT update: ' + response);
       console.log( "milestone_total_estimated_effort: " + msEffortSum);
       console.log( "no_capabilities: " + numEpics);
-      console.log( "test_new_percent_complete: " + rallyMSpercentComplete);
+      console.log( "milestone_percent_complete: " + rallyMSpercentComplete);
       console.log( "total_rally_point_estimate: " + rallyMSeffortSum);
     });
 // write rally logged items to local storage 
@@ -1117,7 +1117,7 @@ async function asyncEpicAjax(epicNumber) {
 
 // look in consolidatedEpicObject to see if object has been previously found 
 
-                  if (findEpic(epicID)){console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@' + epicPreviouslyFound)}
+                  if (findEpic(epicID)){console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  epicPreviouslyFound')}
 
 // getRally Capability Details via async/await function that calls for Capability summary first and then children
 
